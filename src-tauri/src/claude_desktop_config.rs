@@ -549,8 +549,9 @@ fn direct_inference_model_specs(provider: &Provider) -> Result<Vec<InferenceMode
     // Sort supports_1m=true first within each name so the subsequent dedup_by
     // (which keeps the first occurrence) preserves the 1M-capable variant.
     result.sort_by(|a, b| {
-        a.name
-            .cmp(&b.name)
+        model_family_order(&a.name)
+            .cmp(&model_family_order(&b.name))
+            .then_with(|| a.name.cmp(&b.name))
             .then_with(|| b.supports_1m.cmp(&a.supports_1m))
     });
     result.dedup_by(|a, b| a.name == b.name);
@@ -607,7 +608,11 @@ pub fn proxy_model_routes(provider: &Provider) -> Result<Vec<ResolvedModelRoute>
         });
     }
 
-    result.sort_by(|a, b| a.route_id.cmp(&b.route_id));
+    result.sort_by(|a, b| {
+        model_family_order(&a.route_id)
+            .cmp(&model_family_order(&b.route_id))
+            .then_with(|| a.route_id.cmp(&b.route_id))
+    });
     result.dedup_by(|a, b| a.route_id == b.route_id);
 
     if result.is_empty() {
@@ -619,6 +624,21 @@ pub fn proxy_model_routes(provider: &Provider) -> Result<Vec<ResolvedModelRoute>
     }
 
     Ok(result)
+}
+
+fn model_family_order(id: &str) -> u8 {
+    let id = id.strip_prefix("anthropic/").unwrap_or(id);
+    if id.starts_with("claude-fable-") {
+        0
+    } else if id.starts_with("claude-opus-") {
+        1
+    } else if id.starts_with("claude-sonnet-") {
+        2
+    } else if id.starts_with("claude-haiku-") {
+        3
+    } else {
+        4
+    }
 }
 
 fn next_catalog_safe_route_id(
@@ -976,7 +996,7 @@ fn apply_provider_to_paths_inner(
     provider: &Provider,
     paths: &ClaudeDesktopPaths,
 ) -> Result<(), AppError> {
-    let profile = match provider_mode(provider) {
+    let model_profile = match provider_mode(provider) {
         ClaudeDesktopMode::Direct => {
             let credentials = direct_gateway_credentials(provider)?;
             let model_specs = direct_inference_model_specs(provider)?;
@@ -1001,6 +1021,25 @@ fn apply_provider_to_paths_inner(
             build_gateway_profile(&base_url, &api_key, Some(model_specs.as_slice()))
         }
     };
+
+    // This profile is shared with native settings. Own only inference fields;
+    // user-defined Cowork/network/UI preferences survive provider changes.
+    let mut profile = read_json_or_empty(&paths.profile_path)?;
+    for key in [
+        "inferenceProvider",
+        "inferenceGatewayBaseUrl",
+        "inferenceGatewayAuthScheme",
+        "inferenceGatewayApiKey",
+        "inferenceModels",
+    ] {
+        profile.as_object_mut().expect("profile object").remove(key);
+    }
+    profile.as_object_mut().expect("profile object").extend(
+        model_profile
+            .as_object()
+            .expect("model profile object")
+            .clone(),
+    );
 
     write_deployment_mode(&paths.normal_config_path, "3p")?;
     write_deployment_mode(&paths.threep_config_path, "3p")?;
@@ -1029,8 +1068,6 @@ fn build_gateway_profile(
     model_specs: Option<&[InferenceModelSpec]>,
 ) -> Value {
     let mut profile = json!({
-        "coworkEgressAllowedHosts": ["*"],
-        "disableDeploymentModeChooser": true,
         "inferenceGatewayApiKey": api_key,
         "inferenceGatewayAuthScheme": "bearer",
         "inferenceGatewayBaseUrl": base_url,
@@ -1593,8 +1630,8 @@ mod tests {
         );
         assert_eq!(profile["inferenceGatewayApiKey"], json!("test-token"));
         assert_eq!(profile["inferenceGatewayAuthScheme"], json!("bearer"));
-        assert_eq!(profile["disableDeploymentModeChooser"], json!(true));
-        assert_eq!(profile["coworkEgressAllowedHosts"], json!(["*"]));
+        assert!(profile.get("disableDeploymentModeChooser").is_none());
+        assert!(profile.get("coworkEgressAllowedHosts").is_none());
         assert!(profile.get("inferenceModels").is_none());
         assert_eq!(meta["appliedId"], json!(PROFILE_ID));
         assert!(meta["entries"]
@@ -1602,6 +1639,52 @@ mod tests {
             .expect("entries")
             .iter()
             .any(|entry| entry["id"] == json!(PROFILE_ID) && entry["name"] == json!(PROFILE_NAME)));
+    }
+
+    #[test]
+    fn claude_desktop_reapply_keeps_family_order_and_unrelated_preferences() {
+        let temp = TempDir::new().expect("tempdir");
+        let paths = test_paths(temp.path());
+        let db = test_db();
+        let mut provider = proxy_provider("family-order");
+        provider.meta.as_mut().unwrap().claude_desktop_model_routes = [
+            "claude-haiku-4-5",
+            "claude-sonnet-5-5",
+            "claude-opus-5-5",
+            "claude-fable-5-1",
+        ]
+        .into_iter()
+        .map(|id| {
+            (
+                id.to_string(),
+                ClaudeDesktopModelRoute {
+                    model: format!("anthropic/{id}"),
+                    label_override: None,
+                    supports_1m: None,
+                },
+            )
+        })
+        .collect();
+        write_json_file(&paths.profile_path,&json!({"coworkEgressAllowedHosts":["restricted.example"],"disableDeploymentModeChooser":false,"userPreference":"keep"})).unwrap();
+        for _ in 0..2 {
+            apply_provider_to_paths(&db, &provider, &paths).unwrap();
+            let profile: Value = read_json_file(&paths.profile_path).unwrap();
+            assert_eq!(
+                profile["inferenceModels"],
+                json!([
+                    "claude-fable-5-1",
+                    "claude-opus-5-5",
+                    "claude-sonnet-5-5",
+                    "claude-haiku-4-5"
+                ])
+            );
+            assert_eq!(
+                profile["coworkEgressAllowedHosts"],
+                json!(["restricted.example"])
+            );
+            assert_eq!(profile["disableDeploymentModeChooser"], false);
+            assert_eq!(profile["userPreference"], "keep");
+        }
     }
 
     #[test]
@@ -1655,7 +1738,7 @@ mod tests {
             json!("http://127.0.0.1:15721/claude-desktop")
         );
         assert_eq!(profile["inferenceGatewayAuthScheme"], json!("bearer"));
-        assert_eq!(profile["coworkEgressAllowedHosts"], json!(["*"]));
+        assert!(profile.get("coworkEgressAllowedHosts").is_none());
         assert_ne!(profile["inferenceGatewayApiKey"], json!("test-token"));
         assert!(profile["inferenceGatewayApiKey"]
             .as_str()

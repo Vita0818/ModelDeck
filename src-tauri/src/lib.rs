@@ -23,6 +23,7 @@ mod linux_fix;
 mod mcode_config;
 mod mcp;
 mod model_capabilities;
+mod model_clients;
 mod openclaw_config;
 mod opencode_config;
 mod panic_hook;
@@ -1386,6 +1387,13 @@ pub fn run() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            model_clients::get_model_clients,
+            model_clients::save_model_client,
+            model_clients::apply_model_client,
+            model_clients::reset_model_client,
+            model_clients::inspect_model_clients,
+            model_clients::import_model_client_catalog,
+            model_clients::get_model_client_catalog_sources,
             commands::get_providers,
             commands::get_current_provider,
             commands::add_provider,
@@ -1985,6 +1993,29 @@ async fn enabled_proxy_apps_on_startup(db: &database::Database) -> Vec<&'static 
 async fn restore_proxy_state_on_startup(state: &store::AppState) {
     // 收集需要恢复接管的应用列表（从 proxy_config.enabled 读取）
     let apps_to_restore = enabled_proxy_apps_on_startup(&state.db).await;
+
+    let desktop_needs_gateway = state
+        .db
+        .get_current_provider("claude-desktop")
+        .ok()
+        .flatten()
+        .and_then(|id| {
+            state
+                .db
+                .get_all_providers("claude-desktop")
+                .ok()
+                .and_then(|providers| providers.get(&id).cloned())
+        })
+        .is_some_and(|provider| {
+            !claude_desktop_config::is_official_provider(&provider)
+                && claude_desktop_config::provider_mode(&provider)
+                    == provider::ClaudeDesktopMode::Proxy
+        });
+    if model_clients::needs_gateway() || desktop_needs_gateway {
+        if let Err(error) = state.proxy_service.start().await {
+            log::error!("Could not restore the model client gateway: {error}");
+        }
+    }
 
     if apps_to_restore.is_empty() {
         log::debug!("启动时无需恢复代理状态");

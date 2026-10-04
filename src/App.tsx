@@ -107,6 +107,7 @@ import ToolsPanel from "@/components/openclaw/ToolsPanel";
 import AgentsDefaultsPanel from "@/components/openclaw/AgentsDefaultsPanel";
 import OpenClawHealthBanner from "@/components/openclaw/OpenClawHealthBanner";
 import HermesMemoryPanel from "@/components/hermes/HermesMemoryPanel";
+import ModelClientsPanel from "@/components/model-clients/ModelClientsPanel";
 import {
   APP_IDS,
   DEFAULT_VISIBLE_APPS,
@@ -127,7 +128,8 @@ type View =
   | "openclawEnv"
   | "openclawTools"
   | "openclawAgents"
-  | "hermesMemory";
+  | "hermesMemory"
+  | "modelClients";
 
 interface SyncStatusUpdatedPayload {
   source?: string;
@@ -163,6 +165,7 @@ const VALID_VIEWS: View[] = [
   "openclawTools",
   "openclawAgents",
   "hermesMemory",
+  "modelClients",
 ];
 
 const getInitialView = (): View => {
@@ -1028,6 +1031,10 @@ function App() {
   };
 
   const renderContent = () => {
+    // Provider cards contain nested exit animations. Unmount that tree when
+    // opening this independent page, so WebKit cannot leave navigation waiting
+    // for an occluded card animation to finish.
+    if (currentView === "modelClients") return <ModelClientsPanel />;
     const content = (() => {
       switch (currentView) {
         case "settings":
@@ -1346,6 +1353,7 @@ function App() {
                   {currentView === "openclawAgents" &&
                     t("openclaw.agents.title")}
                   {currentView === "hermesMemory" && t("hermes.memory.title")}
+                  {currentView === "modelClients" && t("modelClients.title")}
                 </h1>
               </div>
             ) : (
@@ -1591,6 +1599,15 @@ function App() {
                 )}
                 {currentView === "providers" && (
                   <>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentView("modelClients")}
+                      title={t("modelClients.title")}
+                    >
+                      <Cpu className="w-4 h-4 mr-1" />
+                      {t("modelClients.title")}
+                    </Button>
                     <div className="flex items-center gap-1 p-1 bg-muted rounded-xl">
                       <AnimatePresence mode="wait">
                         <motion.div

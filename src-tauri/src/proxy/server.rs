@@ -116,6 +116,11 @@ impl ProxyServer {
             .local_addr()
             .map_err(|e| ProxyError::BindFailed(e.to_string()))?;
         let actual_port = local_addr.port();
+        if let Err(error) =
+            crate::model_clients::publish_gateway_origin(&self.config.listen_address, actual_port)
+        {
+            log::warn!("Could not publish the model client gateway address: {error}");
+        }
 
         log::info!("[{}] 代理服务器启动于 {local_addr}", log_srv::STARTED);
 
@@ -290,6 +295,18 @@ impl ProxyServer {
 
     fn build_router(&self) -> Router {
         Router::new()
+            .route(
+                "/model-clients/:client/*path",
+                any(crate::model_clients::gateway::handle),
+            )
+            .route(
+                "/muse-code/models",
+                get(crate::model_clients::gateway::muse_models),
+            )
+            .route(
+                "/v1/muse-code/models",
+                get(crate::model_clients::gateway::muse_models),
+            )
             // 健康检查
             .route("/health", get(handlers::health_check))
             .route("/status", get(handlers::get_status))

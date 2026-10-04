@@ -29,6 +29,12 @@ pub async fn start_proxy_server(
 #[tauri::command]
 pub async fn stop_proxy_server(state: tauri::State<'_, AppState>) -> Result<(), String> {
     let takeover = state.proxy_service.get_takeover_status().await?;
+    if crate::model_clients::needs_gateway() {
+        return Err(
+            "Antigravity 或 Muse Code 正在使用本地路由，请先在「客户端模型」中恢复原生默认。"
+                .into(),
+        );
+    }
     if takeover.claude
         || takeover.codex
         || takeover.gemini
