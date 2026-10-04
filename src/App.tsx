@@ -1792,7 +1792,9 @@ function App() {
 
       <main
         ref={mainScrollRef}
-        className="flex-1 min-h-0 flex flex-col overflow-y-auto animate-fade-in"
+        className={`flex-1 min-h-0 flex flex-col overflow-y-auto${
+          currentView === "modelClients" ? "" : " animate-fade-in"
+        }`}
       >
         {isOpenClawView && openclawHealthWarnings.length > 0 && (
           <OpenClawHealthBanner warnings={openclawHealthWarnings} />
