@@ -60,6 +60,17 @@ impl Drop for TestHomeGuard {
 // =============================================================================
 
 #[test]
+fn modeldeck_links_preserve_legacy_import_contract() {
+    let query = "v1/import?resource=provider&app=codex&name=ModelDeck%20Connection&endpoint=https%3A%2F%2Fexample.com%2Fv1";
+    let current = parse_deeplink_url(&format!("modeldeck://{query}")).unwrap();
+    let legacy = parse_deeplink_url(&format!("ccswitch://{query}")).unwrap();
+    assert_eq!(
+        serde_json::to_value(current).unwrap(),
+        serde_json::to_value(legacy).unwrap()
+    );
+}
+
+#[test]
 fn test_parse_valid_claude_deeplink() {
     let url = "ccswitch://v1/import?resource=provider&app=claude&name=Test%20Provider&homepage=https%3A%2F%2Fexample.com&endpoint=https%3A%2F%2Fapi.example.com&apiKey=sk-test-123&icon=claude";
 

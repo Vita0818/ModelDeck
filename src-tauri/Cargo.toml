@@ -1,10 +1,9 @@
 [package]
-name = "cc-switch"
-version = "3.20.4"
-description = "All-in-One Assistant for Claude Code, Codex & Gemini CLI"
-authors = ["Jason Young"]
+name = "modeldeck"
+version = "0.1.0"
+description = "Personal model connection manager for AI coding clients"
+authors = ["ModelDeck contributors", "Jason Young (upstream CC Switch)"]
 license = "MIT"
-repository = "https://github.com/farion1231/cc-switch"
 edition = "2021"
 rust-version = "1.85.0"
 

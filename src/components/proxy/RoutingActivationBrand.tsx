@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { APP_NAME } from "@/lib/product";
 
 const BURST_LIFETIME_MS = 980;
 
@@ -84,10 +85,7 @@ export function RoutingActivationBrand({
         />
       )}
 
-      <motion.a
-        href="https://ccswitch.io"
-        target="_blank"
-        rel="noreferrer"
+      <motion.span
         className={cn(
           "relative z-10 text-xl font-semibold transition-colors duration-500",
           active
@@ -122,8 +120,8 @@ export function RoutingActivationBrand({
             : { duration: 0.28, ease: [0.22, 1, 0.36, 1] }
         }
       >
-        CC Switch
-      </motion.a>
+        {APP_NAME}
+      </motion.span>
 
       {showBurst && (
         <motion.span
