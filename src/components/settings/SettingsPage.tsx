@@ -247,7 +247,7 @@ export function SettingsPage({
               <TabsContent value="general" className="space-y-6 mt-0">
                 {settings ? (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={false}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
                     className="space-y-6"
@@ -303,7 +303,7 @@ export function SettingsPage({
 
               <TabsContent value="auth" className="space-y-6 mt-0 pb-4">
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                   className="space-y-6"
@@ -315,7 +315,7 @@ export function SettingsPage({
               <TabsContent value="advanced" className="space-y-6 mt-0 pb-4">
                 {settings ? (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={false}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
                     className="space-y-4"

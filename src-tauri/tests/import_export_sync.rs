@@ -1018,7 +1018,7 @@ fn create_backup_retains_only_latest_entries() {
 }
 
 #[test]
-fn sync_gemini_packycode_sets_security_selected_type() {
+fn sync_excludes_gemini_api_key_connections() {
     let _guard = test_mutex().lock().expect("acquire test mutex");
     reset_test_fs();
     let home = ensure_test_home();
@@ -1045,30 +1045,13 @@ fn sync_gemini_packycode_sets_security_selected_type() {
         );
     }
 
-    ConfigService::sync_current_providers_to_live(&mut config)
-        .expect("syncing gemini live should succeed");
-
-    // security field is written to ~/.gemini/settings.json, not ~/.cc-switch/settings.json
-    let gemini_settings = home.join(".gemini").join("settings.json");
-    assert!(
-        gemini_settings.exists(),
-        "Gemini settings.json should exist at {}",
-        gemini_settings.display()
-    );
-
-    let raw = std::fs::read_to_string(&gemini_settings).expect("read gemini settings.json");
-    let value: serde_json::Value = serde_json::from_str(&raw).expect("parse gemini settings.json");
-    assert_eq!(
-        value
-            .pointer("/security/auth/selectedType")
-            .and_then(|v| v.as_str()),
-        Some("gemini-api-key"),
-        "syncing PackyCode Gemini should enforce security.auth.selectedType in Gemini settings"
-    );
+    ConfigService::sync_current_providers_to_live(&mut config).expect("supported provider sync");
+    assert!(!home.join(".gemini/settings.json").exists());
+    assert!(!home.join(".gemini/.env").exists());
 }
 
 #[test]
-fn sync_gemini_google_official_sets_oauth_security() {
+fn sync_excludes_gemini_oauth_and_preserves_native_settings() {
     let _guard = test_mutex().lock().expect("acquire test mutex");
     reset_test_fs();
     let home = ensure_test_home();
@@ -1096,26 +1079,13 @@ fn sync_gemini_google_official_sets_oauth_security() {
             .insert("google-official".to_string(), provider);
     }
 
-    ConfigService::sync_current_providers_to_live(&mut config)
-        .expect("syncing google official gemini should succeed");
-
-    // security field is written to ~/.gemini/settings.json, not ~/.cc-switch/settings.json
-    let gemini_settings = home.join(".gemini").join("settings.json");
-    assert!(
-        gemini_settings.exists(),
-        "Gemini settings should exist at {}",
-        gemini_settings.display()
-    );
-    let gemini_raw = std::fs::read_to_string(&gemini_settings).expect("read gemini settings");
-    let gemini_value: serde_json::Value =
-        serde_json::from_str(&gemini_raw).expect("parse gemini settings json");
-    assert_eq!(
-        gemini_value
-            .pointer("/security/auth/selectedType")
-            .and_then(|v| v.as_str()),
-        Some("oauth-personal"),
-        "Gemini settings should record oauth-personal for Google Official"
-    );
+    let gemini_settings = home.join(".gemini/settings.json");
+    fs::create_dir_all(gemini_settings.parent().unwrap()).unwrap();
+    let original = b"{\"security\":{\"auth\":{\"selectedType\":\"native-login\"}},\"keep\":true}\n";
+    fs::write(&gemini_settings, original).unwrap();
+    ConfigService::sync_current_providers_to_live(&mut config).expect("supported provider sync");
+    assert_eq!(fs::read(&gemini_settings).unwrap(), original);
+    assert!(!home.join(".gemini/.env").exists());
 }
 
 #[test]

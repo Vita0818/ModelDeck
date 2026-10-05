@@ -25,6 +25,18 @@ fn default_true() -> bool {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct VisibleApps {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub antigravity: Option<bool>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub cursor: Option<bool>,
+    #[serde(
+        rename = "cursor-agent",
+        default,
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub cursor_agent: Option<bool>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub muse: Option<bool>,
     #[serde(default = "default_true")]
     pub claude: bool,
     #[serde(
@@ -44,7 +56,7 @@ pub struct VisibleApps {
     pub opencode: bool,
     #[serde(default = "default_true")]
     pub openclaw: bool,
-    #[serde(default)]
+    #[serde(default = "default_true")]
     pub hermes: bool,
     #[serde(default = "default_true")]
     pub pi: bool,
@@ -55,16 +67,20 @@ pub struct VisibleApps {
 impl Default for VisibleApps {
     fn default() -> Self {
         Self {
+            antigravity: Some(true),
+            cursor: Some(true),
+            cursor_agent: Some(true),
+            muse: Some(true),
             claude: true,
             claude_desktop: true,
             codex: true,
-            gemini: true,
+            gemini: false,
             grokbuild: true,
             opencode: true,
-            openclaw: true,
-            hermes: false, // 默认不显示，需用户手动启用
-            pi: true,
-            mcode: true,
+            openclaw: false,
+            hermes: true,
+            pi: false,
+            mcode: false,
         }
     }
 }
@@ -72,6 +88,9 @@ impl Default for VisibleApps {
 impl VisibleApps {
     /// Check if the specified app is visible
     pub fn is_visible(&self, app: &AppType) -> bool {
+        if !crate::product::supports_provider_app(app) {
+            return false;
+        }
         match app {
             AppType::Claude => self.claude,
             AppType::ClaudeDesktop => self.claude_desktop,
@@ -80,9 +99,19 @@ impl VisibleApps {
             AppType::GrokBuild => self.grokbuild,
             AppType::OpenCode => self.opencode,
             AppType::OpenClaw => self.openclaw,
-            AppType::Hermes => self.hermes,
+            AppType::Hermes => self.antigravity.is_none() || self.hermes,
             AppType::Pi => self.pi,
             AppType::Mcode => self.mcode,
+        }
+    }
+
+    pub fn is_model_client_visible(&self, client: &str) -> bool {
+        match client {
+            "antigravity" => self.antigravity.unwrap_or(true),
+            "cursor" => self.cursor.unwrap_or(true),
+            "cursor-agent" => self.cursor_agent.unwrap_or(true),
+            "muse" => self.muse.unwrap_or(true),
+            _ => false,
         }
     }
 }
@@ -1192,6 +1221,36 @@ pub fn update_s3_sync_status(status: WebDavSyncStatus) -> Result<(), AppError> {
 mod tests {
     use super::*;
     use crate::app_config::AppType;
+
+    #[test]
+    fn modeldeck_visibility_excludes_legacy_tools_and_round_trips_new_clients() {
+        let legacy: VisibleApps = serde_json::from_value(serde_json::json!({
+            "gemini": true, "openclaw": true, "pi": true, "mcode": true, "hermes": false
+        }))
+        .unwrap();
+        for app in [
+            AppType::Gemini,
+            AppType::OpenClaw,
+            AppType::Pi,
+            AppType::Mcode,
+        ] {
+            assert!(!legacy.is_visible(&app));
+        }
+        assert!(legacy.is_visible(&AppType::Hermes));
+        for (id, _) in crate::product::MODEL_CLIENTS {
+            assert!(legacy.is_model_client_visible(id));
+        }
+        let selected = VisibleApps {
+            cursor_agent: Some(false),
+            hermes: false,
+            ..VisibleApps::default()
+        };
+        let restored: VisibleApps =
+            serde_json::from_value(serde_json::to_value(selected).unwrap()).unwrap();
+        assert!(!restored.is_model_client_visible("cursor-agent"));
+        assert!(restored.is_model_client_visible("cursor"));
+        assert!(!restored.is_visible(&AppType::Hermes));
+    }
 
     #[test]
     fn visible_apps_old_settings_default_claude_desktop_visible() {

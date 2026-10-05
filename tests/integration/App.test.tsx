@@ -138,7 +138,15 @@ vi.mock("@/components/AppSwitcher", () => ({
       <span>{activeApp}</span>
       <button onClick={() => onSwitch("claude")}>switch-claude</button>
       <button onClick={() => onSwitch("codex")}>switch-codex</button>
-      <button onClick={() => onSwitch("openclaw")}>switch-openclaw</button>
+      <button onClick={() => onSwitch("hermes")}>switch-hermes</button>
+      <button onClick={() => onSwitch("antigravity")}>
+        switch-antigravity
+      </button>
+      <button onClick={() => onSwitch("cursor-agent")}>
+        switch-cursor-agent
+      </button>
+      <button onClick={() => onSwitch("cursor")}>switch-cursor</button>
+      <button onClick={() => onSwitch("muse")}>switch-muse</button>
     </div>
   ),
 }));
@@ -205,7 +213,19 @@ describe("App integration with MSW", () => {
     skillsPanelMocks.checkUpdates.mockReset();
     skillsPanelMocks.openDiscovery.mockReset();
     localStorage.removeItem("cc-switch-last-view");
-    localStorage.removeItem("cc-switch-last-app");
+    localStorage.removeItem("modeldeck-last-client");
+    localStorage.setItem("cc-switch-last-app", "claude");
+    server.use(
+      http.post("http://tauri.local/get_model_clients", () =>
+        HttpResponse.json({ profiles: {}, active: {} }),
+      ),
+      http.post("http://tauri.local/inspect_model_clients", () =>
+        HttpResponse.json([]),
+      ),
+      http.post("http://tauri.local/get_model_client_catalog_sources", () =>
+        HttpResponse.json([]),
+      ),
+    );
   });
 
   it("covers basic provider flows via real hooks", async () => {
@@ -347,8 +367,8 @@ describe("App integration with MSW", () => {
     });
   });
 
-  it("duplicates openclaw providers with a generated key that avoids live-only ids", async () => {
-    setProviders("openclaw", {
+  it("duplicates hermes providers with a generated key that avoids live-only ids", async () => {
+    setProviders("hermes", {
       deepseek: {
         id: "deepseek",
         name: "DeepSeek",
@@ -363,13 +383,13 @@ describe("App integration with MSW", () => {
         createdAt: Date.now(),
       },
     });
-    setCurrentProviderId("openclaw", "deepseek");
-    setLiveProviderIds("openclaw", ["deepseek-copy"]);
+    setCurrentProviderId("hermes", "deepseek");
+    setLiveProviderIds("hermes", ["deepseek-copy"]);
 
     const { default: App } = await import("@/App");
     renderApp(App);
 
-    fireEvent.click(screen.getByText("switch-openclaw"));
+    fireEvent.click(screen.getByText("switch-hermes"));
 
     await waitFor(() =>
       expect(screen.getByTestId("provider-list").textContent).toContain(
@@ -386,112 +406,60 @@ describe("App integration with MSW", () => {
     });
 
     expect(toastErrorMock).not.toHaveBeenCalledWith(
-      expect.stringContaining("Provider key is required for openclaw"),
+      expect.stringContaining("Provider key is required for hermes"),
     );
   });
 
-  it("refreshes MiniMax Code provider membership after removing it from live config", async () => {
-    localStorage.setItem("cc-switch-last-app", "mcode");
-    let liveConfigManaged = true;
-    let providerRequests = 0;
-    server.use(
-      http.post("http://tauri.local/get_providers", async ({ request }) => {
-        const { app } = (await request.json()) as { app: string };
-        if (app !== "mcode") return;
-        providerRequests += 1;
-        return HttpResponse.json({
-          custom: {
-            id: "custom",
-            name: "Custom MiniMax Code",
-            settingsConfig: {},
-            meta: { liveConfigManaged },
-          },
-        });
-      }),
-      http.post(
-        "http://tauri.local/remove_provider_from_live_config",
-        async ({ request }) => {
-          expect(await request.json()).toEqual({ id: "custom", app: "mcode" });
-          liveConfigManaged = false;
-          return HttpResponse.json(true);
-        },
-      ),
-    );
+  it.each(["gemini", "openclaw", "pi", "mcode"])(
+    "ignores a legacy %s selection and opens a supported client",
+    async (legacy) => {
+      localStorage.setItem("cc-switch-last-app", legacy);
+      const { default: App } = await import("@/App");
+      renderApp(App);
+      await waitFor(() =>
+        expect(screen.getByTestId("provider-list")).toHaveTextContent(
+          "codex-1",
+        ),
+      );
+      expect(screen.getByTestId("app-switcher")).toHaveTextContent("codex");
+    },
+  );
 
+  it("opens model adapters from the main switcher and keeps their unsaved drafts across provider pages", async () => {
     const { default: App } = await import("@/App");
     renderApp(App);
-
+    fireEvent.click(screen.getByText("switch-antigravity"));
+    const agyKey = await screen.findByDisplayValue("AGY_OR_KEY");
+    fireEvent.change(agyKey, { target: { value: "AGY_PRIVATE_KEY" } });
+    fireEvent.click(screen.getByText("switch-codex"));
     await waitFor(() =>
-      expect(screen.getByTestId("provider-list")).toHaveTextContent(
-        '"liveConfigManaged":true',
-      ),
+      expect(screen.getByTestId("provider-list")).toHaveTextContent("codex-1"),
     );
-    const requestsBeforeRemoval = providerRequests;
-    fireEvent.click(screen.getByText("remove"));
-    fireEvent.click(screen.getByText("confirm-delete"));
-
-    await waitFor(() =>
-      expect(screen.queryByTestId("confirm-dialog")).not.toBeInTheDocument(),
-    );
-    expect(liveConfigManaged).toBe(false);
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list")).toHaveTextContent(
-        '"liveConfigManaged":false',
-      ),
-    );
-    expect(providerRequests).toBeGreaterThan(requestsBeforeRemoval);
-    expect(screen.getByTestId("provider-list")).toHaveTextContent(
-      "Custom MiniMax Code",
-    );
+    fireEvent.click(screen.getByText("switch-cursor-agent"));
+    expect(await screen.findByDisplayValue("CURSOR_CLI_OR_KEY")).toBeVisible();
+    fireEvent.click(screen.getByText("switch-antigravity"));
+    expect(await screen.findByDisplayValue("AGY_PRIVATE_KEY")).toBeVisible();
+    expect(localStorage.getItem("modeldeck-last-client")).toBe("antigravity");
   });
 
-  it("warns without blocking when removing Pi's global default provider", async () => {
-    localStorage.setItem("cc-switch-last-app", "pi");
-    setProviders("pi", {
-      custom: {
-        id: "custom",
-        name: "Custom Pi",
-        settingsConfig: {
-          baseUrl: "https://api.example.com/v1",
-          apiKey: "test-key",
-          api: "openai-completions",
-          models: [{ id: "model-a" }],
-        },
-        category: "custom",
-        sortIndex: 0,
-        createdAt: Date.now(),
-      },
-    });
-    server.use(
-      http.post("http://tauri.local/get_pi_current_state", () =>
-        HttpResponse.json({
-          enabledProviderIds: ["custom"],
-          defaultProviderId: "custom",
-        }),
-      ),
-    );
-
-    const { default: App } = await import("@/App");
-    renderApp(App);
-
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list").textContent).toContain(
-        "Custom Pi",
-      ),
-    );
-    fireEvent.click(screen.getByText("remove"));
-
-    expect(screen.getByTestId("confirm-message")).toHaveTextContent(
-      "confirm.piDefaultProviderWarning",
-    );
-    fireEvent.click(screen.getByText("confirm-delete"));
-    await waitFor(() =>
-      expect(screen.queryByTestId("confirm-dialog")).not.toBeInTheDocument(),
-    );
-  });
+  it.each([
+    ["antigravity", "AGY_OR_KEY"],
+    ["cursor", "CURSOR_OR_KEY"],
+    ["cursor-agent", "CURSOR_CLI_OR_KEY"],
+    ["muse", "MUSE_OR_KEY"],
+  ])(
+    "restores %s as the selected client after relaunch",
+    async (client, key) => {
+      localStorage.setItem("modeldeck-last-client", client);
+      const { default: App } = await import("@/App");
+      renderApp(App);
+      expect(await screen.findByDisplayValue(key)).toBeVisible();
+      expect(screen.queryByTestId("provider-list")).not.toBeInTheDocument();
+    },
+  );
 
   it("shows toast when duplicate cannot load live provider ids", async () => {
-    setProviders("openclaw", {
+    setProviders("hermes", {
       deepseek: {
         id: "deepseek",
         name: "DeepSeek",
@@ -506,16 +474,16 @@ describe("App integration with MSW", () => {
         createdAt: Date.now(),
       },
     });
-    setCurrentProviderId("openclaw", "deepseek");
+    setCurrentProviderId("hermes", "deepseek");
 
     const liveIdsSpy = vi
-      .spyOn(providersApi, "getOpenClawLiveProviderIds")
+      .spyOn(providersApi, "getHermesLiveProviderIds")
       .mockRejectedValueOnce(new Error("broken config"));
 
     const { default: App } = await import("@/App");
     renderApp(App);
 
-    fireEvent.click(screen.getByText("switch-openclaw"));
+    fireEvent.click(screen.getByText("switch-hermes"));
 
     await waitFor(() =>
       expect(screen.getByTestId("provider-list").textContent).toContain(

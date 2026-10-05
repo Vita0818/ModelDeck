@@ -69,6 +69,52 @@ describe("ModelClientsPanel", () => {
     });
   });
 
+  it("accepts the main client selection without a second set of tabs and retains each draft", async () => {
+    const { rerender } = render(
+      <ModelClientsPanel selectedClient="antigravity" />,
+    );
+    await screen.findByDisplayValue("AGY_OR_KEY");
+    expect(screen.queryByRole("tablist")).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("modelClients.endpoint"), {
+      target: { value: "https://example.com/agy/v1" },
+    });
+    rerender(<ModelClientsPanel selectedClient="cursor-agent" />);
+    expect(screen.getByLabelText("modelClients.envName")).toHaveValue(
+      "CURSOR_CLI_OR_KEY",
+    );
+    rerender(<ModelClientsPanel selectedClient="antigravity" />);
+    expect(screen.getByLabelText("modelClients.endpoint")).toHaveValue(
+      "https://example.com/agy/v1",
+    );
+  });
+
+  it("refreshes catalog sources after returning from provider pages without replacing the draft", async () => {
+    const { rerender } = render(
+      <ModelClientsPanel selectedClient="antigravity" />,
+    );
+    await screen.findByDisplayValue("AGY_OR_KEY");
+    fireEvent.change(screen.getByLabelText("modelClients.envName"), {
+      target: { value: "MY_AGY_KEY" },
+    });
+    rerender(
+      <ModelClientsPanel selectedClient="antigravity" visible={false} />,
+    );
+    rerender(<ModelClientsPanel selectedClient="antigravity" visible={true} />);
+    await waitFor(() =>
+      expect(
+        invoke.mock.calls.filter(
+          ([command]) => command === "get_model_client_catalog_sources",
+        ),
+      ).toHaveLength(2),
+    );
+    expect(
+      invoke.mock.calls.filter(([command]) => command === "get_model_clients"),
+    ).toHaveLength(1);
+    expect(screen.getByLabelText("modelClients.envName")).toHaveValue(
+      "MY_AGY_KEY",
+    );
+  });
+
   it("keeps each client's key binding and drafts separate", async () => {
     render(<ModelClientsPanel />);
     await screen.findByDisplayValue("AGY_OR_KEY");
@@ -98,6 +144,25 @@ describe("ModelClientsPanel", () => {
     );
     expect(invoke.mock.calls.some(([c]) => c === "apply_model_client")).toBe(
       false,
+    );
+  });
+
+  it("keeps environment mode while the user clears and retypes its variable name", async () => {
+    render(<ModelClientsPanel selectedClient="antigravity" />);
+    await screen.findByDisplayValue("AGY_OR_KEY");
+    fireEvent.change(screen.getByLabelText("modelClients.envName"), {
+      target: { value: "" },
+    });
+    expect(screen.getByLabelText("modelClients.keySource")).toHaveValue("env");
+    expect(screen.getByLabelText("modelClients.envName")).toHaveValue("");
+    expect(
+      screen.queryByLabelText("modelClients.apiKey"),
+    ).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("modelClients.envName"), {
+      target: { value: "MY_AGY_KEY" },
+    });
+    expect(screen.getByLabelText("modelClients.envName")).toHaveValue(
+      "MY_AGY_KEY",
     );
   });
 

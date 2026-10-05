@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { invoke } from "@tauri-apps/api/core";
 import { useQueryClient } from "@tanstack/react-query";
@@ -108,11 +107,18 @@ import AgentsDefaultsPanel from "@/components/openclaw/AgentsDefaultsPanel";
 import OpenClawHealthBanner from "@/components/openclaw/OpenClawHealthBanner";
 import HermesMemoryPanel from "@/components/hermes/HermesMemoryPanel";
 import ModelClientsPanel from "@/components/model-clients/ModelClientsPanel";
+import { isProxyAppId } from "@/config/appConfig";
 import {
-  APP_IDS,
-  DEFAULT_VISIBLE_APPS,
-  isProxyAppId,
-} from "@/config/appConfig";
+  CLIENT_IDS,
+  MODELDECK_CLIENTS,
+  CLIENT_STORAGE_KEY,
+  initialClient,
+  isClientId,
+  isModelClientId,
+  resolveClientVisibility,
+  type ClientId,
+  type ModelClientId,
+} from "@/config/modeldeckClients";
 
 type View =
   | "providers"
@@ -140,15 +146,6 @@ interface SyncStatusUpdatedPayload {
 const DEFAULT_DRAG_BAR_HEIGHT = isWindows() || isLinux() ? 0 : 28; // px
 const HEADER_HEIGHT = 64; // px
 
-const STORAGE_KEY = "cc-switch-last-app";
-const getInitialApp = (): AppId => {
-  const saved = localStorage.getItem(STORAGE_KEY) as AppId | null;
-  if (saved && APP_IDS.includes(saved)) {
-    return saved;
-  }
-  return "claude";
-};
-
 const VIEW_STORAGE_KEY = "cc-switch-last-view";
 const VALID_VIEWS: View[] = [
   "providers",
@@ -161,11 +158,7 @@ const VALID_VIEWS: View[] = [
   "universal",
   "sessions",
   "workspace",
-  "openclawEnv",
-  "openclawTools",
-  "openclawAgents",
   "hermesMemory",
-  "modelClients",
 ];
 
 const getInitialView = (): View => {
@@ -180,7 +173,22 @@ function App() {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
 
-  const [activeApp, setActiveApp] = useState<AppId>(getInitialApp);
+  const [activeClient, setActiveClient] = useState<ClientId>(initialClient);
+  // Keep the last provider client while a model adapter is open. Existing
+  // provider hooks retain their state without targeting another client's data.
+  const [activeApp, setActiveApp] = useState<AppId>(() => {
+    const client = initialClient();
+    return isModelClientId(client) ? "claude" : client;
+  });
+  const isModelClient = isModelClientId(activeClient);
+  const [modelPanelOpened, setModelPanelOpened] = useState(() =>
+    isModelClientId(initialClient()),
+  );
+  const [lastModelClient, setLastModelClient] = useState<ModelClientId>(() => {
+    const client = initialClient();
+    return isModelClientId(client) ? client : "antigravity";
+  });
+  const [modelClientBusy, setModelClientBusy] = useState(false);
   const sharedFeatureApp: AppId =
     activeApp === "claude-desktop" ? "claude" : activeApp;
   const [currentView, setCurrentView] = useState<View>(getInitialView);
@@ -210,22 +218,33 @@ function App() {
   const dragBarHeight = useAppWindowControls ? 32 : DEFAULT_DRAG_BAR_HEIGHT;
   const contentTopOffset = dragBarHeight + HEADER_HEIGHT;
   const visibleApps = useMemo<VisibleApps>(
-    () => ({
-      ...DEFAULT_VISIBLE_APPS,
-      ...settingsData?.visibleApps,
-    }),
+    () => resolveClientVisibility(settingsData?.visibleApps),
     [settingsData?.visibleApps],
   );
 
-  const getFirstVisibleApp = (): AppId => {
-    return APP_IDS.find((app) => visibleApps[app]) ?? "claude";
-  };
-
-  useEffect(() => {
-    if (!visibleApps[activeApp]) {
-      setActiveApp(getFirstVisibleApp());
+  const selectClient = (client: ClientId) => {
+    if (modelClientBusy || !isClientId(client)) return;
+    setActiveClient(client);
+    setCurrentView("providers");
+    if (isModelClientId(client)) {
+      setLastModelClient(client);
+      setModelPanelOpened(true);
+    } else {
+      setActiveApp(client);
     }
-  }, [visibleApps, activeApp]);
+  };
+  useEffect(() => {
+    localStorage.setItem(CLIENT_STORAGE_KEY, activeClient);
+  }, [activeClient]);
+  useEffect(() => {
+    if (!visibleApps[activeClient]) {
+      selectClient(CLIENT_IDS.find((id) => visibleApps[id]) ?? "codex");
+    }
+  }, [visibleApps, activeClient, modelClientBusy]);
+  useTauriEvent<{ client: string }>("modeldeck-client-selected", (payload) => {
+    if (isClientId(payload.client)) selectClient(payload.client);
+  });
+  const isModelClientView = currentView === "providers" && isModelClient;
 
   // Fallback from sessions view when switching to an app without session support
   useEffect(() => {
@@ -299,7 +318,7 @@ function App() {
   } = useProxyStatus();
   const proxyAppId = isProxyAppId(activeApp) ? activeApp : null;
   const currentAppUsesProxy =
-    proxyAppId !== null || activeApp === "claude-desktop";
+    !isModelClient && (proxyAppId !== null || activeApp === "claude-desktop");
   const isCurrentAppTakeoverActive = proxyAppId
     ? takeoverStatus?.[proxyAppId] || false
     : false;
@@ -637,7 +656,7 @@ function App() {
   useEffect(() => {
     const checkEnvOnSwitch = async () => {
       try {
-        if (activeApp === "mcode") return;
+        if (isModelClient || activeApp === "mcode") return;
         const conflicts = await checkEnvConflicts(activeApp);
 
         if (conflicts.length > 0) {
@@ -664,11 +683,14 @@ function App() {
     };
 
     checkEnvOnSwitch();
-  }, [activeApp]);
+  }, [activeApp, isModelClient]);
 
   const currentViewRef = useRef(currentView);
   const managementBusy =
-    mcpManagementBusy || skillsNavigationBusy || promptNavigationBusy;
+    modelClientBusy ||
+    mcpManagementBusy ||
+    skillsNavigationBusy ||
+    promptNavigationBusy;
   const managementBusyRef = useRef(false);
   managementBusyRef.current = managementBusy;
 
@@ -1034,7 +1056,7 @@ function App() {
     // Provider cards contain nested exit animations. Unmount that tree when
     // opening this independent page, so WebKit cannot leave navigation waiting
     // for an occluded card animation to finish.
-    if (currentView === "modelClients") return <ModelClientsPanel />;
+    if (isModelClientView) return null;
     const content = (() => {
       switch (currentView) {
         case "settings":
@@ -1124,71 +1146,62 @@ function App() {
                 ref={providerScrollContainerRef}
                 className="flex-1 overflow-y-auto overflow-x-hidden pb-12 px-1"
               >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeApp}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.15 }}
-                    className="space-y-4"
-                  >
-                    <ProviderList
-                      providers={providers}
-                      currentProviderId={currentProviderId}
-                      appId={activeApp}
-                      isLoading={isLoading}
-                      isProxyRunning={currentAppUsesProxy && isProxyRunning}
-                      isProxyTakeover={
-                        isProxyRunning && isCurrentAppTakeoverActive
-                      }
-                      activeProviderId={activeProviderId}
-                      onSwitch={
-                        activeApp === "pi"
-                          ? handleEnablePiProvider
-                          : switchProvider
-                      }
-                      onEdit={(provider) => {
-                        setEditingProvider(provider);
-                      }}
-                      onDelete={(provider) =>
-                        setConfirmAction({ provider, action: "delete" })
-                      }
-                      onRemoveFromConfig={
-                        activeApp === "opencode" ||
-                        activeApp === "openclaw" ||
-                        activeApp === "hermes" ||
-                        activeApp === "pi" ||
-                        activeApp === "mcode"
-                          ? (provider) =>
-                              setConfirmAction({ provider, action: "remove" })
+                <div key={activeApp} className="space-y-4">
+                  <ProviderList
+                    providers={providers}
+                    currentProviderId={currentProviderId}
+                    appId={activeApp}
+                    isLoading={isLoading}
+                    isProxyRunning={currentAppUsesProxy && isProxyRunning}
+                    isProxyTakeover={
+                      isProxyRunning && isCurrentAppTakeoverActive
+                    }
+                    activeProviderId={activeProviderId}
+                    onSwitch={
+                      activeApp === "pi"
+                        ? handleEnablePiProvider
+                        : switchProvider
+                    }
+                    onEdit={(provider) => {
+                      setEditingProvider(provider);
+                    }}
+                    onDelete={(provider) =>
+                      setConfirmAction({ provider, action: "delete" })
+                    }
+                    onRemoveFromConfig={
+                      activeApp === "opencode" ||
+                      activeApp === "openclaw" ||
+                      activeApp === "hermes" ||
+                      activeApp === "pi" ||
+                      activeApp === "mcode"
+                        ? (provider) =>
+                            setConfirmAction({ provider, action: "remove" })
+                        : undefined
+                    }
+                    onDisableOmo={
+                      activeApp === "opencode" ? handleDisableOmo : undefined
+                    }
+                    onDisableOmoSlim={
+                      activeApp === "opencode"
+                        ? handleDisableOmoSlim
+                        : undefined
+                    }
+                    onDuplicate={handleDuplicateProvider}
+                    onConfigureUsage={setUsageProvider}
+                    onOpenWebsite={handleOpenWebsite}
+                    onOpenTerminal={
+                      activeApp === "claude" ? handleOpenTerminal : undefined
+                    }
+                    onCreate={() => setIsAddOpen(true)}
+                    onSetAsDefault={
+                      activeApp === "openclaw"
+                        ? setAsDefaultModel
+                        : activeApp === "hermes"
+                          ? switchProvider
                           : undefined
-                      }
-                      onDisableOmo={
-                        activeApp === "opencode" ? handleDisableOmo : undefined
-                      }
-                      onDisableOmoSlim={
-                        activeApp === "opencode"
-                          ? handleDisableOmoSlim
-                          : undefined
-                      }
-                      onDuplicate={handleDuplicateProvider}
-                      onConfigureUsage={setUsageProvider}
-                      onOpenWebsite={handleOpenWebsite}
-                      onOpenTerminal={
-                        activeApp === "claude" ? handleOpenTerminal : undefined
-                      }
-                      onCreate={() => setIsAddOpen(true)}
-                      onSetAsDefault={
-                        activeApp === "openclaw"
-                          ? setAsDefaultModel
-                          : activeApp === "hermes"
-                            ? switchProvider
-                            : undefined
-                      }
-                    />
-                  </motion.div>
-                </AnimatePresence>
+                    }
+                  />
+                </div>
               </div>
             </div>
           );
@@ -1196,18 +1209,9 @@ function App() {
     })();
 
     return (
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentView}
-          className="flex flex-1 min-h-0 flex-col"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          {content}
-        </motion.div>
-      </AnimatePresence>
+      <div key={currentView} className="flex flex-1 min-h-0 flex-col">
+        {content}
+      </div>
     );
   };
 
@@ -1359,8 +1363,12 @@ function App() {
             ) : (
               <div className="flex items-center gap-2">
                 <RoutingActivationBrand
-                  active={isProxyRunning && isCurrentAppTakeoverActive}
-                  contextKey={activeApp}
+                  active={
+                    !isModelClient &&
+                    isProxyRunning &&
+                    isCurrentAppTakeoverActive
+                  }
+                  contextKey={activeClient}
                   ready={
                     proxyStatus !== undefined && takeoverStatus !== undefined
                   }
@@ -1372,6 +1380,7 @@ function App() {
                     setSettingsDefaultTab("general");
                     setCurrentView("settings");
                   }}
+                  disabled={modelClientBusy}
                   title={t("common.settings")}
                   className="hover:bg-black/5 dark:hover:bg-white/5"
                 >
@@ -1383,7 +1392,7 @@ function App() {
                     setCurrentView("settings");
                   }}
                 />
-                {isCurrentAppTakeoverActive && (
+                {!isModelClient && isCurrentAppTakeoverActive && (
                   <Button
                     variant="ghost"
                     size="icon"
@@ -1405,6 +1414,7 @@ function App() {
 
           <div className="flex flex-1 min-w-0 items-center justify-end gap-1.5">
             {currentView === "providers" &&
+              !isModelClient &&
               (activeApp === "claude-desktop" || proxyAppId) && (
                 <div
                   className="flex shrink-0 items-center gap-1.5"
@@ -1425,7 +1435,7 @@ function App() {
                 </div>
               )}
             {currentView === "providers" &&
-              activeApp !== "mcode" &&
+              !isModelClient &&
               (settingsData?.showProfileSwitcher ?? true) && (
                 <div
                   className="flex shrink-0 items-center"
@@ -1439,8 +1449,9 @@ function App() {
             <div className="flex flex-1 min-w-0 items-center justify-end overflow-hidden py-4">
               {currentView === "providers" && (
                 <AppSwitcher
-                  activeApp={activeApp}
-                  onSwitch={setActiveApp}
+                  activeApp={activeClient}
+                  onSwitch={selectClient}
+                  disabled={modelClientBusy}
                   visibleApps={visibleApps}
                 />
               )}
@@ -1597,180 +1608,165 @@ function App() {
                     )}
                   </>
                 )}
-                {currentView === "providers" && (
+                {currentView === "providers" && !isModelClient && (
                   <>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setCurrentView("modelClients")}
-                      title={t("modelClients.title")}
-                    >
-                      <Cpu className="w-4 h-4 mr-1" />
-                      {t("modelClients.title")}
-                    </Button>
                     <div className="flex items-center gap-1 p-1 bg-muted rounded-xl">
-                      <AnimatePresence mode="wait">
-                        <motion.div
-                          key={
-                            activeApp === "openclaw"
-                              ? "openclaw"
-                              : activeApp === "hermes"
-                                ? "hermes"
-                                : activeApp === "grokbuild"
-                                  ? "grokbuild"
-                                  : "default"
-                          }
-                          className="flex items-center gap-1"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.15 }}
-                        >
-                          {activeApp === "hermes" ? (
-                            <>
+                      <div
+                        key={
+                          activeApp === "openclaw"
+                            ? "openclaw"
+                            : activeApp === "hermes"
+                              ? "hermes"
+                              : activeApp === "grokbuild"
+                                ? "grokbuild"
+                                : "default"
+                        }
+                        className="flex items-center gap-1"
+                      >
+                        {activeApp === "hermes" ? (
+                          <>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setCurrentView("skills")}
+                              className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
+                              title={t("skills.manage")}
+                            >
+                              <Wrench className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setCurrentView("hermesMemory")}
+                              className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
+                              title={t("hermes.memory.title")}
+                            >
+                              <Brain className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => void openHermesWebUI()}
+                              className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
+                              title={t("hermes.webui.open")}
+                            >
+                              <LayoutDashboard className="w-4 h-4" />
+                            </Button>
+                            {hasMcpSupport && (
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                onClick={() => setCurrentView("skills")}
+                                onClick={() => setCurrentView("mcp")}
                                 className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                title={t("skills.manage")}
+                                title={t("mcp.title")}
                               >
-                                <Wrench className="w-4 h-4" />
+                                <McpIcon size={16} />
                               </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentView("hermesMemory")}
-                                className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                title={t("hermes.memory.title")}
-                              >
-                                <Brain className="w-4 h-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => void openHermesWebUI()}
-                                className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                title={t("hermes.webui.open")}
-                              >
-                                <LayoutDashboard className="w-4 h-4" />
-                              </Button>
-                              {hasMcpSupport && (
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => setCurrentView("mcp")}
-                                  className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                  title={t("mcp.title")}
-                                >
-                                  <McpIcon size={16} />
-                                </Button>
+                            )}
+                          </>
+                        ) : activeApp === "openclaw" ? (
+                          <>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setCurrentView("workspace")}
+                              className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
+                              title={t("workspace.manage")}
+                            >
+                              <FolderOpen className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setCurrentView("openclawEnv")}
+                              className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
+                              title={t("openclaw.env.title")}
+                            >
+                              <KeyRound className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setCurrentView("openclawTools")}
+                              className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
+                              title={t("openclaw.tools.title")}
+                            >
+                              <Shield className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setCurrentView("openclawAgents")}
+                              className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
+                              title={t("openclaw.agents.title")}
+                            >
+                              <Cpu className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setCurrentView("sessions")}
+                              className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
+                              title={t("sessionManager.title")}
+                            >
+                              <History className="w-4 h-4" />
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setCurrentView("skills")}
+                              className={cn(
+                                "text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5",
+                                "transition-all duration-200 ease-in-out overflow-hidden",
+                                hasSkillsSupport
+                                  ? "opacity-100 w-8 scale-100 px-2"
+                                  : "opacity-0 w-0 scale-75 pointer-events-none px-0 -ml-1",
                               )}
-                            </>
-                          ) : activeApp === "openclaw" ? (
-                            <>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentView("workspace")}
-                                className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                title={t("workspace.manage")}
-                              >
-                                <FolderOpen className="w-4 h-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentView("openclawEnv")}
-                                className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                title={t("openclaw.env.title")}
-                              >
-                                <KeyRound className="w-4 h-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentView("openclawTools")}
-                                className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                title={t("openclaw.tools.title")}
-                              >
-                                <Shield className="w-4 h-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentView("openclawAgents")}
-                                className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                title={t("openclaw.agents.title")}
-                              >
-                                <Cpu className="w-4 h-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentView("sessions")}
-                                className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                title={t("sessionManager.title")}
-                              >
-                                <History className="w-4 h-4" />
-                              </Button>
-                            </>
-                          ) : (
-                            <>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentView("skills")}
-                                className={cn(
-                                  "text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5",
-                                  "transition-all duration-200 ease-in-out overflow-hidden",
-                                  hasSkillsSupport
-                                    ? "opacity-100 w-8 scale-100 px-2"
-                                    : "opacity-0 w-0 scale-75 pointer-events-none px-0 -ml-1",
-                                )}
-                                title={t("skills.manage")}
-                              >
-                                <Wrench className="flex-shrink-0 w-4 h-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentView("prompts")}
-                                className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                title={t("prompts.manage")}
-                              >
-                                <Book className="w-4 h-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentView("sessions")}
-                                className={cn(
-                                  "text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5",
-                                  "transition-all duration-200 ease-in-out overflow-hidden",
-                                  hasSessionSupport
-                                    ? "opacity-100 w-8 scale-100 px-2"
-                                    : "opacity-0 w-0 scale-75 pointer-events-none px-0 -ml-1",
-                                )}
-                                title={t("sessionManager.title")}
-                              >
-                                <History className="flex-shrink-0 w-4 h-4" />
-                              </Button>
-                              {hasMcpSupport && (
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => setCurrentView("mcp")}
-                                  className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                  title={t("mcp.title")}
-                                >
-                                  <McpIcon size={16} />
-                                </Button>
+                              title={t("skills.manage")}
+                            >
+                              <Wrench className="flex-shrink-0 w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setCurrentView("prompts")}
+                              className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
+                              title={t("prompts.manage")}
+                            >
+                              <Book className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setCurrentView("sessions")}
+                              className={cn(
+                                "text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5",
+                                "transition-all duration-200 ease-in-out overflow-hidden",
+                                hasSessionSupport
+                                  ? "opacity-100 w-8 scale-100 px-2"
+                                  : "opacity-0 w-0 scale-75 pointer-events-none px-0 -ml-1",
                               )}
-                            </>
-                          )}
-                        </motion.div>
-                      </AnimatePresence>
+                              title={t("sessionManager.title")}
+                            >
+                              <History className="flex-shrink-0 w-4 h-4" />
+                            </Button>
+                            {hasMcpSupport && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setCurrentView("mcp")}
+                                className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
+                                title={t("mcp.title")}
+                              >
+                                <McpIcon size={16} />
+                              </Button>
+                            )}
+                          </>
+                        )}
+                      </div>
                     </div>
 
                     <Button
@@ -1792,12 +1788,31 @@ function App() {
 
       <main
         ref={mainScrollRef}
-        className={`flex-1 min-h-0 flex flex-col overflow-y-auto${
-          currentView === "modelClients" ? "" : " animate-fade-in"
-        }`}
+        className="flex-1 min-h-0 flex flex-col overflow-y-auto"
       >
+        {currentView === "providers" && (
+          <div className="px-7 pb-4">
+            <h1 className="text-lg font-semibold">
+              {MODELDECK_CLIENTS.find(({ id }) => id === activeClient)?.name}
+            </h1>
+          </div>
+        )}
         {isOpenClawView && openclawHealthWarnings.length > 0 && (
           <OpenClawHealthBanner warnings={openclawHealthWarnings} />
+        )}
+        {modelPanelOpened && (
+          <div
+            className={
+              isModelClientView ? "flex flex-1 min-h-0 flex-col" : "hidden"
+            }
+            aria-hidden={!isModelClientView}
+          >
+            <ModelClientsPanel
+              selectedClient={lastModelClient}
+              onBusyChange={setModelClientBusy}
+              visible={isModelClientView}
+            />
+          </div>
         )}
         {renderContent()}
       </main>

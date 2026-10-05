@@ -160,34 +160,48 @@ pub struct TrayAppSection {
 pub const AUTO_SUFFIX: &str = "auto";
 pub const TRAY_ID: &str = "cc-switch";
 
-pub const TRAY_SECTIONS: [TrayAppSection; 4] = [
+pub const TRAY_SECTIONS: [TrayAppSection; 6] = [
     TrayAppSection {
         app_type: AppType::Claude,
         prefix: "claude_",
         empty_id: "claude_empty",
-        header_label: "Claude",
+        header_label: "Claude Code",
         log_name: "Claude",
     },
     TrayAppSection {
         app_type: AppType::Codex,
         prefix: "codex_",
         empty_id: "codex_empty",
-        header_label: "Codex",
+        header_label: "Codex CLI",
         log_name: "Codex",
-    },
-    TrayAppSection {
-        app_type: AppType::Gemini,
-        prefix: "gemini_",
-        empty_id: "gemini_empty",
-        header_label: "Gemini",
-        log_name: "Gemini",
     },
     TrayAppSection {
         app_type: AppType::GrokBuild,
         prefix: "grokbuild_",
         empty_id: "grokbuild_empty",
-        header_label: "Grok Build",
+        header_label: "Grok",
         log_name: "Grok Build",
+    },
+    TrayAppSection {
+        app_type: AppType::ClaudeDesktop,
+        prefix: "claude-desktop_",
+        empty_id: "claude-desktop_empty",
+        header_label: "Claude Desktop",
+        log_name: "Claude Desktop",
+    },
+    TrayAppSection {
+        app_type: AppType::OpenCode,
+        prefix: "opencode_",
+        empty_id: "opencode_empty",
+        header_label: "OpenCode",
+        log_name: "OpenCode",
+    },
+    TrayAppSection {
+        app_type: AppType::Hermes,
+        prefix: "hermes_",
+        empty_id: "hermes_empty",
+        header_label: "Hermes",
+        log_name: "Hermes",
     },
 ];
 
@@ -854,6 +868,23 @@ pub fn create_tray_menu(
         menu_builder = menu_builder.separator();
     }
 
+    // Model adapters use their configuration page; opening one never applies a
+    // draft connection or changes credentials from a tray click.
+    for (client, label) in crate::product::MODEL_CLIENTS {
+        if visible_apps.is_model_client_visible(client) {
+            let item = MenuItem::with_id(
+                app,
+                format!("modeldeck_client_{client}"),
+                label,
+                true,
+                None::<&str>,
+            )
+            .map_err(|e| AppError::Message(format!("Create client menu: {e}")))?;
+            menu_builder = menu_builder.item(&item);
+        }
+    }
+    menu_builder = menu_builder.separator();
+
     // 项目 Profile 子菜单：项目列表全应用共享，按分组嵌套子菜单各自勾选/应用
     // （组内应用可见且存在项目时才显示该组）
     {
@@ -1044,6 +1075,22 @@ pub fn apply_tray_policy(app: &tauri::AppHandle, dock_visible: bool) {
 /// 处理托盘菜单事件
 pub fn handle_tray_menu_event(app: &tauri::AppHandle, event_id: &str) {
     log::info!("处理托盘菜单事件: {event_id}");
+
+    if let Some(client) = event_id.strip_prefix("modeldeck_client_") {
+        if crate::product::MODEL_CLIENTS
+            .iter()
+            .any(|(id, _)| *id == client)
+        {
+            handle_tray_menu_event(app, "show_main");
+            if let Err(error) = app.emit(
+                "modeldeck-client-selected",
+                serde_json::json!({ "client": client }),
+            ) {
+                log::warn!("Open model client: {error}");
+            }
+        }
+        return;
+    }
 
     match event_id {
         "show_main" => {
@@ -1459,7 +1506,7 @@ mod tests {
 
         assert_eq!(section.prefix, "grokbuild_");
         assert_eq!(section.empty_id, "grokbuild_empty");
-        assert_eq!(section.header_label, "Grok Build");
+        assert_eq!(section.header_label, "Grok");
     }
 
     fn make_quota(tool: &str, success: bool, tiers: Vec<QuotaTier>) -> SubscriptionQuota {

@@ -59,16 +59,7 @@ interface ToolVersion {
   wsl_distro: string | null;
 }
 
-const TOOL_NAMES = [
-  "claude",
-  "codex",
-  "gemini",
-  "grok",
-  "opencode",
-  "openclaw",
-  "hermes",
-  "pi",
-] as const;
+const TOOL_NAMES = ["claude", "codex", "grok", "opencode", "hermes"] as const;
 type ToolName = (typeof TOOL_NAMES)[number];
 type ToolLifecycleAction = "install" | "update";
 
@@ -130,35 +121,25 @@ const POSIX_ONE_CLICK_INSTALL_COMMANDS = `# Claude Code
 ${posixScriptInstallCommand("https://claude.ai/install.sh")} || npm i -g @anthropic-ai/claude-code@latest
 # Codex
 npm i -g @openai/codex@latest
-# Gemini CLI
-npm i -g @google/gemini-cli@latest
 # Grok Build
 npm i -g @xai-official/grok@latest
 # OpenCode
 ${posixScriptInstallCommand("https://opencode.ai/install")} || npm i -g opencode-ai@latest
-# OpenClaw
-npm i -g openclaw@latest
 # Hermes
 ${posixScriptInstallCommand("https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh")}
-# Pi
-npm i -g @earendil-works/pi-coding-agent@latest`;
+`;
 
 const WINDOWS_ONE_CLICK_INSTALL_COMMANDS = `# Claude Code
 npm i -g @anthropic-ai/claude-code@latest
 # Codex
 npm i -g @openai/codex@latest
-# Gemini CLI
-npm i -g @google/gemini-cli@latest
 # Grok Build
 npm i -g @xai-official/grok@latest
 # OpenCode
 npm i -g opencode-ai@latest
-# OpenClaw
-npm i -g openclaw@latest
 # Hermes
 ${HERMES_WINDOWS_INSTALL_COMMAND}
-# Pi
-npm i -g @earendil-works/pi-coding-agent@latest`;
+`;
 
 const ONE_CLICK_INSTALL_COMMANDS = isWindows()
   ? WINDOWS_ONE_CLICK_INSTALL_COMMANDS
@@ -167,12 +148,9 @@ const ONE_CLICK_INSTALL_COMMANDS = isWindows()
 const TOOL_DISPLAY_NAMES: Record<ToolName, string> = {
   claude: "Claude Code",
   codex: "Codex",
-  gemini: "Gemini CLI",
   grok: "Grok Build",
   opencode: "OpenCode",
-  openclaw: "OpenClaw",
   hermes: "Hermes",
-  pi: "Pi",
 };
 
 // 后端返回的 tool 是 string；这里收敛唯一的 ToolName 断言与兜底，供升级确认
@@ -184,12 +162,9 @@ function toolDisplayName(tool: string): string {
 const TOOL_APP_IDS: Record<ToolName, AppId> = {
   claude: "claude",
   codex: "codex",
-  gemini: "gemini",
   grok: "grokbuild",
   opencode: "opencode",
-  openclaw: "openclaw",
   hermes: "hermes",
-  pi: "pi",
 };
 
 // 工具版本探测代价高：每个工具一次 `--version` 子进程 + 一次 npm/github/pypi 网络请求。
@@ -843,7 +818,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
 
   return (
     <motion.section
-      initial={{ opacity: 0, y: 10 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
       className="space-y-6"
@@ -856,7 +831,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
       </header>
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.98 }}
+        initial={false}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3, delay: 0.1 }}
         className="rounded-xl border border-border bg-gradient-to-br from-card/80 to-card/40 p-6 space-y-5 shadow-sm"
@@ -963,7 +938,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
 
         {hasUpdate && updateInfo && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
+            initial={false}
             animate={{ opacity: 1, height: "auto" }}
             className="rounded-lg bg-primary/10 border border-primary/20 px-4 py-3 text-sm"
           >
@@ -1075,7 +1050,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
             return (
               <motion.div
                 key={toolName}
-                initial={{ opacity: 0, y: 10 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.15 + index * 0.04 }}
                 className="flex min-h-[150px] flex-col gap-3 rounded-xl border border-border bg-gradient-to-br from-card/80 to-card/40 p-4 shadow-sm transition-colors hover:border-primary/30"
@@ -1255,7 +1230,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.3 }}
         className="space-y-3"

@@ -1,6 +1,7 @@
 import React from "react";
 import type { AppId } from "@/lib/api/types";
 import type { VisibleApps } from "@/types";
+import { resolveClientVisibility } from "./modeldeckClients";
 import {
   ClaudeIcon,
   CodexIcon,
@@ -17,41 +18,23 @@ export interface AppConfig {
 }
 
 export const APP_IDS: AppId[] = [
+  "codex",
   "claude",
   "claude-desktop",
-  "codex",
-  "gemini",
   "grokbuild",
   "opencode",
-  "openclaw",
   "hermes",
-  "pi",
-  "mcode",
 ];
 
-export const DEFAULT_VISIBLE_APPS: VisibleApps = {
-  claude: true,
-  "claude-desktop": true,
-  codex: true,
-  gemini: true,
-  grokbuild: true,
-  opencode: true,
-  openclaw: true,
-  hermes: true,
-  pi: true,
-  mcode: true,
-};
+export const DEFAULT_VISIBLE_APPS: VisibleApps = resolveClientVisibility();
 
 /** App IDs shown in Skills panels. */
 export const SKILLS_APP_IDS: AppId[] = [
   "claude",
   "codex",
-  "gemini",
   "grokbuild",
   "opencode",
   "hermes",
-  "pi",
-  "mcode",
 ];
 
 export type ProxyAppId = Extract<
@@ -60,12 +43,7 @@ export type ProxyAppId = Extract<
 >;
 
 /** Apps with a complete local gateway + failover data plane. */
-export const PROXY_APP_IDS: ProxyAppId[] = [
-  "claude",
-  "codex",
-  "gemini",
-  "grokbuild",
-];
+export const PROXY_APP_IDS: ProxyAppId[] = ["claude", "codex", "grokbuild"];
 
 export function isProxyAppId(appId: string): appId is ProxyAppId {
   return (PROXY_APP_IDS as string[]).includes(appId);
@@ -93,11 +71,9 @@ export type McpAppId = Exclude<AppId, "claude-desktop" | "openclaw" | "pi">;
 export const MCP_APP_IDS: McpAppId[] = [
   "claude",
   "codex",
-  "gemini",
   "grokbuild",
   "opencode",
   "hermes",
-  "mcode",
 ];
 
 export function isMcpAppId(appId: string): appId is McpAppId {

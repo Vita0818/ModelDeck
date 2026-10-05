@@ -4,6 +4,27 @@
 
 ModelDeck 是你的个人桌面项目，用于管理模型提供商、端点、独立密钥、模型目录、上下文与推理设置。
 
+## 当前版本：v0.2.0
+
+基于 CC Switch 源码直接整合以下 10 个客户端：
+
+| 客户端 | 入口 |
+| --- | --- |
+| Codex CLI | 主切换栏 |
+| Claude Code | 主切换栏 |
+| Claude Desktop | 主切换栏 |
+| Antigravity CLI | 主切换栏 |
+| Cursor CLI | 主切换栏 |
+| Cursor GUI | 主切换栏 |
+| Grok | 主切换栏 |
+| Muse Code | 主切换栏 |
+| OpenCode | 主切换栏 |
+| Hermes | 主切换栏 |
+
+切换栏、可见性设置、托盘和启动同步使用同一支持范围。新接入的四个客户端直接在主界面编辑连接；切换客户端或打开设置会保留当前应用会话里的未保存草稿。MiniMax Code、OpenClaw、Pi、Gemini CLI 不列入工具支持范围。
+
+[本版说明](docs/releases/v0.2.0.md)。`v0.1.0` 继续保留为第一版代码快照。
+
 ## 第一版：v0.1.0
 
 第一版完整继承当前已实现的代码，以 CC Switch v3.20.4 为上游基础，保留 Antigravity CLI、Cursor IDE、Cursor Agent CLI、Muse Code 的新增模型接入以及已有客户端功能。
@@ -11,7 +32,7 @@ ModelDeck 是你的个人桌面项目，用于管理模型提供商、端点、�
 原始实现的基线提交为 `10d0af62b0f5991eab61db5bf07811dfbd347660`，已保留为 `modeldeck-baseline-2026-10-04`。ModelDeck 第一版增加独立名称、图标、版本和应用标识，并关闭上游自动更新通道。
 
 - 应用名称：**ModelDeck**
-- 应用版本：**0.1.0**
+- 当前应用版本：**0.2.0**
 - 应用标识：`com.vita.modeldeck`
 - 主分支：`main`
 - 使用说明：[客户端模型连接](docs/CLIENT_MODELS.md)

@@ -1697,7 +1697,7 @@ pub fn sync_current_to_live(state: &AppState) -> Result<(), AppError> {
     let mut failures = Vec::new();
 
     // Sync providers based on mode
-    for app_type in AppType::all() {
+    for app_type in AppType::all().filter(crate::product::supports_provider_app) {
         if matches!(app_type, AppType::Pi | AppType::Mcode) {
             continue;
         }
@@ -1724,7 +1724,7 @@ pub fn sync_current_to_live(state: &AppState) -> Result<(), AppError> {
     }
 
     // Skill sync
-    for app_type in AppType::all() {
+    for app_type in AppType::all().filter(crate::product::supports_provider_app) {
         if let Err(e) = crate::services::skill::SkillService::sync_to_app(&state.db, &app_type) {
             log::warn!("同步 Skill 到 {app_type:?} 失败: {e}");
             failures.push(format!("skill/{}: {e}", app_type.as_str()));

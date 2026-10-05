@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Check, Copy, Loader2, Plus, Save, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import type { ModelClientId } from "@/config/modeldeckClients";
 
-type Client = "antigravity" | "cursor" | "cursor-agent" | "muse";
+type Client = ModelClientId;
 interface Model {
   id: string;
   name: string;
@@ -69,9 +70,18 @@ const blank = (client: Client, executable = ""): Profile => ({
 const selectStyle =
   "h-9 w-full rounded-md border border-border bg-background px-3 text-sm";
 
-export default function ModelClientsPanel() {
+export default function ModelClientsPanel({
+  selectedClient,
+  onBusyChange,
+  visible = true,
+}: {
+  selectedClient?: Client;
+  onBusyChange?: (busy: boolean) => void;
+  visible?: boolean;
+}) {
   const { t } = useTranslation();
-  const [client, setClient] = useState<Client>("antigravity");
+  const [localClient, setClient] = useState<Client>("antigravity");
+  const client = selectedClient ?? localClient;
   const [profiles, setProfiles] = useState<Partial<Record<Client, Profile>>>(
     {},
   );
@@ -82,10 +92,51 @@ export default function ModelClientsPanel() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [command, setCommand] = useState("");
+  const [keySources, setKeySources] = useState<
+    Partial<Record<Client, "env" | "stored">>
+  >({});
   const [active, setActive] = useState<Store["active"]>({});
   const [savedProfiles, setSavedProfiles] = useState<
     NonNullable<Store["savedProfiles"]>
   >({});
+  const wasVisible = useRef(visible);
+  useEffect(() => {
+    const returning = visible && !wasVisible.current;
+    wasVisible.current = visible;
+    if (!returning) return;
+    let cancelled = false;
+    // Providers can be edited on another client page while this draft stays
+    // mounted. Refresh catalog metadata without reloading its credentials.
+    Promise.all([
+      invoke<Source[]>("get_model_client_catalog_sources"),
+      invoke<Inspection[]>("inspect_model_clients"),
+    ])
+      .then(([catalogs, installed]) => {
+        if (cancelled) return;
+        setSources(catalogs);
+        setInspection(installed);
+        setSourceId((current) =>
+          catalogs.some((source) => source.id === current)
+            ? current
+            : (catalogs.find((source) => /openrouter/i.test(source.name))?.id ??
+              catalogs[0]?.id ??
+              ""),
+        );
+      })
+      .catch((error) => {
+        if (!cancelled) setError(String(error));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [visible]);
+  useEffect(() => {
+    onBusyChange?.(busy);
+  }, [busy, onBusyChange]);
+  useEffect(() => {
+    setError("");
+    setCommand("");
+  }, [client]);
   useEffect(() => {
     let cancelled = false;
     Promise.all([
@@ -118,6 +169,7 @@ export default function ModelClientsPanel() {
   }, []);
   const status = inspection.find((i) => i.client === client);
   const profile = profiles[client] ?? blank(client, status?.executable);
+  const keySource = keySources[client] ?? (profile.keyEnv ? "env" : "stored");
   const model = profile.models.find((m) => m.id === profile.defaultModel);
   const cursorCloud = client === "cursor" || client === "cursor-agent";
   const update = (patch: Partial<Profile>) =>
@@ -240,29 +292,31 @@ export default function ModelClientsPanel() {
         <p className="text-sm text-muted-foreground">
           {t("modelClients.description")}
         </p>
-        <div
-          className="flex flex-wrap gap-2"
-          role="tablist"
-          aria-label={t("modelClients.title")}
-        >
-          {clients.map((c) => (
-            <Button
-              key={c.id}
-              role="tab"
-              aria-selected={client === c.id}
-              variant={client === c.id ? "default" : "outline"}
-              disabled={busy}
-              onClick={() => {
-                setClient(c.id);
-                setError("");
-                setCommand("");
-              }}
-            >
-              {c.name}
-              {active[c.id] && <Check className="ml-2 h-3 w-3" />}
-            </Button>
-          ))}
-        </div>
+        {!selectedClient && (
+          <div
+            className="flex flex-wrap gap-2"
+            role="tablist"
+            aria-label={t("modelClients.title")}
+          >
+            {clients.map((c) => (
+              <Button
+                key={c.id}
+                role="tab"
+                aria-selected={client === c.id}
+                variant={client === c.id ? "default" : "outline"}
+                disabled={busy}
+                onClick={() => {
+                  setClient(c.id);
+                  setError("");
+                  setCommand("");
+                }}
+              >
+                {c.name}
+                {active[c.id] && <Check className="ml-2 h-3 w-3" />}
+              </Button>
+            ))}
+          </div>
+        )}
         <div className="rounded-xl border border-border bg-muted/40 p-4 text-sm space-y-2">
           <p>{t(`modelClients.capability.${client}`)}</p>
           <p className="text-muted-foreground break-all">
@@ -305,6 +359,10 @@ export default function ModelClientsPanel() {
                 onChange={(e) => {
                   const selected = savedProfiles[client]?.[e.target.value];
                   if (selected) {
+                    setKeySources((previous) => ({
+                      ...previous,
+                      [client]: selected.keyEnv ? "env" : "stored",
+                    }));
                     setProfiles((previous) => ({
                       ...previous,
                       [client]: { ...selected },
@@ -361,28 +419,39 @@ export default function ModelClientsPanel() {
               <span>{t("modelClients.keySource")}</span>
               <select
                 className={selectStyle}
-                value={profile.keyEnv ? "env" : "stored"}
-                onChange={(e) =>
+                value={keySource}
+                onChange={(e) => {
+                  const source = e.target.value === "env" ? "env" : "stored";
+                  setKeySources((previous) => ({
+                    ...previous,
+                    [client]: source,
+                  }));
                   update(
-                    e.target.value === "env"
+                    source === "env"
                       ? {
                           keyEnv: clients.find((c) => c.id === client)!.key,
                           apiKey: "",
                         }
                       : { keyEnv: "", apiKey: "" },
-                  )
-                }
+                  );
+                }}
               >
                 <option value="env">{t("modelClients.environment")}</option>
                 <option value="stored">{t("modelClients.storedKey")}</option>
               </select>
             </label>
-            {profile.keyEnv ? (
+            {keySource === "env" ? (
               <label className="space-y-2 text-sm">
                 <span>{t("modelClients.envName")}</span>
                 <Input
                   value={profile.keyEnv}
-                  onChange={(e) => update({ keyEnv: e.target.value })}
+                  onChange={(e) => {
+                    setKeySources((previous) => ({
+                      ...previous,
+                      [client]: "env",
+                    }));
+                    update({ keyEnv: e.target.value });
+                  }}
                 />
               </label>
             ) : (

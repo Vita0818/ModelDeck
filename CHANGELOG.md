@@ -1,5 +1,14 @@
 # ModelDeck changelog
 
+## 0.2.0 — 2026-10-05
+
+- Integrate all ten requested clients into the main client switcher.
+- Keep Antigravity, Cursor CLI/GUI and Muse drafts while navigating other pages.
+- Scope client visibility, tray navigation, configuration directories, tool installers and startup synchronization to the requested tools.
+- Exclude MiniMax Code, OpenClaw, Pi and Gemini CLI from active product navigation and automatic synchronization.
+- Preserve legacy database records and native protocol adapters for compatibility.
+- Render client and settings pages immediately without waiting on hidden WebKit animations.
+
 ## 0.1.0 — 2026-10-04
 
 - Preserve the current client model management implementation as the first ModelDeck version.

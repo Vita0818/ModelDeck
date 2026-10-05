@@ -707,7 +707,10 @@ impl Database {
         let mut inserted = 0_usize;
         let now_ms = chrono::Utc::now().timestamp_millis();
 
-        for seed in OFFICIAL_SEEDS {
+        for seed in OFFICIAL_SEEDS
+            .iter()
+            .filter(|seed| crate::product::supports_provider_app(&seed.app_type))
+        {
             let app_type_str = seed.app_type.as_str();
 
             // 若该 id 已存在（极端情况：用户曾手动用过同 id），跳过

@@ -4,7 +4,13 @@
 
 ModelDeck is a personal desktop application for managing model providers, endpoints, independent API keys, model catalogs, context limits and reasoning preferences across AI coding clients.
 
-## Version 0.1.0
+## Version 0.2.0
+
+The main client switcher now covers exactly **Codex CLI, Claude Code, Claude Desktop, Antigravity CLI, Cursor CLI, Cursor GUI, Grok, Muse Code, OpenCode and Hermes**. The four model adapters share the main navigation and retain unsaved drafts when visiting other client pages or settings. Visibility settings, tray navigation and automatic startup synchronization follow this supported set. MiniMax Code, OpenClaw, Pi and Gemini CLI are excluded from the product's client scope.
+
+This is a local Tauri/Rust/React desktop application built directly from the CC Switch source. See [v0.2.0](docs/releases/v0.2.0.md). The original `v0.1.0` snapshot remains available in Git.
+
+## First version: 0.1.0
 
 The first version starts from the complete working implementation already built on CC Switch v3.20.4. The preserved source baseline is `10d0af62b0f5991eab61db5bf07811dfbd347660`, tagged `modeldeck-baseline-2026-10-04`.
 

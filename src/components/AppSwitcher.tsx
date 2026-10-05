@@ -1,6 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { AppId } from "@/lib/api";
 import type { VisibleApps } from "@/types";
 import { ProviderIcon } from "@/components/ProviderIcon";
 import {
@@ -10,58 +9,34 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Monitor, MoreHorizontal, Terminal } from "lucide-react";
-import { APP_IDS } from "@/config/appConfig";
-
-const APP_BADGE_ICON: Partial<
-  Record<AppId, { icon: typeof Terminal; offsetY?: number }>
-> = {
-  claude: { icon: Terminal },
-  "claude-desktop": { icon: Monitor, offsetY: 0.5 },
-};
+import {
+  CLIENT_IDS,
+  MODELDECK_CLIENTS,
+  resolveClientVisibility,
+  type ClientId,
+} from "@/config/modeldeckClients";
 
 interface AppSwitcherProps {
-  activeApp: AppId;
-  onSwitch: (app: AppId) => void;
+  activeApp: ClientId;
+  onSwitch: (app: ClientId) => void;
   visibleApps?: VisibleApps;
+  disabled?: boolean;
 }
 
-const STORAGE_KEY = "cc-switch-last-app";
-
-const APP_ICON_NAME: Record<AppId, string> = {
-  claude: "claude",
-  "claude-desktop": "claude",
-  codex: "openai",
-  gemini: "gemini",
-  grokbuild: "grok",
-  opencode: "opencode",
-  openclaw: "openclaw",
-  hermes: "hermes",
-  pi: "pi",
-  mcode: "minimax",
-};
-
-const APP_DISPLAY_NAME: Record<AppId, string> = {
-  claude: "Claude Code",
-  "claude-desktop": "Claude Desktop",
-  codex: "Codex",
-  gemini: "Gemini",
-  grokbuild: "Grok Build",
-  opencode: "OpenCode",
-  openclaw: "OpenClaw",
-  hermes: "Hermes",
-  pi: "Pi",
-  mcode: "MiniMax Code",
-};
-
 /** 应用图标 + 角标（Claude Code / Desktop 用角标区分终端与桌面） */
-function AppGlyph({ app, isActive }: { app: AppId; isActive: boolean }) {
-  const badgeConfig = APP_BADGE_ICON[app];
-  const BadgeIcon = badgeConfig?.icon;
+function AppGlyph({ app, isActive }: { app: ClientId; isActive: boolean }) {
+  const client = MODELDECK_CLIENTS.find((entry) => entry.id === app)!;
+  const BadgeIcon =
+    client.badge === "desktop"
+      ? Monitor
+      : client.badge === "terminal"
+        ? Terminal
+        : undefined;
   return (
     <span className="relative inline-flex shrink-0">
       <ProviderIcon
-        icon={APP_ICON_NAME[app]}
-        name={APP_DISPLAY_NAME[app]}
+        icon={client.icon}
+        name={MODELDECK_CLIENTS.find((entry) => entry.id === app)!.name}
         size={20}
       />
       {BadgeIcon && (
@@ -74,15 +49,7 @@ function AppGlyph({ app, isActive }: { app: AppId; isActive: boolean }) {
           )}
           aria-hidden="true"
         >
-          <BadgeIcon
-            className="h-[8px] w-[8px]"
-            strokeWidth={2.5}
-            style={
-              badgeConfig?.offsetY
-                ? { transform: `translateY(${badgeConfig.offsetY}px)` }
-                : undefined
-            }
-          />
+          <BadgeIcon className="h-[8px] w-[8px]" strokeWidth={2.5} />
         </span>
       )}
     </span>
@@ -93,22 +60,19 @@ export function AppSwitcher({
   activeApp,
   onSwitch,
   visibleApps,
+  disabled = false,
 }: AppSwitcherProps) {
   const { t } = useTranslation();
   const rootRef = useRef<HTMLDivElement>(null);
   const [moreOpen, setMoreOpen] = useState(false);
 
-  const handleSwitch = (app: AppId) => {
-    if (app === activeApp) return;
-    localStorage.setItem(STORAGE_KEY, app);
+  const handleSwitch = (app: ClientId) => {
+    if (disabled || app === activeApp) return;
     onSwitch(app);
   };
 
-  // Filter apps based on visibility settings (default all visible)
-  const appsToShow = APP_IDS.filter((app) => {
-    if (!visibleApps) return true;
-    return visibleApps[app];
-  });
+  const visibility = resolveClientVisibility(visibleApps);
+  const appsToShow = CLIENT_IDS.filter((app) => visibility[app]);
   const appCount = appsToShow.length;
 
   const [visibleCount, setVisibleCount] = useState(appCount);
@@ -169,11 +133,15 @@ export function AppSwitcher({
           <button
             key={app}
             type="button"
+            disabled={disabled}
+            aria-pressed={isActive}
             onClick={() => handleSwitch(app)}
-            title={APP_DISPLAY_NAME[app]}
-            aria-label={APP_DISPLAY_NAME[app]}
+            title={MODELDECK_CLIENTS.find((entry) => entry.id === app)!.name}
+            aria-label={
+              MODELDECK_CLIENTS.find((entry) => entry.id === app)!.name
+            }
             className={cn(
-              "group inline-flex items-center px-3 h-8 rounded-md text-sm font-medium transition-all duration-200",
+              "group inline-flex items-center px-3 h-8 rounded-md text-sm font-medium",
               isActive
                 ? "bg-background text-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground hover:bg-background/50",
@@ -188,10 +156,11 @@ export function AppSwitcher({
           <PopoverTrigger asChild>
             <button
               type="button"
+              disabled={disabled}
               title={t("appSwitcher.more")}
               aria-label={t("appSwitcher.more")}
               className={cn(
-                "inline-flex items-center px-3 h-8 rounded-md transition-all duration-200",
+                "inline-flex items-center px-3 h-8 rounded-md",
                 moreOpen
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground hover:bg-background/50",
@@ -210,14 +179,18 @@ export function AppSwitcher({
               <button
                 key={app}
                 type="button"
+                disabled={disabled}
+                aria-pressed={activeApp === app}
                 onClick={() => {
                   setMoreOpen(false);
                   handleSwitch(app);
                 }}
-                className="group flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                className="group flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
               >
                 <AppGlyph app={app} isActive={false} />
-                <span className="truncate">{APP_DISPLAY_NAME[app]}</span>
+                <span className="truncate">
+                  {MODELDECK_CLIENTS.find((entry) => entry.id === app)!.name}
+                </span>
               </button>
             ))}
           </PopoverContent>
