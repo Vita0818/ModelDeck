@@ -62,7 +62,6 @@ import {
   DRAG_REGION_STYLE,
 } from "@/lib/platform";
 import { AppSwitcher } from "@/components/AppSwitcher";
-import { ProfileSwitcher } from "@/components/profiles/ProfileSwitcher";
 import { ProviderList } from "@/components/providers/ProviderList";
 import { AddProviderDialog } from "@/components/providers/AddProviderDialog";
 import { EditProviderDialog } from "@/components/providers/EditProviderDialog";
@@ -70,9 +69,6 @@ import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { SettingsPage } from "@/components/settings/SettingsPage";
 import { UpdateBadge } from "@/components/UpdateBadge";
 import { EnvWarningBanner } from "@/components/env/EnvWarningBanner";
-import { ProxyToggle } from "@/components/proxy/ProxyToggle";
-import { ClaudeDesktopRouteToggle } from "@/components/proxy/ClaudeDesktopRouteToggle";
-import { FailoverToggle } from "@/components/proxy/FailoverToggle";
 import { RoutingActivationBrand } from "@/components/proxy/RoutingActivationBrand";
 import UsageScriptModal from "@/components/UsageScriptModal";
 import UnifiedMcpPanel from "@/components/mcp/UnifiedMcpPanel";
@@ -106,18 +102,16 @@ import ToolsPanel from "@/components/openclaw/ToolsPanel";
 import AgentsDefaultsPanel from "@/components/openclaw/AgentsDefaultsPanel";
 import OpenClawHealthBanner from "@/components/openclaw/OpenClawHealthBanner";
 import HermesMemoryPanel from "@/components/hermes/HermesMemoryPanel";
-import ModelClientsPanel from "@/components/model-clients/ModelClientsPanel";
+import DeckPanel from "@/components/deck/DeckPanel";
 import { isProxyAppId } from "@/config/appConfig";
 import {
   CLIENT_IDS,
-  MODELDECK_CLIENTS,
   CLIENT_STORAGE_KEY,
   initialClient,
   isClientId,
   isModelClientId,
   resolveClientVisibility,
   type ClientId,
-  type ModelClientId,
 } from "@/config/modeldeckClients";
 
 type View =
@@ -163,6 +157,7 @@ const VALID_VIEWS: View[] = [
 
 const getInitialView = (): View => {
   const saved = localStorage.getItem(VIEW_STORAGE_KEY) as View | null;
+  if (saved === "universal") return "providers";
   if (saved && VALID_VIEWS.includes(saved)) {
     return saved;
   }
@@ -181,13 +176,6 @@ function App() {
     return isModelClientId(client) ? "claude" : client;
   });
   const isModelClient = isModelClientId(activeClient);
-  const [modelPanelOpened, setModelPanelOpened] = useState(() =>
-    isModelClientId(initialClient()),
-  );
-  const [lastModelClient, setLastModelClient] = useState<ModelClientId>(() => {
-    const client = initialClient();
-    return isModelClientId(client) ? client : "antigravity";
-  });
   const [modelClientBusy, setModelClientBusy] = useState(false);
   const sharedFeatureApp: AppId =
     activeApp === "claude-desktop" ? "claude" : activeApp;
@@ -226,10 +214,7 @@ function App() {
     if (modelClientBusy || !isClientId(client)) return;
     setActiveClient(client);
     setCurrentView("providers");
-    if (isModelClientId(client)) {
-      setLastModelClient(client);
-      setModelPanelOpened(true);
-    } else {
+    if (!isModelClientId(client)) {
       setActiveApp(client);
     }
   };
@@ -244,7 +229,6 @@ function App() {
   useTauriEvent<{ client: string }>("modeldeck-client-selected", (payload) => {
     if (isClientId(payload.client)) selectClient(payload.client);
   });
-  const isModelClientView = currentView === "providers" && isModelClient;
 
   // Fallback from sessions view when switching to an app without session support
   useEffect(() => {
@@ -308,8 +292,6 @@ function App() {
   // 这里 enabled 默认 false，仅用于「导入」按钮的绿点提示，不主动发起扫描。
   const { data: unmanagedSkills } = useScanUnmanagedSkills();
   const hasUnmanagedSkills = (unmanagedSkills?.length ?? 0) > 0;
-  const addActionButtonClass =
-    "bg-orange-500 hover:bg-orange-600 dark:bg-orange-500 dark:hover:bg-orange-600 text-white shadow-lg shadow-orange-500/30 dark:shadow-orange-500/40 rounded-full w-8 h-8";
 
   const {
     isRunning: isProxyRunning,
@@ -331,6 +313,7 @@ function App() {
   }, [proxyStatus?.active_targets, proxyAppId]);
 
   const { data, isLoading, refetch } = useProvidersQuery(activeApp, {
+    enabled: currentView !== "providers",
     isProxyRunning: currentAppUsesProxy && isProxyRunning,
   });
   const { data: piCurrentState } = usePiCurrentState(activeApp === "pi");
@@ -656,6 +639,10 @@ function App() {
   useEffect(() => {
     const checkEnvOnSwitch = async () => {
       try {
+        if (currentView === "providers") {
+          setShowEnvBanner(false);
+          return;
+        }
         if (isModelClient || activeApp === "mcode") return;
         const conflicts = await checkEnvConflicts(activeApp);
 
@@ -683,7 +670,7 @@ function App() {
     };
 
     checkEnvOnSwitch();
-  }, [activeApp, isModelClient]);
+  }, [activeApp, isModelClient, currentView]);
 
   const currentViewRef = useRef(currentView);
   const managementBusy =
@@ -1056,7 +1043,7 @@ function App() {
     // Provider cards contain nested exit animations. Unmount that tree when
     // opening this independent page, so WebKit cannot leave navigation waiting
     // for an occluded card animation to finish.
-    if (isModelClientView) return null;
+    if (currentView === "providers") return null;
     const content = (() => {
       switch (currentView) {
         case "settings":
@@ -1413,37 +1400,6 @@ function App() {
           </div>
 
           <div className="flex flex-1 min-w-0 items-center justify-end gap-1.5">
-            {currentView === "providers" &&
-              !isModelClient &&
-              (activeApp === "claude-desktop" || proxyAppId) && (
-                <div
-                  className="flex shrink-0 items-center gap-1.5"
-                  style={{ WebkitAppRegion: "no-drag" } as any}
-                >
-                  {activeApp === "claude-desktop" ? (
-                    <ClaudeDesktopRouteToggle />
-                  ) : proxyAppId ? (
-                    <>
-                      {settingsData?.enableLocalProxy && (
-                        <ProxyToggle activeApp={proxyAppId} />
-                      )}
-                      {settingsData?.enableFailoverToggle && (
-                        <FailoverToggle activeApp={proxyAppId} />
-                      )}
-                    </>
-                  ) : null}
-                </div>
-              )}
-            {currentView === "providers" &&
-              !isModelClient &&
-              (settingsData?.showProfileSwitcher ?? true) && (
-                <div
-                  className="flex shrink-0 items-center"
-                  style={{ WebkitAppRegion: "no-drag" } as any}
-                >
-                  <ProfileSwitcher activeApp={activeApp} />
-                </div>
-              )}
             {/* 弹性中段：空间不足时由 AppSwitcher 自行收纳溢出应用；
                 justify-end + overflow-hidden 只裁剪 resize 瞬间的过渡帧 */}
             <div className="flex flex-1 min-w-0 items-center justify-end overflow-hidden py-4">
@@ -1768,16 +1724,6 @@ function App() {
                         )}
                       </div>
                     </div>
-
-                    <Button
-                      onClick={() => setIsAddOpen(true)}
-                      size="icon"
-                      className={`ml-2 ${addActionButtonClass}`}
-                      aria-label={t("provider.addNewProvider")}
-                      title={t("provider.addNewProvider")}
-                    >
-                      <Plus className="w-5 h-5" />
-                    </Button>
                   </>
                 )}
               </div>
@@ -1790,30 +1736,14 @@ function App() {
         ref={mainScrollRef}
         className="flex-1 min-h-0 flex flex-col overflow-y-auto"
       >
-        {currentView === "providers" && (
-          <div className="px-7 pb-4">
-            <h1 className="text-lg font-semibold">
-              {MODELDECK_CLIENTS.find(({ id }) => id === activeClient)?.name}
-            </h1>
-          </div>
-        )}
         {isOpenClawView && openclawHealthWarnings.length > 0 && (
           <OpenClawHealthBanner warnings={openclawHealthWarnings} />
         )}
-        {modelPanelOpened && (
-          <div
-            className={
-              isModelClientView ? "flex flex-1 min-h-0 flex-col" : "hidden"
-            }
-            aria-hidden={!isModelClientView}
-          >
-            <ModelClientsPanel
-              selectedClient={lastModelClient}
-              onBusyChange={setModelClientBusy}
-              visible={isModelClientView}
-            />
-          </div>
-        )}
+        <DeckPanel
+          client={activeClient}
+          onBusyChange={setModelClientBusy}
+          visible={currentView === "providers"}
+        />
         {renderContent()}
       </main>
 

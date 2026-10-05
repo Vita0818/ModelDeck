@@ -50,6 +50,7 @@ export interface ProvidersQueryData {
 }
 
 export interface UseProvidersQueryOptions {
+  enabled?: boolean;
   isProxyRunning?: boolean; // 代理服务是否运行中
 }
 
@@ -60,6 +61,7 @@ export const useProvidersQuery = (
   const { isProxyRunning = false } = options || {};
 
   return useQuery({
+    enabled: options?.enabled ?? true,
     queryKey: ["providers", appId],
     placeholderData: keepPreviousData,
     // 当代理服务运行时，每 10 秒刷新一次供应商列表

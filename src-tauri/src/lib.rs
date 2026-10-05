@@ -10,6 +10,7 @@ mod codex_state_db;
 mod commands;
 mod config;
 mod database;
+mod deck;
 mod deeplink;
 mod error;
 mod gemini_config;
@@ -1347,6 +1348,10 @@ pub fn run() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            deck::get_deck,
+            deck::save_deck,
+            deck::apply_deck_binding,
+            deck::reset_deck_binding,
             model_clients::get_model_clients,
             model_clients::save_model_client,
             model_clients::apply_model_client,
@@ -1952,7 +1957,11 @@ async fn enabled_proxy_apps_on_startup(db: &database::Database) -> Vec<&'static 
 
 async fn restore_proxy_state_on_startup(state: &store::AppState) {
     // 收集需要恢复接管的应用列表（从 proxy_config.enabled 读取）
-    let apps_to_restore = enabled_proxy_apps_on_startup(&state.db).await;
+    let apps_to_restore = enabled_proxy_apps_on_startup(&state.db)
+        .await
+        .into_iter()
+        .filter(|client| !deck::manages(client))
+        .collect::<Vec<_>>();
 
     let desktop_needs_gateway = state
         .db
@@ -1971,7 +1980,7 @@ async fn restore_proxy_state_on_startup(state: &store::AppState) {
                 && claude_desktop_config::provider_mode(&provider)
                     == provider::ClaudeDesktopMode::Proxy
         });
-    if model_clients::needs_gateway() || desktop_needs_gateway {
+    if deck::needs_gateway() || model_clients::needs_gateway() || desktop_needs_gateway {
         if let Err(error) = state.proxy_service.start().await {
             log::error!("Could not restore the model client gateway: {error}");
         }

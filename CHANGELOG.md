@@ -1,5 +1,15 @@
 # ModelDeck changelog
 
+## 0.3.0 — 2026-10-05
+
+- Separate global providers, model resources and reasoning tiers from harness selections.
+- Expose endpoint model aliases through references to shared resources.
+- Resolve each request from the current graph and keep upstream credentials behind the gateway.
+- Generate native catalogs for all ten clients without storing separate authoritative catalogs.
+- Migrate existing connections with credential-aware deduplication and preserve native login configurations.
+- Add compatibility matrices, reference validation, optimistic revisions and reversible native application.
+- Select compatible input protocols for OpenCode and Hermes.
+
 ## 0.2.0 — 2026-10-05
 
 - Integrate all ten requested clients into the main client switcher.

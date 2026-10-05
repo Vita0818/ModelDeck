@@ -22,7 +22,7 @@ use axum::{
 use futures::StreamExt;
 use serde_json::{json, Value};
 
-mod gemini;
+pub(crate) mod gemini;
 
 fn error(status: StatusCode, message: &str) -> Response {
     #[cfg(test)]
@@ -80,6 +80,16 @@ pub(crate) fn catalog(client: ModelClient, p: &ClientProfile) -> Value {
 }
 
 pub async fn handle(Path((client, path)): Path<(String, String)>, request: Request) -> Response {
+    match crate::deck::binding_active(&client) {
+        Ok(true) => return crate::deck::gateway::handle_client(&client, &path, request).await,
+        Err(_) => {
+            return error(
+                StatusCode::SERVICE_UNAVAILABLE,
+                "ModelDeck resources are unavailable",
+            )
+        }
+        Ok(false) => {}
+    }
     let Some(client) = parse_client(&client) else {
         return error(StatusCode::NOT_FOUND, "Unknown model client");
     };
@@ -101,6 +111,18 @@ pub async fn handle(Path((client, path)): Path<(String, String)>, request: Reque
 }
 
 pub async fn muse_models(request: Request) -> Response {
+    match crate::deck::binding_active("muse") {
+        Ok(true) => {
+            return crate::deck::gateway::handle_client("muse", "muse-code/models", request).await
+        }
+        Err(_) => {
+            return error(
+                StatusCode::SERVICE_UNAVAILABLE,
+                "ModelDeck resources are unavailable",
+            )
+        }
+        Ok(false) => {}
+    }
     let profile = match read_store().and_then(|s| {
         s.active
             .get(&ModelClient::Muse)
@@ -227,7 +249,7 @@ fn set_model(p: &ClientProfile, body: &mut Value) -> Result<(), String> {
     Ok(())
 }
 
-async fn forward(
+pub(crate) async fn forward(
     http: &reqwest::Client,
     p: &ClientProfile,
     key: &str,
@@ -265,6 +287,15 @@ async fn forward(
                 )
             }
         };
+        if !p.effort.is_empty()
+            && p.models.iter().any(|model| {
+                Some(model.id.as_str()) == body.get("model").and_then(Value::as_str)
+                    && model.reasoning_supported != Some(false)
+                    && model.reasoning.contains(&p.effort)
+            })
+        {
+            body["reasoning_effort"] = json!(p.effort);
+        }
     } else if muse && p.protocol == "anthropic" {
         url = format!(
             "{base}/{}",

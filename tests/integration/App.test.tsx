@@ -4,17 +4,16 @@ import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { http, HttpResponse } from "msw";
 import { providersApi } from "@/lib/api/providers";
-import {
-  resetProviderState,
-  setCurrentProviderId,
-  setLiveProviderIds,
-  setProviders,
-} from "../msw/state";
+import { deckFixture } from "../fixtures/deck";
+import { resetProviderState } from "../msw/state";
 import { emitTauriEvent } from "../msw/tauriMocks";
 import { server } from "../msw/server";
 
 const toastSuccessMock = vi.fn();
 const toastErrorMock = vi.fn();
+vi.mock("@/components/FirstRunNoticeDialog", () => ({
+  FirstRunNoticeDialog: () => null,
+}));
 const skillsPanelMocks = vi.hoisted(() => ({
   checkUpdates: vi.fn(),
   openDiscovery: vi.fn(),
@@ -138,6 +137,11 @@ vi.mock("@/components/AppSwitcher", () => ({
       <span>{activeApp}</span>
       <button onClick={() => onSwitch("claude")}>switch-claude</button>
       <button onClick={() => onSwitch("codex")}>switch-codex</button>
+      <button onClick={() => onSwitch("claude-desktop")}>
+        switch-claude-desktop
+      </button>
+      <button onClick={() => onSwitch("grokbuild")}>switch-grokbuild</button>
+      <button onClick={() => onSwitch("opencode")}>switch-opencode</button>
       <button onClick={() => onSwitch("hermes")}>switch-hermes</button>
       <button onClick={() => onSwitch("antigravity")}>
         switch-antigravity
@@ -205,7 +209,7 @@ const renderApp = (AppComponent: ComponentType) => {
   );
 };
 
-describe("App integration with MSW", () => {
+describe("App with shared ModelDeck resources", () => {
   beforeEach(() => {
     resetProviderState();
     toastSuccessMock.mockReset();
@@ -215,125 +219,74 @@ describe("App integration with MSW", () => {
     localStorage.removeItem("cc-switch-last-view");
     localStorage.removeItem("modeldeck-last-client");
     localStorage.setItem("cc-switch-last-app", "claude");
+    const view = deckFixture();
     server.use(
-      http.post("http://tauri.local/get_model_clients", () =>
-        HttpResponse.json({ profiles: {}, active: {} }),
-      ),
-      http.post("http://tauri.local/inspect_model_clients", () =>
-        HttpResponse.json([]),
-      ),
-      http.post("http://tauri.local/get_model_client_catalog_sources", () =>
-        HttpResponse.json([]),
-      ),
+      http.post("http://tauri.local/get_deck", () => HttpResponse.json(view)),
     );
   });
 
-  it("covers basic provider flows via real hooks", async () => {
+  it("opens all ten harnesses against the same shared graph", async () => {
+    const { default: App } = await import("@/App");
+    const getProviders = vi.spyOn(providersApi, "getAll");
+    renderApp(App);
+    await screen.findByTestId("deck-panel");
+    for (const id of [
+      "codex",
+      "claude",
+      "claude-desktop",
+      "antigravity",
+      "cursor-agent",
+      "cursor",
+      "grokbuild",
+      "muse",
+      "opencode",
+      "hermes",
+    ]) {
+      fireEvent.click(screen.getByText(`switch-${id}`));
+      expect(screen.getByLabelText("deck.selectedEndpoint")).toHaveValue(
+        "entry",
+      );
+      expect(screen.queryByTestId("provider-list")).not.toBeInTheDocument();
+      expect(
+        screen.queryByDisplayValue("https://private-upstream.test/v1"),
+      ).not.toBeInTheDocument();
+    }
+    expect(getProviders).not.toHaveBeenCalled();
+  });
+
+  it("retains unsaved global resource edits across harness navigation", async () => {
     const { default: App } = await import("@/App");
     renderApp(App);
-
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list").textContent).toContain(
-        "claude-1",
-      ),
-    );
-
-    fireEvent.click(screen.getByText("switch-codex"));
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list").textContent).toContain(
-        "codex-1",
-      ),
-    );
-
-    fireEvent.click(screen.getByText("usage"));
-    expect(screen.getByTestId("usage-modal")).toBeInTheDocument();
-    fireEvent.click(screen.getByText("save-script"));
-    fireEvent.click(screen.getByText("close-usage"));
-
-    fireEvent.click(screen.getByText("create"));
-    expect(screen.getByTestId("add-provider-dialog")).toBeInTheDocument();
-    fireEvent.click(screen.getByText("confirm-add"));
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list").textContent).toMatch(
-        /New codex Provider/,
-      ),
-    );
-
-    fireEvent.click(screen.getByText("edit"));
-    expect(screen.getByTestId("edit-provider-dialog")).toBeInTheDocument();
-    fireEvent.click(screen.getByText("confirm-edit"));
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list").textContent).toMatch(
-        /-edited/,
-      ),
-    );
-
-    fireEvent.click(screen.getByText("switch"));
-    fireEvent.click(screen.getByText("duplicate"));
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list").textContent).toMatch(/copy/),
-    );
-
-    fireEvent.click(screen.getByText("open-website"));
-
-    emitTauriEvent("provider-switched", {
-      appType: "codex",
-      providerId: "codex-2",
+    await screen.findByTestId("deck-panel");
+    fireEvent.click(screen.getByRole("tab", { name: "deck.resourceLayer" }));
+    fireEvent.change(screen.getByLabelText("deck.providerName"), {
+      target: { value: "One shared provider" },
     });
+    fireEvent.click(screen.getByText("switch-antigravity"));
+    fireEvent.click(screen.getByText("switch-codex"));
+    fireEvent.click(screen.getByRole("tab", { name: "deck.resourceLayer" }));
+    expect(screen.getByLabelText("deck.providerName")).toHaveValue(
+      "One shared provider",
+    );
+  });
 
-    expect(toastErrorMock).not.toHaveBeenCalled();
-    expect(toastSuccessMock).toHaveBeenCalled();
-  }, 10_000);
-
-  it("resets provider view scroll when switching apps", async () => {
+  it("resets the main scroll position when selecting another harness", async () => {
     const { default: App } = await import("@/App");
     const { container } = renderApp(App);
-
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list").textContent).toContain(
-        "claude-1",
-      ),
-    );
-
-    const mainScrollContainer = container.querySelector("main") as HTMLElement;
-    const providerScrollContainer = Array.from(
-      container.querySelectorAll<HTMLElement>(".overflow-y-auto"),
-    ).find(
-      (element) =>
-        element !== mainScrollContainer && element.className.includes("pb-12"),
-    );
-
-    expect(mainScrollContainer).not.toBeNull();
-    expect(providerScrollContainer).toBeDefined();
-
-    mainScrollContainer.scrollTop = 320;
-    mainScrollContainer.scrollLeft = 12;
-    providerScrollContainer!.scrollTop = 640;
-    providerScrollContainer!.scrollLeft = 24;
-
+    await screen.findByTestId("deck-panel");
+    const main = container.querySelector("main")!;
+    main.scrollTop = 500;
+    main.scrollLeft = 10;
     fireEvent.click(screen.getByText("switch-codex"));
-
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list").textContent).toContain(
-        "codex-1",
-      ),
-    );
-
-    expect(mainScrollContainer.scrollTop).toBe(0);
-    expect(mainScrollContainer.scrollLeft).toBe(0);
-    expect(providerScrollContainer!.scrollTop).toBe(0);
-    expect(providerScrollContainer!.scrollLeft).toBe(0);
-  }, 10_000);
+    await waitFor(() => expect(main.scrollTop).toBe(0));
+    expect(main.scrollLeft).toBe(0);
+  });
 
   it("shows toast when auto sync fails in background", async () => {
     const { default: App } = await import("@/App");
     renderApp(App);
 
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list").textContent).toContain(
-        "claude-1",
-      ),
-    );
+    await screen.findByTestId("deck-panel");
 
     expect(() => {
       emitTauriEvent("webdav-sync-status-updated", null);
@@ -365,145 +318,6 @@ describe("App integration with MSW", () => {
     await waitFor(() => {
       expect(toastErrorMock).toHaveBeenCalled();
     });
-  });
-
-  it("duplicates hermes providers with a generated key that avoids live-only ids", async () => {
-    setProviders("hermes", {
-      deepseek: {
-        id: "deepseek",
-        name: "DeepSeek",
-        settingsConfig: {
-          baseUrl: "https://api.deepseek.com",
-          apiKey: "test-key",
-          api: "openai-completions",
-          models: [],
-        },
-        category: "custom",
-        sortIndex: 0,
-        createdAt: Date.now(),
-      },
-    });
-    setCurrentProviderId("hermes", "deepseek");
-    setLiveProviderIds("hermes", ["deepseek-copy"]);
-
-    const { default: App } = await import("@/App");
-    renderApp(App);
-
-    fireEvent.click(screen.getByText("switch-hermes"));
-
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list").textContent).toContain(
-        "deepseek",
-      ),
-    );
-
-    fireEvent.click(screen.getByText("duplicate"));
-
-    await waitFor(() => {
-      const providerList = screen.getByTestId("provider-list").textContent;
-      expect(providerList).toContain("deepseek-copy-2");
-      expect(providerList).toContain("DeepSeek copy");
-    });
-
-    expect(toastErrorMock).not.toHaveBeenCalledWith(
-      expect.stringContaining("Provider key is required for hermes"),
-    );
-  });
-
-  it.each(["gemini", "openclaw", "pi", "mcode"])(
-    "ignores a legacy %s selection and opens a supported client",
-    async (legacy) => {
-      localStorage.setItem("cc-switch-last-app", legacy);
-      const { default: App } = await import("@/App");
-      renderApp(App);
-      await waitFor(() =>
-        expect(screen.getByTestId("provider-list")).toHaveTextContent(
-          "codex-1",
-        ),
-      );
-      expect(screen.getByTestId("app-switcher")).toHaveTextContent("codex");
-    },
-  );
-
-  it("opens model adapters from the main switcher and keeps their unsaved drafts across provider pages", async () => {
-    const { default: App } = await import("@/App");
-    renderApp(App);
-    fireEvent.click(screen.getByText("switch-antigravity"));
-    const agyKey = await screen.findByDisplayValue("AGY_OR_KEY");
-    fireEvent.change(agyKey, { target: { value: "AGY_PRIVATE_KEY" } });
-    fireEvent.click(screen.getByText("switch-codex"));
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list")).toHaveTextContent("codex-1"),
-    );
-    fireEvent.click(screen.getByText("switch-cursor-agent"));
-    expect(await screen.findByDisplayValue("CURSOR_CLI_OR_KEY")).toBeVisible();
-    fireEvent.click(screen.getByText("switch-antigravity"));
-    expect(await screen.findByDisplayValue("AGY_PRIVATE_KEY")).toBeVisible();
-    expect(localStorage.getItem("modeldeck-last-client")).toBe("antigravity");
-  });
-
-  it.each([
-    ["antigravity", "AGY_OR_KEY"],
-    ["cursor", "CURSOR_OR_KEY"],
-    ["cursor-agent", "CURSOR_CLI_OR_KEY"],
-    ["muse", "MUSE_OR_KEY"],
-  ])(
-    "restores %s as the selected client after relaunch",
-    async (client, key) => {
-      localStorage.setItem("modeldeck-last-client", client);
-      const { default: App } = await import("@/App");
-      renderApp(App);
-      expect(await screen.findByDisplayValue(key)).toBeVisible();
-      expect(screen.queryByTestId("provider-list")).not.toBeInTheDocument();
-    },
-  );
-
-  it("shows toast when duplicate cannot load live provider ids", async () => {
-    setProviders("hermes", {
-      deepseek: {
-        id: "deepseek",
-        name: "DeepSeek",
-        settingsConfig: {
-          baseUrl: "https://api.deepseek.com",
-          apiKey: "test-key",
-          api: "openai-completions",
-          models: [],
-        },
-        category: "custom",
-        sortIndex: 0,
-        createdAt: Date.now(),
-      },
-    });
-    setCurrentProviderId("hermes", "deepseek");
-
-    const liveIdsSpy = vi
-      .spyOn(providersApi, "getHermesLiveProviderIds")
-      .mockRejectedValueOnce(new Error("broken config"));
-
-    const { default: App } = await import("@/App");
-    renderApp(App);
-
-    fireEvent.click(screen.getByText("switch-hermes"));
-
-    await waitFor(() =>
-      expect(screen.getByTestId("provider-list").textContent).toContain(
-        "deepseek",
-      ),
-    );
-
-    fireEvent.click(screen.getByText("duplicate"));
-
-    await waitFor(() => {
-      expect(toastErrorMock).toHaveBeenCalledWith(
-        expect.stringContaining("读取配置中的供应商标识失败"),
-      );
-    });
-
-    expect(screen.getByTestId("provider-list").textContent).not.toContain(
-      "deepseek-copy",
-    );
-
-    liveIdsSpy.mockRestore();
   });
 
   it("hosts the Skills check-update action in the App toolbar", async () => {

@@ -1698,6 +1698,9 @@ pub fn sync_current_to_live(state: &AppState) -> Result<(), AppError> {
 
     // Sync providers based on mode
     for app_type in AppType::all().filter(crate::product::supports_provider_app) {
+        if crate::deck::manages(app_type.as_str()) {
+            continue;
+        }
         if matches!(app_type, AppType::Pi | AppType::Mcode) {
             continue;
         }

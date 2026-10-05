@@ -116,6 +116,9 @@ impl ProxyServer {
             .local_addr()
             .map_err(|e| ProxyError::BindFailed(e.to_string()))?;
         let actual_port = local_addr.port();
+        if let Err(error) = crate::deck::publish_origin(&self.config.listen_address, actual_port) {
+            log::warn!("Could not publish the ModelDeck gateway address: {error}");
+        }
         if let Err(error) =
             crate::model_clients::publish_gateway_origin(&self.config.listen_address, actual_port)
         {
@@ -295,6 +298,11 @@ impl ProxyServer {
 
     fn build_router(&self) -> Router {
         Router::new()
+            .route("/deck/:endpoint/*path", any(crate::deck::gateway::handle))
+            .route(
+                "/deck-clients/:client/*path",
+                any(crate::deck::gateway::handle_harness),
+            )
             .route(
                 "/model-clients/:client/*path",
                 any(crate::model_clients::gateway::handle),

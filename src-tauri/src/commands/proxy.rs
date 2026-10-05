@@ -29,6 +29,9 @@ pub async fn start_proxy_server(
 #[tauri::command]
 pub async fn stop_proxy_server(state: tauri::State<'_, AppState>) -> Result<(), String> {
     let takeover = state.proxy_service.get_takeover_status().await?;
+    if crate::deck::needs_gateway() {
+        return Err("有 harness 正在使用 ModelDeck 端点，请先恢复其原生配置。".into());
+    }
     if crate::model_clients::needs_gateway() {
         return Err(
             "Antigravity 或 Muse Code 正在使用本地路由，请先在「客户端模型」中恢复原生默认。"
@@ -53,6 +56,9 @@ pub async fn stop_proxy_server(state: tauri::State<'_, AppState>) -> Result<(), 
 /// 停止代理服务器（恢复 Live 配置）
 #[tauri::command]
 pub async fn stop_proxy_with_restore(state: tauri::State<'_, AppState>) -> Result<(), String> {
+    if crate::deck::needs_gateway() {
+        return Err("有 harness 正在使用 ModelDeck 端点，请先恢复其原生配置。".into());
+    }
     state.proxy_service.stop_with_restore().await
 }
 
@@ -71,6 +77,9 @@ pub async fn set_proxy_takeover_for_app(
     app_type: String,
     enabled: bool,
 ) -> Result<(), String> {
+    if crate::deck::manages(&app_type) {
+        return Err("这个 harness 正在使用共享端点，请在 harness 选择中管理其连接。".into());
+    }
     state
         .proxy_service
         .set_takeover_for_app(&app_type, enabled)
@@ -95,6 +104,13 @@ pub async fn update_proxy_config(
     state: tauri::State<'_, AppState>,
     config: ProxyConfig,
 ) -> Result<(), String> {
+    let current = state.proxy_service.get_config().await?;
+    if crate::deck::needs_gateway()
+        && (config.listen_port != current.listen_port
+            || config.listen_address != current.listen_address)
+    {
+        return Err("请先恢复使用共享端点的 harness 配置，再修改网关监听地址或端口。".into());
+    }
     state.proxy_service.update_config(&config).await
 }
 
@@ -122,6 +138,16 @@ pub async fn update_global_proxy_config(
     config: GlobalProxyConfig,
 ) -> Result<(), String> {
     let db = &state.db;
+    let current = db
+        .get_global_proxy_config()
+        .await
+        .map_err(|e| e.to_string())?;
+    if crate::deck::needs_gateway()
+        && (config.listen_port != current.listen_port
+            || config.listen_address != current.listen_address)
+    {
+        return Err("请先恢复使用共享端点的 harness 配置，再修改网关监听地址或端口。".into());
+    }
     db.update_global_proxy_config(config)
         .await
         .map_err(|e| e.to_string())

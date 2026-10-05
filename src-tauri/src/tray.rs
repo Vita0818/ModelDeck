@@ -787,6 +787,28 @@ pub fn create_tray_menu(
             continue;
         }
 
+        if crate::deck::config_path().exists() {
+            let current = crate::deck::read_store()
+                .ok()
+                .and_then(|store| {
+                    store
+                        .active_bindings
+                        .get(section.app_type.as_str())
+                        .map(|binding| format!("{} · {}", section.header_label, binding.model))
+                })
+                .unwrap_or_else(|| section.header_label.to_string());
+            let item = MenuItem::with_id(
+                app,
+                format!("modeldeck_client_{}", section.app_type.as_str()),
+                &current,
+                true,
+                None::<&str>,
+            )
+            .map_err(|e| AppError::Message(format!("Create harness menu: {e}")))?;
+            menu_builder = menu_builder.item(&item);
+            continue;
+        }
+
         let app_type_str = section.app_type.as_str();
         let providers = app_state.db.get_all_providers(app_type_str)?;
 
@@ -1077,10 +1099,7 @@ pub fn handle_tray_menu_event(app: &tauri::AppHandle, event_id: &str) {
     log::info!("处理托盘菜单事件: {event_id}");
 
     if let Some(client) = event_id.strip_prefix("modeldeck_client_") {
-        if crate::product::MODEL_CLIENTS
-            .iter()
-            .any(|(id, _)| *id == client)
-        {
+        if crate::deck::CLIENTS.contains(&client) {
             handle_tray_menu_event(app, "show_main");
             if let Err(error) = app.emit(
                 "modeldeck-client-selected",

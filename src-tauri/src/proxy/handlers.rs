@@ -715,7 +715,7 @@ fn endpoint_with_query(uri: &axum::http::Uri, endpoint: &str) -> String {
 /// `serde_json::from_slice` 直接解析失败。这里在解析前解压，并剥掉已失真的实体头
 /// （content-encoding / content-length / transfer-encoding）——转发层会基于解压后的
 /// 明文 JSON 重新生成正确的头。
-fn decode_codex_request_body(
+pub(crate) fn decode_codex_request_body(
     headers: &mut axum::http::HeaderMap,
     body_bytes: Bytes,
 ) -> Result<Bytes, ProxyError> {

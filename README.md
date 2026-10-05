@@ -4,11 +4,18 @@
 
 ModelDeck is a personal desktop application for managing model providers, endpoints, independent API keys, model catalogs, context limits and reasoning preferences across AI coding clients.
 
-## Version 0.2.0
+## Version 0.3.0
 
-The main client switcher now covers exactly **Codex CLI, Claude Code, Claude Desktop, Antigravity CLI, Cursor CLI, Cursor GUI, Grok, Muse Code, OpenCode and Hermes**. The four model adapters share the main navigation and retain unsaved drafts when visiting other client pages or settings. Visibility settings, tray navigation and automatic startup synchronization follow this supported set. MiniMax Code, OpenClaw, Pi and Gemini CLI are excluded from the product's client scope.
+ModelDeck separates two management layers:
 
-This is a local Tauri/Rust/React desktop application built directly from the CC Switch source. See [v0.2.0](docs/releases/v0.2.0.md). The original `v0.1.0` snapshot remains available in Git.
+- **Resource management:** shared upstream providers, credentials, models, capabilities and reasoning tiers, exposed through endpoint aliases.
+- **Harness selection:** each client references an endpoint and public models. Native configuration and catalogs are generated from the shared graph.
+
+Requests resolve the current resource mapping, so a route edit applies to every harness using it. Harness bindings contain references rather than another complete upstream catalog.
+
+The supported set remains **Codex CLI, Claude Code, Claude Desktop, Antigravity CLI, Cursor CLI, Cursor GUI, Grok, Muse Code, OpenCode and Hermes**. Existing connections are migrated without applying native configurations. MiniMax Code, OpenClaw, Pi and Gemini CLI remain excluded.
+
+See [the two-layer guide](docs/TWO_LAYER_MODELDECK.md) and [v0.3.0](docs/releases/v0.3.0.md). The `v0.1.0` and `v0.2.0` snapshots remain available.
 
 ## First version: 0.1.0
 
@@ -50,7 +57,7 @@ To preserve the current working configuration contract, v0.1.0 retains the exist
 
 The registered URL scheme is `modeldeck://`. Pasted legacy `ccswitch://` imports remain accepted. The original CC Switch update endpoints and update signing key are not configured in ModelDeck.
 
-API keys and personal runtime configuration are not part of this repository. Each newly managed client has its own credential binding. Cursor uses its own account services and requires a publicly reachable HTTPS endpoint; its server-side context and reasoning limits remain authoritative.
+API keys and personal runtime configuration are not part of this repository. Upstream credentials belong to global providers; harnesses use gateway credentials. Cursor uses its own account services and requires a publicly reachable HTTPS endpoint; its server-side context and reasoning limits remain authoritative.
 
 ## Source and license
 

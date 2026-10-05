@@ -1,3 +1,5 @@
+> 从 ModelDeck v0.3.0 开始，请使用 [两层管理](TWO_LAYER_MODELDECK.md)。提供商、模型和档位在全局资源层维护，各个 harness 只保存端点和模型引用。以下内容记录早期客户端适配器与原生限制，旧的独立连接编辑流程已由新界面替代。
+
 # 客户端模型连接
 
 ModelDeck **v0.2.0** 基于 CC Switch **v3.20.4**，顶部切换栏直接提供全部 10 个指定客户端。本文介绍其中 Antigravity CLI、Cursor GUI、Cursor CLI、Muse Code 四个适配器。每个客户端可以保存多个命名连接，分别管理端点、密钥来源、模型目录、默认模型和可用的推理设置。

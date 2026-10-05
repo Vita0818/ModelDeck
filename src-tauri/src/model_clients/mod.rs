@@ -1,7 +1,7 @@
 //! Model-only integrations. These clients intentionally do not participate in
 //! the skill, prompt, MCP, OAuth, or subscription management code paths.
 pub(crate) mod gateway;
-mod native;
+pub(crate) mod native;
 
 use crate::config::{atomic_write_private, get_app_config_dir};
 use serde::{Deserialize, Serialize};
@@ -23,6 +23,15 @@ pub enum ModelClient {
 }
 
 impl ModelClient {
+    pub fn try_from_id(id: &str) -> Option<Self> {
+        Some(match id {
+            "antigravity" => Self::Antigravity,
+            "cursor" => Self::Cursor,
+            "cursor-agent" => Self::CursorAgent,
+            "muse" => Self::Muse,
+            _ => return None,
+        })
+    }
     pub fn id(self) -> &'static str {
         match self {
             Self::Antigravity => "antigravity",

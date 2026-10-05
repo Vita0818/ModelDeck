@@ -15,6 +15,7 @@ pub mod gemini_url;
 pub mod handler_config;
 pub mod handler_context;
 mod handlers;
+pub(crate) use handlers::decode_codex_request_body;
 pub mod http_client;
 pub mod hyper_client;
 pub(crate) mod json_canonical;

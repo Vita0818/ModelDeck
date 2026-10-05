@@ -15,13 +15,14 @@ import time
 parser = argparse.ArgumentParser()
 parser.add_argument("--client", required=True, type=Path)
 parser.add_argument("--adapter", required=True, type=Path)
+parser.add_argument("--deck", action="store_true", help="Probe a shared ModelDeck resource graph")
 args = parser.parse_args()
 root = args.client.resolve().parent
 records = []
 done = threading.Event()
-upstream_key = "cursor-upstream-dedicated-probe-key"
-model = "openai/gpt-6-astra"
-endpoint = "https://openrouter.ai/api/v1"
+upstream_key = "cursor-gateway-probe-key" if args.deck else "cursor-upstream-dedicated-probe-key"
+model = "coding" if args.deck else "openai/gpt-6-astra"
+endpoint = "https://modeldeck-probe.test/deck/entry/v1" if args.deck else "https://openrouter.ai/api/v1"
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
@@ -90,6 +91,14 @@ with tempfile.TemporaryDirectory(prefix="cc-cursor-probe-") as temporary:
         "models": [{"id": model, "name": "GPT-6 Astra", "context": 1050000, "output": 128000, "reasoning": ["max"]}],
         "defaultModel": model, "protocol": "openai-chat", "effort": "max",
     }}}))
+    if args.deck:
+        profile_file.write_text(json.dumps({
+            "schemaVersion": 1,
+            "providers": {"upstream": {"id": "upstream", "protocol": "openai-chat", "apiKey": "private-upstream-marker"}},
+            "models": {"resource": {"providerId": "upstream", "upstreamId": "private-real-model", "context": 1050000, "output": 128000, "tools": True}},
+            "endpoints": {"entry": {"protocols": ["openai-chat"], "publicUrl": endpoint.removesuffix("/v1"), "token": upstream_key, "routes": {model: {"modelId": "resource", "effort": "max"}}}},
+            "activeBindings": {"cursor-agent": {"endpointId": "entry", "model": model}},
+        }))
     h2_source = work / "rpc.cjs"
     h2_records = work / "rpc-records.jsonl"
     h2_source.write_text(r'''
@@ -97,7 +106,8 @@ const http2 = require('node:http2');
 const fs = require('node:fs');
 const zlib = require('node:zlib');
 const rows = process.argv[2];
-const profile = JSON.parse(fs.readFileSync(process.argv[3], 'utf8')).active['cursor-agent'];
+const store = JSON.parse(fs.readFileSync(process.argv[3], 'utf8'));
+const profile = store.schemaVersion === 1 ? require(process.argv[4]).projectDeck(store) : store.active['cursor-agent'];
 const server = http2.createServer();
 server.on('stream', (stream, headers) => {
   let data = Buffer.alloc(0);
@@ -113,6 +123,7 @@ server.on('stream', (stream, headers) => {
       correctKey: decoded.includes(Buffer.from(profile.apiKey)),
       correctModel: decoded.includes(Buffer.from(profile.defaultModel)),
       correctEndpoint: decoded.includes(Buffer.from(profile.endpoint)),
+      upstreamSecretExposed: decoded.includes(Buffer.from('private-upstream-marker')) || decoded.includes(Buffer.from('private-real-model')),
     };
     fs.appendFileSync(rows, JSON.stringify(row) + '\n');
     if (!stream.headersSent) stream.respond({':status': 200, 'content-type': headers['content-type'] || 'application/connect+proto'});
@@ -125,7 +136,7 @@ server.on('stream', (stream, headers) => {
 });
 server.listen(0, '127.0.0.1', () => console.log(server.address().port));
 ''')
-    h2 = subprocess.Popen([str(root / "node"), str(h2_source), str(h2_records), str(profile_file)], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
+    h2 = subprocess.Popen([str(root / "node"), str(h2_source), str(h2_records), str(profile_file), str(args.adapter.resolve())], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
     h2_port = int(h2.stdout.readline().strip())
     environment = os.environ.copy()
     environment.update({
@@ -167,12 +178,14 @@ server.listen(0, '127.0.0.1', () => console.log(server.address().port));
         records.extend(json.loads(line) for line in h2_records.read_text().splitlines())
     stdout = (work / "stdout").read_text(errors="replace")
     stderr = (work / "stderr").read_text(errors="replace")
-    print(json.dumps({"requests": records, "exitCode": child.returncode, "keyAbsentFromOutput": upstream_key not in stdout + stderr}, indent=2))
+    print(json.dumps({"deckMode": args.deck, "requests": records, "exitCode": child.returncode, "keyAbsentFromOutput": upstream_key not in stdout + stderr}, indent=2))
     if not any(r["correctKey"] and r["correctModel"] and r["correctEndpoint"] for r in records):
         # All material is generated solely by this synthetic test.
         print("Native stdout:", stdout[-2500:])
         print("Native stderr:", stderr[-3500:])
         raise SystemExit("Cursor did not emit the configured BYOK credentials.")
+    if any(row.get("upstreamSecretExposed") for row in records):
+        raise SystemExit("Upstream details crossed the harness boundary.")
     if upstream_key in stdout + stderr:
         raise SystemExit("Cursor leaked the probe key into its output.")
 server.shutdown()

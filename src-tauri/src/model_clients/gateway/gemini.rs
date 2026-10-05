@@ -300,7 +300,7 @@ impl ChatStream {
     }
 }
 
-pub(super) async fn handle(
+pub(crate) async fn handle(
     http: &reqwest::Client,
     p: &ClientProfile,
     key: &str,

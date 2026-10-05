@@ -4,26 +4,20 @@
 
 ModelDeck 是你的个人桌面项目，用于管理模型提供商、端点、独立密钥、模型目录、上下文与推理设置。
 
-## 当前版本：v0.2.0
+## 当前版本：v0.3.0
 
-基于 CC Switch 源码直接整合以下 10 个客户端：
+ModelDeck 现在分为两个入口：
 
-| 客户端 | 入口 |
-| --- | --- |
-| Codex CLI | 主切换栏 |
-| Claude Code | 主切换栏 |
-| Claude Desktop | 主切换栏 |
-| Antigravity CLI | 主切换栏 |
-| Cursor CLI | 主切换栏 |
-| Cursor GUI | 主切换栏 |
-| Grok | 主切换栏 |
-| Muse Code | 主切换栏 |
-| OpenCode | 主切换栏 |
-| Hermes | 主切换栏 |
+- **资源管理**：统一配置真实提供商、密钥、模型、能力和档位，并通过端点建立对外模型映射。
+- **harness 选择**：为每个客户端选择端点、默认模型和辅助模型；原生配置与模型目录由适配器生成。
 
-切换栏、可见性设置、托盘和启动同步使用同一支持范围。新接入的四个客户端直接在主界面编辑连接；切换客户端或打开设置会保留当前应用会话里的未保存草稿。MiniMax Code、OpenClaw、Pi、Gemini CLI 不列入工具支持范围。
+同一个后台资源可以供多个 harness 使用，同一个 harness 可以选择不同的兼容资源。修改后台路由后，所有引用它的调用使用新的资源。每个客户端不再维护另一份完整的上游模型配置。
 
-[本版说明](docs/releases/v0.2.0.md)。`v0.1.0` 继续保留为第一版代码快照。
+支持 **Codex CLI、Claude Code、Claude Desktop、Antigravity CLI、Cursor CLI、Cursor GUI、Grok、Muse Code、OpenCode、Hermes**。MiniMax Code、OpenClaw、Pi、Gemini CLI 不列入工具支持范围。
+
+首次打开会迁移旧连接并保留原配置。迁移本身不应用客户端配置；使用「保存并应用」启用共享端点。
+
+[使用说明：两层管理](docs/TWO_LAYER_MODELDECK.md) · [v0.3.0 说明](docs/releases/v0.3.0.md)。`v0.1.0` 和 `v0.2.0` 保留为既有版本快照。
 
 ## 第一版：v0.1.0
 
@@ -32,7 +26,7 @@ ModelDeck 是你的个人桌面项目，用于管理模型提供商、端点、�
 原始实现的基线提交为 `10d0af62b0f5991eab61db5bf07811dfbd347660`，已保留为 `modeldeck-baseline-2026-10-04`。ModelDeck 第一版增加独立名称、图标、版本和应用标识，并关闭上游自动更新通道。
 
 - 应用名称：**ModelDeck**
-- 当前应用版本：**0.2.0**
+- 当前应用版本：**0.3.0**
 - 应用标识：`com.vita.modeldeck`
 - 主分支：`main`
 - 使用说明：[客户端模型连接](docs/CLIENT_MODELS.md)
@@ -63,7 +57,7 @@ cargo test
 
 新链接使用 `modeldeck://`；手动导入仍兼容旧的 `ccswitch://` 链接。ModelDeck 没有配置 CC Switch 的更新地址或更新签名公钥，更新使用自己的本地构建。
 
-仓库不包含个人 API 密钥、客户端登录状态或运行时配置。Cursor 仍需自己的账户服务及公网 HTTPS 端点，真实模型调用也需要各客户端的独立密钥。
+仓库不包含个人 API 密钥、客户端登录状态或运行时配置。Cursor 仍需自己的账户服务及公网 HTTPS 端点，上游密钥统一绑定到提供商，harness 使用网关接入凭据。
 
 ## 来源与许可
 

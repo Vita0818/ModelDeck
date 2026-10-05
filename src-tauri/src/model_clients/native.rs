@@ -202,7 +202,7 @@ pub fn preflight(client: ModelClient, p: &ClientProfile) -> Result<(), String> {
     Ok(())
 }
 
-fn ensure_cursor_closed() -> Result<(), String> {
+pub(crate) fn ensure_cursor_closed() -> Result<(), String> {
     #[cfg(unix)]
     {
         let check = std::process::Command::new("pgrep")
@@ -594,7 +594,12 @@ pub fn apply(
         let directory = get_app_config_dir().join("adapters");
         let adapter_path = directory.join("cursor-models.cjs");
         let launch_path = get_app_config_dir().join("bin/cursor-agent");
-        let script=format!("#!/bin/sh\n# Managed by CC Switch: Cursor model catalog and BYOK only.\nset -eu\ncursor_native={}\nif command -v realpath >/dev/null 2>&1; then cursor_runtime_dir=$(dirname \"$(realpath \"$cursor_native\")\"); else cursor_runtime_dir=$(dirname \"$(readlink \"$cursor_native\" || printf '%s' \"$cursor_native\")\"); fi\nexport CCSWITCH_CURSOR_PROFILE_FILE={}\nexport CURSOR_INVOKED_AS=cursor-agent\nhas_model=0\nfor arg do case \"$arg\" in --) break;; --model|--model=*) has_model=1;; esac; done\nif [ \"$has_model\" = 0 ]; then set -- --model {} \"$@\"; fi\nexec \"$cursor_runtime_dir/node\" --use-system-ca --require {} \"$cursor_runtime_dir/index.js\" \"$@\"\n",quote(&native.to_string_lossy()),quote(&super::config_path().to_string_lossy()),quote(&p.default_model),quote(&adapter_path.to_string_lossy()));
+        let profile_path = if p.local_token.starts_with("deck-") {
+            crate::deck::config_path()
+        } else {
+            super::config_path()
+        };
+        let script=format!("#!/bin/sh\n# Managed by ModelDeck: Cursor model catalog and BYOK only.\nset -eu\ncursor_native={}\nif command -v realpath >/dev/null 2>&1; then cursor_runtime_dir=$(dirname \"$(realpath \"$cursor_native\")\"); else cursor_runtime_dir=$(dirname \"$(readlink \"$cursor_native\" || printf '%s' \"$cursor_native\")\"); fi\nexport CCSWITCH_CURSOR_PROFILE_FILE={}\nexport CURSOR_INVOKED_AS=cursor-agent\nhas_model=0\nfor arg do case \"$arg\" in --) break;; --model|--model=*) has_model=1;; esac; done\nif [ \"$has_model\" = 0 ]; then set -- --model {} \"$@\"; fi\nexec \"$cursor_runtime_dir/node\" --use-system-ca --require {} \"$cursor_runtime_dir/index.js\" \"$@\"\n",quote(&native.to_string_lossy()),quote(&profile_path.to_string_lossy()),quote(&p.default_model),quote(&adapter_path.to_string_lossy()));
         commit_files(
             vec![
                 FileUpdate {

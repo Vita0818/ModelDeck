@@ -188,6 +188,24 @@ function install(entry, profile) {
   };
 }
 
+function projectDeck(store) {
+  const binding = store.activeBindings?.["cursor-agent"];
+  const endpoint = binding && store.endpoints?.[binding.endpointId];
+  if (!endpoint?.protocols?.includes("openai-chat")) return undefined;
+  const models = Object.entries(endpoint.routes || {}).flatMap(([alias, route]) => {
+    const resource = store.models?.[route.modelId];
+    const provider = resource && store.providers?.[resource.providerId];
+    return resource?.tools && provider?.protocol === "openai-chat" &&
+      !alias.startsWith("claude-") && !alias.startsWith("gemini-")
+      ? [{ id: alias, name: alias, context: resource.context, output: resource.output }]
+      : [];
+  });
+  return {
+    enabled: true, endpoint: `${endpoint.publicUrl.replace(/\/$/, "")}/v1`,
+    apiKey: endpoint.token, keyEnv: "", models, defaultModel: binding.model,
+  };
+}
+
 if (process.env.CCSWITCH_CURSOR_PROFILE_FILE) {
   // A dedicated environment variable is set only by the managed launcher.
   // Other Node programs spawned by agent tools do not load this adapter.
@@ -196,11 +214,12 @@ if (process.env.CCSWITCH_CURSOR_PROFILE_FILE) {
     const store = JSON.parse(
       fs.readFileSync(process.env.CCSWITCH_CURSOR_PROFILE_FILE, "utf8"),
     );
-    install(entry, store.active?.["cursor-agent"]);
+    install(entry, store.schemaVersion === 1 ? projectDeck(store) : store.active?.["cursor-agent"]);
   }
 }
 
 module.exports = {
+  projectDeck,
   validateInstallation,
   validateProfile,
   wrapService,
