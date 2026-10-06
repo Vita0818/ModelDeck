@@ -88,7 +88,7 @@ export function ToolUpgradeConfirmDialog({
           ))}
         </div>
 
-        <DialogFooter className="flex gap-2 border-t-0 bg-transparent pt-2 sm:justify-end">
+        <DialogFooter>
           <Button variant="outline" onClick={onCancel}>
             {t("common.cancel")}
           </Button>

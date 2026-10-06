@@ -87,7 +87,7 @@ export function ConfirmDialog({
             <span className="text-sm leading-relaxed">{checkboxLabel}</span>
           </label>
         ) : null}
-        <DialogFooter className="flex gap-2 border-t-0 bg-transparent pt-2 sm:justify-end">
+        <DialogFooter>
           <Button variant="outline" onClick={onCancel} disabled={pending}>
             {cancelText || t("common.cancel")}
           </Button>

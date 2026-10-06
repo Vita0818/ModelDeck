@@ -1616,7 +1616,7 @@ export function WebdavSyncSection({
               </div>
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="flex gap-2 border-t-0 bg-transparent pt-2 sm:justify-end">
+          <DialogFooter>
             <Button variant="outline" onClick={closeDialog}>
               {t("common.cancel")}
             </Button>
@@ -1689,7 +1689,7 @@ export function WebdavSyncSection({
               </div>
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="flex gap-2 border-t-0 bg-transparent pt-2 sm:justify-end">
+          <DialogFooter>
             <Button variant="outline" onClick={closeDialog}>
               {t("common.cancel")}
             </Button>
@@ -1756,7 +1756,7 @@ export function WebdavSyncSection({
               </div>
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="flex gap-2 border-t-0 bg-transparent pt-2 sm:justify-end">
+          <DialogFooter>
             <Button variant="outline" onClick={closeS3Dialog}>
               {t("common.cancel")}
             </Button>
@@ -1808,7 +1808,7 @@ export function WebdavSyncSection({
               </div>
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="flex gap-2 border-t-0 bg-transparent pt-2 sm:justify-end">
+          <DialogFooter>
             <Button variant="outline" onClick={closeS3Dialog}>
               {t("common.cancel")}
             </Button>
@@ -1838,7 +1838,7 @@ export function WebdavSyncSection({
               </div>
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="flex gap-2 border-t-0 bg-transparent pt-2 sm:justify-end">
+          <DialogFooter>
             <Button variant="outline" onClick={handleMutualExclusionCancel}>
               {t("common.cancel")}
             </Button>
