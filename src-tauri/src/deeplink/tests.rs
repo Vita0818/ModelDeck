@@ -1,7 +1,6 @@
 //! Deep link module tests
 
 use super::parser::parse_deeplink_url;
-use super::prompt::import_prompt_from_deeplink;
 use super::provider::parse_and_merge_config;
 use super::utils::{infer_homepage_from_endpoint, validate_url};
 use super::DeepLinkImportRequest;
@@ -785,34 +784,6 @@ fn test_build_claude_provider_without_config_unchanged() {
     assert_eq!(env["ANTHROPIC_BASE_URL"], "https://api.example.com");
     // No extras leaked in
     assert_eq!(env.len(), 2);
-}
-
-// =============================================================================
-// Prompt Tests
-// =============================================================================
-
-// Integration-style unit test: prompt import reaches PromptService and resolves
-// live config file paths, so HOME must be isolated before it runs.
-#[test]
-#[serial_test::serial]
-fn test_import_prompt_allows_space_in_base64_content() {
-    let _test_home = TestHomeGuard::new();
-    let url = "ccswitch://v1/import?resource=prompt&app=codex&name=PromptPlus&content=Pj4+";
-    let request = parse_deeplink_url(url).unwrap();
-
-    // URL decoded content may have "+" become space
-    assert_eq!(request.content.as_deref(), Some("Pj4 "));
-
-    let db = Arc::new(Database::memory().expect("create memory db"));
-    let state = AppState::new(db.clone());
-
-    let prompt_id = import_prompt_from_deeplink(&state, request.clone()).expect("import prompt");
-
-    let prompts = state.db.get_prompts("codex").expect("get prompts");
-    let prompt = prompts.get(&prompt_id).expect("prompt saved");
-
-    assert_eq!(prompt.content, ">>>");
-    assert_eq!(prompt.name, request.name.unwrap());
 }
 
 // =============================================================================

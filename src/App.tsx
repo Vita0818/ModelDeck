@@ -11,14 +11,12 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import {
-  Plus,
   Settings,
   ArrowLeft,
   Minus,
   Maximize2,
   Minimize2,
   X,
-  Book,
   Brain,
   History,
   BarChart2,
@@ -65,10 +63,6 @@ import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { UpdateBadge } from "@/components/UpdateBadge";
 import { EnvWarningBanner } from "@/components/env/EnvWarningBanner";
 import { RoutingActivationBrand } from "@/components/proxy/RoutingActivationBrand";
-import type {
-  PromptPanelHandle,
-  PromptPrimaryAction,
-} from "@/components/prompts/PromptPanel";
 import { FirstRunNoticeDialog } from "@/components/FirstRunNoticeDialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -116,7 +110,6 @@ const SettingsPage = lazy(() =>
     default: m.SettingsPage,
   })),
 );
-const PromptPanel = lazy(() => import("@/components/prompts/PromptPanel"));
 const HermesMemoryPanel = lazy(
   () => import("@/components/hermes/HermesMemoryPanel"),
 );
@@ -166,7 +159,6 @@ const VIEW_STORAGE_KEY = "cc-switch-last-view";
 const VALID_VIEWS: View[] = [
   "providers",
   "settings",
-  "prompts",
   "agents",
   "universal",
   "sessions",
@@ -201,8 +193,6 @@ function App() {
   const [currentView, setCurrentView] = useState<View>(getInitialView);
   const [settingsDefaultTab, setSettingsDefaultTab] = useState("general");
   const [isAddOpen, setIsAddOpen] = useState(false);
-  const [promptManagementBusy, setPromptManagementBusy] = useState(false);
-  const [promptNavigationBusy, setPromptNavigationBusy] = useState(false);
 
   useEffect(() => {
     localStorage.setItem(VIEW_STORAGE_KEY, currentView);
@@ -311,9 +301,6 @@ function App() {
     }
   }, [activeApp, currentView]);
 
-  const promptPanelRef = useRef<PromptPanelHandle>(null);
-  const [promptPrimaryAction, setPromptPrimaryAction] =
-    useState<PromptPrimaryAction>("prompt");
   const {
     isRunning: isProxyRunning,
     takeoverStatus,
@@ -472,7 +459,7 @@ function App() {
   }, [activeApp, queryClient, refetch]);
 
   const currentViewRef = useRef(currentView);
-  const managementBusy = modelClientBusy || promptNavigationBusy;
+  const managementBusy = modelClientBusy;
   const managementBusyRef = useRef(false);
   managementBusyRef.current = managementBusy;
 
@@ -692,18 +679,6 @@ function App() {
               onOpenChange={() => setCurrentView("providers")}
               onImportSuccess={handleImportSuccess}
               defaultTab={settingsDefaultTab}
-            />
-          );
-        case "prompts":
-          return (
-            <PromptPanel
-              ref={promptPanelRef}
-              open={true}
-              onOpenChange={() => setCurrentView("providers")}
-              appId={sharedFeatureApp}
-              onInteractionBlockedChange={setPromptManagementBusy}
-              onNavigationBlockedChange={setPromptNavigationBusy}
-              onPrimaryActionChange={setPromptPrimaryAction}
             />
           );
         case "hermesMemory":
@@ -983,22 +958,6 @@ function App() {
                 className="flex shrink-0 items-center gap-1.5"
                 style={{ WebkitAppRegion: "no-drag" } as any}
               >
-                {currentView === "prompts" && promptPrimaryAction && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    disabled={promptManagementBusy}
-                    onClick={() => promptPanelRef.current?.openAdd()}
-                    className="hover:bg-black/5 disabled:opacity-100 dark:hover:bg-white/5"
-                  >
-                    <Plus className="w-4 h-4 mr-2" />
-                    {t(
-                      promptPrimaryAction === "template"
-                        ? "pi.prompts.newTemplate"
-                        : "prompts.add",
-                    )}
-                  </Button>
-                )}
                 {currentView === "providers" && !isModelClient && (
                   <>
                     <div className="flex items-center gap-1 p-1 bg-muted rounded-xl">
@@ -1085,15 +1044,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => setCurrentView("prompts")}
-                              className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                              title={t("prompts.manage")}
-                            >
-                              <Book className="w-4 h-4" />
-                            </Button>
                             <Button
                               variant="ghost"
                               size="sm"

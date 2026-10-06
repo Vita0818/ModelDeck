@@ -3,7 +3,6 @@ export { piApi } from "./pi";
 export { providersApi, universalProvidersApi } from "./providers";
 export { settingsApi } from "./settings";
 export { backupsApi } from "./settings";
-export { promptsApi } from "./prompts";
 export { usageApi } from "./usage";
 export { subscriptionApi } from "./subscription";
 export { vscodeApi } from "./vscode";
@@ -15,7 +14,6 @@ export * as configApi from "./config";
 export * as authApi from "./auth";
 export * as copilotApi from "./copilot";
 export type { ProviderSwitchEvent } from "./providers";
-export type { Prompt } from "./prompts";
 export type {
   CopilotDeviceCodeResponse,
   CopilotAuthStatus,

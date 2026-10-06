@@ -7,9 +7,7 @@ pub mod env_manager;
 pub mod model_fetch;
 pub mod model_pricing;
 pub mod omo;
-pub mod pi_prompt_files;
 pub(crate) mod pi_state;
-pub mod prompt;
 pub mod provider;
 pub mod proxy;
 pub mod s3;
@@ -35,7 +33,6 @@ pub mod webdav_sync;
 
 pub use config::ConfigService;
 pub use omo::OmoService;
-pub use prompt::PromptService;
 pub use provider::{ProviderService, ProviderSortUpdate, SwitchResult};
 pub use proxy::ProxyService;
 #[allow(unused_imports)]

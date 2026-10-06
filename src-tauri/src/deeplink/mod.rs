@@ -7,7 +7,6 @@
 //!
 
 mod parser;
-mod prompt;
 mod provider;
 mod utils;
 
@@ -18,7 +17,6 @@ use serde::{Deserialize, Serialize};
 
 // Re-export public API
 pub use parser::parse_deeplink_url;
-pub use prompt::import_prompt_from_deeplink;
 pub use provider::{import_provider_from_deeplink, parse_and_merge_config};
 
 /// Deep link import request model
