@@ -512,7 +512,6 @@
       "password": "WebDAV 密碼",
       "passwordPlaceholder": "應用程式密碼（堅果雲請使用「第三方應用程式密碼」）",
       "remoteRoot": "遠端根目錄",
-      "profile": "同步設定名稱",
       "autoSync": "自動同步",
       "autoSyncHint": "開啟後每次資料庫變更都會自動上傳至 WebDAV。",
       "test": "測試連線",
@@ -546,7 +545,6 @@
         "custom": "自訂"
       },
       "remoteRootDefault": "預設: cc-switch-sync",
-      "profileDefault": "預設: default",
       "saveAndTestSuccess": "設定已儲存，連線正常",
       "saveAndTestFailed": "設定已儲存，但連線測試失敗：{{error}}",
       "noRemoteData": "雲端沒有找到同步資料",
@@ -619,8 +617,6 @@
       "endpointPlaceholder": "例如 https://s3-compatible.example.com",
       "remoteRoot": "遠端根目錄",
       "remoteRootDefault": "預設: cc-switch-sync",
-      "profile": "同步設定檔名稱",
-      "profileDefault": "預設: default",
       "autoSync": "自動同步",
       "autoSyncHint": "開啟後每次資料庫變更都會自動上傳到 S3。",
       "enabled": "啟用 S3 同步",
@@ -718,9 +714,7 @@
       "claudeDesc": "Anthropic Claude Code CLI",
       "codexDesc": "OpenAI Codex CLI",
       "geminiDesc": "Google Gemini CLI",
-      "opencodeDesc": "OpenCode CLI",
-      "showProfileSwitcher": "顯示專案切換",
-      "showProfileSwitcherDescription": "在主頁面頂部顯示專案切換入口"
+      "opencodeDesc": "OpenCode CLI"
     },
     "terminal": {
       "title": "首選終端機",
@@ -1046,7 +1040,6 @@
     "apiBackend": "API Backend",
     "contextWindow": "上下文視窗",
     "contextWindowInvalid": "上下文視窗必須是正整數",
-    "profile": "用戶端模型檔位",
     "rawConfig": "config.toml",
     "invalidToml": "config.toml 格式錯誤：{{error}}",
     "defaultModelPlaceholder": "例如: grok-4.5",
@@ -2190,42 +2183,6 @@
       "deleteMessage": "確定要刪除提示詞 \"{{name}}\" 嗎？"
     }
   },
-  "profiles": {
-    "switcherAriaLabel": "專案：{{name}}",
-    "switcherTooltip": {
-      "claude": "專案：一鍵切換 Claude Code 的供應商 / MCP / Skills / 記憶檔案",
-      "claude-desktop": "專案：一鍵切換 Claude Desktop 的供應商",
-      "codex": "專案：一鍵切換 Codex 的供應商 / MCP / Skills / 記憶檔案"
-    },
-    "none": "不使用專案",
-    "searchPlaceholder": "搜尋專案",
-    "empty": "尚無專案",
-    "createFromCurrent": "新建專案",
-    "createDescription": {
-      "claude": "把 Claude Code 目前的供應商、MCP、Skills、記憶檔案儲存為一個專案，之後可一鍵切換。",
-      "claude-desktop": "把 Claude Desktop 目前的供應商儲存為一個專案，之後可一鍵切換。",
-      "codex": "把 Codex 目前的供應商、MCP、Skills 和記憶檔案設定儲存為一個專案，之後可一鍵切換。"
-    },
-    "manage": "管理專案…",
-    "manageTitle": "管理專案",
-    "manageDescription": "專案是設定快照。切換專案時，目前設定會自動儲存回原專案。",
-    "namePlaceholder": "例如：開發、繪圖",
-    "rename": "重新命名",
-    "noSnapshotForScope": "本側未儲存",
-    "delete": "刪除",
-    "deleteConfirmTitle": "確認刪除",
-    "deleteConfirmMessage": "確定要刪除專案 \"{{name}}\" 嗎？不會改動任何現有設定。",
-    "createSuccess": "專案已建立",
-    "createFailed": "建立專案失敗: {{detail}}",
-    "updateSuccess": "專案已更新",
-    "updateFailed": "更新專案失敗: {{detail}}",
-    "deleteSuccess": "專案已刪除",
-    "deleteFailed": "刪除專案失敗: {{detail}}",
-    "applySuccess": "專案已套用",
-    "applyFailed": "套用專案失敗: {{detail}}",
-    "applyWarnings": "專案已套用，{{warningCount}} 條警告：\n{{details}}",
-    "clearSuccess": "已切換為不使用專案"
-  },
   "workspace": {
     "title": "Workspace 檔案管理",
     "manage": "Workspace",
@@ -2320,12 +2277,6 @@
     "tools": {
       "title": "工具權限",
       "description": "管理 openclaw.json 中的工具權限設定（允許/拒絕清單）",
-      "profile": "權限模式",
-      "profileMinimal": "最小權限",
-      "profileCoding": "編碼",
-      "profileMessaging": "對話",
-      "profileFull": "完全存取",
-      "profileUnset": "未設定",
       "unsupportedProfileTitle": "檢測到不受支援的工具設定",
       "unsupportedProfileDescription": "目前 tools.profile 的值「{{value}}」不在 OpenClaw 支援清單內。在您手動選擇新值之前，它會被保留。",
       "unsupportedProfileLabel": "不受支援",
@@ -2855,7 +2806,6 @@
   "omo": {
     "editProfile": "編輯 OMO 設定",
     "newProfile": "新增 OMO 設定",
-    "profileName": "名稱",
     "mainAgents": "主 Agent",
     "subAgents": "子 Agent",
     "categories": "分類",
@@ -2868,12 +2818,9 @@
     "addProfile": "新增 OMO 設定",
     "disabledItems": "停用項目設定",
     "advanced": "進階設定",
-    "profileCreated": "OMO 設定已建立",
-    "profileUpdated": "OMO 設定已更新",
     "invalidJson": "其他欄位包含無效 JSON",
     "confirmDelete": "刪除設定",
     "confirmDeleteMsg": "確定刪除 \"{{name}}\" 嗎？",
-    "profileDeleted": "設定已刪除",
     "imported": "已匯入為 \"{{name}}\"",
     "import": "匯入",
     "global": "全域",

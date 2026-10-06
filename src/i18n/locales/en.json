@@ -512,7 +512,6 @@
       "password": "WebDAV Password",
       "passwordPlaceholder": "App password",
       "remoteRoot": "Remote Root Directory",
-      "profile": "Sync Profile Name",
       "autoSync": "Auto Sync",
       "autoSyncHint": "When enabled, each database change triggers an automatic WebDAV upload.",
       "test": "Test Connection",
@@ -546,7 +545,6 @@
         "custom": "Custom"
       },
       "remoteRootDefault": "Default: cc-switch-sync",
-      "profileDefault": "Default: default",
       "saveAndTestSuccess": "Config saved, connection OK",
       "saveAndTestFailed": "Config saved, but connection test failed: {{error}}",
       "noRemoteData": "No sync data found on the remote server",
@@ -619,8 +617,6 @@
       "endpointPlaceholder": "e.g. https://s3-compatible.example.com",
       "remoteRoot": "Remote Root Directory",
       "remoteRootDefault": "Default: cc-switch-sync",
-      "profile": "Sync Profile Name",
-      "profileDefault": "Default: default",
       "autoSync": "Auto Sync",
       "autoSyncHint": "When enabled, each database change triggers an automatic S3 upload.",
       "enabled": "Enable S3 Sync",
@@ -718,9 +714,7 @@
       "claudeDesc": "Anthropic Claude Code CLI",
       "codexDesc": "OpenAI Codex CLI",
       "geminiDesc": "Google Gemini CLI",
-      "opencodeDesc": "OpenCode CLI",
-      "showProfileSwitcher": "Show project switcher",
-      "showProfileSwitcherDescription": "Show the project switcher in the main page header"
+      "opencodeDesc": "OpenCode CLI"
     },
     "terminal": {
       "title": "Preferred Terminal",
@@ -1045,7 +1039,6 @@
     "apiBackend": "API backend",
     "contextWindow": "Context window",
     "contextWindowInvalid": "Context window must be a positive integer",
-    "profile": "Client model profile",
     "rawConfig": "config.toml",
     "invalidToml": "Invalid config.toml: {{error}}",
     "defaultModelPlaceholder": "e.g. grok-4.5",
@@ -2189,42 +2182,6 @@
       "deleteMessage": "Are you sure you want to delete prompt \"{{name}}\"?"
     }
   },
-  "profiles": {
-    "switcherAriaLabel": "Project: {{name}}",
-    "switcherTooltip": {
-      "claude": "Projects: switch the Claude Code provider / MCP / Skills / memory files in one click",
-      "claude-desktop": "Projects: switch the Claude Desktop provider in one click",
-      "codex": "Projects: switch the Codex provider / MCP / Skills / memory files in one click"
-    },
-    "none": "No project",
-    "searchPlaceholder": "Search projects",
-    "empty": "No projects yet",
-    "createFromCurrent": "New project",
-    "createDescription": {
-      "claude": "Save the current Claude Code provider, MCP, Skills and memory file as a project you can switch to later.",
-      "claude-desktop": "Save the current Claude Desktop provider as a project you can switch to later.",
-      "codex": "Save the current Codex provider, MCP, Skills and memory file configuration as a project you can switch to later."
-    },
-    "manage": "Manage projects…",
-    "manageTitle": "Manage Projects",
-    "manageDescription": "Projects are configuration snapshots. When you switch projects, the current configuration is automatically saved back to the project you are leaving.",
-    "namePlaceholder": "e.g. Development, Drawing",
-    "rename": "Rename",
-    "noSnapshotForScope": "Not saved for this app yet",
-    "delete": "Delete",
-    "deleteConfirmTitle": "Confirm Delete",
-    "deleteConfirmMessage": "Are you sure you want to delete project \"{{name}}\"? Your current configuration will not be changed.",
-    "createSuccess": "Project created",
-    "createFailed": "Failed to create project: {{detail}}",
-    "updateSuccess": "Project updated",
-    "updateFailed": "Failed to update project: {{detail}}",
-    "deleteSuccess": "Project deleted",
-    "deleteFailed": "Failed to delete project: {{detail}}",
-    "applySuccess": "Project applied",
-    "applyFailed": "Failed to apply project: {{detail}}",
-    "applyWarnings": "Project applied with {{warningCount}} warning(s):\n{{details}}",
-    "clearSuccess": "Switched to no project"
-  },
   "workspace": {
     "title": "Workspace Files",
     "manage": "Workspace",
@@ -2319,12 +2276,6 @@
     "tools": {
       "title": "Tool Permissions",
       "description": "Manage tool permissions in openclaw.json (allow/deny lists)",
-      "profile": "Permission Profile",
-      "profileMinimal": "Minimal",
-      "profileCoding": "Coding",
-      "profileMessaging": "Messaging",
-      "profileFull": "Full",
-      "profileUnset": "Not set",
       "unsupportedProfileTitle": "Unsupported tools profile detected",
       "unsupportedProfileDescription": "The current tools.profile value '{{value}}' is not in the supported OpenClaw list. It will be preserved until you choose a new value.",
       "unsupportedProfileLabel": "unsupported",
@@ -2854,7 +2805,6 @@
   "omo": {
     "editProfile": "Edit OMO Config",
     "newProfile": "New OMO Config",
-    "profileName": "Name",
     "mainAgents": "Main Agents",
     "subAgents": "Sub Agents",
     "categories": "Categories",
@@ -2867,12 +2817,9 @@
     "addProfile": "Add OMO Provider",
     "disabledItems": "Disabled Items",
     "advanced": "Advanced Settings",
-    "profileCreated": "OMO config created",
-    "profileUpdated": "OMO config updated",
     "invalidJson": "Other Fields contains invalid JSON",
     "confirmDelete": "Delete Config",
     "confirmDeleteMsg": "Delete \"{{name}}\"?",
-    "profileDeleted": "Config deleted",
     "imported": "Imported as \"{{name}}\"",
     "import": "Import",
     "global": "Global",

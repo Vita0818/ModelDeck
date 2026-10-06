@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { providersApi } from "@/lib/api";
-import { proxyKeys } from "@/lib/query";
 import { useTauriEvent } from "@/hooks/useTauriEvent";
 
 interface SyncStatusUpdatedPayload {
@@ -26,21 +25,6 @@ export function useAppEventBridges(): void {
     } catch (error) {
       console.error("[App] Failed to update tray menu", error);
     }
-  });
-
-  // 应用项目后刷新相关缓存（providers 由既有 provider-switched 监听承接；
-  // proxy 状态由后端直接改 DB，不走 mutation，必须显式刷新）
-  useTauriEvent("profile-applied", async () => {
-    await queryClient.invalidateQueries({ queryKey: ["profiles"] });
-    await queryClient.invalidateQueries({ queryKey: ["mcp", "all"] });
-    await queryClient.invalidateQueries({ queryKey: ["skills"] });
-    await queryClient.invalidateQueries({
-      queryKey: proxyKeys.takeoverStatus,
-    });
-    await queryClient.invalidateQueries({ queryKey: proxyKeys.status });
-    await queryClient.invalidateQueries({
-      queryKey: ["providers", "claude-desktop"],
-    });
   });
 
   // Shared body for the two remote-sync channels. Not a hook itself, so the

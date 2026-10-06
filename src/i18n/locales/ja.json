@@ -512,7 +512,6 @@
       "password": "パスワード",
       "passwordPlaceholder": "アプリパスワード",
       "remoteRoot": "リモートルートディレクトリ",
-      "profile": "同期プロファイル名",
       "autoSync": "自動同期",
       "autoSyncHint": "有効にすると、データベース変更のたびに WebDAV へ自動アップロードします。",
       "test": "接続テスト",
@@ -546,7 +545,6 @@
         "custom": "カスタム"
       },
       "remoteRootDefault": "デフォルト: cc-switch-sync",
-      "profileDefault": "デフォルト: default",
       "saveAndTestSuccess": "設定を保存しました。接続正常です",
       "saveAndTestFailed": "設定を保存しましたが、接続テストに失敗しました：{{error}}",
       "noRemoteData": "クラウドに同期データが見つかりません",
@@ -619,8 +617,6 @@
       "endpointPlaceholder": "例: https://s3-compatible.example.com",
       "remoteRoot": "リモートルートディレクトリ",
       "remoteRootDefault": "デフォルト: cc-switch-sync",
-      "profile": "同期プロファイル名",
-      "profileDefault": "デフォルト: default",
       "autoSync": "自動同期",
       "autoSyncHint": "有効にすると、データベース変更のたびに S3 へ自動アップロードします。",
       "enabled": "S3 同期を有効化",
@@ -718,9 +714,7 @@
       "claudeDesc": "Anthropic Claude Code CLI",
       "codexDesc": "OpenAI Codex CLI",
       "geminiDesc": "Google Gemini CLI",
-      "opencodeDesc": "OpenCode CLI",
-      "showProfileSwitcher": "プロジェクト切り替えを表示",
-      "showProfileSwitcherDescription": "メイン画面上部にプロジェクト切り替えを表示します"
+      "opencodeDesc": "OpenCode CLI"
     },
     "terminal": {
       "title": "優先ターミナル",
@@ -1045,7 +1039,6 @@
     "apiBackend": "API Backend",
     "contextWindow": "コンテキストウィンドウ",
     "contextWindowInvalid": "コンテキストウィンドウは正の整数で指定してください",
-    "profile": "クライアントモデルプロファイル",
     "rawConfig": "config.toml",
     "invalidToml": "config.toml の形式が不正です: {{error}}",
     "defaultModelPlaceholder": "例: grok-4.5",
@@ -2189,42 +2182,6 @@
       "deleteMessage": "プロンプト「{{name}}」を削除してもよろしいですか？"
     }
   },
-  "profiles": {
-    "switcherAriaLabel": "プロジェクト：{{name}}",
-    "switcherTooltip": {
-      "claude": "プロジェクト：Claude Code のプロバイダー / MCP / Skills / メモリファイルをワンクリックで切り替え",
-      "claude-desktop": "プロジェクト：Claude Desktop のプロバイダーをワンクリックで切り替え",
-      "codex": "プロジェクト：Codex のプロバイダー / MCP / Skills / メモリファイルをワンクリックで切り替え"
-    },
-    "none": "プロジェクトを使用しない",
-    "searchPlaceholder": "プロジェクトを検索",
-    "empty": "プロジェクトはまだありません",
-    "createFromCurrent": "新規プロジェクト",
-    "createDescription": {
-      "claude": "Claude Code の現在のプロバイダー、MCP、Skills、メモリファイルをプロジェクトとして保存し、後からワンクリックで切り替えられます。",
-      "claude-desktop": "Claude Desktop の現在のプロバイダーをプロジェクトとして保存し、後からワンクリックで切り替えられます。",
-      "codex": "Codex の現在のプロバイダー、MCP、Skills、メモリファイルの設定をプロジェクトとして保存し、後からワンクリックで切り替えられます。"
-    },
-    "manage": "プロジェクトを管理…",
-    "manageTitle": "プロジェクト管理",
-    "manageDescription": "プロジェクトは設定のスナップショットです。プロジェクトを切り替えると、現在の設定は元のプロジェクトに自動的に保存されます。",
-    "namePlaceholder": "例：開発、イラスト",
-    "rename": "名前を変更",
-    "noSnapshotForScope": "このアプリ側は未保存",
-    "delete": "削除",
-    "deleteConfirmTitle": "削除の確認",
-    "deleteConfirmMessage": "プロジェクト「{{name}}」を削除してもよろしいですか？現在の設定は変更されません。",
-    "createSuccess": "プロジェクトを作成しました",
-    "createFailed": "プロジェクトの作成に失敗しました: {{detail}}",
-    "updateSuccess": "プロジェクトを更新しました",
-    "updateFailed": "プロジェクトの更新に失敗しました: {{detail}}",
-    "deleteSuccess": "プロジェクトを削除しました",
-    "deleteFailed": "プロジェクトの削除に失敗しました: {{detail}}",
-    "applySuccess": "プロジェクトを適用しました",
-    "applyFailed": "プロジェクトの適用に失敗しました: {{detail}}",
-    "applyWarnings": "プロジェクトを適用しました（警告 {{warningCount}} 件）：\n{{details}}",
-    "clearSuccess": "プロジェクトを使用しない状態に切り替えました"
-  },
   "workspace": {
     "title": "ワークスペースファイル",
     "manage": "ワークスペース",
@@ -2319,12 +2276,6 @@
     "tools": {
       "title": "ツール権限",
       "description": "openclaw.json のツール権限設定を管理（許可/拒否リスト）",
-      "profile": "権限プロファイル",
-      "profileMinimal": "最小",
-      "profileCoding": "コーディング",
-      "profileMessaging": "メッセージ",
-      "profileFull": "フルアクセス",
-      "profileUnset": "未設定",
       "unsupportedProfileTitle": "未対応のツールプロファイルを検出しました",
       "unsupportedProfileDescription": "現在の tools.profile の値 '{{value}}' は OpenClaw の対応リストにありません。新しい値を選択するまでこの値を保持します。",
       "unsupportedProfileLabel": "未対応",
@@ -2854,7 +2805,6 @@
   "omo": {
     "editProfile": "OMO 設定を編集",
     "newProfile": "新規 OMO 設定",
-    "profileName": "名前",
     "mainAgents": "メインエージェント",
     "subAgents": "サブエージェント",
     "categories": "カテゴリ",
@@ -2867,12 +2817,9 @@
     "addProfile": "OMO プロバイダーを追加",
     "disabledItems": "無効項目設定",
     "advanced": "詳細設定",
-    "profileCreated": "OMO 設定を作成しました",
-    "profileUpdated": "OMO 設定を更新しました",
     "invalidJson": "その他のフィールドに無効なJSONが含まれています",
     "confirmDelete": "設定を削除",
     "confirmDeleteMsg": "「{{name}}」を削除しますか？",
-    "profileDeleted": "設定を削除しました",
     "imported": "「{{name}}」としてインポートしました",
     "import": "インポート",
     "global": "グローバル",
