@@ -1978,167 +1978,6 @@
     "officialDescription": "官方登入，不需要填寫 API Key",
     "presetDescription": "使用預設設定，只需填寫 API Key"
   },
-  "mcp": {
-    "title": "MCP 管理",
-    "import": "匯入",
-    "importExisting": "匯入已有",
-    "addMcp": "新增 MCP",
-    "claudeTitle": "Claude Code MCP 管理",
-    "codexTitle": "Codex MCP 管理",
-    "geminiTitle": "Gemini MCP 管理",
-    "unifiedPanel": {
-      "title": "MCP 伺服器管理",
-      "addServer": "新增伺服器",
-      "editServer": "編輯伺服器",
-      "deleteServer": "刪除伺服器",
-      "deleteConfirm": "確定要刪除伺服器 \"{{id}}\" 嗎？此操作無法復原。",
-      "noServers": "暫無伺服器",
-      "enabledApps": "啟用的應用程式",
-      "noImportFound": "未發現需要匯入的 MCP 伺服器。所有伺服器已在 ModelDeck 統一管理中。",
-      "importSuccess": "成功匯入 {{count}} 個 MCP 伺服器",
-      "searchPlaceholder": "搜尋 MCP 名稱、描述、標籤或命令...",
-      "searchAriaLabel": "搜尋已管理的 MCP 伺服器",
-      "noSearchResults": "未找到相符的 MCP 伺服器",
-      "apps": {
-        "claude": "Claude",
-        "codex": "Codex",
-        "gemini": "Gemini",
-        "grokbuild": "Grok Build",
-        "opencode": "OpenCode",
-        "openclaw": "OpenClaw",
-        "hermes": "Hermes",
-        "mcode": "MiniMax Code"
-      }
-    },
-    "userLevelPath": "使用者級 MCP 設定路徑",
-    "serverList": "伺服器清單",
-    "loading": "載入中...",
-    "empty": "暫無 MCP 伺服器",
-    "emptyDescription": "點擊右上角按鈕新增第一個 MCP 伺服器",
-    "add": "新增 MCP",
-    "addServer": "新增 MCP",
-    "editServer": "編輯 MCP",
-    "addClaudeServer": "新增 Claude Code MCP",
-    "editClaudeServer": "編輯 Claude Code MCP",
-    "addCodexServer": "新增 Codex MCP",
-    "editCodexServer": "編輯 Codex MCP",
-    "configPath": "設定路徑",
-    "serverCount": "已設定 {{count}} 個 MCP 伺服器",
-    "enabledCount": "已啟用 {{count}} 個",
-    "template": {
-      "fetch": "快速範本：mcp-fetch"
-    },
-    "form": {
-      "title": "MCP 標題（唯一）",
-      "titlePlaceholder": "my-mcp-server",
-      "name": "顯示名稱",
-      "namePlaceholder": "例如 @modelcontextprotocol/server-time",
-      "enabledApps": "啟用至應用程式",
-      "noAppsWarning": "至少選擇一個應用程式",
-      "description": "描述",
-      "descriptionPlaceholder": "選填的描述資訊",
-      "tags": "標籤（逗號分隔）",
-      "tagsPlaceholder": "stdio, time, utility",
-      "homepage": "首頁連結",
-      "homepagePlaceholder": "https://example.com",
-      "docs": "文件連結",
-      "docsPlaceholder": "https://example.com/docs",
-      "additionalInfo": "附加資訊",
-      "jsonConfig": "完整的 JSON 設定",
-      "jsonConfigOrPrefix": "完整的 JSON 設定或者使用",
-      "tomlConfigOrPrefix": "完整的 TOML 設定或者使用",
-      "jsonPlaceholder": "{\n    \"type\": \"stdio\",\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-server-fetch\"]\n}",
-      "tomlConfig": "完整的 TOML 設定",
-      "tomlPlaceholder": "type = \"stdio\"\ncommand = \"uvx\"\nargs = [\"mcp-server-fetch\"]",
-      "useWizard": "設定精靈",
-      "syncOtherSide": "同步至 {{target}}",
-      "syncOtherSideHint": "勾選後會把目前設定同時寫入 {{target}}，若存在同名設定將被覆寫",
-      "willOverwriteWarning": "將覆寫 {{target}} 中的同名設定"
-    },
-    "wizard": {
-      "title": "MCP 設定精靈",
-      "hint": "快速設定 MCP 伺服器，自動產生 JSON 設定",
-      "type": "類型",
-      "typeStdio": "stdio",
-      "typeHttp": "http",
-      "typeSse": "sse",
-      "command": "命令",
-      "commandPlaceholder": "npx 或 uvx",
-      "args": "參數",
-      "argsPlaceholder": "arg1\narg2",
-      "env": "環境變數",
-      "envPlaceholder": "KEY1=value1\nKEY2=value2",
-      "url": "URL",
-      "urlPlaceholder": "https://api.example.com/mcp",
-      "urlRequired": "請輸入 URL",
-      "headers": "請求標頭（選填）",
-      "headersPlaceholder": "Authorization: Bearer your_token_here\nContent-Type: application/json",
-      "preview": "設定預覽",
-      "apply": "套用設定"
-    },
-    "id": "標識 (唯一)",
-    "type": "類型",
-    "command": "命令",
-    "validateCommand": "驗證命令",
-    "args": "參數",
-    "argsPlaceholder": "例如：mcp-server-fetch --help",
-    "env": "環境變數 (一行一個，KEY=VALUE)",
-    "envPlaceholder": "FOO=bar\nHELLO=world",
-    "reset": "重設",
-    "msg": {
-      "saved": "已儲存",
-      "deleted": "已刪除",
-      "enabled": "已啟用",
-      "disabled": "已停用",
-      "templateAdded": "已新增範本"
-    },
-    "error": {
-      "idRequired": "請填寫標識",
-      "idExists": "該標識已存在，請更換",
-      "jsonInvalid": "JSON 格式錯誤，請檢查",
-      "tomlInvalid": "TOML 格式錯誤，請檢查",
-      "commandRequired": "請填寫命令",
-      "singleServerObjectRequired": "此處只需單個伺服器物件，請不要貼上包含 mcpServers 的整份設定",
-      "saveFailed": "儲存失敗",
-      "deleteFailed": "刪除失敗"
-    },
-    "validation": {
-      "ok": "命令可用",
-      "fail": "命令不可用"
-    },
-    "confirm": {
-      "deleteTitle": "刪除 MCP 伺服器",
-      "deleteMessage": "確定要刪除 MCP 伺服器 \"{{id}}\" 嗎？此操作無法復原。"
-    },
-    "presets": {
-      "title": "選擇 MCP 類型",
-      "enable": "啟用",
-      "enabled": "已啟用",
-      "installed": "已安裝",
-      "docs": "文件",
-      "requiresEnv": "需要環境變數",
-      "fetch": {
-        "name": "mcp-server-fetch",
-        "description": "通用 HTTP 請求工具，支援 GET/POST 等 HTTP 方法，適合快速請求 API / 抓取網頁資料"
-      },
-      "time": {
-        "name": "@modelcontextprotocol/server-time",
-        "description": "時間查詢工具，提供目前時間、時區轉換、日期計算等功能"
-      },
-      "memory": {
-        "name": "@modelcontextprotocol/server-memory",
-        "description": "知識圖譜記憶系統，支援儲存實體、關係和觀察，讓 AI 記住對話中的重要資訊"
-      },
-      "sequential-thinking": {
-        "name": "@modelcontextprotocol/server-sequential-thinking",
-        "description": "順序思考工具，協助 AI 將複雜問題分解為多個步驟，逐步深入思考"
-      },
-      "context7": {
-        "name": "@upstash/context7-mcp",
-        "description": "Context7 文件搜尋工具，提供最新的函式庫文件和程式碼範例，設定 key 會有更高限額"
-      }
-    }
-  },
   "prompts": {
     "manage": "提示詞",
     "title": "{{appName}} 提示詞管理",
@@ -2430,10 +2269,6 @@
     "importMcpDescription": "請確認是否匯入這些 MCP Servers",
     "promptImportSuccess": "提示詞匯入成功",
     "promptImportSuccessDescription": "已匯入提示詞：{{name}}",
-    "mcpImportSuccess": "MCP Servers 匯入成功",
-    "mcpImportSuccessDescription": "成功匯入 {{count}} 個伺服器",
-    "mcpPartialSuccess": "部分匯入成功",
-    "mcpPartialSuccessDescription": "成功：{{success}}，失敗：{{failed}}",
     "app": "應用程式類型",
     "providerName": "供應商名稱",
     "homepage": "官網位址",
@@ -2460,16 +2295,6 @@
     "configUrl": "設定檔 URL",
     "configMergeError": "合併設定檔失敗",
     "primaryEndpoint": "主",
-    "mcp": {
-      "title": "批次匯入 MCP Servers",
-      "targetApps": "目標應用程式",
-      "serverCount": "MCP Servers ({{count}} 個)",
-      "enabledWarning": "匯入後將立即寫入所有指定應用程式的設定檔",
-      "command": "命令",
-      "args": "參數",
-      "env": "環境",
-      "url": "位址"
-    },
     "prompt": {
       "title": "匯入系統提示詞",
       "app": "應用程式",

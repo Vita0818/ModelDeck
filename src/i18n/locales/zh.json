@@ -1977,167 +1977,6 @@
     "officialDescription": "官方登录，不需要填写 API Key",
     "presetDescription": "使用预设配置，只需填写 API Key"
   },
-  "mcp": {
-    "title": "MCP 管理",
-    "import": "导入",
-    "importExisting": "导入已有",
-    "addMcp": "添加MCP",
-    "claudeTitle": "Claude Code MCP 管理",
-    "codexTitle": "Codex MCP 管理",
-    "geminiTitle": "Gemini MCP 管理",
-    "unifiedPanel": {
-      "title": "MCP 服务器管理",
-      "addServer": "添加服务器",
-      "editServer": "编辑服务器",
-      "deleteServer": "删除服务器",
-      "deleteConfirm": "确定要删除服务器 \"{{id}}\" 吗？此操作无法撤销。",
-      "noServers": "暂无服务器",
-      "enabledApps": "启用的应用",
-      "noImportFound": "未发现需要导入的 MCP 服务器。所有服务器已在 ModelDeck 统一管理中。",
-      "importSuccess": "成功导入 {{count}} 个 MCP 服务器",
-      "searchPlaceholder": "搜索 MCP 名称、描述、标签或命令...",
-      "searchAriaLabel": "搜索已管理的 MCP 服务器",
-      "noSearchResults": "未找到匹配的 MCP 服务器",
-      "apps": {
-        "claude": "Claude",
-        "codex": "Codex",
-        "gemini": "Gemini",
-        "grokbuild": "Grok Build",
-        "opencode": "OpenCode",
-        "openclaw": "OpenClaw",
-        "hermes": "Hermes",
-        "mcode": "MiniMax Code"
-      }
-    },
-    "userLevelPath": "用户级 MCP 配置路径",
-    "serverList": "服务器列表",
-    "loading": "加载中...",
-    "empty": "暂无 MCP 服务器",
-    "emptyDescription": "点击右上角按钮添加第一个 MCP 服务器",
-    "add": "添加 MCP",
-    "addServer": "新增 MCP",
-    "editServer": "编辑 MCP",
-    "addClaudeServer": "新增 Claude Code MCP",
-    "editClaudeServer": "编辑 Claude Code MCP",
-    "addCodexServer": "新增 Codex MCP",
-    "editCodexServer": "编辑 Codex MCP",
-    "configPath": "配置路径",
-    "serverCount": "已配置 {{count}} 个 MCP 服务器",
-    "enabledCount": "已启用 {{count}} 个",
-    "template": {
-      "fetch": "快速模板：mcp-fetch"
-    },
-    "form": {
-      "title": "MCP 标题（唯一）",
-      "titlePlaceholder": "my-mcp-server",
-      "name": "显示名称",
-      "namePlaceholder": "例如 @modelcontextprotocol/server-time",
-      "enabledApps": "启用到应用",
-      "noAppsWarning": "至少选择一个应用",
-      "description": "描述",
-      "descriptionPlaceholder": "可选的描述信息",
-      "tags": "标签（逗号分隔）",
-      "tagsPlaceholder": "stdio, time, utility",
-      "homepage": "主页链接",
-      "homepagePlaceholder": "https://example.com",
-      "docs": "文档链接",
-      "docsPlaceholder": "https://example.com/docs",
-      "additionalInfo": "附加信息",
-      "jsonConfig": "完整的 JSON 配置",
-      "jsonConfigOrPrefix": "完整的 JSON 配置或者使用",
-      "tomlConfigOrPrefix": "完整的 TOML 配置或者使用",
-      "jsonPlaceholder": "{\n  \"type\": \"stdio\",\n  \"command\": \"uvx\",\n  \"args\": [\"mcp-server-fetch\"]\n}",
-      "tomlConfig": "完整的 TOML 配置",
-      "tomlPlaceholder": "type = \"stdio\"\ncommand = \"uvx\"\nargs = [\"mcp-server-fetch\"]",
-      "useWizard": "配置向导",
-      "syncOtherSide": "同步到 {{target}}",
-      "syncOtherSideHint": "勾选后会把当前配置同时写入 {{target}}，若存在同名配置将被覆盖",
-      "willOverwriteWarning": "将覆盖 {{target}} 中的同名配置"
-    },
-    "wizard": {
-      "title": "MCP 配置向导",
-      "hint": "快速配置 MCP 服务器，自动生成 JSON 配置",
-      "type": "类型",
-      "typeStdio": "stdio",
-      "typeHttp": "http",
-      "typeSse": "sse",
-      "command": "命令",
-      "commandPlaceholder": "npx 或 uvx",
-      "args": "参数",
-      "argsPlaceholder": "arg1\narg2",
-      "env": "环境变量",
-      "envPlaceholder": "KEY1=value1\nKEY2=value2",
-      "url": "URL",
-      "urlPlaceholder": "https://api.example.com/mcp",
-      "urlRequired": "请输入 URL",
-      "headers": "请求头（可选）",
-      "headersPlaceholder": "Authorization: Bearer your_token_here\nContent-Type: application/json",
-      "preview": "配置预览",
-      "apply": "应用配置"
-    },
-    "id": "标识 (唯一)",
-    "type": "类型",
-    "command": "命令",
-    "validateCommand": "校验命令",
-    "args": "参数",
-    "argsPlaceholder": "例如：mcp-server-fetch --help",
-    "env": "环境变量 (一行一个，KEY=VALUE)",
-    "envPlaceholder": "FOO=bar\nHELLO=world",
-    "reset": "重置",
-    "msg": {
-      "saved": "已保存",
-      "deleted": "已删除",
-      "enabled": "已启用",
-      "disabled": "已禁用",
-      "templateAdded": "已添加模板"
-    },
-    "error": {
-      "idRequired": "请填写标识",
-      "idExists": "该标识已存在，请更换",
-      "jsonInvalid": "JSON 格式错误，请检查",
-      "tomlInvalid": "TOML 格式错误，请检查",
-      "commandRequired": "请填写命令",
-      "singleServerObjectRequired": "此处只需单个服务器对象，请不要粘贴包含 mcpServers 的整份配置",
-      "saveFailed": "保存失败",
-      "deleteFailed": "删除失败"
-    },
-    "validation": {
-      "ok": "命令可用",
-      "fail": "命令不可用"
-    },
-    "confirm": {
-      "deleteTitle": "删除 MCP 服务器",
-      "deleteMessage": "确定要删除 MCP 服务器 \"{{id}}\" 吗？此操作无法撤销。"
-    },
-    "presets": {
-      "title": "选择 MCP 类型",
-      "enable": "启用",
-      "enabled": "已启用",
-      "installed": "已安装",
-      "docs": "文档",
-      "requiresEnv": "需要环境变量",
-      "fetch": {
-        "name": "mcp-server-fetch",
-        "description": "通用 HTTP 请求工具，支持 GET/POST 等 HTTP 方法，适合快速请求接口/抓取网页数据"
-      },
-      "time": {
-        "name": "@modelcontextprotocol/server-time",
-        "description": "时间查询工具，提供当前时间、时区转换、日期计算等功能"
-      },
-      "memory": {
-        "name": "@modelcontextprotocol/server-memory",
-        "description": "知识图谱记忆系统，支持存储实体、关系和观察，让 AI 记住对话中的重要信息"
-      },
-      "sequential-thinking": {
-        "name": "@modelcontextprotocol/server-sequential-thinking",
-        "description": "顺序思考工具，帮助 AI 将复杂问题分解为多个步骤，逐步深入思考"
-      },
-      "context7": {
-        "name": "@upstash/context7-mcp",
-        "description": "Context7 文档搜索工具，提供最新的库文档和代码示例，配置 key 会有更高限额"
-      }
-    }
-  },
   "prompts": {
     "manage": "提示词",
     "title": "{{appName}} 提示词管理",
@@ -2429,10 +2268,6 @@
     "importMcpDescription": "请确认是否导入这些 MCP Servers",
     "promptImportSuccess": "提示词导入成功",
     "promptImportSuccessDescription": "已导入提示词: {{name}}",
-    "mcpImportSuccess": "MCP Servers 导入成功",
-    "mcpImportSuccessDescription": "成功导入 {{count}} 个服务器",
-    "mcpPartialSuccess": "部分导入成功",
-    "mcpPartialSuccessDescription": "成功: {{success}}, 失败: {{failed}}",
     "app": "应用类型",
     "providerName": "供应商名称",
     "homepage": "官网地址",
@@ -2459,16 +2294,6 @@
     "configUrl": "配置文件 URL",
     "configMergeError": "合并配置文件失败",
     "primaryEndpoint": "主",
-    "mcp": {
-      "title": "批量导入 MCP Servers",
-      "targetApps": "目标应用",
-      "serverCount": "MCP Servers ({{count}} 个)",
-      "enabledWarning": "导入后将立即写入所有指定应用的配置文件",
-      "command": "命令",
-      "args": "参数",
-      "env": "环境",
-      "url": "地址"
-    },
     "prompt": {
       "title": "导入系统提示词",
       "app": "应用",

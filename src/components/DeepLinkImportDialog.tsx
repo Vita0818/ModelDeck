@@ -15,7 +15,6 @@ import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
 import { PromptConfirmation } from "./deeplink/PromptConfirmation";
-import { McpConfirmation } from "./deeplink/McpConfirmation";
 import { ProviderIcon } from "./ProviderIcon";
 import {
   classifyEndpoint,
@@ -37,24 +36,6 @@ export function DeepLinkImportDialog() {
   const [request, setRequest] = useState<DeepLinkImportRequest | null>(null);
   const [isImporting, setIsImporting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
-  // 容错判断：MCP 导入结果可能缺少 type 字段
-  const isMcpImportResult = (
-    value: unknown,
-  ): value is {
-    importedCount: number;
-    importedIds: string[];
-    failed: Array<{ id: string; error: string }>;
-    type?: "mcp";
-  } => {
-    if (!value || typeof value !== "object") return false;
-    const v = value as Record<string, unknown>;
-    return (
-      typeof v.importedCount === "number" &&
-      Array.isArray(v.importedIds) &&
-      Array.isArray(v.failed)
-    );
-  };
 
   useEffect(() => {
     // Listen for deep link import events
@@ -106,38 +87,6 @@ export function DeepLinkImportDialog() {
 
     try {
       const result = await deeplinkApi.importFromDeeplink(request);
-      const refreshMcp = async (summary: {
-        importedCount: number;
-        importedIds: string[];
-        failed: Array<{ id: string; error: string }>;
-      }) => {
-        // 强制刷新 MCP 相关缓存，确保管理页重新从数据库加载
-        await queryClient.invalidateQueries({
-          queryKey: ["mcp", "all"],
-          refetchType: "all",
-        });
-        await queryClient.refetchQueries({
-          queryKey: ["mcp", "all"],
-          type: "all",
-        });
-
-        if (summary.failed.length > 0) {
-          toast.warning(t("deeplink.mcpPartialSuccess"), {
-            description: t("deeplink.mcpPartialSuccessDescription", {
-              success: summary.importedCount,
-              failed: summary.failed.length,
-            }),
-          });
-        } else {
-          toast.success(t("deeplink.mcpImportSuccess"), {
-            description: t("deeplink.mcpImportSuccessDescription", {
-              count: summary.importedCount,
-            }),
-            closeButton: true,
-          });
-        }
-      };
-
       // Handle different result types
       if ("type" in result) {
         if (result.type === "provider") {
@@ -163,12 +112,7 @@ export function DeepLinkImportDialog() {
             }),
             closeButton: true,
           });
-        } else if (result.type === "mcp") {
-          await refreshMcp(result);
         }
-      } else if (isMcpImportResult(result)) {
-        // 兜底处理：旧版本后端可能未返回 type 字段
-        await refreshMcp(result);
       } else {
         // Legacy return type (string ID) - assume provider
         await queryClient.invalidateQueries({
@@ -246,8 +190,6 @@ export function DeepLinkImportDialog() {
     switch (request.resource) {
       case "prompt":
         return t("deeplink.importPrompt");
-      case "mcp":
-        return t("deeplink.importMcp");
       default:
         return t("deeplink.confirmImport");
     }
@@ -258,8 +200,6 @@ export function DeepLinkImportDialog() {
     switch (request.resource) {
       case "prompt":
         return t("deeplink.importPromptDescription");
-      case "mcp":
-        return t("deeplink.importMcpDescription");
       default:
         return t("deeplink.confirmImportDescription");
     }
@@ -280,9 +220,6 @@ export function DeepLinkImportDialog() {
             <div className="space-y-4 px-8 py-4 max-h-[60vh] overflow-y-auto [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:block [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-200 dark:[&::-webkit-scrollbar-thumb]:bg-gray-700">
               {request.resource === "prompt" && (
                 <PromptConfirmation request={request} />
-              )}
-              {request.resource === "mcp" && (
-                <McpConfirmation request={request} />
               )}
 
               {/* Legacy Provider View */}

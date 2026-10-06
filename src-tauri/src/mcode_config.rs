@@ -461,9 +461,9 @@ mod tests {
 mod capability_tests {
     use super::*;
     use crate::{
-        app_config::{AppType, McpApps, McpServer},
+        app_config::AppType,
         database::Database,
-        services::{prompt::PromptService, McpService},
+        services::prompt::PromptService,
         store::AppState,
     };
     use serde_json::json;
@@ -477,38 +477,6 @@ mod capability_tests {
         let db = Arc::new(Database::memory().unwrap());
         let state = AppState::new(db.clone());
         fs::create_dir_all(data_dir()).unwrap();
-        let mcp_path = data_dir().join("mcp.json");
-        let original = json!({"extension":42,"mcpServers":{"keep":{"type":"sse","url":"https://example.com/sse","enabled":false}}});
-        fs::write(&mcp_path, original.to_string()).unwrap();
-        let server = McpServer {
-            id: "cc-switch-validation".into(),
-            name: "Validation".into(),
-            server: json!({"type":"stdio","command":std::env::var("MCODE_TEST_NODE").unwrap(),"args":[std::env::var("MCODE_TEST_MCP_SERVER").unwrap()]}),
-            apps: McpApps {
-                mcode: true,
-                ..Default::default()
-            },
-            description: None,
-            homepage: None,
-            docs: None,
-            tags: vec![],
-        };
-        McpService::upsert_server(&state, server.clone()).unwrap();
-        assert!(db.get_all_mcp_servers().unwrap()[&server.id].apps.mcode);
-        McpService::toggle_app(&state, &server.id, AppType::Mcode, false).unwrap();
-        assert_eq!(
-            serde_json::from_str::<Value>(&fs::read_to_string(&mcp_path).unwrap()).unwrap(),
-            original
-        );
-        McpService::toggle_app(&state, &server.id, AppType::Mcode, true).unwrap();
-        McpService::delete_server(&state, &server.id).unwrap();
-        assert_eq!(
-            serde_json::from_str::<Value>(&fs::read_to_string(&mcp_path).unwrap()).unwrap(),
-            original
-        );
-        McpService::upsert_server(&state, server).unwrap();
-        crate::mcp::mcode::import(&state).unwrap();
-        assert!(!db.get_all_mcp_servers().unwrap()["keep"].apps.mcode);
         let path = crate::prompt_files::prompt_file_path(&AppType::Mcode).unwrap();
         fs::write(
             &path,

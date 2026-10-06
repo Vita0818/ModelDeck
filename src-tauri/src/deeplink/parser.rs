@@ -59,7 +59,6 @@ pub fn parse_deeplink_url(url_str: &str) -> Result<DeepLinkImportRequest, AppErr
     match resource.as_str() {
         "provider" => parse_provider_deeplink(&params, version, resource),
         "prompt" => parse_prompt_deeplink(&params, version, resource),
-        "mcp" => parse_mcp_deeplink(&params, version, resource),
         _ => Err(AppError::InvalidInput(format!(
             "Unsupported resource type: {resource}"
         ))),
@@ -158,7 +157,6 @@ fn parse_provider_deeplink(
         opus_model,
         content: None,
         description: None,
-        apps: None,
         config,
         config_format,
         config_url,
@@ -225,78 +223,8 @@ fn parse_prompt_deeplink(
         haiku_model: None,
         sonnet_model: None,
         opus_model: None,
-        apps: None,
         config: None,
         config_format: None,
-        config_url: None,
-        usage_enabled: None,
-        usage_script: None,
-        usage_api_key: None,
-        usage_base_url: None,
-        usage_access_token: None,
-        usage_user_id: None,
-        usage_auto_interval: None,
-    })
-}
-
-/// Parse MCP deep link parameters
-fn parse_mcp_deeplink(
-    params: &HashMap<String, String>,
-    version: String,
-    resource: String,
-) -> Result<DeepLinkImportRequest, AppError> {
-    let apps = params
-        .get("apps")
-        .ok_or_else(|| AppError::InvalidInput("Missing 'apps' parameter for MCP".to_string()))?
-        .clone();
-
-    // Validate apps format
-    for app in apps.split(',') {
-        let trimmed = app.trim();
-        if !matches!(
-            trimmed,
-            "claude"
-                | "codex"
-                | "gemini"
-                | "grokbuild"
-                | "grok"
-                | "opencode"
-                | "openclaw"
-                | "hermes"
-        ) {
-            return Err(AppError::InvalidInput(format!(
-                "Invalid app in 'apps': must be 'claude', 'codex', 'gemini', 'grokbuild', 'opencode', 'openclaw', or 'hermes', got '{trimmed}'"
-            )));
-        }
-    }
-
-    let config = params
-        .get("config")
-        .ok_or_else(|| AppError::InvalidInput("Missing 'config' parameter for MCP".to_string()))?
-        .clone();
-
-    let enabled = params.get("enabled").and_then(|v| v.parse::<bool>().ok());
-
-    Ok(DeepLinkImportRequest {
-        version,
-        resource,
-        apps: Some(apps),
-        enabled,
-        config: Some(config),
-        config_format: Some("json".to_string()), // MCP config is always JSON
-        app: None,
-        name: None,
-        icon: None,
-        homepage: None,
-        endpoint: None,
-        api_key: None,
-        model: None,
-        notes: None,
-        haiku_model: None,
-        sonnet_model: None,
-        opus_model: None,
-        content: None,
-        description: None,
         config_url: None,
         usage_enabled: None,
         usage_script: None,

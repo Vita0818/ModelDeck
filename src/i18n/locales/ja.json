@@ -1977,167 +1977,6 @@
     "officialDescription": "公式ログイン。API Key 不要",
     "presetDescription": "プリセットを使用。API Key だけ入力すれば OK"
   },
-  "mcp": {
-    "title": "MCP 管理",
-    "import": "インポート",
-    "importExisting": "既存をインポート",
-    "addMcp": "MCPを追加",
-    "claudeTitle": "Claude Code MCP 管理",
-    "codexTitle": "Codex MCP 管理",
-    "geminiTitle": "Gemini MCP 管理",
-    "unifiedPanel": {
-      "title": "MCP サーバー管理",
-      "addServer": "サーバーを追加",
-      "editServer": "サーバーを編集",
-      "deleteServer": "サーバーを削除",
-      "deleteConfirm": "サーバー「{{id}}」を削除しますか？この操作は元に戻せません。",
-      "noServers": "まだサーバーがありません",
-      "enabledApps": "有効なアプリ",
-      "noImportFound": "インポートする MCP サーバーが見つかりませんでした。すべてのサーバーは ModelDeck で管理されています。",
-      "importSuccess": "{{count}} 個の MCP サーバーをインポートしました",
-      "searchPlaceholder": "MCP の名前、説明、タグ、コマンドを検索...",
-      "searchAriaLabel": "管理中の MCP サーバーを検索",
-      "noSearchResults": "検索に一致する MCP サーバーがありません",
-      "apps": {
-        "claude": "Claude",
-        "codex": "Codex",
-        "gemini": "Gemini",
-        "grokbuild": "Grok Build",
-        "opencode": "OpenCode",
-        "openclaw": "OpenClaw",
-        "hermes": "Hermes",
-        "mcode": "MiniMax Code"
-      }
-    },
-    "userLevelPath": "ユーザーレベルの MCP パス",
-    "serverList": "サーバー一覧",
-    "loading": "読み込み中...",
-    "empty": "MCP サーバーがありません",
-    "emptyDescription": "右上のボタンから最初の MCP サーバーを追加してください",
-    "add": "MCP を追加",
-    "addServer": "MCP を追加",
-    "editServer": "MCP を編集",
-    "addClaudeServer": "Claude Code MCP を追加",
-    "editClaudeServer": "Claude Code MCP を編集",
-    "addCodexServer": "Codex MCP を追加",
-    "editCodexServer": "Codex MCP を編集",
-    "configPath": "設定パス",
-    "serverCount": "MCP サーバー: {{count}} 件",
-    "enabledCount": "{{count}} 件が有効",
-    "template": {
-      "fetch": "クイックテンプレート: mcp-fetch"
-    },
-    "form": {
-      "title": "MCP ID（ユニーク）",
-      "titlePlaceholder": "my-mcp-server",
-      "name": "表示名",
-      "namePlaceholder": "例: @modelcontextprotocol/server-time",
-      "enabledApps": "適用するアプリ",
-      "noAppsWarning": "少なくとも 1 つ選択してください",
-      "description": "説明",
-      "descriptionPlaceholder": "任意の説明",
-      "tags": "タグ（カンマ区切り）",
-      "tagsPlaceholder": "stdio, time, utility",
-      "homepage": "ホームページ",
-      "homepagePlaceholder": "https://example.com",
-      "docs": "ドキュメント",
-      "docsPlaceholder": "https://example.com/docs",
-      "additionalInfo": "追加情報",
-      "jsonConfig": "JSON 全設定",
-      "jsonConfigOrPrefix": "JSON 全設定、または",
-      "tomlConfigOrPrefix": "TOML 全設定、または",
-      "jsonPlaceholder": "{\n  \"type\": \"stdio\",\n  \"command\": \"uvx\",\n  \"args\": [\"mcp-server-fetch\"]\n}",
-      "tomlConfig": "TOML 全設定",
-      "tomlPlaceholder": "type = \"stdio\"\ncommand = \"uvx\"\nargs = [\"mcp-server-fetch\"]",
-      "useWizard": "設定ウィザード",
-      "syncOtherSide": "{{target}} にも反映",
-      "syncOtherSideHint": "{{target}} に同じ設定を書き込みます。既存の同一 ID は上書きされます。",
-      "willOverwriteWarning": "{{target}} の既存設定を上書きします"
-    },
-    "wizard": {
-      "title": "MCP 設定ウィザード",
-      "hint": "MCP サーバーを素早く設定し JSON を自動生成します",
-      "type": "タイプ",
-      "typeStdio": "stdio",
-      "typeHttp": "http",
-      "typeSse": "sse",
-      "command": "コマンド",
-      "commandPlaceholder": "npx または uvx",
-      "args": "引数",
-      "argsPlaceholder": "arg1\narg2",
-      "env": "環境変数",
-      "envPlaceholder": "KEY1=value1\nKEY2=value2",
-      "url": "URL",
-      "urlPlaceholder": "https://api.example.com/mcp",
-      "urlRequired": "URL を入力してください",
-      "headers": "ヘッダー（任意）",
-      "headersPlaceholder": "Authorization: Bearer your_token_here\nContent-Type: application/json",
-      "preview": "設定プレビュー",
-      "apply": "設定を反映"
-    },
-    "id": "識別子（ユニーク）",
-    "type": "タイプ",
-    "command": "コマンド",
-    "validateCommand": "コマンドを検証",
-    "args": "引数",
-    "argsPlaceholder": "例: mcp-server-fetch --help",
-    "env": "環境変数（1 行に 1 件、KEY=VALUE）",
-    "envPlaceholder": "FOO=bar\nHELLO=world",
-    "reset": "リセット",
-    "msg": {
-      "saved": "保存しました",
-      "deleted": "削除しました",
-      "enabled": "有効化しました",
-      "disabled": "無効化しました",
-      "templateAdded": "テンプレートを追加しました"
-    },
-    "error": {
-      "idRequired": "識別子を入力してください",
-      "idExists": "この識別子は既に存在します。別のものを選んでください。",
-      "jsonInvalid": "JSON 形式が無効です",
-      "tomlInvalid": "TOML 形式が無効です",
-      "commandRequired": "コマンドを入力してください",
-      "singleServerObjectRequired": "単一の MCP サーバーオブジェクトを貼り付けてください（トップレベルの mcpServers は不要）",
-      "saveFailed": "保存に失敗しました",
-      "deleteFailed": "削除に失敗しました"
-    },
-    "validation": {
-      "ok": "コマンドが見つかりました",
-      "fail": "コマンドが見つかりません"
-    },
-    "confirm": {
-      "deleteTitle": "MCP サーバーを削除",
-      "deleteMessage": "MCP サーバー「{{id}}」を削除してもよろしいですか？この操作は元に戻せません。"
-    },
-    "presets": {
-      "title": "MCP タイプを選択",
-      "enable": "有効化",
-      "enabled": "有効",
-      "installed": "インストール済み",
-      "docs": "ドキュメント",
-      "requiresEnv": "環境変数が必要",
-      "fetch": {
-        "name": "mcp-server-fetch",
-        "description": "汎用 HTTP リクエストツール。GET/POST などに対応し、API テストや Web データ取得に最適です"
-      },
-      "time": {
-        "name": "@modelcontextprotocol/server-time",
-        "description": "現在時刻、タイムゾーン変換、日付計算を提供する時間クエリツール"
-      },
-      "memory": {
-        "name": "@modelcontextprotocol/server-memory",
-        "description": "エンティティ・関係・観測を扱うナレッジグラフ型メモリ。会話の重要情報を AI に記憶させます"
-      },
-      "sequential-thinking": {
-        "name": "@modelcontextprotocol/server-sequential-thinking",
-        "description": "複雑な問題をステップに分解して深く考えるためのシーケンシャル思考ツール"
-      },
-      "context7": {
-        "name": "@upstash/context7-mcp",
-        "description": "最新のライブラリドキュメントとコード例を提供する Context7 ドキュメント検索ツール。キー設定で上限が拡張されます"
-      }
-    }
-  },
   "prompts": {
     "manage": "プロンプト",
     "title": "{{appName}} プロンプト管理",
@@ -2429,10 +2268,6 @@
     "importMcpDescription": "これらの MCP サーバーをインポートするか確認してください",
     "promptImportSuccess": "プロンプトをインポートしました",
     "promptImportSuccessDescription": "インポートされたプロンプト: {{name}}",
-    "mcpImportSuccess": "MCP サーバーをインポートしました",
-    "mcpImportSuccessDescription": "{{count}} 件のサーバーをインポートしました",
-    "mcpPartialSuccess": "一部のみインポート成功",
-    "mcpPartialSuccessDescription": "成功: {{success}}、失敗: {{failed}}",
     "app": "アプリ種別",
     "providerName": "プロバイダー名",
     "homepage": "ホームページ",
@@ -2459,16 +2294,6 @@
     "configUrl": "設定ファイル URL",
     "configMergeError": "設定ファイルのマージに失敗しました",
     "primaryEndpoint": "メイン",
-    "mcp": {
-      "title": "MCP サーバーを一括インポート",
-      "targetApps": "ターゲットアプリ",
-      "serverCount": "MCP サーバー（{{count}} 件）",
-      "enabledWarning": "インポート後、指定したすべてのアプリに即座に書き込まれます",
-      "command": "コマンド",
-      "args": "引数",
-      "env": "環境変数",
-      "url": "URL"
-    },
     "prompt": {
       "title": "システムプロンプトをインポート",
       "app": "アプリ",

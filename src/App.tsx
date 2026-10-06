@@ -22,7 +22,6 @@ import {
   Brain,
   History,
   BarChart2,
-  Download,
   FolderOpen,
   KeyRound,
   Shield,
@@ -71,7 +70,6 @@ import type {
   PromptPrimaryAction,
 } from "@/components/prompts/PromptPanel";
 import { FirstRunNoticeDialog } from "@/components/FirstRunNoticeDialog";
-import { McpIcon } from "@/components/BrandIcons";
 import { Button } from "@/components/ui/button";
 import {
   useDisableCurrentOmo,
@@ -122,7 +120,6 @@ const PromptPanel = lazy(() => import("@/components/prompts/PromptPanel"));
 const HermesMemoryPanel = lazy(
   () => import("@/components/hermes/HermesMemoryPanel"),
 );
-const UnifiedMcpPanel = lazy(() => import("@/components/mcp/UnifiedMcpPanel"));
 const AgentsPanel = lazy(() =>
   import("@/components/agents/AgentsPanel").then((m) => ({
     default: m.AgentsPanel,
@@ -170,7 +167,6 @@ const VALID_VIEWS: View[] = [
   "providers",
   "settings",
   "prompts",
-  "mcp",
   "agents",
   "universal",
   "sessions",
@@ -205,7 +201,6 @@ function App() {
   const [currentView, setCurrentView] = useState<View>(getInitialView);
   const [settingsDefaultTab, setSettingsDefaultTab] = useState("general");
   const [isAddOpen, setIsAddOpen] = useState(false);
-  const [mcpManagementBusy, setMcpManagementBusy] = useState(false);
   const [promptManagementBusy, setPromptManagementBusy] = useState(false);
   const [promptNavigationBusy, setPromptNavigationBusy] = useState(false);
 
@@ -252,10 +247,6 @@ function App() {
 
   // Fallback from sessions view when switching to an app without session support
   useEffect(() => {
-    if (currentView === "mcp" && sharedFeatureApp === "pi") {
-      setCurrentView("providers");
-      return;
-    }
     if (
       currentView === "sessions" &&
       sharedFeatureApp !== "claude" &&
@@ -323,7 +314,6 @@ function App() {
   const promptPanelRef = useRef<PromptPanelHandle>(null);
   const [promptPrimaryAction, setPromptPrimaryAction] =
     useState<PromptPrimaryAction>("prompt");
-  const mcpPanelRef = useRef<any>(null);
   const {
     isRunning: isProxyRunning,
     takeoverStatus,
@@ -370,7 +360,6 @@ function App() {
     sharedFeatureApp === "hermes" ||
     sharedFeatureApp === "pi" ||
     sharedFeatureApp === "mcode";
-  const hasMcpSupport = sharedFeatureApp !== "pi";
 
   const {
     addProvider,
@@ -483,8 +472,7 @@ function App() {
   }, [activeApp, queryClient, refetch]);
 
   const currentViewRef = useRef(currentView);
-  const managementBusy =
-    modelClientBusy || mcpManagementBusy || promptNavigationBusy;
+  const managementBusy = modelClientBusy || promptNavigationBusy;
   const managementBusyRef = useRef(false);
   managementBusyRef.current = managementBusy;
 
@@ -720,14 +708,6 @@ function App() {
           );
         case "hermesMemory":
           return <HermesMemoryPanel />;
-        case "mcp":
-          return (
-            <UnifiedMcpPanel
-              ref={mcpPanelRef}
-              onOpenChange={() => setCurrentView("providers")}
-              onInteractionBlockedChange={setMcpManagementBusy}
-            />
-          );
         case "agents":
           return (
             <AgentsPanel onOpenChange={() => setCurrentView("providers")} />
@@ -1019,30 +999,6 @@ function App() {
                     )}
                   </Button>
                 )}
-                {currentView === "mcp" && (
-                  <>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      disabled={mcpManagementBusy}
-                      onClick={() => mcpPanelRef.current?.openImport()}
-                      className="hover:bg-black/5 disabled:opacity-100 dark:hover:bg-white/5"
-                    >
-                      <Download className="w-4 h-4 mr-2" />
-                      {t("mcp.importExisting")}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      disabled={mcpManagementBusy}
-                      onClick={() => mcpPanelRef.current?.openAdd()}
-                      className="hover:bg-black/5 disabled:opacity-100 dark:hover:bg-white/5"
-                    >
-                      <Plus className="w-4 h-4 mr-2" />
-                      {t("mcp.addMcp")}
-                    </Button>
-                  </>
-                )}
                 {currentView === "providers" && !isModelClient && (
                   <>
                     <div className="flex items-center gap-1 p-1 bg-muted rounded-xl">
@@ -1078,17 +1034,6 @@ function App() {
                             >
                               <LayoutDashboard className="w-4 h-4" />
                             </Button>
-                            {hasMcpSupport && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentView("mcp")}
-                                className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                title={t("mcp.title")}
-                              >
-                                <McpIcon size={16} />
-                              </Button>
-                            )}
                           </>
                         ) : activeApp === "openclaw" ? (
                           <>
@@ -1164,17 +1109,6 @@ function App() {
                             >
                               <History className="flex-shrink-0 w-4 h-4" />
                             </Button>
-                            {hasMcpSupport && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentView("mcp")}
-                                className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                                title={t("mcp.title")}
-                              >
-                                <McpIcon size={16} />
-                              </Button>
-                            )}
                           </>
                         )}
                       </div>

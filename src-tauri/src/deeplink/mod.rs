@@ -3,11 +3,9 @@
 //! This module implements the ccswitch:// protocol for importing configurations
 //! via deep links. Supports importing:
 //! - Provider configurations (Claude/Codex/Gemini)
-//! - MCP server configurations
 //! - Prompts
 //!
 
-mod mcp;
 mod parser;
 mod prompt;
 mod provider;
@@ -19,7 +17,6 @@ mod tests;
 use serde::{Deserialize, Serialize};
 
 // Re-export public API
-pub use mcp::import_mcp_from_deeplink;
 pub use parser::parse_deeplink_url;
 pub use prompt::import_prompt_from_deeplink;
 pub use provider::{import_provider_from_deeplink, parse_and_merge_config};
@@ -33,7 +30,7 @@ pub use provider::{import_provider_from_deeplink, parse_and_merge_config};
 pub struct DeepLinkImportRequest {
     /// Protocol version (e.g., "v1")
     pub version: String,
-    /// Resource type to import: "provider" | "prompt" | "mcp"
+    /// Resource type to import: "provider" | "prompt"
     pub resource: String,
 
     // ============ Common fields ============
@@ -84,10 +81,6 @@ pub struct DeepLinkImportRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
 
-    // ============ MCP-specific fields ============
-    /// Target applications for MCP (comma-separated: "claude,codex,gemini")
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub apps: Option<String>,
 
 
     // ============ Config file fields (v3.8+) ============

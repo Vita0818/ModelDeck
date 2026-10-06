@@ -18,7 +18,6 @@ use crate::database::{validate_cost_multiplier, validate_pricing_source};
 use crate::error::AppError;
 use crate::provider::{Provider, UsageResult};
 use crate::proxy::providers::codex_oauth_auth::CodexLiveAuthSwitchGuard;
-use crate::services::mcp::McpService;
 use crate::settings::CustomEndpoint;
 use crate::store::AppState;
 
@@ -85,18 +84,6 @@ pub fn reapply_current_codex_official_live(state: &AppState) -> Result<bool, App
         live::sync_live_for_provider_respecting_takeover(state, &AppType::Codex, provider)?;
     if outcome == LiveSyncOutcome::BackupOnly {
         return Ok(true);
-    }
-    // 重写 live 会整体替换 config.toml（有意设计），[mcp_servers] 随之丢失，
-    // 写完必须立刻从 DB 重新投影启用的 MCP。只投影 Codex 而非
-    // sync_all_enabled：后者按 AppType::all() 顺序逐应用短路，排在 Codex
-    // 前面的无关应用 live 损坏（如 ~/.claude.json 坏 JSON）会阻断 Codex
-    // 的重投影，让刚被清掉的 [mcp_servers] 无人补回。
-    // 投影失败降级为警告：走到这里 live 已按新开关状态落盘，开关事实上
-    // 已生效；若把错误上抛，save_settings 会回滚开关设置，制造"设置=旧值、
-    // live=新桶"的会话分裂——正是该回滚要防止的状态。MCP 投影可自愈
-    // （下次切换 / 任一 MCP 启停操作都会重新投影）。
-    if let Err(err) = McpService::sync_enabled_for_app(state, &AppType::Codex) {
-        log::warn!("统一会话开关重写 live 后重投影 Codex MCP 失败（将在下次同步时自愈）: {err}");
     }
     Ok(true)
 }
@@ -5454,11 +5441,6 @@ impl ProviderService {
                     ));
                 }
 
-                if let Err(err) = McpService::sync_enabled_for_app(state, &app_type) {
-                    log::warn!(
-                        "保存供应商后重投影 {app_type:?} MCP 失败（将在下次同步时自愈）: {err}"
-                    );
-                }
                 return Ok(true);
             }
 
@@ -5535,18 +5517,7 @@ impl ProviderService {
         state.db.save_provider(app_type.as_str(), &provider)?;
 
         if is_current {
-            let outcome =
-                live::sync_live_for_provider_respecting_takeover(state, &app_type, &provider)?;
-            if outcome == LiveSyncOutcome::WroteLive {
-                // MCP is stored in the database and projected after a successful
-                // live write. Keep the failure best-effort so the provider save
-                // itself is not reported as failed when MCP projection can retry.
-                if let Err(err) = McpService::sync_enabled_for_app(state, &app_type) {
-                    log::warn!(
-                        "保存供应商后重投影 {app_type:?} MCP 失败（将在下次同步时自愈）: {err}"
-                    );
-                }
-            }
+            live::sync_live_for_provider_respecting_takeover(state, &app_type, &provider)?;
         }
 
         Ok(true)
@@ -6070,17 +6041,6 @@ impl ProviderService {
             }
         }
 
-        // 切换重写了目标应用的 live，只重投影该应用的 MCP（Codex 的
-        // [mcp_servers] 与 live 同文件，整体替换后必须补回；其余应用的
-        // MCP 文件独立于 live，投影是幂等维护）。不用全量 sync_all_enabled：
-        // 无关应用的 live 损坏（如 ~/.claude.json 坏 JSON）不该阻断切换。
-        // 走到这里 DB is_current 与 live 都已落盘，切换事实上已成功；
-        // 投影失败上抛会让前端报"切换失败"制造分裂假象，故降级为警告
-        // （MCP 投影可自愈：下次切换 / 任一 MCP 启停都会重新投影）。
-        if let Err(err) = McpService::sync_enabled_for_app(state, &app_type) {
-            log::warn!("切换供应商后重投影 {app_type:?} MCP 失败（将在下次同步时自愈）: {err}");
-        }
-
         Ok(result)
     }
 
@@ -6113,7 +6073,7 @@ impl ProviderService {
             return Ok(());
         }
 
-        McpService::sync_enabled_for_app(state, &app_type)
+        Ok(())
     }
 
     pub fn migrate_legacy_common_config_usage(

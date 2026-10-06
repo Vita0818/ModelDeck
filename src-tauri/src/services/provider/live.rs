@@ -15,7 +15,6 @@ use crate::database::Database;
 use crate::error::AppError;
 use crate::provider::Provider;
 use crate::proxy::providers::codex_oauth_auth::{CodexLiveAuthSwitchGuard, CodexOAuthManager};
-use crate::services::mcp::McpService;
 use crate::store::AppState;
 
 use super::gemini_auth::{
@@ -1529,11 +1528,6 @@ pub(crate) fn sync_current_provider_for_app_to_live(
         }
     }
 
-    // 本函数语义是"把这个应用同步到 live"，MCP 重投影也只针对该应用；
-    // 全量 sync_all_enabled 会把无关应用的 live 损坏牵连进来。投影失败
-    // 上抛（不降级）：这里没有已变更的 DB 状态需要保护，调用方重试即可。
-    McpService::sync_enabled_for_app(state, app_type)?;
-
     Ok(())
 }
 
@@ -1720,10 +1714,6 @@ pub fn sync_current_to_live(state: &AppState) -> Result<(), AppError> {
         }
     }
 
-    // MCP sync is already best-effort per application.
-    if let Err(error) = McpService::sync_all_enabled(state) {
-        failures.push(format!("mcp: {error}"));
-    }
 
     if failures.is_empty() {
         Ok(())
