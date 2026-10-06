@@ -85,7 +85,7 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
     label: "Claude",
     icon: <ClaudeIcon size={14} />,
     activeClass:
-      "bg-warning/10 ring-1 ring-orange-500/20 hover:bg-warning/20 text-warning",
+      "bg-warning/10 ring-1 ring-warning/20 hover:bg-warning/20 text-warning",
     badgeClass:
       "bg-warning/10 text-warning hover:bg-warning/20 border-0 gap-1.5",
   },
@@ -93,7 +93,7 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
     label: "Claude Desktop",
     icon: <ClaudeIcon size={14} />,
     activeClass:
-      "bg-warning/10 ring-1 ring-amber-500/20 hover:bg-warning/20 text-warning",
+      "bg-warning/10 ring-1 ring-warning/20 hover:bg-warning/20 text-warning",
     badgeClass:
       "bg-warning/10 text-warning hover:bg-warning/20 border-0 gap-1.5",
   },
@@ -101,7 +101,7 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
     label: "Codex",
     icon: <CodexIcon size={14} />,
     activeClass:
-      "bg-success/10 ring-1 ring-green-500/20 hover:bg-success/20 text-success",
+      "bg-success/10 ring-1 ring-success/20 hover:bg-success/20 text-success",
     badgeClass:
       "bg-success/10 text-success hover:bg-success/20 border-0 gap-1.5",
   },
@@ -109,7 +109,7 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
     label: "Gemini",
     icon: <GeminiIcon size={14} />,
     activeClass:
-      "bg-primary/10 ring-1 ring-blue-500/20 hover:bg-primary/20 text-primary",
+      "bg-primary/10 ring-1 ring-primary/20 hover:bg-primary/20 text-primary",
     badgeClass:
       "bg-primary/10 text-primary hover:bg-primary/20 border-0 gap-1.5",
   },
@@ -124,7 +124,7 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
       />
     ),
     activeClass:
-      "bg-primary/10 ring-1 ring-cyan-500/20 hover:bg-primary/20 text-primary",
+      "bg-primary/10 ring-1 ring-primary/20 hover:bg-primary/20 text-primary",
     badgeClass:
       "bg-primary/10 text-primary hover:bg-primary/20 border-0 gap-1.5",
   },
@@ -139,7 +139,7 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
       />
     ),
     activeClass:
-      "bg-primary/10 ring-1 ring-indigo-500/20 hover:bg-primary/20 text-primary",
+      "bg-primary/10 ring-1 ring-primary/20 hover:bg-primary/20 text-primary",
     badgeClass:
       "bg-primary/10 text-primary hover:bg-primary/20 border-0 gap-1.5",
   },
@@ -147,7 +147,7 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
     label: "OpenClaw",
     icon: <OpenClawIcon size={14} />,
     activeClass:
-      "bg-destructive/10 ring-1 ring-rose-500/20 hover:bg-destructive/20 text-destructive",
+      "bg-destructive/10 ring-1 ring-destructive/20 hover:bg-destructive/20 text-destructive",
     badgeClass:
       "bg-destructive/10 text-destructive hover:bg-destructive/20 border-0 gap-1.5",
   },
@@ -162,7 +162,7 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
       />
     ),
     activeClass:
-      "bg-system-purple/10 ring-1 ring-violet-500/20 hover:bg-system-purple/20 text-system-purple dark:text-system-purple",
+      "bg-system-purple/10 ring-1 ring-system-purple/20 hover:bg-system-purple/20 text-system-purple dark:text-system-purple",
     badgeClass:
       "bg-system-purple/10 text-system-purple dark:text-system-purple hover:bg-system-purple/20 border-0 gap-1.5",
   },
@@ -176,7 +176,7 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
     label: "Pi",
     icon: <ProviderIcon icon="pi" name="Pi" size={14} showFallback={false} />,
     activeClass:
-      "bg-system-purple/10 ring-1 ring-fuchsia-500/20 hover:bg-system-purple/20 text-system-purple dark:text-system-purple",
+      "bg-system-purple/10 ring-1 ring-system-purple/20 hover:bg-system-purple/20 text-system-purple dark:text-system-purple",
     badgeClass:
       "bg-system-purple/10 text-system-purple dark:text-system-purple hover:bg-system-purple/20 border-0 gap-1.5",
   },
