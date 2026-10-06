@@ -215,14 +215,36 @@ html[data-window-active="false"] .status-heartbeat {
   .pi-thinking-popover[data-state] {
     animation: none;
   }
+
+  /*
+   * Global guard. Only a couple of components opted into reduced motion
+   * individually, so decorative CSS animation and transitions are collapsed
+   * here instead of per component.
+   *
+   * - 0.01ms rather than 0: `animationend` / `transitionend` still fire, so
+   *   Radix exit animations continue to unmount their content.
+   * - `.animate-spin` is exempt: a frozen loading spinner reads as a hung UI
+   *   rather than as a calmer one.
+   */
+  *:not(.animate-spin),
+  *:not(.animate-spin)::before,
+  *:not(.animate-spin)::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 ::-webkit-scrollbar {
   display: none;
 }
 
+/* Follow the themed ring token so the focus outline tracks light/dark and any
+   future accent change, instead of pinning one blue. */
 *:focus-visible {
-  @apply outline-2 outline-blue-500 outline-offset-2;
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
 }
 
 @layer utilities {

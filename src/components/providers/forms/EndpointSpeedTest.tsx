@@ -614,13 +614,13 @@ const EndpointSpeedTest: React.FC<EndpointSpeedTestProps> = ({
                         </div>
                       </div>
                     ) : isTesting ? (
-                      <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
+                      <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
                     ) : entry.error ? (
-                      <div className="text-xs text-gray-400">
+                      <div className="text-xs text-muted-foreground">
                         {t("endpointTest.failed")}
                       </div>
                     ) : (
-                      <div className="text-xs text-gray-400">—</div>
+                      <div className="text-xs text-muted-foreground">—</div>
                     )}
 
                     <button
