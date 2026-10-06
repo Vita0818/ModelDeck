@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Group, GroupTitle, Row } from "@/components/ui/group";
 import { settingsApi } from "@/lib/api";
 import { LanguageSettings } from "@/components/settings/LanguageSettings";
 import { ThemeSettings } from "@/components/settings/ThemeSettings";
@@ -245,38 +246,58 @@ export function SettingsPage({
               ref={tabScrollContainerRef}
               className="scroll-area flex-1 px-7 py-6 [&_[role=tabpanel]]:mx-auto [&_[role=tabpanel]]:w-full [&_[role=tabpanel]]:max-w-3xl"
             >
-              <TabsContent value="general" className="space-y-6 mt-0">
+              <TabsContent value="general" className="mt-0 space-y-7">
                 {settings ? (
-                  <motion.div
-                    initial={false}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="space-y-6"
-                  >
-                    <LanguageSettings
-                      value={settings.language}
-                      onChange={(lang) => handleAutoSave({ language: lang })}
-                    />
-                    <ThemeSettings />
+                  <>
+                    <section>
+                      <GroupTitle>{t("settings.appearance")}</GroupTitle>
+                      <Group>
+                        <Row
+                          label={t("settings.language")}
+                          description={t("settings.languageHint")}
+                          trailing={
+                            <LanguageSettings
+                              value={settings.language}
+                              onChange={(lang) =>
+                                handleAutoSave({ language: lang })
+                              }
+                            />
+                          }
+                        />
+                        <Row
+                          label={t("settings.theme")}
+                          description={t("settings.themeHint")}
+                          trailing={<ThemeSettings />}
+                        />
+                      </Group>
+                    </section>
+
                     <AppVisibilitySettings
                       settings={settings}
                       onChange={handleAutoSave}
                     />
+
+                    <section>
+                      <GroupTitle>{t("settings.windowBehavior")}</GroupTitle>
+                      <Group>
+                        <WindowSettings
+                          settings={settings}
+                          onChange={handleAutoSave}
+                        />
+                        <TerminalSettings
+                          value={settings.preferredTerminal}
+                          onChange={(terminal) =>
+                            handleAutoSave({ preferredTerminal: terminal })
+                          }
+                        />
+                      </Group>
+                    </section>
+
                     <CodexAuthSettings
                       settings={settings}
                       onChange={handleAutoSave}
                     />
-                    <WindowSettings
-                      settings={settings}
-                      onChange={handleAutoSave}
-                    />
-                    <TerminalSettings
-                      value={settings.preferredTerminal}
-                      onChange={(terminal) =>
-                        handleAutoSave({ preferredTerminal: terminal })
-                      }
-                    />
-                  </motion.div>
+                  </>
                 ) : null}
               </TabsContent>
 
@@ -317,14 +338,14 @@ export function SettingsPage({
                         value="directory"
                         className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
                       >
-                        <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 data-[state=open]:bg-muted/50">
+                        <AccordionTrigger>
                           <div className="flex items-center gap-3">
-                            <FolderSearch className="h-5 w-5 text-primary" />
+                            <FolderSearch className="size-[17px] text-muted-foreground" />
                             <div className="text-left">
-                              <h3 className="text-base font-semibold">
+                              <h3 className="text-base font-medium text-foreground">
                                 {t("settings.advanced.configDir.title")}
                               </h3>
-                              <p className="text-sm text-muted-foreground font-normal">
+                              <p className="text-sm font-normal text-muted-foreground">
                                 {t("settings.advanced.configDir.description")}
                               </p>
                             </div>
@@ -356,14 +377,14 @@ export function SettingsPage({
                         value="data"
                         className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
                       >
-                        <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 data-[state=open]:bg-muted/50">
+                        <AccordionTrigger>
                           <div className="flex items-center gap-3">
-                            <Database className="h-5 w-5 text-primary" />
+                            <Database className="size-[17px] text-muted-foreground" />
                             <div className="text-left">
-                              <h3 className="text-base font-semibold">
+                              <h3 className="text-base font-medium text-foreground">
                                 {t("settings.advanced.data.title")}
                               </h3>
-                              <p className="text-sm text-muted-foreground font-normal">
+                              <p className="text-sm font-normal text-muted-foreground">
                                 {t("settings.advanced.data.description")}
                               </p>
                             </div>
@@ -388,16 +409,16 @@ export function SettingsPage({
                         value="backup"
                         className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
                       >
-                        <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 data-[state=open]:bg-muted/50">
+                        <AccordionTrigger>
                           <div className="flex items-center gap-3">
                             <HardDriveDownload className="h-5 w-5 text-warning" />
                             <div className="text-left">
-                              <h3 className="text-base font-semibold">
+                              <h3 className="text-base font-medium text-foreground">
                                 {t("settings.advanced.backup.title", {
                                   defaultValue: "Backup & Restore",
                                 })}
                               </h3>
-                              <p className="text-sm text-muted-foreground font-normal">
+                              <p className="text-sm font-normal text-muted-foreground">
                                 {t("settings.advanced.backup.description", {
                                   defaultValue:
                                     "Manage automatic backups, view and restore database snapshots",
@@ -421,14 +442,14 @@ export function SettingsPage({
                         value="cloudSync"
                         className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
                       >
-                        <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 data-[state=open]:bg-muted/50">
+                        <AccordionTrigger>
                           <div className="flex items-center gap-3">
-                            <Cloud className="h-5 w-5 text-primary" />
+                            <Cloud className="size-[17px] text-muted-foreground" />
                             <div className="text-left">
-                              <h3 className="text-base font-semibold">
+                              <h3 className="text-base font-medium text-foreground">
                                 {t("settings.advanced.cloudSync.title")}
                               </h3>
-                              <p className="text-sm text-muted-foreground font-normal">
+                              <p className="text-sm font-normal text-muted-foreground">
                                 {t("settings.advanced.cloudSync.description")}
                               </p>
                             </div>
@@ -448,14 +469,14 @@ export function SettingsPage({
                         value="connectivityCheck"
                         className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
                       >
-                        <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 data-[state=open]:bg-muted/50">
+                        <AccordionTrigger>
                           <div className="flex items-center gap-3">
                             <FlaskConical className="h-5 w-5 text-success" />
                             <div className="text-left">
-                              <h3 className="text-base font-semibold">
+                              <h3 className="text-base font-medium text-foreground">
                                 {t("settings.advanced.connectivityCheck.title")}
                               </h3>
-                              <p className="text-sm text-muted-foreground font-normal">
+                              <p className="text-sm font-normal text-muted-foreground">
                                 {t(
                                   "settings.advanced.connectivityCheck.description",
                                 )}
@@ -472,14 +493,14 @@ export function SettingsPage({
                         value="logConfig"
                         className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
                       >
-                        <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 data-[state=open]:bg-muted/50">
+                        <AccordionTrigger>
                           <div className="flex items-center gap-3">
-                            <ScrollText className="h-5 w-5 text-primary" />
+                            <ScrollText className="size-[17px] text-muted-foreground" />
                             <div className="text-left">
-                              <h3 className="text-base font-semibold">
+                              <h3 className="text-base font-medium text-foreground">
                                 {t("settings.advanced.logConfig.title")}
                               </h3>
-                              <p className="text-sm text-muted-foreground font-normal">
+                              <p className="text-sm font-normal text-muted-foreground">
                                 {t("settings.advanced.logConfig.description")}
                               </p>
                             </div>

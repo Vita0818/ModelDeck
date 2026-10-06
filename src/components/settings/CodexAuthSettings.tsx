@@ -4,6 +4,7 @@ import { History, KeyRound } from "lucide-react";
 import { toast } from "sonner";
 import type { SettingsFormState } from "@/hooks/useSettings";
 import { ToggleRow } from "@/components/ui/toggle-row";
+import { Group, GroupTitle } from "@/components/ui/group";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { settingsApi } from "@/lib/api";
 
@@ -89,29 +90,29 @@ export function CodexAuthSettings({
   };
 
   return (
-    <section className="space-y-4">
-      <div className="flex items-center gap-2 pb-2 border-b border-border/40">
-        <KeyRound className="h-4 w-4 text-primary" />
-        <h3 className="text-sm font-medium">{t("settings.codexAuth")}</h3>
-      </div>
+    <section>
+      <GroupTitle>{t("settings.codexAuth")}</GroupTitle>
+      <Group>
+        <ToggleRow
+          icon={<KeyRound className="size-4" />}
+          title={t("settings.preserveCodexOfficialAuthOnSwitch")}
+          description={t(
+            "settings.preserveCodexOfficialAuthOnSwitchDescription",
+          )}
+          checked={settings.preserveCodexOfficialAuthOnSwitch ?? false}
+          onCheckedChange={(value) =>
+            onChange({ preserveCodexOfficialAuthOnSwitch: value })
+          }
+        />
 
-      <ToggleRow
-        icon={<KeyRound className="h-4 w-4 text-success" />}
-        title={t("settings.preserveCodexOfficialAuthOnSwitch")}
-        description={t("settings.preserveCodexOfficialAuthOnSwitchDescription")}
-        checked={settings.preserveCodexOfficialAuthOnSwitch ?? false}
-        onCheckedChange={(value) =>
-          onChange({ preserveCodexOfficialAuthOnSwitch: value })
-        }
-      />
-
-      <ToggleRow
-        icon={<History className="h-4 w-4 text-primary" />}
-        title={t("settings.unifyCodexSessionHistory")}
-        description={t("settings.unifyCodexSessionHistoryDescription")}
-        checked={settings.unifyCodexSessionHistory ?? false}
-        onCheckedChange={handleUnifyHistoryChange}
-      />
+        <ToggleRow
+          icon={<History className="size-4" />}
+          title={t("settings.unifyCodexSessionHistory")}
+          description={t("settings.unifyCodexSessionHistoryDescription")}
+          checked={settings.unifyCodexSessionHistory ?? false}
+          onCheckedChange={handleUnifyHistoryChange}
+        />
+      </Group>
 
       <ConfirmDialog
         isOpen={showEnableConfirm}

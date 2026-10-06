@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { ProviderIcon } from "@/components/ProviderIcon";
+import { Group, GroupFooter, GroupTitle } from "@/components/ui/group";
+import { ToggleRow } from "@/components/ui/toggle-row";
 import type { SettingsFormState } from "@/hooks/useSettings";
 import type { VisibleApps } from "@/types";
 import {
@@ -44,73 +44,25 @@ export function AppVisibilitySettings({
   };
 
   return (
-    <section className="space-y-2">
-      <header className="space-y-1">
-        <h3 className="text-sm font-medium">
-          {t("settings.appVisibility.title")}
-        </h3>
-        <p className="text-xs text-muted-foreground">
-          {t("settings.appVisibility.description")}
-        </p>
-      </header>
-      <div className="flex flex-wrap gap-1 rounded-md border border-border bg-background p-1">
+    <section>
+      <GroupTitle>{t("settings.appVisibility.title")}</GroupTitle>
+      <Group>
         {MODELDECK_CLIENTS.map((app) => {
           const isVisible = visibleApps[app.id] ?? true;
-          // Disable button if this is the last visible app
-          const isDisabled = isVisible && visibleCount <= 1;
-
           return (
-            <AppButton
+            <ToggleRow
               key={app.id}
-              active={isVisible}
-              disabled={isDisabled}
-              onClick={() => handleToggle(app.id)}
-              icon={app.icon}
-              name={app.name}
-            >
-              {app.name}
-            </AppButton>
+              icon={<ProviderIcon icon={app.icon} name={app.name} size={18} />}
+              title={app.name}
+              checked={isVisible}
+              // Hiding the last visible client would leave no destination.
+              disabled={isVisible && visibleCount <= 1}
+              onCheckedChange={() => handleToggle(app.id)}
+            />
           );
         })}
-      </div>
+      </Group>
+      <GroupFooter>{t("settings.appVisibility.description")}</GroupFooter>
     </section>
-  );
-}
-
-interface AppButtonProps {
-  active: boolean;
-  disabled?: boolean;
-  onClick: () => void;
-  icon: string;
-  name: string;
-  children: React.ReactNode;
-}
-
-function AppButton({
-  active,
-  disabled,
-  onClick,
-  icon,
-  name,
-  children,
-}: AppButtonProps) {
-  return (
-    <Button
-      type="button"
-      aria-label={name}
-      onClick={onClick}
-      disabled={disabled}
-      size="sm"
-      variant={active ? "default" : "ghost"}
-      className={cn(
-        "min-w-[90px] w-auto gap-1.5 px-3",
-        active
-          ? "shadow-sm"
-          : "text-muted-foreground hover:text-foreground hover:bg-muted",
-      )}
-    >
-      <ProviderIcon icon={icon} name={name} size={14} />
-      {children}
-    </Button>
   );
 }

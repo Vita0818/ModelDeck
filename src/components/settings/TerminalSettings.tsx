@@ -6,6 +6,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Terminal as TerminalIcon } from "lucide-react";
+import { Row } from "@/components/ui/group";
 import { isMac, isWindows, isLinux } from "@/lib/platform";
 
 // Terminal options per platform
@@ -88,28 +90,24 @@ export function TerminalSettings({ value, onChange }: TerminalSettingsProps) {
   const currentValue = value || defaultTerminal;
 
   return (
-    <section className="space-y-2">
-      <header className="space-y-1">
-        <h3 className="text-sm font-medium">{t("settings.terminal.title")}</h3>
-        <p className="text-xs text-muted-foreground">
-          {t("settings.terminal.description")}
-        </p>
-      </header>
-      <Select value={currentValue} onValueChange={onChange}>
-        <SelectTrigger className="w-[200px]">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {terminals.map((terminal) => (
-            <SelectItem key={terminal.value} value={terminal.value}>
-              {t(terminal.labelKey)}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      <p className="text-xs text-muted-foreground">
-        {t("settings.terminal.fallbackHint")}
-      </p>
-    </section>
+    <Row
+      icon={<TerminalIcon className="size-4" />}
+      label={t("settings.terminal.title")}
+      description={t("settings.terminal.description")}
+      trailing={
+        <Select value={currentValue} onValueChange={onChange}>
+          <SelectTrigger className="w-52">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {terminals.map((terminal) => (
+              <SelectItem key={terminal.value} value={terminal.value}>
+                {t(terminal.labelKey)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      }
+    />
   );
 }

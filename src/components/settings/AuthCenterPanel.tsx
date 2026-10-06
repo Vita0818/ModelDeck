@@ -49,8 +49,8 @@ export function AuthCenterPanel({ authScrollTarget }: AuthCenterPanelProps) {
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <ShieldCheck className="h-5 w-5 text-primary" />
-              <h3 className="text-base font-semibold">
+              <ShieldCheck className="size-[17px] text-muted-foreground" />
+              <h3 className="text-base font-medium text-foreground">
                 {t("settings.authCenter.title", {
                   defaultValue: "OAuth 认证中心",
                 })}

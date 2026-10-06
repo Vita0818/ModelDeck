@@ -880,7 +880,8 @@
       "defaultCostMultiplierRequired": "預設倍率不能為空",
       "defaultCostMultiplierInvalid": "預設倍率格式不正確"
     },
-    "saveFailedGeneric": "儲存失敗，請重試"
+    "saveFailedGeneric": "儲存失敗，請重試",
+    "appearance": "外觀"
   },
   "apps": {
     "claude": "Claude",
