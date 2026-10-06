@@ -99,7 +99,7 @@ export function ProxyTabContent({
         {/* Local Proxy */}
         <AccordionItem
           value="proxy"
-          className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
+         
         >
           <AccordionTrigger>
             <div className="flex items-center gap-3">
@@ -140,7 +140,7 @@ export function ProxyTabContent({
         {/* Auto Failover */}
         <AccordionItem
           value="failover"
-          className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
+         
         >
           <AccordionTrigger>
             <div className="flex items-center gap-3">
@@ -225,7 +225,7 @@ export function ProxyTabContent({
         {/* Rectifier */}
         <AccordionItem
           value="rectifier"
-          className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
+         
         >
           <AccordionTrigger>
             <div className="flex items-center gap-3">
@@ -248,7 +248,7 @@ export function ProxyTabContent({
         {/* Global Outbound Proxy */}
         <AccordionItem
           value="globalProxy"
-          className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
+         
         >
           <AccordionTrigger>
             <div className="flex items-center gap-3">

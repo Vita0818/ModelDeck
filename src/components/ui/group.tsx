@@ -25,6 +25,13 @@ export function GroupTitle({
   );
 }
 
+/**
+ * The card shape shared by grouped lists and disclosure items, so a settings
+ * group and a collapsed accordion sit on the same surface.
+ */
+export const groupSurface =
+  "overflow-hidden rounded-xl border border-border bg-card shadow-xs";
+
 export function Group({
   className,
   ...props
@@ -32,7 +39,7 @@ export function Group({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-xl border border-border bg-card shadow-xs",
+        groupSurface,
         "[&>*+*]:border-t [&>*+*]:border-separator",
         className,
       )}

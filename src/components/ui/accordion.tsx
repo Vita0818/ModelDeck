@@ -2,6 +2,7 @@ import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { groupSurface } from "@/components/ui/group";
 
 const Accordion = AccordionPrimitive.Root;
 
@@ -9,7 +10,11 @@ const AccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
 >(({ className, ...props }, ref) => (
-  <AccordionPrimitive.Item ref={ref} className={className} {...props} />
+  <AccordionPrimitive.Item
+    ref={ref}
+    className={cn(groupSurface, className)}
+    {...props}
+  />
 ));
 AccordionItem.displayName = "AccordionItem";
 
@@ -37,6 +42,35 @@ const AccordionTrigger = React.forwardRef<
 ));
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 
+/** Standard disclosure label: leading glyph, title, and a secondary line. */
+function AccordionHeading({
+  icon,
+  title,
+  description,
+}: {
+  icon?: React.ReactNode;
+  title: React.ReactNode;
+  description?: React.ReactNode;
+}) {
+  return (
+    <span className="flex min-w-0 items-center gap-3">
+      {icon && (
+        <span className="grid size-[17px] shrink-0 place-items-center text-muted-foreground [&>svg]:size-[17px]">
+          {icon}
+        </span>
+      )}
+      <span className="flex min-w-0 flex-col gap-0.5">
+        <span className="text-base font-medium text-foreground">{title}</span>
+        {description && (
+          <span className="text-sm font-normal text-muted-foreground">
+            {description}
+          </span>
+        )}
+      </span>
+    </span>
+  );
+}
+
 const AccordionContent = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
@@ -53,4 +87,10 @@ const AccordionContent = React.forwardRef<
 ));
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;
 
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionHeading,
+  AccordionContent,
+};

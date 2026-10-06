@@ -529,7 +529,7 @@ export function UsageDashboard({
           >
             <AccordionItem
               value="pricing"
-              className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
+             
             >
               <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted data-[state=open]:bg-muted">
                 <div className="flex items-center gap-3">
@@ -550,7 +550,7 @@ export function UsageDashboard({
             </AccordionItem>
             <AccordionItem
               value="maintenance"
-              className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
+             
             >
               <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted data-[state=open]:bg-muted">
                 <div className="flex items-center gap-3">

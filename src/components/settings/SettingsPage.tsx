@@ -29,6 +29,7 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
+  AccordionHeading,
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -334,24 +335,17 @@ export function SettingsPage({
                       defaultValue={[]}
                       className="w-full space-y-4"
                     >
-                      <AccordionItem
-                        value="directory"
-                        className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
-                      >
+                      <AccordionItem value="directory">
                         <AccordionTrigger>
-                          <div className="flex items-center gap-3">
-                            <FolderSearch className="size-[17px] text-muted-foreground" />
-                            <div className="text-left">
-                              <h3 className="text-base font-medium text-foreground">
-                                {t("settings.advanced.configDir.title")}
-                              </h3>
-                              <p className="text-sm font-normal text-muted-foreground">
-                                {t("settings.advanced.configDir.description")}
-                              </p>
-                            </div>
-                          </div>
+                          <AccordionHeading
+                            icon={<FolderSearch />}
+                            title={t("settings.advanced.configDir.title")}
+                            description={t(
+                              "settings.advanced.configDir.description",
+                            )}
+                          />
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
+                        <AccordionContent>
                           <DirectorySettings
                             appConfigDir={appConfigDir}
                             resolvedDirs={resolvedDirs}
@@ -373,24 +367,17 @@ export function SettingsPage({
                         </AccordionContent>
                       </AccordionItem>
 
-                      <AccordionItem
-                        value="data"
-                        className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
-                      >
+                      <AccordionItem value="data">
                         <AccordionTrigger>
-                          <div className="flex items-center gap-3">
-                            <Database className="size-[17px] text-muted-foreground" />
-                            <div className="text-left">
-                              <h3 className="text-base font-medium text-foreground">
-                                {t("settings.advanced.data.title")}
-                              </h3>
-                              <p className="text-sm font-normal text-muted-foreground">
-                                {t("settings.advanced.data.description")}
-                              </p>
-                            </div>
-                          </div>
+                          <AccordionHeading
+                            icon={<Database />}
+                            title={t("settings.advanced.data.title")}
+                            description={t(
+                              "settings.advanced.data.description",
+                            )}
+                          />
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
+                        <AccordionContent>
                           <ImportExportSection
                             status={importStatus}
                             selectedFile={selectedFile}
@@ -405,29 +392,23 @@ export function SettingsPage({
                         </AccordionContent>
                       </AccordionItem>
 
-                      <AccordionItem
-                        value="backup"
-                        className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
-                      >
+                      <AccordionItem value="backup">
                         <AccordionTrigger>
-                          <div className="flex items-center gap-3">
-                            <HardDriveDownload className="size-5 text-warning" />
-                            <div className="text-left">
-                              <h3 className="text-base font-medium text-foreground">
-                                {t("settings.advanced.backup.title", {
-                                  defaultValue: "Backup & Restore",
-                                })}
-                              </h3>
-                              <p className="text-sm font-normal text-muted-foreground">
-                                {t("settings.advanced.backup.description", {
-                                  defaultValue:
-                                    "Manage automatic backups, view and restore database snapshots",
-                                })}
-                              </p>
-                            </div>
-                          </div>
+                          <AccordionHeading
+                            icon={<HardDriveDownload />}
+                            title={t("settings.advanced.backup.title", {
+                              defaultValue: "Backup & Restore",
+                            })}
+                            description={t(
+                              "settings.advanced.backup.description",
+                              {
+                                defaultValue:
+                                  "Manage automatic backups, view and restore database snapshots",
+                              },
+                            )}
+                          />
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
+                        <AccordionContent>
                           <BackupListSection
                             backupIntervalHours={settings.backupIntervalHours}
                             backupRetainCount={settings.backupRetainCount}
@@ -438,24 +419,17 @@ export function SettingsPage({
                         </AccordionContent>
                       </AccordionItem>
 
-                      <AccordionItem
-                        value="cloudSync"
-                        className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
-                      >
+                      <AccordionItem value="cloudSync">
                         <AccordionTrigger>
-                          <div className="flex items-center gap-3">
-                            <Cloud className="size-[17px] text-muted-foreground" />
-                            <div className="text-left">
-                              <h3 className="text-base font-medium text-foreground">
-                                {t("settings.advanced.cloudSync.title")}
-                              </h3>
-                              <p className="text-sm font-normal text-muted-foreground">
-                                {t("settings.advanced.cloudSync.description")}
-                              </p>
-                            </div>
-                          </div>
+                          <AccordionHeading
+                            icon={<Cloud />}
+                            title={t("settings.advanced.cloudSync.title")}
+                            description={t(
+                              "settings.advanced.cloudSync.description",
+                            )}
+                          />
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
+                        <AccordionContent>
                           <WebdavSyncSection
                             config={settings?.webdavSync}
                             s3Config={settings?.s3Sync}
@@ -465,48 +439,34 @@ export function SettingsPage({
                         </AccordionContent>
                       </AccordionItem>
 
-                      <AccordionItem
-                        value="connectivityCheck"
-                        className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
-                      >
+                      <AccordionItem value="connectivityCheck">
                         <AccordionTrigger>
-                          <div className="flex items-center gap-3">
-                            <FlaskConical className="size-5 text-success" />
-                            <div className="text-left">
-                              <h3 className="text-base font-medium text-foreground">
-                                {t("settings.advanced.connectivityCheck.title")}
-                              </h3>
-                              <p className="text-sm font-normal text-muted-foreground">
-                                {t(
-                                  "settings.advanced.connectivityCheck.description",
-                                )}
-                              </p>
-                            </div>
-                          </div>
+                          <AccordionHeading
+                            icon={<FlaskConical />}
+                            title={t(
+                              "settings.advanced.connectivityCheck.title",
+                            )}
+                            description={t(
+                              "settings.advanced.connectivityCheck.description",
+                            )}
+                          />
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
+                        <AccordionContent>
                           <ConnectivityCheckConfigPanel />
                         </AccordionContent>
                       </AccordionItem>
 
-                      <AccordionItem
-                        value="logConfig"
-                        className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
-                      >
+                      <AccordionItem value="logConfig">
                         <AccordionTrigger>
-                          <div className="flex items-center gap-3">
-                            <ScrollText className="size-[17px] text-muted-foreground" />
-                            <div className="text-left">
-                              <h3 className="text-base font-medium text-foreground">
-                                {t("settings.advanced.logConfig.title")}
-                              </h3>
-                              <p className="text-sm font-normal text-muted-foreground">
-                                {t("settings.advanced.logConfig.description")}
-                              </p>
-                            </div>
-                          </div>
+                          <AccordionHeading
+                            icon={<ScrollText />}
+                            title={t("settings.advanced.logConfig.title")}
+                            description={t(
+                              "settings.advanced.logConfig.description",
+                            )}
+                          />
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
+                        <AccordionContent>
                           <LogConfigPanel />
                         </AccordionContent>
                       </AccordionItem>
