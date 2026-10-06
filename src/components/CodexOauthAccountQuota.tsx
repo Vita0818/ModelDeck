@@ -35,7 +35,7 @@ const CodexOauthAccountQuota: React.FC<CodexOauthAccountQuotaProps> = ({
   // 这样账号会立刻显示、用量数据到达后原地平滑替换，不产生跳版。
   if (loading && !quota) {
     return (
-      <div className="mt-3 flex items-center justify-center rounded-xl border border-border bg-card py-5 shadow-sm">
+      <div className="mt-3 flex items-center justify-center rounded-xl border border-border bg-card py-5 shadow-xs">
         <Loader2 className="size-4 animate-spin text-muted-foreground" />
       </div>
     );

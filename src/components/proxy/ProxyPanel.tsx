@@ -238,7 +238,7 @@ export function ProxyPanel({
         />
 
         {/* [2] Proxy service toggle — always visible */}
-        <div className="flex items-center justify-between rounded-xl border border-border bg-card p-4 transition-colors hover:bg-muted">
+        <div className="flex items-center justify-between rounded-xl border border-border bg-card p-4 shadow-xs transition-colors hover:bg-muted">
           <div className="flex items-center gap-3">
             <div className="flex size-8 items-center justify-center rounded-lg bg-background ring-1 ring-border">
               <Power className="size-4 text-success" />

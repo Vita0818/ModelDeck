@@ -62,7 +62,7 @@ const CopilotQuotaFooter: React.FC<CopilotQuotaFooterProps> = ({
   if (!quota.success) {
     if (inline) {
       return (
-        <div className="inline-flex items-center gap-2 text-xs rounded-lg border border-border bg-card px-3 py-2 shadow-sm">
+        <div className="inline-flex items-center gap-2 text-xs rounded-lg border border-border bg-card px-3 py-2 shadow-xs">
           <div className="flex items-center gap-1.5 text-destructive">
             <AlertCircle size={12} />
             <span>{quota.error || t("subscription.queryFailed")}</span>
@@ -123,7 +123,7 @@ const CopilotQuotaFooter: React.FC<CopilotQuotaFooterProps> = ({
 
   // 展开模式
   return (
-    <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-sm">
+    <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-xs">
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs text-muted-foreground font-medium">
           {quota.plan || t("subscription.title")}

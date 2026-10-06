@@ -366,7 +366,7 @@ export function PricingConfigPanel() {
               <AlertDescription>{t("usage.noPricingData")}</AlertDescription>
             </Alert>
           ) : (
-            <div className="rounded-md bg-card shadow-sm">
+            <div className="rounded-md bg-card shadow-xs">
               <Table>
                 <TableHeader>
                   <TableRow>

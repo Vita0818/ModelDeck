@@ -26,11 +26,14 @@ export function GroupTitle({
 }
 
 /**
- * The card shape shared by grouped lists and disclosure items, so a settings
- * group and a collapsed accordion sit on the same surface.
+ * The resting card surface. Every panel that sits on the window background
+ * uses this, so radius and elevation cannot drift between them. Overlays
+ * (dialogs, popovers, menus) carry their own, heavier shadow.
  */
-export const groupSurface =
-  "overflow-hidden rounded-xl border border-border bg-card shadow-xs";
+export const cardSurface = "rounded-xl border border-border bg-card shadow-xs";
+
+/** The card surface for lists, which must clip rows at the rounded corners. */
+export const groupSurface = `overflow-hidden ${cardSurface}`;
 
 export function Group({
   className,

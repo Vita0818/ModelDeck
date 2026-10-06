@@ -233,7 +233,7 @@ export function UsageHero({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <Card className="relative overflow-hidden border border-border bg-card shadow-sm">
+      <Card className="relative overflow-hidden border border-border bg-card shadow-xs">
         <CardContent className="p-4 md:p-5">
           <div className="flex flex-col gap-4">
             {/* Top row: Main Token Count, Requests, Cost */}
@@ -270,7 +270,7 @@ export function UsageHero({
                 </div>
               </div>
 
-              <div className="flex items-center gap-5 bg-secondary px-4 py-2.5 rounded-xl border border-border shadow-sm">
+              <div className="flex items-center gap-5 bg-secondary px-4 py-2.5 rounded-xl border border-border shadow-xs">
                 <div className="flex flex-col">
                   <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
                     {t("usage.totalRequests")}
@@ -321,7 +321,7 @@ export function UsageHero({
                 accent="text-success"
               />
 
-              <div className="col-span-2 lg:col-span-1 flex flex-col justify-center rounded-xl border border-border bg-secondary p-3 shadow-sm">
+              <div className="col-span-2 lg:col-span-1 flex flex-col justify-center rounded-xl border border-border bg-secondary p-3 shadow-xs">
                 <div className="flex items-center justify-between text-[11px] mb-2">
                   <span className="text-muted-foreground font-medium">
                     {t("usage.cacheHitRate", "缓存命中率")}
@@ -368,7 +368,7 @@ function MiniStat({
 }: MiniStatProps) {
   return (
     <div
-      className="flex flex-col gap-1 rounded-xl border border-border bg-secondary p-3 shadow-sm"
+      className="flex flex-col gap-1 rounded-xl border border-border bg-secondary p-3 shadow-xs"
       title={tooltip}
     >
       <div

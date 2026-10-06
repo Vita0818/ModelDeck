@@ -131,7 +131,7 @@ export const SubscriptionQuotaView: React.FC<SubscriptionQuotaViewProps> = ({
   if (quota.credentialStatus === "expired" && !quota.success) {
     if (inline) {
       return (
-        <div className="inline-flex items-center gap-2 text-xs rounded-lg border border-warning/40 dark:border-warning/40 bg-warning/10 dark:bg-warning/20 px-3 py-2 shadow-sm">
+        <div className="inline-flex items-center gap-2 text-xs rounded-lg border border-warning/40 dark:border-warning/40 bg-warning/10 dark:bg-warning/20 px-3 py-2 shadow-xs">
           <div className="flex items-center gap-1.5 text-warning">
             <AlertCircle size={12} />
             <span>{t("subscription.expired")}</span>
@@ -148,7 +148,7 @@ export const SubscriptionQuotaView: React.FC<SubscriptionQuotaViewProps> = ({
       );
     }
     return (
-      <div className="mt-3 rounded-xl border border-warning/40 dark:border-warning/40 bg-warning/10 dark:bg-warning/20 px-4 py-3 shadow-sm">
+      <div className="mt-3 rounded-xl border border-warning/40 dark:border-warning/40 bg-warning/10 dark:bg-warning/20 px-4 py-3 shadow-xs">
         <div className="flex items-center justify-between gap-2 text-xs">
           <div className="flex items-center gap-2 text-warning">
             <AlertCircle size={14} />
@@ -176,7 +176,7 @@ export const SubscriptionQuotaView: React.FC<SubscriptionQuotaViewProps> = ({
   if (!quota.success) {
     if (inline) {
       return (
-        <div className="inline-flex items-center gap-2 text-xs rounded-lg border border-border bg-card px-3 py-2 shadow-sm">
+        <div className="inline-flex items-center gap-2 text-xs rounded-lg border border-border bg-card px-3 py-2 shadow-xs">
           <div className="flex items-center gap-1.5 text-destructive">
             <AlertCircle size={12} />
             <span>{t("subscription.queryFailed")}</span>
@@ -193,7 +193,7 @@ export const SubscriptionQuotaView: React.FC<SubscriptionQuotaViewProps> = ({
       );
     }
     return (
-      <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-sm">
+      <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-xs">
         <div className="flex items-center justify-between gap-2 text-xs">
           <div className="flex items-center gap-2 text-destructive">
             <AlertCircle size={14} />
@@ -257,7 +257,7 @@ export const SubscriptionQuotaView: React.FC<SubscriptionQuotaViewProps> = ({
 
   // ── 展开模式：详细信息 ──
   return (
-    <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-sm">
+    <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-xs">
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs text-muted-foreground font-medium">
           {t("subscription.title", { defaultValue: "Subscription Quota" })}

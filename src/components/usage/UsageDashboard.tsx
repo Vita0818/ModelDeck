@@ -305,7 +305,7 @@ export function UsageDashboard({
                   className={cn(
                     "flex h-8 items-center justify-center px-2.5 rounded-md transition-all",
                     appType === type
-                      ? "bg-background text-primary shadow-sm"
+                      ? "bg-background text-primary shadow-xs"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted",
                   )}
                 >

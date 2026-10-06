@@ -97,7 +97,7 @@ const UsageFooter: React.FC<UsageFooterProps> = ({
   if (!usage || !usage.success) {
     if (inline) {
       return (
-        <div className="inline-flex items-center gap-2 text-xs rounded-lg border border-border bg-card px-3 py-2 shadow-sm">
+        <div className="inline-flex items-center gap-2 text-xs rounded-lg border border-border bg-card px-3 py-2 shadow-xs">
           <div className="flex items-center gap-1.5 text-destructive">
             <AlertCircle size={12} />
             <span>{t("usage.queryFailed")}</span>
@@ -115,7 +115,7 @@ const UsageFooter: React.FC<UsageFooterProps> = ({
     }
 
     return (
-      <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-sm">
+      <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-xs">
         <div className="flex items-center justify-between gap-2 text-xs">
           <div className="flex items-center gap-2 text-destructive">
             <AlertCircle size={14} />
@@ -272,7 +272,7 @@ const UsageFooter: React.FC<UsageFooterProps> = ({
   }
 
   return (
-    <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-sm">
+    <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-xs">
       {/* 标题行：包含刷新按钮和自动查询时间 */}
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs text-muted-foreground font-medium">

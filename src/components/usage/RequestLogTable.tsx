@@ -151,7 +151,7 @@ export function RequestLogTable({
         <div className="h-[400px] animate-pulse rounded bg-muted" />
       ) : (
         <>
-          <div className="rounded-lg border border-border bg-card overflow-x-auto">
+          <div className="overflow-x-auto rounded-xl border border-border bg-card shadow-xs">
             <Table>
               <TableHeader>
                 <TableRow>
