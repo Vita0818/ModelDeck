@@ -2777,6 +2777,10 @@
     "resourceHint": "Configure shared providers and models, then expose them through endpoint mappings.",
     "saveResources": "Save resources",
     "matrixHint": "Counts show public models compatible with each harness. An asterisk indicates another connection requirement. Save resource changes to refresh this view.",
-    "retainedConfigs": "{{count}} original login or specialized configurations retained"
+    "retainedConfigs": "{{count}} original login or specialized configurations retained",
+    "addFromPreset": "カタログから追加",
+    "presetSearchPlaceholder": "プロバイダー・エンドポイント・モデルを検索",
+    "presetModelCount": "{{count}} 件のモデル",
+    "presetNoResults": "一致するプロバイダーがありません"
   }
 }

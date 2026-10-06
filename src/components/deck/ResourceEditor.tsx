@@ -1,4 +1,4 @@
-import { Plus, Trash2 } from "lucide-react";
+import { BookMarked, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,8 @@ import {
   type UpstreamProvider,
 } from "@/lib/api/deck";
 import { toast } from "sonner";
+import PresetPicker from "./PresetPicker";
+import type { DeckProviderPreset } from "@/config/deckProviderPresets";
 
 export const selectStyle =
   "h-9 w-full rounded-md border border-input bg-background px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
@@ -44,6 +46,7 @@ export default function ResourceEditor({
   const { t } = useTranslation();
   const [selected, setSelected] = useState("");
   const [modelId, setModelId] = useState("");
+  const [picking, setPicking] = useState(false);
   const [keySources, setKeySources] = useState<
     Record<string, "env" | "stored">
   >({});
@@ -96,6 +99,46 @@ export default function ResourceEditor({
     });
     setSelected(id);
     setModelId("");
+  };
+  /** Seed a provider and its models from the carried-over catalog. */
+  const applyPreset = (preset: DeckProviderPreset) => {
+    const providerId = newId();
+    const models: Record<string, ModelResource> = {};
+    for (const m of preset.models) {
+      const id = newId();
+      models[id] = {
+        id,
+        providerId,
+        upstreamId: m.id,
+        name: m.name,
+        // The source catalogs did not always record limits. Leave unknown
+        // values at 0 so validation prompts the user instead of inventing one.
+        context: m.context ?? 0,
+        output: m.output ?? 0,
+        reasoning: [],
+        reasoningSupported: m.reasoning ?? null,
+        tools: true,
+        images: m.images ?? false,
+      };
+    }
+    onChange({
+      ...store,
+      providers: {
+        ...store.providers,
+        [providerId]: {
+          id: providerId,
+          name: preset.name,
+          baseUrl: preset.baseUrl,
+          protocol: preset.protocol,
+          apiKey: "",
+          keyEnv: "",
+        },
+      },
+      models: { ...store.models, ...models },
+    });
+    setSelected(providerId);
+    setModelId("");
+    setPicking(false);
   };
   const referenced = (ids: string[]) =>
     Object.values(store.endpoints).some((e) =>
@@ -155,15 +198,28 @@ export default function ResourceEditor({
       <aside className="min-w-0 space-y-2 border-b pb-4 lg:border-b-0 lg:border-r lg:pr-5">
         <div className="mb-3 flex items-center justify-between">
           <h3 className="font-medium">{t("deck.providers")}</h3>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={addProvider}
-            disabled={disabled}
-            aria-label={t("deck.addProvider")}
-          >
-            <Plus className="h-4 w-4" />
-          </Button>
+          <div className="flex items-center">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setPicking(true)}
+              disabled={disabled}
+              aria-label={t("deck.addFromPreset")}
+              title={t("deck.addFromPreset")}
+            >
+              <BookMarked className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={addProvider}
+              disabled={disabled}
+              aria-label={t("deck.addProvider")}
+              title={t("deck.addProvider")}
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
         {providers.map((p) => (
           <button
@@ -192,7 +248,18 @@ export default function ResourceEditor({
           </p>
         )}
       </aside>
-      {provider && (
+      {picking && (
+        <section className="min-w-0">
+          <h3 className="mb-3 text-base font-semibold">
+            {t("deck.addFromPreset")}
+          </h3>
+          <PresetPicker
+            onPick={applyPreset}
+            onCancel={() => setPicking(false)}
+          />
+        </section>
+      )}
+      {!picking && provider && (
         <fieldset disabled={disabled} className="min-w-0 space-y-6">
           <div className="flex items-center justify-between gap-3">
             <h3 className="text-base font-semibold">{provider.name}</h3>

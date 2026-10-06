@@ -2777,6 +2777,10 @@
     "resourceHint": "统一配置提供商和模型，再通过端点映射提供给各个 harness。",
     "saveResources": "保存资源",
     "matrixHint": "数字表示该端点与 harness 兼容的对外模型数量；星号表示还需满足连接条件。保存资源修改后会更新此表。",
-    "retainedConfigs": "已保留 {{count}} 项原生登录或专用配置"
+    "retainedConfigs": "已保留 {{count}} 项原生登录或专用配置",
+    "addFromPreset": "从目录添加",
+    "presetSearchPlaceholder": "搜索提供商、地址或模型",
+    "presetModelCount": "{{count}} 个模型",
+    "presetNoResults": "没有匹配的提供商"
   }
 }
