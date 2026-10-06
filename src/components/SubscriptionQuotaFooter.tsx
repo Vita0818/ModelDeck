@@ -1,4 +1,6 @@
 import React from "react";
+import { cardSurface } from "@/components/ui/group";
+import { cn } from "@/lib/utils";
 import { RefreshCw, AlertCircle, Clock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { AppId } from "@/lib/api";
@@ -193,7 +195,7 @@ export const SubscriptionQuotaView: React.FC<SubscriptionQuotaViewProps> = ({
       );
     }
     return (
-      <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-xs">
+      <div className={cn(cardSurface, "mt-3 px-4 py-3")}>
         <div className="flex items-center justify-between gap-2 text-xs">
           <div className="flex items-center gap-2 text-destructive">
             <AlertCircle size={14} />
@@ -257,7 +259,7 @@ export const SubscriptionQuotaView: React.FC<SubscriptionQuotaViewProps> = ({
 
   // ── 展开模式：详细信息 ──
   return (
-    <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-xs">
+    <div className={cn(cardSurface, "mt-3 px-4 py-3")}>
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs text-muted-foreground font-medium">
           {t("subscription.title", { defaultValue: "Subscription Quota" })}

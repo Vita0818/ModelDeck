@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { cardSurface } from "@/components/ui/group";
+import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import {
   Table,
@@ -151,7 +153,7 @@ export function RequestLogTable({
         <div className="h-[400px] animate-pulse rounded bg-muted" />
       ) : (
         <>
-          <div className="overflow-x-auto rounded-xl border border-border bg-card shadow-xs">
+          <div className={cn(cardSurface, "overflow-x-auto")}>
             <Table>
               <TableHeader>
                 <TableRow>

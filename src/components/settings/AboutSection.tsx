@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { cardSurface } from "@/components/ui/group";
+import { cn } from "@/lib/utils";
 import {
   Download,
   Copy,
@@ -830,7 +832,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
         initial={false}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3, delay: 0.1 }}
-        className="rounded-xl border border-border bg-card p-6 space-y-5 shadow-xs"
+        className={cn(cardSurface, "p-6 space-y-5")}
       >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-8">
@@ -1049,7 +1051,10 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
                 initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.15 + index * 0.04 }}
-                className="flex min-h-[150px] flex-col gap-3 rounded-xl border border-border bg-card p-4 shadow-xs transition-colors hover:border-primary/40"
+                className={cn(
+                  cardSurface,
+                  "flex min-h-[150px] flex-col gap-3 p-4 transition-colors hover:border-primary/40",
+                )}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-2">
@@ -1245,7 +1250,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
           {t("settings.manualInstallCommands")}
         </button>
         {showInstallCommands && (
-          <div className="rounded-xl border border-border bg-card p-4 space-y-3 shadow-xs">
+          <div className={cn(cardSurface, "p-4 space-y-3")}>
             <div className="flex items-center justify-between gap-2">
               <p className="text-xs text-muted-foreground">
                 {t("settings.oneClickInstallHint")}

@@ -1,4 +1,6 @@
 import React from "react";
+import { cardSurface } from "@/components/ui/group";
+import { cn } from "@/lib/utils";
 import { RefreshCw, AlertCircle, Clock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { ProviderMeta } from "@/types";
@@ -123,7 +125,7 @@ const CopilotQuotaFooter: React.FC<CopilotQuotaFooterProps> = ({
 
   // 展开模式
   return (
-    <div className="mt-3 rounded-xl border border-border bg-card px-4 py-3 shadow-xs">
+    <div className={cn(cardSurface, "mt-3 px-4 py-3")}>
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs text-muted-foreground font-medium">
           {quota.plan || t("subscription.title")}

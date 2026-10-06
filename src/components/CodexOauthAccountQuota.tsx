@@ -1,4 +1,6 @@
 import React from "react";
+import { cardSurface } from "@/components/ui/group";
+import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useCodexOauthQuotaByAccountId } from "@/lib/query/subscription";
 import { SubscriptionQuotaView } from "@/components/SubscriptionQuotaFooter";
@@ -35,7 +37,12 @@ const CodexOauthAccountQuota: React.FC<CodexOauthAccountQuotaProps> = ({
   // 这样账号会立刻显示、用量数据到达后原地平滑替换，不产生跳版。
   if (loading && !quota) {
     return (
-      <div className="mt-3 flex items-center justify-center rounded-xl border border-border bg-card py-5 shadow-xs">
+      <div
+        className={cn(
+          cardSurface,
+          "mt-3 flex items-center justify-center py-5",
+        )}
+      >
         <Loader2 className="size-4 animate-spin text-muted-foreground" />
       </div>
     );

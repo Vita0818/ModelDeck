@@ -1,4 +1,6 @@
 import { useEffect, useRef } from "react";
+import { cardSurface } from "@/components/ui/group";
+import { cn } from "@/lib/utils";
 import { Github, ShieldCheck } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
@@ -45,7 +47,7 @@ export function AuthCenterPanel({ authScrollTarget }: AuthCenterPanelProps) {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-xl border border-border bg-card p-6 shadow-xs">
+      <section className={cn(cardSurface, "p-6")}>
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
@@ -71,7 +73,7 @@ export function AuthCenterPanel({ authScrollTarget }: AuthCenterPanelProps) {
 
       <section
         ref={copilotSectionRef}
-        className="scroll-mt-4 rounded-xl border border-border bg-card p-6 shadow-xs"
+        className={cn(cardSurface, "scroll-mt-4 p-6")}
       >
         <div className="mb-4 flex items-center gap-3">
           <div className="flex size-10 items-center justify-center rounded-xl bg-muted">
@@ -92,7 +94,7 @@ export function AuthCenterPanel({ authScrollTarget }: AuthCenterPanelProps) {
 
       <section
         ref={codexOauthSectionRef}
-        className="scroll-mt-4 rounded-xl border border-border bg-card p-6 shadow-xs"
+        className={cn(cardSurface, "scroll-mt-4 p-6")}
       >
         <div className="mb-4 flex items-center gap-3">
           <div className="flex size-10 items-center justify-center rounded-xl bg-muted">
@@ -113,7 +115,7 @@ export function AuthCenterPanel({ authScrollTarget }: AuthCenterPanelProps) {
 
       <section
         ref={xaiOauthSectionRef}
-        className="scroll-mt-4 rounded-xl border border-border bg-card p-6 shadow-xs"
+        className={cn(cardSurface, "scroll-mt-4 p-6")}
       >
         <div className="mb-4 flex items-center gap-3">
           <div className="flex size-10 items-center justify-center rounded-xl bg-muted">

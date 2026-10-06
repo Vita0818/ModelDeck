@@ -1,4 +1,6 @@
 import { Suspense, lazy } from "react";
+import { cardSurface } from "@/components/ui/group";
+import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import type { UsageRangeSelection } from "@/types/usage";
 
@@ -30,7 +32,9 @@ const UsageTrendChartView = lazy(() => import("./UsageTrendChart.view"));
 
 function UsageTrendChartFallback() {
   return (
-    <div className="flex h-[350px] items-center justify-center rounded-xl bg-card border border-border">
+    <div
+      className={cn(cardSurface, "flex h-[350px] items-center justify-center")}
+    >
       <Loader2 className="size-8 animate-spin text-muted-foreground/30" />
     </div>
   );

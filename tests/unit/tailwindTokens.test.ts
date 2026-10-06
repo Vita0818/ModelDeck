@@ -74,3 +74,26 @@ describe("tailwind colour tokens", () => {
     ).toEqual([]);
   });
 });
+
+describe("card surfaces", () => {
+  it("are composed from the shared constant, not rewritten by hand", () => {
+    // Three recipes had drifted apart before this was centralised; a literal
+    // copy renders correctly today and silently diverges on the next change.
+    const recipe = ["rounded-xl", "border-border", "bg-card"];
+    const hits: string[] = [];
+    for (const file of SOURCES) {
+      if (file.endsWith("ui/group.tsx")) continue;
+      readFileSync(file, "utf8")
+        .split("\n")
+        .forEach((line, i) => {
+          for (const m of line.matchAll(/className="([^"{}]*)"/g)) {
+            const classes = m[1].split(/\s+/);
+            if (recipe.every((c) => classes.includes(c))) {
+              hits.push(`${file.slice(ROOT.length + 1)}:${i + 1}`);
+            }
+          }
+        });
+    }
+    expect(hits).toEqual([]);
+  });
+});

@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { groupSurface } from "@/components/ui/group";
 import {
   Table,
   TableBody,
@@ -40,7 +41,7 @@ export function ProviderStatsTable({
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border border-border bg-card shadow-xs">
+    <div className={groupSurface}>
       <Table>
         <TableHeader>
           <TableRow>

@@ -1,4 +1,6 @@
 import { useMemo } from "react";
+import { cardSurface } from "@/components/ui/group";
+import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import {
   AreaChart,
@@ -64,7 +66,12 @@ export default function UsageTrendChartView({
 
   if (isLoading) {
     return (
-      <div className="flex h-[350px] items-center justify-center rounded-xl bg-card border border-border">
+      <div
+        className={cn(
+          cardSurface,
+          "flex h-[350px] items-center justify-center",
+        )}
+      >
         <Loader2 className="size-8 animate-spin text-muted-foreground/30" />
       </div>
     );
@@ -102,7 +109,7 @@ export default function UsageTrendChartView({
   };
 
   return (
-    <div className="rounded-xl border border-border bg-card p-6 shadow-xs">
+    <div className={cn(cardSurface, "p-6")}>
       <div className="mb-6 flex items-center justify-between">
         <h3 className="text-lg font-semibold">
           {t("usage.trends", "使用趋势")}
