@@ -25,7 +25,7 @@ import {
   AlertTriangle,
   RefreshCw,
 } from "lucide-react";
-import { useCodexOauth } from "./hooks/useCodexOauth";
+import { useCodexOauth } from "@/hooks/auth/useCodexOauth";
 import { copyText } from "@/lib/clipboard";
 import CodexOauthAccountQuota from "@/components/CodexOauthAccountQuota";
 import { cn } from "@/lib/utils";

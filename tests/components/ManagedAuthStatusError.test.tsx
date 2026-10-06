@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { CodexOAuthSection } from "@/components/providers/forms/CodexOAuthSection";
-import { CopilotAuthSection } from "@/components/providers/forms/CopilotAuthSection";
+import { CodexOAuthSection } from "@/components/auth/CodexOAuthSection";
+import { CopilotAuthSection } from "@/components/auth/CopilotAuthSection";
 
 const authMocks = vi.hoisted(() => ({
   refetchCodex: vi.fn(),
@@ -30,11 +30,11 @@ const failedStatus = (refetchStatus: () => void) => ({
   refetchStatus,
 });
 
-vi.mock("@/components/providers/forms/hooks/useCodexOauth", () => ({
+vi.mock("@/hooks/auth/useCodexOauth", () => ({
   useCodexOauth: () => failedStatus(authMocks.refetchCodex),
 }));
 
-vi.mock("@/components/providers/forms/hooks/useCopilotAuth", () => ({
+vi.mock("@/hooks/auth/useCopilotAuth", () => ({
   useCopilotAuth: () => failedStatus(authMocks.refetchCopilot),
 }));
 

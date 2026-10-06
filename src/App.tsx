@@ -1,3 +1,4 @@
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import {
   Suspense,
   lazy,
@@ -26,49 +27,29 @@ import {
   LayoutDashboard,
   Loader2,
 } from "lucide-react";
-import type { Provider, VisibleApps } from "@/types";
+import type { VisibleApps } from "@/types";
 import { useProvidersQuery, useSettingsQuery } from "@/lib/query";
-import {
-  providersApi,
-  settingsApi,
-  type AppId,
-  type ProviderSwitchEvent,
-} from "@/lib/api";
-import { useProviderActions } from "@/hooks/useProviderActions";
-import { openclawKeys, useOpenClawHealth } from "@/hooks/useOpenClaw";
-import { hermesKeys, useOpenHermesWebUI } from "@/hooks/useHermes";
+import { providersApi, type AppId } from "@/lib/api";
+import { useOpenClawHealth } from "@/hooks/useOpenClaw";
+import { useOpenHermesWebUI } from "@/hooks/useHermes";
 import { hermesApi } from "@/lib/api/hermes";
 import { useProxyStatus } from "@/hooks/useProxyStatus";
 import { useUsageCacheBridge } from "@/hooks/useUsageCacheBridge";
 import { useTauriEvent } from "@/hooks/useTauriEvent";
-import { useLastValidValue } from "@/hooks/useLastValidValue";
-import { useIdlePreload } from "@/hooks/useIdlePreload";
 import { HEADER_HEIGHT, useWindowChrome } from "@/hooks/app/useWindowChrome";
 import { useEnvConflicts } from "@/hooks/app/useEnvConflicts";
 import { useStartupMigrations } from "@/hooks/app/useStartupMigrations";
 import { useAppEventBridges } from "@/hooks/app/useAppEventBridges";
-import { useDuplicateProvider } from "@/hooks/app/useDuplicateProvider";
 import { resolveViewTitle, type View } from "@/components/app/viewTitle";
-import {
-  extractErrorMessage,
-  translatePiProviderMutationError,
-} from "@/utils/errorUtils";
-import { isTextEditableTarget } from "@/utils/domUtils";
+import { extractErrorMessage } from "@/utils/errorUtils";
 import { cn } from "@/lib/utils";
 import { DRAG_REGION_ATTR, DRAG_REGION_STYLE } from "@/lib/platform";
 import { AppSwitcher } from "@/components/AppSwitcher";
-import { ProviderList } from "@/components/providers/ProviderList";
-import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { UpdateBadge } from "@/components/UpdateBadge";
 import { EnvWarningBanner } from "@/components/env/EnvWarningBanner";
 import { RoutingActivationBrand } from "@/components/proxy/RoutingActivationBrand";
 import { FirstRunNoticeDialog } from "@/components/FirstRunNoticeDialog";
 import { Button } from "@/components/ui/button";
-import {
-  useDisableCurrentOmo,
-  useDisableCurrentOmoSlim,
-} from "@/lib/query/omo";
-import { invalidatePiProviderCaches, usePiCurrentState } from "@/lib/query/pi";
 import OpenClawHealthBanner from "@/components/openclaw/OpenClawHealthBanner";
 import DeckPanel from "@/components/deck/DeckPanel";
 import { isProxyAppId } from "@/config/appConfig";
@@ -85,23 +66,6 @@ import {
 // The provider form tree carries every preset catalog (~18k lines of static
 // data), so it is split out and prefetched while the app is idle instead of
 // being parsed before the first paint.
-const loadAddProviderDialog = () =>
-  import("@/components/providers/AddProviderDialog");
-const loadEditProviderDialog = () =>
-  import("@/components/providers/EditProviderDialog");
-
-const AddProviderDialog = lazy(() =>
-  loadAddProviderDialog().then((m) => ({ default: m.AddProviderDialog })),
-);
-const EditProviderDialog = lazy(() =>
-  loadEditProviderDialog().then((m) => ({ default: m.EditProviderDialog })),
-);
-
-const PROVIDER_DIALOG_PRELOADERS = [
-  loadAddProviderDialog,
-  loadEditProviderDialog,
-];
-
 // Secondary views and modals are code-split: only the provider list is part of
 // the first screen, so everything else loads the first time it is opened.
 const SettingsPage = lazy(() =>
@@ -117,11 +81,6 @@ const AgentsPanel = lazy(() =>
     default: m.AgentsPanel,
   })),
 );
-const UniversalProviderPanel = lazy(() =>
-  import("@/components/universal").then((m) => ({
-    default: m.UniversalProviderPanel,
-  })),
-);
 const WorkspaceFilesPanel = lazy(
   () => import("@/components/workspace/WorkspaceFilesPanel"),
 );
@@ -130,7 +89,6 @@ const ToolsPanel = lazy(() => import("@/components/openclaw/ToolsPanel"));
 const AgentsDefaultsPanel = lazy(
   () => import("@/components/openclaw/AgentsDefaultsPanel"),
 );
-const UsageScriptModal = lazy(() => import("@/components/UsageScriptModal"));
 const DeepLinkImportDialog = lazy(() =>
   import("@/components/DeepLinkImportDialog").then((m) => ({
     default: m.DeepLinkImportDialog,
@@ -185,7 +143,6 @@ function App() {
     activeApp === "claude-desktop" ? "claude" : activeApp;
   const [currentView, setCurrentView] = useState<View>(getInitialView);
   const [settingsDefaultTab, setSettingsDefaultTab] = useState("general");
-  const [isAddOpen, setIsAddOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem(VIEW_STORAGE_KEY, currentView);
@@ -228,12 +185,6 @@ function App() {
     if (isClientId(payload.client)) selectClient(payload.client);
   });
 
-  const [editingProvider, setEditingProvider] = useState<Provider | null>(null);
-  const [usageProvider, setUsageProvider] = useState<Provider | null>(null);
-  const [confirmAction, setConfirmAction] = useState<{
-    provider: Provider;
-    action: "remove" | "delete";
-  } | null>(null);
   const {
     conflicts: envConflicts,
     showBanner: showEnvBanner,
@@ -241,38 +192,17 @@ function App() {
     refresh: refreshEnvConflicts,
   } = useEnvConflicts(activeApp, isModelClient, currentView === "providers");
 
-  const effectiveEditingProvider = useLastValidValue(editingProvider);
-  const effectiveUsageProvider = useLastValidValue(usageProvider);
-
-  // Latches: once a provider dialog has been opened we keep it mounted.
-  const [hasOpenedAddDialog, setHasOpenedAddDialog] = useState(false);
-  const [hasOpenedEditDialog, setHasOpenedEditDialog] = useState(false);
-
-  useEffect(() => {
-    if (isAddOpen) setHasOpenedAddDialog(true);
-  }, [isAddOpen]);
-
-  useEffect(() => {
-    if (editingProvider) setHasOpenedEditDialog(true);
-  }, [editingProvider]);
-
-  useIdlePreload(PROVIDER_DIALOG_PRELOADERS);
   const mainScrollRef = useRef<HTMLElement>(null);
-  const providerScrollContainerRef = useRef<HTMLDivElement>(null);
 
   useUsageCacheBridge();
 
   useLayoutEffect(() => {
     if (currentView !== "providers") return;
 
-    for (const container of [
-      mainScrollRef.current,
-      providerScrollContainerRef.current,
-    ]) {
-      if (container) {
-        container.scrollTop = 0;
-        container.scrollLeft = 0;
-      }
+    const container = mainScrollRef.current;
+    if (container) {
+      container.scrollTop = 0;
+      container.scrollLeft = 0;
     }
   }, [activeApp, currentView]);
 
@@ -287,21 +217,10 @@ function App() {
   const isCurrentAppTakeoverActive = proxyAppId
     ? takeoverStatus?.[proxyAppId] || false
     : false;
-  const activeProviderId = useMemo(() => {
-    if (!proxyAppId) return undefined;
-    const target = proxyStatus?.active_targets?.find(
-      (t) => t.app_type === proxyAppId,
-    );
-    return target?.provider_id;
-  }, [proxyStatus?.active_targets, proxyAppId]);
-
-  const { data, isLoading, refetch } = useProvidersQuery(activeApp, {
+  const { refetch } = useProvidersQuery(activeApp, {
     enabled: currentView !== "providers",
     isProxyRunning: currentAppUsesProxy && isProxyRunning,
   });
-  const { data: piCurrentState } = usePiCurrentState(activeApp === "pi");
-  const providers = useMemo(() => data?.providers ?? {}, [data]);
-  const currentProviderId = data?.currentProviderId ?? "";
   const isOpenClawView =
     activeApp === "openclaw" &&
     (currentView === "providers" ||
@@ -311,301 +230,10 @@ function App() {
       currentView === "openclawAgents");
   const { data: openclawHealthWarnings = [] } =
     useOpenClawHealth(isOpenClawView);
-  const {
-    addProvider,
-    updateProvider,
-    switchProvider,
-    deleteProvider,
-    saveUsageScript,
-    setAsDefaultModel,
-  } = useProviderActions(
-    activeApp,
-    currentAppUsesProxy && isProxyRunning,
-    isProxyRunning && isCurrentAppTakeoverActive,
-  );
-  const handleEnablePiProvider = async (provider: Provider) => {
-    try {
-      await providersApi.switch(provider.id, "pi");
-      await invalidatePiProviderCaches(queryClient);
-      await providersApi.updateTrayMenu().catch((error) => {
-        console.error(
-          "Failed to update tray menu after enabling Pi provider",
-          error,
-        );
-      });
-      toast.success(
-        t("pi.provider.enabled", {
-          defaultValue: "已在 Pi 中启用",
-        }),
-        { closeButton: true },
-      );
-    } catch (error) {
-      const detail = extractErrorMessage(error);
-      toast.error(
-        t("pi.provider.enableFailed", {
-          defaultValue: "无法在 Pi 中启用此供应商",
-        }),
-        {
-          description:
-            translatePiProviderMutationError(detail, t) || detail || undefined,
-          closeButton: true,
-        },
-      );
-    }
-  };
-
-  const disableOmoMutation = useDisableCurrentOmo();
-  const handleDisableOmo = () => {
-    disableOmoMutation.mutate(undefined, {
-      onSuccess: () => {
-        toast.success(t("omo.disabled", { defaultValue: "OMO 已停用" }));
-      },
-      onError: (error: Error) => {
-        toast.error(
-          t("omo.disableFailed", {
-            defaultValue: "停用 OMO 失败: {{error}}",
-            error: extractErrorMessage(error),
-          }),
-        );
-      },
-    });
-  };
-
-  const disableOmoSlimMutation = useDisableCurrentOmoSlim();
-  const handleDisableOmoSlim = () => {
-    disableOmoSlimMutation.mutate(undefined, {
-      onSuccess: () => {
-        toast.success(t("omo.disabled", { defaultValue: "OMO 已停用" }));
-      },
-      onError: (error: Error) => {
-        toast.error(
-          t("omo.disableFailed", {
-            defaultValue: "停用 OMO 失败: {{error}}",
-            error: extractErrorMessage(error),
-          }),
-        );
-      },
-    });
-  };
-
-  useEffect(() => {
-    let unsubscribe: (() => void) | undefined;
-    let active = true;
-
-    const setupListener = async () => {
-      try {
-        const off = await providersApi.onSwitched(
-          async (event: ProviderSwitchEvent) => {
-            if (event.appType === activeApp) {
-              await refetch();
-            }
-            if (event.appType === "pi") {
-              await invalidatePiProviderCaches(queryClient);
-            }
-          },
-        );
-        if (!active) {
-          off();
-          return;
-        }
-        unsubscribe = off;
-      } catch (error) {
-        console.error("[App] Failed to subscribe provider switch event", error);
-      }
-    };
-
-    void setupListener();
-    return () => {
-      active = false;
-      unsubscribe?.();
-    };
-  }, [activeApp, queryClient, refetch]);
-
-  const currentViewRef = useRef(currentView);
-  const managementBusy = modelClientBusy;
-  const managementBusyRef = useRef(false);
-  managementBusyRef.current = managementBusy;
-
-  useEffect(() => {
-    currentViewRef.current = currentView;
-  }, [currentView]);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "," && (event.metaKey || event.ctrlKey)) {
-        if (managementBusyRef.current) {
-          event.preventDefault();
-          return;
-        }
-        event.preventDefault();
-        setCurrentView("settings");
-        return;
-      }
-
-      if (event.key !== "Escape" || event.defaultPrevented) return;
-
-      if (document.body.style.overflow === "hidden") return;
-
-      const view = currentViewRef.current;
-      if (view === "providers") return;
-      if (managementBusyRef.current) return;
-
-      if (isTextEditableTarget(event.target)) return;
-
-      event.preventDefault();
-      setCurrentView("providers");
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
   const [launchDashboardOpen, setLaunchDashboardOpen] = useState(false);
   const openHermesWebUI = useOpenHermesWebUI(() =>
     setLaunchDashboardOpen(true),
   );
-
-  const handleOpenWebsite = async (url: string) => {
-    try {
-      await settingsApi.openExternal(url);
-    } catch (error) {
-      const detail =
-        extractErrorMessage(error) ||
-        t("notifications.openLinkFailed", {
-          defaultValue: "链接打开失败",
-        });
-      toast.error(detail);
-    }
-  };
-
-  const handleEditProvider = async ({
-    provider,
-    originalId,
-  }: {
-    provider: Provider;
-    originalId?: string;
-  }) => {
-    await updateProvider(provider, originalId);
-    setEditingProvider(null);
-  };
-
-  const handleConfirmAction = async () => {
-    if (!confirmAction) return;
-    const { provider, action } = confirmAction;
-
-    if (action === "remove") {
-      // Remove from live config only (for additive mode apps like OpenCode/OpenClaw)
-      // Does NOT delete from database - provider remains in the list
-      try {
-        await providersApi.removeFromLiveConfig(provider.id, activeApp);
-      } catch (error) {
-        const detail = extractErrorMessage(error);
-        const description =
-          activeApp === "pi"
-            ? translatePiProviderMutationError(detail, t) || detail
-            : detail;
-        if (activeApp === "pi") {
-          void invalidatePiProviderCaches(queryClient).catch(() => undefined);
-        }
-        toast.error(t("notifications.removeFromConfigFailed"), {
-          description: description || t("common.unknown"),
-          closeButton: true,
-        });
-        return;
-      }
-      if (activeApp === "pi") {
-        await invalidatePiProviderCaches(queryClient);
-      }
-      // Invalidate queries to refresh the isInConfig state
-      if (activeApp === "opencode") {
-        await queryClient.invalidateQueries({
-          queryKey: ["opencodeLiveProviderIds"],
-        });
-      } else if (activeApp === "openclaw") {
-        await queryClient.invalidateQueries({
-          queryKey: openclawKeys.liveProviderIds,
-        });
-        await queryClient.invalidateQueries({
-          queryKey: openclawKeys.health,
-        });
-      } else if (activeApp === "hermes") {
-        await queryClient.invalidateQueries({
-          queryKey: hermesKeys.liveProviderIds,
-        });
-      } else if (activeApp === "mcode") {
-        await queryClient.invalidateQueries({
-          queryKey: ["providers", "mcode"],
-        });
-      }
-      toast.success(
-        activeApp === "pi"
-          ? t("pi.provider.removed", {
-              defaultValue: "已从 Pi 移除",
-            })
-          : t("notifications.removeFromConfigSuccess", {
-              defaultValue: "已从配置移除",
-            }),
-        { closeButton: true },
-      );
-    } else {
-      await deleteProvider(provider.id);
-    }
-    setConfirmAction(null);
-  };
-
-  const handleDuplicateProvider = useDuplicateProvider(
-    activeApp,
-    providers,
-    addProvider,
-  );
-
-  const confirmActionMessage = useMemo(() => {
-    if (!confirmAction) return "";
-
-    const message =
-      confirmAction.action === "remove"
-        ? t("confirm.removeProviderMessage", {
-            name: confirmAction.provider.name,
-          })
-        : t("confirm.deleteProviderMessage", {
-            name: confirmAction.provider.name,
-          });
-    const isPiGlobalDefault =
-      activeApp === "pi" &&
-      piCurrentState?.defaultProviderId === confirmAction.provider.id;
-
-    return isPiGlobalDefault
-      ? `${message}\n\n${t("confirm.piDefaultProviderWarning")}`
-      : message;
-  }, [activeApp, confirmAction, piCurrentState?.defaultProviderId, t]);
-
-  const handleOpenTerminal = async (provider: Provider) => {
-    try {
-      const selectedDir = await settingsApi.pickDirectory();
-      if (!selectedDir) {
-        return;
-      }
-
-      await providersApi.openTerminal(provider.id, activeApp, {
-        cwd: selectedDir,
-      });
-      toast.success(
-        t("provider.terminalOpened", {
-          defaultValue: "终端已打开",
-        }),
-      );
-    } catch (error) {
-      console.error("[App] Failed to open terminal", error);
-      const errorMessage = extractErrorMessage(error);
-      toast.error(
-        t("provider.terminalOpenFailed", {
-          defaultValue: "打开终端失败",
-        }) + (errorMessage ? `: ${errorMessage}` : ""),
-      );
-    }
-  };
 
   const handleImportSuccess = async () => {
     try {
@@ -650,13 +278,6 @@ function App() {
           return (
             <AgentsPanel onOpenChange={() => setCurrentView("providers")} />
           );
-        case "universal":
-          return (
-            <div className="px-6 pt-4">
-              <UniversalProviderPanel />
-            </div>
-          );
-
         case "workspace":
           return <WorkspaceFilesPanel />;
         case "openclawEnv":
@@ -666,71 +287,7 @@ function App() {
         case "openclawAgents":
           return <AgentsDefaultsPanel />;
         default:
-          return (
-            <div className="px-6 flex flex-col flex-1 min-h-0 overflow-hidden">
-              <div
-                ref={providerScrollContainerRef}
-                className="flex-1 overflow-y-auto overflow-x-hidden pb-12 px-1"
-              >
-                <div key={activeApp} className="space-y-4">
-                  <ProviderList
-                    providers={providers}
-                    currentProviderId={currentProviderId}
-                    appId={activeApp}
-                    isLoading={isLoading}
-                    isProxyRunning={currentAppUsesProxy && isProxyRunning}
-                    isProxyTakeover={
-                      isProxyRunning && isCurrentAppTakeoverActive
-                    }
-                    activeProviderId={activeProviderId}
-                    onSwitch={
-                      activeApp === "pi"
-                        ? handleEnablePiProvider
-                        : switchProvider
-                    }
-                    onEdit={(provider) => {
-                      setEditingProvider(provider);
-                    }}
-                    onDelete={(provider) =>
-                      setConfirmAction({ provider, action: "delete" })
-                    }
-                    onRemoveFromConfig={
-                      activeApp === "opencode" ||
-                      activeApp === "openclaw" ||
-                      activeApp === "hermes" ||
-                      activeApp === "pi" ||
-                      activeApp === "mcode"
-                        ? (provider) =>
-                            setConfirmAction({ provider, action: "remove" })
-                        : undefined
-                    }
-                    onDisableOmo={
-                      activeApp === "opencode" ? handleDisableOmo : undefined
-                    }
-                    onDisableOmoSlim={
-                      activeApp === "opencode"
-                        ? handleDisableOmoSlim
-                        : undefined
-                    }
-                    onDuplicate={handleDuplicateProvider}
-                    onConfigureUsage={setUsageProvider}
-                    onOpenWebsite={handleOpenWebsite}
-                    onOpenTerminal={
-                      activeApp === "claude" ? handleOpenTerminal : undefined
-                    }
-                    onCreate={() => setIsAddOpen(true)}
-                    onSetAsDefault={
-                      activeApp === "openclaw"
-                        ? setAsDefaultModel
-                        : activeApp === "hermes"
-                          ? switchProvider
-                          : undefined
-                    }
-                  />
-                </div>
-              </div>
-            </div>
-          );
+          return null;
       }
     })();
 
@@ -829,12 +386,12 @@ function App() {
                 <Button
                   variant="outline"
                   size="icon"
-                  disabled={managementBusy}
+                  disabled={modelClientBusy}
                   aria-label={t("common.back")}
                   onClick={() => setCurrentView("providers")}
                   className={cn(
                     "mr-2 rounded-lg",
-                    managementBusy && "disabled:opacity-100",
+                    modelClientBusy && "disabled:opacity-100",
                   )}
                 >
                   <ArrowLeft className="w-4 h-4" />
@@ -1016,65 +573,6 @@ function App() {
         />
         {renderContent()}
       </main>
-
-      {/* Mounted on first open and kept mounted afterwards, so the panel still
-          plays its exit animation when closed. */}
-      {hasOpenedAddDialog && (
-        <Suspense fallback={null}>
-          <AddProviderDialog
-            open={isAddOpen}
-            onOpenChange={setIsAddOpen}
-            appId={activeApp}
-            onSubmit={addProvider}
-          />
-        </Suspense>
-      )}
-
-      {hasOpenedEditDialog && (
-        <Suspense fallback={null}>
-          <EditProviderDialog
-            open={Boolean(editingProvider)}
-            provider={effectiveEditingProvider}
-            onOpenChange={(open) => {
-              if (!open) {
-                setEditingProvider(null);
-              }
-            }}
-            onSubmit={handleEditProvider}
-            appId={activeApp}
-            isProxyTakeover={isCurrentAppTakeoverActive}
-          />
-        </Suspense>
-      )}
-
-      {effectiveUsageProvider && (
-        <Suspense fallback={null}>
-          <UsageScriptModal
-            key={effectiveUsageProvider.id}
-            provider={effectiveUsageProvider}
-            appId={activeApp}
-            isOpen={Boolean(usageProvider)}
-            onClose={() => setUsageProvider(null)}
-            onSave={(script) => {
-              if (usageProvider) {
-                void saveUsageScript(usageProvider, script);
-              }
-            }}
-          />
-        </Suspense>
-      )}
-
-      <ConfirmDialog
-        isOpen={Boolean(confirmAction)}
-        title={
-          confirmAction?.action === "remove"
-            ? t("confirm.removeProvider")
-            : t("confirm.deleteProvider")
-        }
-        message={confirmActionMessage}
-        onConfirm={() => void handleConfirmAction()}
-        onCancel={() => setConfirmAction(null)}
-      />
 
       <ConfirmDialog
         isOpen={launchDashboardOpen}

@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { ToggleRow } from "@/components/ui/toggle-row";
 import { toast } from "sonner";
 import { useFailoverQueue } from "@/lib/query/failover";
-import { ProviderHealthBadge } from "@/components/providers/ProviderHealthBadge";
+import { ProviderHealthBadge } from "@/components/proxy/ProviderHealthBadge";
 import { useProviderHealth } from "@/lib/query/failover";
 import {
   useProxyStatusQuery,

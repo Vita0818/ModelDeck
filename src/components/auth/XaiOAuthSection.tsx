@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { copyText } from "@/lib/clipboard";
-import { useXaiOauth } from "./hooks/useXaiOauth";
+import { useXaiOauth } from "@/hooks/auth/useXaiOauth";
 
 interface XaiOAuthSectionProps {
   className?: string;

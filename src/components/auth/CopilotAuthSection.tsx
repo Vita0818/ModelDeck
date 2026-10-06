@@ -25,7 +25,7 @@ import {
   AlertTriangle,
   RefreshCw,
 } from "lucide-react";
-import { useCopilotAuth } from "./hooks/useCopilotAuth";
+import { useCopilotAuth } from "@/hooks/auth/useCopilotAuth";
 import { copyText } from "@/lib/clipboard";
 import type { GitHubAccount } from "@/lib/api";
 

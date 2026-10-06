@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { XaiOAuthSection } from "@/components/providers/forms/XaiOAuthSection";
+import { XaiOAuthSection } from "@/components/auth/XaiOAuthSection";
 
 const mockUseXaiOauth = vi.hoisted(() => vi.fn());
 
-vi.mock("@/components/providers/forms/hooks/useXaiOauth", () => ({
+vi.mock("@/hooks/auth/useXaiOauth", () => ({
   useXaiOauth: mockUseXaiOauth,
 }));
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { CodexOAuthSection } from "@/components/providers/forms/CodexOAuthSection";
+import { CodexOAuthSection } from "@/components/auth/CodexOAuthSection";
 import { AuthCenterPanel } from "@/components/settings/AuthCenterPanel";
 
 const mocks = vi.hoisted(() => ({
@@ -10,7 +10,7 @@ const mocks = vi.hoisted(() => ({
   renderAccountQuota: vi.fn(),
 }));
 
-vi.mock("@/components/providers/forms/hooks/useCodexOauth", () => ({
+vi.mock("@/hooks/auth/useCodexOauth", () => ({
   useCodexOauth: mocks.useCodexOauth,
 }));
 
@@ -21,11 +21,11 @@ vi.mock("@/components/CodexOauthAccountQuota", () => ({
   },
 }));
 
-vi.mock("@/components/providers/forms/CopilotAuthSection", () => ({
+vi.mock("@/components/auth/CopilotAuthSection", () => ({
   CopilotAuthSection: () => <div />,
 }));
 
-vi.mock("@/components/providers/forms/XaiOAuthSection", () => ({
+vi.mock("@/components/auth/XaiOAuthSection", () => ({
   XaiOAuthSection: () => <div />,
 }));
 

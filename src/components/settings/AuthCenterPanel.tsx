@@ -3,10 +3,10 @@ import { Github, ShieldCheck } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { CodexIcon } from "@/components/BrandIcons";
-import { CopilotAuthSection } from "@/components/providers/forms/CopilotAuthSection";
-import { CodexOAuthSection } from "@/components/providers/forms/CodexOAuthSection";
+import { CopilotAuthSection } from "@/components/auth/CopilotAuthSection";
+import { CodexOAuthSection } from "@/components/auth/CodexOAuthSection";
 import type { ManagedAuthProvider } from "@/lib/api";
-import { XaiOAuthSection } from "@/components/providers/forms/XaiOAuthSection";
+import { XaiOAuthSection } from "@/components/auth/XaiOAuthSection";
 import { ProviderIcon } from "@/components/ProviderIcon";
 
 interface AuthCenterPanelProps {
