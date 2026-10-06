@@ -35,7 +35,7 @@ fn scan(conn: &Connection, data_dir: &Path) -> rusqlite::Result<Vec<SessionMeta>
     #[cfg(not(windows))]
     let command = format!(
         "env MINIMAX_DATA_DIR={} mcode",
-        crate::session_manager::terminal::shell_escape(&data_dir.to_string_lossy())
+        crate::session_manager::providers::utils::shell_escape(&data_dir.to_string_lossy())
     );
     #[cfg(windows)]
     let command = format!(

@@ -4,20 +4,8 @@ import {
   type UseQueryResult,
   keepPreviousData,
 } from "@tanstack/react-query";
-import {
-  providersApi,
-  settingsApi,
-  usageApi,
-  sessionsApi,
-  type AppId,
-} from "@/lib/api";
-import type {
-  Provider,
-  Settings,
-  UsageResult,
-  SessionMeta,
-  SessionMessage,
-} from "@/types";
+import { providersApi, settingsApi, usageApi, type AppId } from "@/lib/api";
+import type { Provider, Settings, UsageResult } from "@/types";
 import { usageKeys } from "@/lib/query/usage";
 import { extractErrorMessage } from "@/utils/errorUtils";
 
@@ -304,24 +292,4 @@ export const useUsageQuery = (
         : undefined),
     lastQueriedAt,
   };
-};
-
-export const useSessionsQuery = () => {
-  return useQuery<SessionMeta[]>({
-    queryKey: ["sessions"],
-    queryFn: async () => sessionsApi.list(),
-    staleTime: 30 * 1000,
-  });
-};
-
-export const useSessionMessagesQuery = (
-  providerId?: string,
-  sourcePath?: string,
-) => {
-  return useQuery<SessionMessage[]>({
-    queryKey: ["sessionMessages", providerId, sourcePath],
-    queryFn: async () => sessionsApi.getMessages(providerId!, sourcePath!),
-    enabled: Boolean(providerId && sourcePath),
-    staleTime: 30 * 1000,
-  });
 };

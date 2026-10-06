@@ -130,7 +130,7 @@ pub fn sync_grokbuild_usage(db: &Database) -> Result<SessionSyncResult, AppError
 /// 收集所有 Grok 会话的 updates.jsonl（含归档会话，与会话浏览器同根）
 fn collect_grok_updates_files() -> Vec<PathBuf> {
     let mut files = Vec::new();
-    for root in crate::session_manager::providers::grokbuild::session_roots() {
+    for root in grok_session_roots() {
         collect_files_named(&root, "updates.jsonl", &mut files, 0);
     }
     files
@@ -1323,4 +1323,13 @@ mod tests {
             "only the real updates.jsonl should be collected; symlink cycle must not crash"
         );
     }
+}
+
+/// Grok Build 会话目录。用量统计按这些根目录扫描 JSONL。
+fn grok_session_roots() -> Vec<std::path::PathBuf> {
+    let config_dir = crate::grok_config::get_grok_config_dir();
+    vec![
+        config_dir.join("sessions"),
+        config_dir.join("archived_sessions"),
+    ]
 }

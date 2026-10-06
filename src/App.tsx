@@ -18,7 +18,6 @@ import {
   Minimize2,
   X,
   Brain,
-  History,
   BarChart2,
   FolderOpen,
   KeyRound,
@@ -123,11 +122,6 @@ const UniversalProviderPanel = lazy(() =>
     default: m.UniversalProviderPanel,
   })),
 );
-const SessionManagerPage = lazy(() =>
-  import("@/components/sessions/SessionManagerPage").then((m) => ({
-    default: m.SessionManagerPage,
-  })),
-);
 const WorkspaceFilesPanel = lazy(
   () => import("@/components/workspace/WorkspaceFilesPanel"),
 );
@@ -161,7 +155,6 @@ const VALID_VIEWS: View[] = [
   "settings",
   "agents",
   "universal",
-  "sessions",
   "workspace",
   "hermesMemory",
 ];
@@ -234,24 +227,6 @@ function App() {
   useTauriEvent<{ client: string }>("modeldeck-client-selected", (payload) => {
     if (isClientId(payload.client)) selectClient(payload.client);
   });
-
-  // Fallback from sessions view when switching to an app without session support
-  useEffect(() => {
-    if (
-      currentView === "sessions" &&
-      sharedFeatureApp !== "claude" &&
-      sharedFeatureApp !== "codex" &&
-      sharedFeatureApp !== "grokbuild" &&
-      sharedFeatureApp !== "opencode" &&
-      sharedFeatureApp !== "openclaw" &&
-      sharedFeatureApp !== "gemini" &&
-      sharedFeatureApp !== "hermes" &&
-      sharedFeatureApp !== "pi" &&
-      sharedFeatureApp !== "mcode"
-    ) {
-      setCurrentView("providers");
-    }
-  }, [sharedFeatureApp, currentView]);
 
   const [editingProvider, setEditingProvider] = useState<Provider | null>(null);
   const [usageProvider, setUsageProvider] = useState<Provider | null>(null);
@@ -331,23 +306,11 @@ function App() {
     activeApp === "openclaw" &&
     (currentView === "providers" ||
       currentView === "workspace" ||
-      currentView === "sessions" ||
       currentView === "openclawEnv" ||
       currentView === "openclawTools" ||
       currentView === "openclawAgents");
   const { data: openclawHealthWarnings = [] } =
     useOpenClawHealth(isOpenClawView);
-  const hasSessionSupport =
-    sharedFeatureApp === "claude" ||
-    sharedFeatureApp === "codex" ||
-    sharedFeatureApp === "grokbuild" ||
-    sharedFeatureApp === "opencode" ||
-    sharedFeatureApp === "openclaw" ||
-    sharedFeatureApp === "gemini" ||
-    sharedFeatureApp === "hermes" ||
-    sharedFeatureApp === "pi" ||
-    sharedFeatureApp === "mcode";
-
   const {
     addProvider,
     updateProvider,
@@ -694,13 +657,6 @@ function App() {
             </div>
           );
 
-        case "sessions":
-          return (
-            <SessionManagerPage
-              key={sharedFeatureApp}
-              appId={sharedFeatureApp}
-            />
-          );
         case "workspace":
           return <WorkspaceFilesPanel />;
         case "openclawEnv":
@@ -1032,34 +988,9 @@ function App() {
                             >
                               <Cpu className="w-4 h-4" />
                             </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => setCurrentView("sessions")}
-                              className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-8 px-2"
-                              title={t("sessionManager.title")}
-                            >
-                              <History className="w-4 h-4" />
-                            </Button>
                           </>
                         ) : (
-                          <>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => setCurrentView("sessions")}
-                              className={cn(
-                                "text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5",
-                                "transition-all duration-200 ease-in-out overflow-hidden",
-                                hasSessionSupport
-                                  ? "opacity-100 w-8 scale-100 px-2"
-                                  : "opacity-0 w-0 scale-75 pointer-events-none px-0 -ml-1",
-                              )}
-                              title={t("sessionManager.title")}
-                            >
-                              <History className="flex-shrink-0 w-4 h-4" />
-                            </Button>
-                          </>
+                          <></>
                         )}
                       </div>
                     </div>
