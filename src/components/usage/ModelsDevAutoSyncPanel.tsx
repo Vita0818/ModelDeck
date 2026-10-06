@@ -244,7 +244,7 @@ function AutoSyncDialog({ state, onClose, onSaved }: AutoSyncDialogProps) {
 
           {isLoading ? (
             <div className="flex flex-1 items-center justify-center">
-              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              <Loader2 className="size-6 animate-spin text-muted-foreground" />
             </div>
           ) : error ? (
             <Alert variant="destructive">
@@ -279,7 +279,7 @@ function AutoSyncDialog({ state, onClose, onSaved }: AutoSyncDialogProps) {
                   </SelectContent>
                 </Select>
                 <div className="relative flex-1">
-                  <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Search className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     value={search}
                     onChange={(event) => setSearch(event.target.value)}
@@ -337,13 +337,13 @@ function AutoSyncDialog({ state, onClose, onSaved }: AutoSyncDialogProps) {
                           }`}
                         >
                           <span
-                            className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border ${
+                            className={`flex size-4 shrink-0 items-center justify-center rounded border ${
                               selected
                                 ? "border-primary bg-primary text-primary-foreground"
                                 : "border-muted-foreground/50"
                             }`}
                           >
-                            {selected && <Check className="h-3 w-3" />}
+                            {selected && <Check className="size-3" />}
                           </span>
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-2">
@@ -411,7 +411,7 @@ function AutoSyncDialog({ state, onClose, onSaved }: AutoSyncDialogProps) {
             {t("common.cancel")}
           </Button>
           <Button onClick={save} disabled={isSaving || isLoading || !!error}>
-            {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isSaving && <Loader2 className="mr-2 size-4 animate-spin" />}
             {t("common.save")}
           </Button>
         </DialogFooter>
@@ -512,7 +512,7 @@ export function ModelsDevAutoSyncPanel() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center rounded-lg border border-border py-6">
-        <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+        <Loader2 className="size-5 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -610,7 +610,7 @@ export function ModelsDevAutoSyncPanel() {
             size="sm"
             onClick={() => void openLocalFileFolder()}
           >
-            <FolderOpen className="mr-1.5 h-3.5 w-3.5" />
+            <FolderOpen className="mr-1.5 size-3.5" />
             {t("usage.modelsDevAutoSync.openFolder")}
           </Button>
           <Button
@@ -620,9 +620,9 @@ export function ModelsDevAutoSyncPanel() {
             disabled={isReloading}
           >
             {isReloading ? (
-              <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+              <Loader2 className="mr-1.5 size-3.5 animate-spin" />
             ) : (
-              <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
+              <RefreshCw className="mr-1.5 size-3.5" />
             )}
             {t("usage.modelsDevAutoSync.reloadLocalFile")}
           </Button>
@@ -631,14 +631,14 @@ export function ModelsDevAutoSyncPanel() {
             size="sm"
             onClick={() => setIsDialogOpen(true)}
           >
-            <Settings2 className="mr-1.5 h-3.5 w-3.5" />
+            <Settings2 className="mr-1.5 size-3.5" />
             {t("usage.modelsDevAutoSync.configure")}
           </Button>
           <Button size="sm" onClick={() => void syncNow()} disabled={isSyncing}>
             {isSyncing ? (
-              <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+              <Loader2 className="mr-1.5 size-3.5 animate-spin" />
             ) : (
-              <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
+              <RefreshCw className="mr-1.5 size-3.5" />
             )}
             {t("usage.modelsDevAutoSync.syncNow")}
           </Button>

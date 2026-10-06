@@ -142,7 +142,7 @@ export function GlobalProxySettings() {
   if (isLoading && savedUrl === undefined) {
     return (
       <div className="flex items-center justify-center p-4">
-        <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+        <Loader2 className="size-5 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -174,9 +174,9 @@ export function GlobalProxySettings() {
           title={t("settings.globalProxy.scan")}
         >
           {scanMutation.isPending ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="size-4 animate-spin" />
           ) : (
-            <Search className="h-4 w-4" />
+            <Search className="size-4" />
           )}
         </Button>
         <Button
@@ -187,9 +187,9 @@ export function GlobalProxySettings() {
           title={t("settings.globalProxy.test")}
         >
           {testMutation.isPending ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="size-4 animate-spin" />
           ) : (
-            <TestTube2 className="h-4 w-4" />
+            <TestTube2 className="size-4" />
           )}
         </Button>
         <Button
@@ -199,7 +199,7 @@ export function GlobalProxySettings() {
           onClick={handleClear}
           title={t("settings.globalProxy.clear")}
         >
-          <X className="h-4 w-4" />
+          <X className="size-4" />
         </Button>
         <Button
           onClick={handleSave}
@@ -207,7 +207,7 @@ export function GlobalProxySettings() {
           size="sm"
         >
           {setMutation.isPending && (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Loader2 className="mr-2 size-4 animate-spin" />
           )}
           {t("common.save")}
         </Button>
@@ -246,9 +246,9 @@ export function GlobalProxySettings() {
             tabIndex={-1}
           >
             {showPassword ? (
-              <EyeOff className="h-4 w-4 text-muted-foreground" />
+              <EyeOff className="size-4 text-muted-foreground" />
             ) : (
-              <Eye className="h-4 w-4 text-muted-foreground" />
+              <Eye className="size-4 text-muted-foreground" />
             )}
           </Button>
         </div>

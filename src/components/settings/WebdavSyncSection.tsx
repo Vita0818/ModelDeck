@@ -219,9 +219,9 @@ function ActionButton({
     <Button {...props} disabled={actionState !== "idle" || disabled}>
       <span className="inline-flex items-center gap-2">
         {isActive ? (
-          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+          <Loader2 className="size-3.5 animate-spin" />
         ) : (
-          <Icon className="h-3.5 w-3.5" />
+          <Icon className="size-3.5" />
         )}
         {isActive ? activeLabel : idleLabel}
       </span>
@@ -1067,7 +1067,7 @@ export function WebdavSyncSection({
             {/* Preset hint */}
             {activePreset?.hint && (
               <div className="flex items-start gap-2 pl-44 text-xs text-muted-foreground">
-                <Info className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                <Info className="size-3.5 shrink-0 mt-0.5" />
                 <span>{t(activePreset.hint)}</span>
               </div>
             )}
@@ -1170,13 +1170,13 @@ export function WebdavSyncSection({
             {/* Save status indicator */}
             {dirty && (
               <span className="inline-flex items-center gap-1.5 text-xs text-warning animate-fade-in">
-                <span className="h-1.5 w-1.5 rounded-full bg-warning dark:bg-warning" />
+                <span className="size-1.5 rounded-full bg-warning dark:bg-warning" />
                 {t("settings.webdavSync.unsaved")}
               </span>
             )}
             {!dirty && justSaved && (
               <span className="inline-flex items-center gap-1.5 text-xs text-success animate-fade-in">
-                <Check className="h-3 w-3" />
+                <Check className="size-3" />
                 {t("settings.webdavSync.saved")}
               </span>
             )}
@@ -1256,7 +1256,7 @@ export function WebdavSyncSection({
             {/* Preset hint */}
             {activeS3Preset?.hint && (
               <div className="flex items-start gap-2 pl-44 text-xs text-muted-foreground">
-                <Info className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                <Info className="size-3.5 shrink-0 mt-0.5" />
                 <span>{t(activeS3Preset.hint)}</span>
               </div>
             )}
@@ -1483,13 +1483,13 @@ export function WebdavSyncSection({
             {/* Save status indicator */}
             {s3Dirty && (
               <span className="inline-flex items-center gap-1.5 text-xs text-warning animate-fade-in">
-                <span className="h-1.5 w-1.5 rounded-full bg-warning dark:bg-warning" />
+                <span className="size-1.5 rounded-full bg-warning dark:bg-warning" />
                 {t("settings.s3Sync.unsaved")}
               </span>
             )}
             {!s3Dirty && s3JustSaved && (
               <span className="inline-flex items-center gap-1.5 text-xs text-success animate-fade-in">
-                <Check className="h-3 w-3" />
+                <Check className="size-3" />
                 {t("settings.s3Sync.saved")}
               </span>
             )}
@@ -1549,7 +1549,7 @@ export function WebdavSyncSection({
         <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
             <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
-              <AlertTriangle className="h-5 w-5 text-destructive" />
+              <AlertTriangle className="size-5 text-destructive" />
               {t("settings.webdavSync.confirmUpload.title")}
             </DialogTitle>
             <DialogDescription asChild>
@@ -1637,7 +1637,7 @@ export function WebdavSyncSection({
         <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
             <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
-              <AlertTriangle className="h-5 w-5 text-destructive" />
+              <AlertTriangle className="size-5 text-destructive" />
               {t("settings.webdavSync.confirmDownload.title")}
             </DialogTitle>
             <DialogDescription asChild>
@@ -1710,7 +1710,7 @@ export function WebdavSyncSection({
         <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
             <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
-              <AlertTriangle className="h-5 w-5 text-destructive" />
+              <AlertTriangle className="size-5 text-destructive" />
               {t("settings.s3Sync.confirmUpload.title")}
             </DialogTitle>
             <DialogDescription asChild>
@@ -1777,7 +1777,7 @@ export function WebdavSyncSection({
         <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
             <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
-              <AlertTriangle className="h-5 w-5 text-destructive" />
+              <AlertTriangle className="size-5 text-destructive" />
               {t("settings.s3Sync.confirmDownload.title")}
             </DialogTitle>
             <DialogDescription asChild>
@@ -1829,7 +1829,7 @@ export function WebdavSyncSection({
         <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
             <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
-              <AlertTriangle className="h-5 w-5 text-destructive" />
+              <AlertTriangle className="size-5 text-destructive" />
               {t("settings.s3Sync.mutualExclusionTitle")}
             </DialogTitle>
             <DialogDescription asChild>

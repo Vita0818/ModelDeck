@@ -411,7 +411,7 @@ export function SettingsPage({
                       >
                         <AccordionTrigger>
                           <div className="flex items-center gap-3">
-                            <HardDriveDownload className="h-5 w-5 text-warning" />
+                            <HardDriveDownload className="size-5 text-warning" />
                             <div className="text-left">
                               <h3 className="text-base font-medium text-foreground">
                                 {t("settings.advanced.backup.title", {
@@ -471,7 +471,7 @@ export function SettingsPage({
                       >
                         <AccordionTrigger>
                           <div className="flex items-center gap-3">
-                            <FlaskConical className="h-5 w-5 text-success" />
+                            <FlaskConical className="size-5 text-success" />
                             <div className="text-left">
                               <h3 className="text-base font-medium text-foreground">
                                 {t("settings.advanced.connectivityCheck.title")}
@@ -529,12 +529,12 @@ export function SettingsPage({
                   <Button onClick={handleSave} disabled={isSaving}>
                     {isSaving ? (
                       <span className="inline-flex items-center gap-2">
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <Loader2 className="size-4 animate-spin" />
                         {t("settings.saving")}
                       </span>
                     ) : (
                       <>
-                        <Save className="mr-2 h-4 w-4" />
+                        <Save className="mr-2 size-4" />
                         {t("common.save")}
                       </>
                     )}

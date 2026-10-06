@@ -36,7 +36,7 @@ const CodexOauthAccountQuota: React.FC<CodexOauthAccountQuotaProps> = ({
   if (loading && !quota) {
     return (
       <div className="mt-3 flex items-center justify-center rounded-xl border border-border bg-card py-5 shadow-sm">
-        <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+        <Loader2 className="size-4 animate-spin text-muted-foreground" />
       </div>
     );
   }

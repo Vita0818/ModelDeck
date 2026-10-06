@@ -107,7 +107,7 @@ export function FailoverQueueManager({
   if (isQueueLoading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+        <Loader2 className="size-6 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -115,7 +115,7 @@ export function FailoverQueueManager({
   if (queueError) {
     return (
       <Alert variant="destructive">
-        <AlertTriangle className="h-4 w-4" />
+        <AlertTriangle className="size-4" />
         <AlertDescription>{String(queueError)}</AlertDescription>
       </Alert>
     );
@@ -154,7 +154,7 @@ export function FailoverQueueManager({
 
       {/* 说明信息 */}
       <Alert className="border-primary/40/40 bg-primary/10">
-        <Info className="h-4 w-4" />
+        <Info className="size-4" />
         <AlertDescription className="text-sm">
           {t(
             "proxy.failoverQueue.info",
@@ -206,9 +206,9 @@ export function FailoverQueueManager({
           variant="outline"
         >
           {addToQueue.isPending ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="size-4 animate-spin" />
           ) : (
-            <Plus className="h-4 w-4" />
+            <Plus className="size-4" />
           )}
         </Button>
       </div>
@@ -275,7 +275,7 @@ function QueueItem({
       )}
     >
       {/* 序号 */}
-      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-xs font-medium">
+      <div className="flex size-6 items-center justify-center rounded-full bg-muted text-xs font-medium">
         {index + 1}
       </div>
 
@@ -295,15 +295,15 @@ function QueueItem({
       <Button
         variant="ghost"
         size="icon"
-        className="h-8 w-8 text-muted-foreground hover:text-destructive"
+        className="size-8 text-muted-foreground hover:text-destructive"
         onClick={() => onRemove(item.providerId)}
         disabled={disabled || isRemoving}
         aria-label={t("common.delete", "删除")}
       >
         {isRemoving ? (
-          <Loader2 className="h-4 w-4 animate-spin" />
+          <Loader2 className="size-4 animate-spin" />
         ) : (
-          <Trash2 className="h-4 w-4" />
+          <Trash2 className="size-4" />
         )}
       </Button>
     </div>

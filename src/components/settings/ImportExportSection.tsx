@@ -66,11 +66,11 @@ export function ImportExportSection({
             >
               <div className="flex items-center gap-2 w-full justify-center">
                 {isImporting ? (
-                  <Loader2 className="h-4 w-4 animate-spin flex-shrink-0" />
+                  <Loader2 className="size-4 animate-spin flex-shrink-0" />
                 ) : selectedFile ? (
-                  <CheckCircle2 className="h-4 w-4 flex-shrink-0" />
+                  <CheckCircle2 className="size-4 flex-shrink-0" />
                 ) : (
-                  <FolderOpen className="h-4 w-4 flex-shrink-0" />
+                  <FolderOpen className="size-4 flex-shrink-0" />
                 )}
                 <span className="font-medium">
                   {isImporting
@@ -92,10 +92,10 @@ export function ImportExportSection({
               <button
                 type="button"
                 onClick={onClear}
-                className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-destructive hover:bg-destructive text-white flex items-center justify-center shadow-lg transition-colors z-10"
+                className="absolute -top-2 -right-2 size-6 rounded-full bg-destructive hover:bg-destructive text-white flex items-center justify-center shadow-lg transition-colors z-10"
                 aria-label={t("common.clear")}
               >
-                <XCircle className="h-4 w-4" />
+                <XCircle className="size-4" />
               </button>
             )}
           </div>
@@ -107,7 +107,7 @@ export function ImportExportSection({
               className="w-full h-full py-3 px-4 bg-primary hover:bg-primary dark:bg-primary dark:hover:bg-primary text-white items-center"
               onClick={onExport}
             >
-              <Save className="mr-2 h-4 w-4" />
+              <Save className="mr-2 size-4" />
               {t("settings.exportConfig")}
             </Button>
           </div>
@@ -148,7 +148,7 @@ function ImportStatusMessage({
       <div
         className={`${baseClass} border-primary/40/30 bg-primary/10 text-primary`}
       >
-        <Loader2 className="mt-0.5 h-5 w-5 flex-shrink-0 animate-spin" />
+        <Loader2 className="mt-0.5 size-5 flex-shrink-0 animate-spin" />
         <div>
           <p className="font-semibold">{t("settings.importing")}</p>
           <p className="text-primary/80 dark:text-primary/80">
@@ -164,7 +164,7 @@ function ImportStatusMessage({
       <div
         className={`${baseClass} border-success/40/30 bg-success/10 text-success`}
       >
-        <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0" />
+        <CheckCircle2 className="mt-0.5 size-5 flex-shrink-0" />
         <div className="space-y-1.5">
           <p className="font-semibold">{t("settings.importSuccess")}</p>
           {backupId ? (
@@ -185,7 +185,7 @@ function ImportStatusMessage({
       <div
         className={`${baseClass} border-warning/40/30 bg-warning/10 text-warning`}
       >
-        <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0" />
+        <AlertCircle className="mt-0.5 size-5 flex-shrink-0" />
         <div className="space-y-1.5">
           <p className="font-semibold">{t("settings.importPartialSuccess")}</p>
           <p className="text-warning/80 dark:text-warning/80">
@@ -202,7 +202,7 @@ function ImportStatusMessage({
     <div
       className={`${baseClass} border-destructive/40/30 bg-destructive/10 text-destructive`}
     >
-      <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0" />
+      <AlertCircle className="mt-0.5 size-5 flex-shrink-0" />
       <div className="space-y-1.5">
         <p className="font-semibold">{t("settings.importFailed")}</p>
         <p className="text-destructive/80 dark:text-destructive/80">

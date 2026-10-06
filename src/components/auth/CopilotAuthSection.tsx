@@ -218,7 +218,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
           role="alert"
           className="flex items-center gap-2 rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-sm text-destructive"
         >
-          <AlertTriangle className="h-4 w-4 shrink-0" />
+          <AlertTriangle className="size-4 shrink-0" />
           <span className="min-w-0 flex-1">
             {t(
               "copilot.statusLoadFailed",
@@ -232,7 +232,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
             className="h-7 shrink-0"
             onClick={() => void refetchStatus()}
           >
-            <RefreshCw className="mr-1 h-3.5 w-3.5" />
+            <RefreshCw className="mr-1 size-3.5" />
             {t("copilot.retry", "重试")}
           </Button>
         </div>
@@ -240,7 +240,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
 
       {!isStatusSuccess && !isStatusError && (
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Loader2 className="h-4 w-4 animate-spin" />
+          <Loader2 className="size-4 animate-spin" />
           {t("copilot.statusLoading", "正在加载...")}
         </div>
       )}
@@ -302,7 +302,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
               onClick={onManageAccounts}
               className="h-9 shrink-0"
             >
-              <Settings2 className="h-4 w-4" />
+              <Settings2 className="size-4" />
               {t("copilot.manageAccounts", "管理账号")}
             </Button>
           )}
@@ -360,12 +360,12 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7 text-muted-foreground hover:text-destructive"
+                    className="size-7 text-muted-foreground hover:text-destructive"
                     onClick={(e) => handleRemoveAccount(account.id, e)}
                     disabled={isRemovingAccount}
                     title={t("copilot.removeAccount", "移除账号")}
                   >
-                    <X className="h-4 w-4" />
+                    <X className="size-4" />
                   </Button>
                 </div>
               </div>
@@ -388,7 +388,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
               deploymentType === "enterprise" && !enterpriseDomain.trim()
             }
           >
-            <Github className="mr-2 h-4 w-4" />
+            <Github className="mr-2 size-4" />
             {t("copilot.loginWithGitHub", "使用 GitHub 登录")}
           </Button>
         )}
@@ -408,7 +408,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
               (deploymentType === "enterprise" && !enterpriseDomain.trim())
             }
           >
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="mr-2 size-4" />
             {t("copilot.addAnotherAccount", "添加其他账号")}
           </Button>
         )}
@@ -417,7 +417,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
       {mode === "manage" && isPolling && deviceCode && (
         <div className="space-y-3 p-4 rounded-lg border border-border bg-muted">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="size-4 animate-spin" />
             {t("copilot.waitingForAuth", "等待授权中...")}
           </div>
 
@@ -438,9 +438,9 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
                 title={t("copilot.copyCode", "复制代码")}
               >
                 {copied ? (
-                  <Check className="h-4 w-4 text-success" />
+                  <Check className="size-4 text-success" />
                 ) : (
-                  <Copy className="h-4 w-4" />
+                  <Copy className="size-4" />
                 )}
               </Button>
             </div>
@@ -455,7 +455,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
               className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
             >
               {deviceCode.verification_uri}
-              <ExternalLink className="h-3 w-3" />
+              <ExternalLink className="size-3" />
             </a>
           </div>
 
@@ -509,7 +509,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
             onClick={logout}
             className="w-full text-destructive hover:text-destructive hover:bg-destructive/10 dark:hover:bg-destructive"
           >
-            <LogOut className="mr-2 h-4 w-4" />
+            <LogOut className="mr-2 size-4" />
             {t("copilot.logoutAll", "注销所有账号")}
           </Button>
         )}
@@ -523,14 +523,14 @@ const CopilotAccountAvatar: React.FC<{ account: GitHubAccount }> = ({
   const [failed, setFailed] = React.useState(false);
 
   if (!account.avatar_url || failed) {
-    return <User className="h-5 w-5 text-muted-foreground" />;
+    return <User className="size-5 text-muted-foreground" />;
   }
 
   return (
     <img
       src={account.avatar_url}
       alt={account.login}
-      className="h-5 w-5 rounded-full"
+      className="size-5 rounded-full"
       loading="lazy"
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}

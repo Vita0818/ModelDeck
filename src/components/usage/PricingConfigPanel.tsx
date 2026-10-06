@@ -203,7 +203,7 @@ export function PricingConfigPanel() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-4">
-        <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+        <Loader2 className="size-5 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -238,7 +238,7 @@ export function PricingConfigPanel() {
           >
             {isSaving ? (
               <>
-                <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+                <Loader2 className="mr-1.5 size-3.5 animate-spin" />
                 {t("common.saving")}
               </>
             ) : (
@@ -249,7 +249,7 @@ export function PricingConfigPanel() {
 
         {isConfigLoading ? (
           <div className="flex items-center justify-center py-4">
-            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+            <Loader2 className="size-4 animate-spin text-muted-foreground" />
           </div>
         ) : (
           <div className="rounded-md border border-border overflow-hidden">
@@ -355,7 +355,7 @@ export function PricingConfigPanel() {
             }}
             size="sm"
           >
-            <Plus className="mr-1 h-4 w-4" />
+            <Plus className="mr-1 size-4" />
             {t("common.add")}
           </Button>
         </div>
@@ -419,7 +419,7 @@ export function PricingConfigPanel() {
                             }}
                             title={t("common.edit")}
                           >
-                            <Pencil className="h-4 w-4" />
+                            <Pencil className="size-4" />
                           </Button>
                           <Button
                             variant="ghost"
@@ -428,7 +428,7 @@ export function PricingConfigPanel() {
                             title={t("common.delete")}
                             className="text-destructive hover:text-destructive"
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="size-4" />
                           </Button>
                         </div>
                       </TableCell>

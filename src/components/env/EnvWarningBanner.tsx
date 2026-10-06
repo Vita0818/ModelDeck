@@ -114,7 +114,7 @@ export function EnvWarningBanner({
       <div className="fixed top-0 left-0 right-0 z-[100] bg-warning/10 dark:bg-warning border-b border-warning/40 dark:border-warning/40 shadow-lg animate-slide-down">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-warning flex-shrink-0 mt-0.5" />
+            <AlertTriangle className="size-5 text-warning flex-shrink-0 mt-0.5" />
 
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between gap-3">
@@ -137,12 +137,12 @@ export function EnvWarningBanner({
                     {isExpanded ? (
                       <>
                         {t("env.actions.collapse")}
-                        <ChevronUp className="h-4 w-4 ml-1" />
+                        <ChevronUp className="size-4 ml-1" />
                       </>
                     ) : (
                       <>
                         {t("env.actions.expand")}
-                        <ChevronDown className="h-4 w-4 ml-1" />
+                        <ChevronDown className="size-4 ml-1" />
                       </>
                     )}
                   </Button>
@@ -153,7 +153,7 @@ export function EnvWarningBanner({
                     onClick={onDismiss}
                     className="text-warning hover:bg-warning/10 dark:hover:bg-warning/50"
                   >
-                    <X className="h-4 w-4" />
+                    <X className="size-4" />
                   </Button>
                 </div>
               </div>
@@ -226,7 +226,7 @@ export function EnvWarningBanner({
                       disabled={selectedConflicts.size === 0 || isDeleting}
                       className="gap-1"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="size-4" />
                       {isDeleting
                         ? t("env.actions.deleting")
                         : t("env.actions.deleteSelected", {
@@ -245,7 +245,7 @@ export function EnvWarningBanner({
         <DialogContent className="max-w-md" layer="top">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-destructive" />
+              <AlertTriangle className="size-5 text-destructive" />
               {t("env.confirm.title")}
             </DialogTitle>
             <DialogDescription className="space-y-2">

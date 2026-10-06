@@ -836,7 +836,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
           <div className="flex items-center gap-8">
             <div className="flex flex-col items-center gap-2">
               <div className="flex items-center gap-2">
-                <img src={appIcon} alt={APP_NAME} className="h-5 w-5" />
+                <img src={appIcon} alt={APP_NAME} className="size-5" />
                 <h4 className="text-lg font-semibold text-foreground">
                   {APP_NAME}
                 </h4>
@@ -847,14 +847,14 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
                     {t("common.version")}
                   </span>
                   {isLoadingVersion ? (
-                    <Loader2 className="h-3 w-3 animate-spin" />
+                    <Loader2 className="size-3 animate-spin" />
                   ) : (
                     <span className="font-medium">{`v${displayVersion}`}</span>
                   )}
                 </Badge>
                 {isPortable && (
                   <Badge variant="secondary" className="gap-1.5">
-                    <Info className="h-3 w-3" />
+                    <Info className="size-3" />
                     {t("settings.portableMode")}
                   </Badge>
                 )}
@@ -883,7 +883,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
               onClick={handleOpenGithub}
               className="h-8 gap-1.5 border-primary/30 bg-primary/10 text-xs text-primary hover:bg-primary/20 hover:text-primary"
             >
-              <Github className="h-3.5 w-3.5" />
+              <Github className="size-3.5" />
               {t("settings.github")}
             </Button>
             <Button
@@ -893,7 +893,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
               onClick={handleOpenReleaseNotes}
               className="h-8 gap-1.5 text-xs"
             >
-              <ExternalLink className="h-3.5 w-3.5" />
+              <ExternalLink className="size-3.5" />
               {t("settings.releaseNotes")}
             </Button>
             <Button
@@ -907,24 +907,24 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
                 t("modeldeck.localBuild")
               ) : isDownloading ? (
                 <>
-                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  <Loader2 className="size-3.5 animate-spin" />
                   {t("settings.updating")}
                 </>
               ) : hasUpdate ? (
                 <>
-                  <Download className="h-3.5 w-3.5" />
+                  <Download className="size-3.5" />
                   {t("settings.updateTo", {
                     version: updateInfo?.availableVersion ?? "",
                   })}
                 </>
               ) : isChecking ? (
                 <>
-                  <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                  <RefreshCw className="size-3.5 animate-spin" />
                   {t("settings.checking")}
                 </>
               ) : (
                 <>
-                  <RefreshCw className="h-3.5 w-3.5" />
+                  <RefreshCw className="size-3.5" />
                   {t("settings.checkForUpdates")}
                 </>
               )}
@@ -964,9 +964,9 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
               disabled={isLoadingTools || isAnyBusy || isDiagnosingAll}
             >
               {isDiagnosingAll ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                <Loader2 className="size-3.5 animate-spin" />
               ) : (
-                <Stethoscope className="h-3.5 w-3.5" />
+                <Stethoscope className="size-3.5" />
               )}
               {isDiagnosingAll
                 ? t("settings.toolDiagnosing")
@@ -981,7 +981,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
             >
               <RefreshCw
                 className={
-                  isLoadingTools ? "h-3.5 w-3.5 animate-spin" : "h-3.5 w-3.5"
+                  isLoadingTools ? "size-3.5 animate-spin" : "size-3.5"
                 }
               />
               {isLoadingTools ? t("common.refreshing") : t("common.refresh")}
@@ -999,9 +999,9 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
               }
             >
               {batchAction === "update" ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                <Loader2 className="size-3.5 animate-spin" />
               ) : (
-                <ArrowUpCircle className="h-3.5 w-3.5" />
+                <ArrowUpCircle className="size-3.5" />
               )}
               {t("settings.updateAllTools", {
                 count: updatableToolNames.length,
@@ -1053,8 +1053,8 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-2">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-background/80 text-muted-foreground">
-                      {appConfig?.icon ?? <Terminal className="h-4 w-4" />}
+                    <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-background/80 text-muted-foreground">
+                      {appConfig?.icon ?? <Terminal className="size-4" />}
                     </span>
                     <div className="min-w-0">
                       <div className="truncate text-sm font-medium">
@@ -1071,17 +1071,17 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
                     </div>
                   </div>
                   {isToolVersionLoading ? (
-                    <Loader2 className="mt-1 h-4 w-4 animate-spin text-muted-foreground" />
+                    <Loader2 className="mt-1 size-4 animate-spin text-muted-foreground" />
                   ) : tool?.version ? (
                     isOutdated ? (
                       <span className="mt-1 shrink-0 rounded-full border border-warning/40/20 bg-warning/10 px-1.5 py-0.5 text-[10px] text-warning">
                         {t("settings.updateAvailableShort")}
                       </span>
                     ) : (
-                      <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-success" />
+                      <CheckCircle2 className="mt-1 size-4 shrink-0 text-success" />
                     )
                   ) : (
-                    <AlertCircle className="mt-1 h-4 w-4 shrink-0 text-warning" />
+                    <AlertCircle className="mt-1 size-4 shrink-0 text-warning" />
                   )}
                 </div>
 
@@ -1201,11 +1201,11 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
                       {/* preflight（升级前冲突探测）阶段也转圈：此时 toolActions
                           尚未置位，只 disabled 不转圈会让探测的数秒像"点了没反应"。 */}
                       {runningAction || preflightTools.has(toolName) ? (
-                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        <Loader2 className="size-3.5 animate-spin" />
                       ) : action === "install" ? (
-                        <Download className="h-3.5 w-3.5" />
+                        <Download className="size-3.5" />
                       ) : (
-                        <ArrowUpCircle className="h-3.5 w-3.5" />
+                        <ArrowUpCircle className="size-3.5" />
                       )}
                       {/* loading 时文案保持不变、仅图标切换为 spinner，
                           按钮宽度恒定，避免"升级"→"升级中…"导致的抖动。 */}
@@ -1238,7 +1238,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
           className="flex w-full items-center gap-1.5 px-1 text-sm font-medium text-foreground transition-colors hover:text-primary"
         >
           <ChevronDown
-            className={`h-3.5 w-3.5 transition-transform ${
+            className={`size-3.5 transition-transform ${
               showInstallCommands ? "" : "-rotate-90"
             }`}
           />
@@ -1256,7 +1256,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
                 onClick={handleCopyInstallCommands}
                 className="h-7 gap-1.5 text-xs"
               >
-                <Copy className="h-3.5 w-3.5" />
+                <Copy className="size-3.5" />
                 {t("common.copy")}
               </Button>
             </div>

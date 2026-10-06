@@ -74,8 +74,8 @@ export function AuthCenterPanel({ authScrollTarget }: AuthCenterPanelProps) {
         className="scroll-mt-4 rounded-xl border border-border bg-card p-6"
       >
         <div className="mb-4 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
-            <Github className="h-5 w-5" />
+          <div className="flex size-10 items-center justify-center rounded-xl bg-muted">
+            <Github className="size-5" />
           </div>
           <div>
             <h4 className="font-medium">GitHub Copilot</h4>
@@ -95,7 +95,7 @@ export function AuthCenterPanel({ authScrollTarget }: AuthCenterPanelProps) {
         className="scroll-mt-4 rounded-xl border border-border bg-card p-6"
       >
         <div className="mb-4 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
+          <div className="flex size-10 items-center justify-center rounded-xl bg-muted">
             <CodexIcon size={20} />
           </div>
           <div>
@@ -116,7 +116,7 @@ export function AuthCenterPanel({ authScrollTarget }: AuthCenterPanelProps) {
         className="scroll-mt-4 rounded-xl border border-border bg-card p-6"
       >
         <div className="mb-4 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
+          <div className="flex size-10 items-center justify-center rounded-xl bg-muted">
             <ProviderIcon icon="xai" name="xAI" size={20} />
           </div>
           <div>

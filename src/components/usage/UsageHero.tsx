@@ -149,7 +149,7 @@ function AppGlyph({
       return cloneElement(base, { size: 20 });
     }
   }
-  return <Zap className={cn("h-5 w-5", accentClass)} />;
+  return <Zap className={cn("size-5", accentClass)} />;
 }
 
 export function UsageHero({
@@ -218,7 +218,7 @@ export function UsageHero({
     return (
       <Card className="border border-border bg-card">
         <CardContent className="flex items-center justify-center min-h-[200px]">
-          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground/50" />
+          <Loader2 className="size-6 animate-spin text-muted-foreground/50" />
         </CardContent>
       </Card>
     );
@@ -276,7 +276,7 @@ export function UsageHero({
                     {t("usage.totalRequests")}
                   </span>
                   <span className="font-semibold flex items-center gap-1.5 text-sm tabular-nums">
-                    <Activity className="h-3.5 w-3.5 text-primary" />
+                    <Activity className="size-3.5 text-primary" />
                     {requests.toLocaleString()}
                   </span>
                 </div>
@@ -295,19 +295,19 @@ export function UsageHero({
             {/* Bottom row: Breakdown and Hit Rate */}
             <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
               <MiniStat
-                icon={<ArrowDownToLine className="h-3.5 w-3.5" />}
+                icon={<ArrowDownToLine className="size-3.5" />}
                 label={t("usage.freshInput", "新增输入")}
                 value={formatTokensShort(input, lang)}
                 accent="text-primary"
               />
               <MiniStat
-                icon={<ArrowUpFromLine className="h-3.5 w-3.5" />}
+                icon={<ArrowUpFromLine className="size-3.5" />}
                 label={t("usage.output")}
                 value={formatTokensShort(output, lang)}
                 accent="text-system-purple"
               />
               <MiniStat
-                icon={<Database className="h-3.5 w-3.5" />}
+                icon={<Database className="size-3.5" />}
                 label={t("usage.cacheWrite", "缓存写入")}
                 value={cacheWriteDisplay.value}
                 accent="text-warning"
@@ -315,7 +315,7 @@ export function UsageHero({
                 tooltip={cacheWriteDisplay.tooltip}
               />
               <MiniStat
-                icon={<Sparkles className="h-3.5 w-3.5" />}
+                icon={<Sparkles className="size-3.5" />}
                 label={t("usage.cacheRead", "缓存命中")}
                 value={formatTokensShort(cacheRead, lang)}
                 accent="text-success"
@@ -377,7 +377,7 @@ function MiniStat({
         {icon}
         <span className="text-foreground/70 tracking-wide">{label}</span>
         {tooltip && (
-          <Info className="h-3 w-3 text-muted-foreground/60 shrink-0 ml-auto" />
+          <Info className="size-3 text-muted-foreground/60 shrink-0 ml-auto" />
         )}
       </div>
       <div

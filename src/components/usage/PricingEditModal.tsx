@@ -118,7 +118,7 @@ export function PricingEditModal({
                 onClick={() => setIsPickerOpen(true)}
                 className="shrink-0"
               >
-                <Globe className="mr-1.5 h-4 w-4" />
+                <Globe className="mr-1.5 size-4" />
                 {t("usage.importFromModelsDev", "从 models.dev 导入")}
               </Button>
             </div>

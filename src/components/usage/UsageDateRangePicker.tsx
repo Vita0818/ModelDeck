@@ -325,9 +325,9 @@ export function UsageDateRangePicker({
           className="h-9 w-[100px] justify-start gap-1.5 text-xs"
           title={triggerLabel}
         >
-          <CalendarDays className="h-4 w-4 shrink-0" />
+          <CalendarDays className="size-4 shrink-0" />
           <span className="truncate flex-1">{triggerLabel}</span>
-          <ChevronDown className="h-3.5 w-3.5 shrink-0 opacity-50" />
+          <ChevronDown className="size-3.5 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
@@ -410,7 +410,7 @@ export function UsageDateRangePicker({
                 type="button"
                 size="icon"
                 variant="ghost"
-                className="h-7 w-7"
+                className="size-7"
                 onClick={() =>
                   setDisplayMonth(
                     new Date(
@@ -421,7 +421,7 @@ export function UsageDateRangePicker({
                   )
                 }
               >
-                <ChevronLeft className="h-3.5 w-3.5" />
+                <ChevronLeft className="size-3.5" />
               </Button>
               <button
                 type="button"
@@ -438,7 +438,7 @@ export function UsageDateRangePicker({
                 type="button"
                 size="icon"
                 variant="ghost"
-                className="h-7 w-7"
+                className="size-7"
                 onClick={() =>
                   setDisplayMonth(
                     new Date(
@@ -449,7 +449,7 @@ export function UsageDateRangePicker({
                   )
                 }
               >
-                <ChevronRight className="h-3.5 w-3.5" />
+                <ChevronRight className="size-3.5" />
               </Button>
             </div>
 

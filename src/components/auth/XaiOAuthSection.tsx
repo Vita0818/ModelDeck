@@ -129,9 +129,9 @@ export const XaiOAuthSection: React.FC<XaiOAuthSectionProps> = ({
                 >
                   <span className="flex items-center gap-2">
                     {account.requires_reauth ? (
-                      <AlertTriangle className="h-4 w-4 text-warning" />
+                      <AlertTriangle className="size-4 text-warning" />
                     ) : (
-                      <User className="h-4 w-4 text-muted-foreground" />
+                      <User className="size-4 text-muted-foreground" />
                     )}
                     {account.login}
                     {account.requires_reauth && (
@@ -160,9 +160,9 @@ export const XaiOAuthSection: React.FC<XaiOAuthSectionProps> = ({
               >
                 <div className="flex min-w-0 items-center gap-2">
                   {account.requires_reauth ? (
-                    <AlertTriangle className="h-5 w-5 shrink-0 text-warning" />
+                    <AlertTriangle className="size-5 shrink-0 text-warning" />
                   ) : (
-                    <User className="h-5 w-5 shrink-0 text-muted-foreground" />
+                    <User className="size-5 shrink-0 text-muted-foreground" />
                   )}
                   <span className="truncate text-sm font-medium">
                     {account.login}
@@ -199,12 +199,12 @@ export const XaiOAuthSection: React.FC<XaiOAuthSectionProps> = ({
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7 text-muted-foreground hover:text-destructive"
+                    className="size-7 text-muted-foreground hover:text-destructive"
                     disabled={isRemovingAccount}
                     onClick={(event) => remove(account.id, event)}
                     title={t("xaiOauth.removeAccount", "移除账号")}
                   >
-                    <X className="h-4 w-4" />
+                    <X className="size-4" />
                   </Button>
                 </div>
               </div>
@@ -222,9 +222,9 @@ export const XaiOAuthSection: React.FC<XaiOAuthSectionProps> = ({
           onClick={addAccount}
         >
           {hasAnyAccount ? (
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="mr-2 size-4" />
           ) : (
-            <Sparkles className="mr-2 h-4 w-4" />
+            <Sparkles className="mr-2 size-4" />
           )}
           {hasAnyAccount
             ? t("xaiOauth.addOrReauth", "添加账号或重新登录")
@@ -235,7 +235,7 @@ export const XaiOAuthSection: React.FC<XaiOAuthSectionProps> = ({
       {isPolling && deviceCode && (
         <div className="space-y-3 rounded-lg border bg-muted p-4">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="size-4 animate-spin" />
             {t("xaiOauth.waitingForAuth", "等待 xAI 授权中…")}
           </div>
           <div className="text-center">
@@ -253,9 +253,9 @@ export const XaiOAuthSection: React.FC<XaiOAuthSectionProps> = ({
                 onClick={copyUserCode}
               >
                 {copied ? (
-                  <Check className="h-4 w-4 text-success" />
+                  <Check className="size-4 text-success" />
                 ) : (
-                  <Copy className="h-4 w-4" />
+                  <Copy className="size-4" />
                 )}
               </Button>
             </div>
@@ -268,7 +268,7 @@ export const XaiOAuthSection: React.FC<XaiOAuthSectionProps> = ({
               className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
             >
               {deviceCode.verification_uri}
-              <ExternalLink className="h-3 w-3" />
+              <ExternalLink className="size-3" />
             </a>
           </div>
           <div className="text-center">
@@ -315,7 +315,7 @@ export const XaiOAuthSection: React.FC<XaiOAuthSectionProps> = ({
           className="w-full text-destructive hover:text-destructive"
           onClick={logout}
         >
-          <LogOut className="mr-2 h-4 w-4" />
+          <LogOut className="mr-2 size-4" />
           {t("xaiOauth.logoutAll", "移除所有 xAI 账号")}
         </Button>
       )}

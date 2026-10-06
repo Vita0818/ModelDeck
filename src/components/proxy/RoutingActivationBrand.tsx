@@ -128,7 +128,7 @@ export function RoutingActivationBrand({
           key={`particles-${burstSequence}`}
           data-testid="routing-activation-particles"
           aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-1/2 z-20 h-0 w-0"
+          className="pointer-events-none absolute left-1/2 top-1/2 z-20 size-0"
         >
           {PARTICLES.map((particle, index) => (
             <motion.span

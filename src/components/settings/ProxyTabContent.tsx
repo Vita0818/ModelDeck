@@ -103,7 +103,7 @@ export function ProxyTabContent({
         >
           <AccordionTrigger>
             <div className="flex items-center gap-3">
-              <Server className="h-5 w-5 text-success" />
+              <Server className="size-5 text-success" />
               <div className="text-left">
                 <h3 className="text-base font-medium text-foreground">
                   {t("settings.advanced.proxy.title")}
@@ -117,7 +117,7 @@ export function ProxyTabContent({
                 className="gap-1.5 h-6 ml-auto mr-2"
               >
                 <Activity
-                  className={`h-3 w-3 ${isRunning ? "status-heartbeat" : ""}`}
+                  className={`size-3 ${isRunning ? "status-heartbeat" : ""}`}
                 />
                 {isRunning
                   ? t("settings.advanced.proxy.running")
@@ -144,7 +144,7 @@ export function ProxyTabContent({
         >
           <AccordionTrigger>
             <div className="flex items-center gap-3">
-              <Activity className="h-5 w-5 text-warning" />
+              <Activity className="size-5 text-warning" />
               <div className="text-left">
                 <h3 className="text-base font-medium text-foreground">
                   {t("settings.advanced.failover.title")}
@@ -158,7 +158,7 @@ export function ProxyTabContent({
           <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
             <div className="space-y-6">
               <ToggleRow
-                icon={<ShieldAlert className="h-4 w-4 text-warning" />}
+                icon={<ShieldAlert className="size-4 text-warning" />}
                 title={t("settings.advanced.proxy.enableFailoverToggle")}
                 description={t(
                   "settings.advanced.proxy.enableFailoverToggleDescription",
@@ -229,7 +229,7 @@ export function ProxyTabContent({
         >
           <AccordionTrigger>
             <div className="flex items-center gap-3">
-              <Zap className="h-5 w-5 text-system-purple" />
+              <Zap className="size-5 text-system-purple" />
               <div className="text-left">
                 <h3 className="text-base font-medium text-foreground">
                   {t("settings.advanced.rectifier.title")}

@@ -308,7 +308,7 @@ export function UsageDashboard({
                   )}
                 >
                   {type === "all" ? (
-                    <LayoutGrid className="h-4 w-4" />
+                    <LayoutGrid className="size-4" />
                   ) : (
                     <ProviderIcon
                       icon={APP_FILTER_ICON[type]}
@@ -384,7 +384,7 @@ export function UsageDashboard({
                 aria-label={t("usage.refreshInterval")}
               >
                 <span className="flex items-center gap-2">
-                  <RefreshCw className="h-3.5 w-3.5 shrink-0" />
+                  <RefreshCw className="size-3.5 shrink-0" />
                   <SelectValue />
                 </span>
               </SelectTrigger>
@@ -429,15 +429,15 @@ export function UsageDashboard({
             <div className="flex items-center justify-between mb-4">
               <TabsList className="bg-muted">
                 <TabsTrigger value="logs" className="gap-2">
-                  <ListFilter className="h-4 w-4" />
+                  <ListFilter className="size-4" />
                   {t("usage.requestLogs")}
                 </TabsTrigger>
                 <TabsTrigger value="providers" className="gap-2">
-                  <Activity className="h-4 w-4" />
+                  <Activity className="size-4" />
                   {t("usage.providerStats")}
                 </TabsTrigger>
                 <TabsTrigger value="models" className="gap-2">
-                  <BarChart3 className="h-4 w-4" />
+                  <BarChart3 className="size-4" />
                   {t("usage.modelStats")}
                 </TabsTrigger>
               </TabsList>
@@ -486,7 +486,7 @@ export function UsageDashboard({
         <div className="space-y-4">
           <div className="rounded-xl rounded-xl border border-border bg-card shadow-xs px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <ScanSearch className="h-5 w-5 text-primary" />
+              <ScanSearch className="size-5 text-primary" />
               <div>
                 <h3 className="text-base font-semibold">
                   {t("usage.sessionSync.title")}
@@ -505,9 +505,9 @@ export function UsageDashboard({
                   onClick={() => void runManualSessionSync()}
                 >
                   {syncingSession ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="mr-2 size-4 animate-spin" />
                   ) : (
-                    <RefreshCw className="mr-2 h-4 w-4" />
+                    <RefreshCw className="mr-2 size-4" />
                   )}
                   {t("usage.sessionSync.syncNow")}
                 </Button>
@@ -533,7 +533,7 @@ export function UsageDashboard({
             >
               <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted data-[state=open]:bg-muted">
                 <div className="flex items-center gap-3">
-                  <Coins className="h-5 w-5 text-warning" />
+                  <Coins className="size-5 text-warning" />
                   <div className="text-left">
                     <h3 className="text-base font-semibold">
                       {t("settings.advanced.pricing.title")}
@@ -554,7 +554,7 @@ export function UsageDashboard({
             >
               <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted data-[state=open]:bg-muted">
                 <div className="flex items-center gap-3">
-                  <DatabaseBackup className="h-5 w-5 text-warning" />
+                  <DatabaseBackup className="size-5 text-warning" />
                   <div className="text-left">
                     <h3 className="text-base font-semibold">
                       {t("usage.rebuildCodex.title")}
@@ -577,9 +577,9 @@ export function UsageDashboard({
                     className="shrink-0"
                   >
                     {rebuildingCodex ? (
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      <Loader2 className="mr-2 size-4 animate-spin" />
                     ) : (
-                      <DatabaseBackup className="mr-2 h-4 w-4" />
+                      <DatabaseBackup className="mr-2 size-4" />
                     )}
                     {t("usage.rebuildCodex.action")}
                   </Button>

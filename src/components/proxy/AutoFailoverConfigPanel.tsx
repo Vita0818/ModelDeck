@@ -206,7 +206,7 @@ export function AutoFailoverConfigPanel({
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-4">
-        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+        <Loader2 className="size-6 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -214,7 +214,7 @@ export function AutoFailoverConfigPanel({
   const isDisabled = disabled || updateConfig.isPending;
 
   return (
-    <div className="border-0 rounded-none shadow-none bg-transparent">
+    <div>
       <div className="space-y-4">
         {error && (
           <Alert variant="destructive">
@@ -223,7 +223,7 @@ export function AutoFailoverConfigPanel({
         )}
 
         <Alert className="border-primary/40/40 bg-primary/10">
-          <Info className="h-4 w-4" />
+          <Info className="size-4" />
           <AlertDescription className="text-sm">
             {t(
               "proxy.autoFailover.info",
@@ -502,12 +502,12 @@ export function AutoFailoverConfigPanel({
           <Button onClick={handleSave} disabled={isDisabled}>
             {updateConfig.isPending ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="mr-2 size-4 animate-spin" />
                 {t("common.saving", "保存中...")}
               </>
             ) : (
               <>
-                <Save className="mr-2 h-4 w-4" />
+                <Save className="mr-2 size-4" />
                 {t("common.save", "保存")}
               </>
             )}

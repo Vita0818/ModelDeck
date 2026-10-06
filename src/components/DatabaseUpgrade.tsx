@@ -139,9 +139,9 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
       <div className="w-full max-w-lg space-y-5 rounded-2xl border border-border bg-card p-7 shadow-xl">
         <div className="flex items-start gap-4">
           <div
-            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${accent.chip}`}
+            className={`flex size-12 shrink-0 items-center justify-center rounded-xl ${accent.chip}`}
           >
-            <AccentIcon className="h-6 w-6" />
+            <AccentIcon className="size-6" />
           </div>
           <div className="space-y-1">
             <h1 className="text-lg font-semibold">
@@ -179,7 +179,7 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
 
         {phase === "checking" && (
           <p className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="size-4 animate-spin" />
             {t("dbUpgrade.checking", "正在检查可用更新…")}
           </p>
         )}
@@ -208,7 +208,7 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span className="flex items-center gap-2 text-muted-foreground">
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader2 className="size-4 animate-spin" />
                 {percent === null
                   ? t("dbUpgrade.preparing", "正在准备更新…")
                   : t("dbUpgrade.downloading", "正在下载更新…")}
@@ -250,9 +250,9 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
                 className="gap-2 bg-warning text-white hover:bg-warning"
               >
                 {phase === "error" ? (
-                  <RefreshCw className="h-4 w-4" />
+                  <RefreshCw className="size-4" />
                 ) : (
-                  <Download className="h-4 w-4" />
+                  <Download className="size-4" />
                 )}
                 {phase === "error"
                   ? t("dbUpgrade.retry", "重试升级")
@@ -266,7 +266,7 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
             onClick={() => void invoke("open_app_config_folder")}
             disabled={phase === "updating"}
           >
-            <FolderOpen className="h-4 w-4" />
+            <FolderOpen className="size-4" />
             {t("dbUpgrade.openConfigDir", "打开配置目录")}
           </Button>
 

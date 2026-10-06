@@ -281,7 +281,7 @@ export function BackupListSection({
               }
             }}
           >
-            <Download className="h-3 w-3 mr-1" />
+            <Download className="size-3 mr-1" />
             {isCreating
               ? t("settings.backupManager.creating", {
                   defaultValue: "Backing up...",
@@ -328,20 +328,20 @@ export function BackupListSection({
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-6 w-6 shrink-0"
+                        className="size-6 shrink-0"
                         onClick={handleConfirmRename}
                         disabled={isRenaming || !editValue.trim()}
                       >
-                        <Check className="h-3.5 w-3.5" />
+                        <Check className="size-3.5" />
                       </Button>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-6 w-6 shrink-0"
+                        className="size-6 shrink-0"
                         onClick={handleCancelRename}
                         disabled={isRenaming}
                       >
-                        <X className="h-3.5 w-3.5" />
+                        <X className="size-3.5" />
                       </Button>
                     </div>
                   ) : (
@@ -361,26 +361,26 @@ export function BackupListSection({
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-7 w-7"
+                      className="size-7"
                       onClick={() => handleStartRename(backup.filename)}
                       disabled={isRestoring || isRenaming || isDeleting}
                       title={t("settings.backupManager.rename", {
                         defaultValue: "Rename",
                       })}
                     >
-                      <Pencil className="h-3 w-3" />
+                      <Pencil className="size-3" />
                     </Button>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-7 w-7 text-destructive hover:text-destructive"
+                      className="size-7 text-destructive hover:text-destructive"
                       onClick={() => setDeleteFilename(backup.filename)}
                       disabled={isRestoring || isDeleting}
                       title={t("settings.backupManager.delete", {
                         defaultValue: "Delete",
                       })}
                     >
-                      <Trash2 className="h-3 w-3" />
+                      <Trash2 className="size-3" />
                     </Button>
                     <Button
                       variant="ghost"
@@ -389,7 +389,7 @@ export function BackupListSection({
                       disabled={isRestoring || isDeleting}
                       onClick={() => setConfirmFilename(backup.filename)}
                     >
-                      <RotateCcw className="h-3 w-3 mr-1" />
+                      <RotateCcw className="size-3 mr-1" />
                       {isRestoring
                         ? t("settings.backupManager.restoring", {
                             defaultValue: "Restoring...",

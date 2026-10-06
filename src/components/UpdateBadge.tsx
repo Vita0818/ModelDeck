@@ -31,12 +31,12 @@ export function UpdateBadge({ className = "", onClick }: UpdateBadgeProps) {
       aria-label={title}
       onClick={onClick}
       className={`
-        relative h-8 w-8 rounded-full
+        relative size-8 rounded-full
         ${isActive ? "text-success hover:bg-success/10 dark:hover:bg-success/10" : "text-muted-foreground hover:bg-muted"}
         ${className}
       `}
     >
-      <ArrowUpCircle className="h-5 w-5" />
+      <ArrowUpCircle className="size-5" />
     </Button>
   );
 }

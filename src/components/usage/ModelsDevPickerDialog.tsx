@@ -191,7 +191,7 @@ export function ModelsDevPickerDialog({
         <div className="flex flex-1 min-h-0 flex-col gap-3 px-6 py-4">
           {isLoading ? (
             <div className="flex flex-1 items-center justify-center">
-              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              <Loader2 className="size-6 animate-spin text-muted-foreground" />
             </div>
           ) : error ? (
             <Alert variant="destructive">
@@ -232,7 +232,7 @@ export function ModelsDevPickerDialog({
                   </SelectContent>
                 </Select>
                 <div className="relative flex-1">
-                  <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Search className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
@@ -265,7 +265,7 @@ export function ModelsDevPickerDialog({
                         }`}
                       >
                         <Check
-                          className={`h-4 w-4 shrink-0 text-primary ${
+                          className={`size-4 shrink-0 text-primary ${
                             selected?.key === entry.key
                               ? "visible"
                               : "invisible"
@@ -344,7 +344,7 @@ export function ModelsDevPickerDialog({
           >
             {updatePricing.isPending ? (
               <>
-                <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
+                <Loader2 className="mr-1.5 size-4 animate-spin" />
                 {t("usage.modelsDevImporting", "导入中...")}
               </>
             ) : (

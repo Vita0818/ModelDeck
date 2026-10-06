@@ -65,7 +65,7 @@ export default function UsageTrendChartView({
   if (isLoading) {
     return (
       <div className="flex h-[350px] items-center justify-center rounded-xl bg-card border border-border">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground/30" />
+        <Loader2 className="size-8 animate-spin text-muted-foreground/30" />
       </div>
     );
   }
@@ -84,7 +84,7 @@ export default function UsageTrendChartView({
               style={{ color: entry.color }}
             >
               <div
-                className="h-2 w-2 rounded-full"
+                className="size-2 rounded-full"
                 style={{ backgroundColor: entry.color }}
               />
               <span className="font-medium">{entry.name}:</span>

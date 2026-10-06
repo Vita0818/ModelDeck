@@ -230,7 +230,7 @@ export function ProxyPanel({
       <section className="space-y-4">
         {/* [1] Enable proxy button on main page — always visible */}
         <ToggleRow
-          icon={<Zap className="h-4 w-4 text-success" />}
+          icon={<Zap className="size-4 text-success" />}
           title={t("settings.advanced.proxy.enableFeature")}
           description={t("settings.advanced.proxy.enableFeatureDescription")}
           checked={enableLocalProxy}
@@ -240,8 +240,8 @@ export function ProxyPanel({
         {/* [2] Proxy service toggle — always visible */}
         <div className="flex items-center justify-between rounded-xl border border-border bg-card p-4 transition-colors hover:bg-muted">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-background ring-1 ring-border">
-              <Power className="h-4 w-4 text-success" />
+            <div className="flex size-8 items-center justify-center rounded-lg bg-background ring-1 ring-border">
+              <Power className="size-4 text-success" />
             </div>
             <div className="space-y-1">
               <p className="text-sm font-medium leading-none">
@@ -423,7 +423,7 @@ export function ProxyPanel({
                 grokQueue.length > 0) && (
                 <div className="pt-3 border-t border-border space-y-3">
                   <div className="flex items-center gap-2">
-                    <ListOrdered className="h-3.5 w-3.5 text-muted-foreground" />
+                    <ListOrdered className="size-3.5 text-muted-foreground" />
                     <p className="text-xs text-muted-foreground">
                       {t("proxy.failoverQueue.title")}
                     </p>
@@ -483,21 +483,21 @@ export function ProxyPanel({
             {/* [7] Stats cards */}
             <div className="grid gap-3 md:grid-cols-4">
               <StatCard
-                icon={<Activity className="h-4 w-4" />}
+                icon={<Activity className="size-4" />}
                 label={t("proxy.panel.stats.activeConnections", {
                   defaultValue: "活跃连接",
                 })}
                 value={status.active_connections}
               />
               <StatCard
-                icon={<TrendingUp className="h-4 w-4" />}
+                icon={<TrendingUp className="size-4" />}
                 label={t("proxy.panel.stats.totalRequests", {
                   defaultValue: "总请求数",
                 })}
                 value={status.total_requests}
               />
               <StatCard
-                icon={<Clock className="h-4 w-4" />}
+                icon={<Clock className="size-4" />}
                 label={t("proxy.panel.stats.successRate", {
                   defaultValue: "成功率",
                 })}
@@ -505,7 +505,7 @@ export function ProxyPanel({
                 variant={status.success_rate > 90 ? "success" : "warning"}
               />
               <StatCard
-                icon={<Clock className="h-4 w-4" />}
+                icon={<Clock className="size-4" />}
                 label={t("proxy.panel.stats.uptime", {
                   defaultValue: "运行时间",
                 })}
@@ -590,12 +590,12 @@ export function ProxyPanel({
                 >
                   {updateGlobalConfig.isPending ? (
                     <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      <Loader2 className="mr-2 size-4 animate-spin" />
                       {t("common.saving", { defaultValue: "保存中..." })}
                     </>
                   ) : (
                     <>
-                      <Save className="mr-2 h-4 w-4" />
+                      <Save className="mr-2 size-4" />
                       {t("common.save", { defaultValue: "保存" })}
                     </>
                   )}
@@ -606,7 +606,7 @@ export function ProxyPanel({
             {/* Stopped hint */}
             <div className="text-center py-6 text-muted-foreground">
               <div className="mx-auto w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
-                <Server className="h-8 w-8" />
+                <Server className="size-8" />
               </div>
               <p className="text-base font-medium text-foreground mb-1">
                 {t("proxy.panel.stoppedTitle", {

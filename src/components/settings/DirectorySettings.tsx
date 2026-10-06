@@ -69,7 +69,7 @@ export function DirectorySettings({
             onClick={onBrowseAppConfig}
             title={t("settings.browseDirectory")}
           >
-            <FolderSearch className="h-4 w-4" />
+            <FolderSearch className="size-4" />
           </Button>
           <Button
             type="button"
@@ -78,7 +78,7 @@ export function DirectorySettings({
             onClick={onResetAppConfig}
             title={t("settings.resetDefault")}
           >
-            <Undo2 className="h-4 w-4" />
+            <Undo2 className="size-4" />
           </Button>
         </div>
       </section>
@@ -202,7 +202,7 @@ function DirectoryInput({
           onClick={onBrowse}
           title={t("settings.browseDirectory")}
         >
-          <FolderSearch className="h-4 w-4" />
+          <FolderSearch className="size-4" />
         </Button>
         <Button
           type="button"
@@ -211,7 +211,7 @@ function DirectoryInput({
           onClick={onReset}
           title={t("settings.resetDefault")}
         >
-          <Undo2 className="h-4 w-4" />
+          <Undo2 className="size-4" />
         </Button>
       </div>
     </div>

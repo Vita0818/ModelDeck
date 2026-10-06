@@ -341,7 +341,7 @@ export function RequestLogTable({
                 disabled={page === 0}
                 onClick={() => setPage((p) => Math.max(0, p - 1))}
               >
-                <ChevronLeft className="h-4 w-4" />
+                <ChevronLeft className="size-4" />
               </Button>
               {(() => {
                 const pages: (number | string)[] = [];
@@ -376,7 +376,7 @@ export function RequestLogTable({
                       key={p}
                       variant={p === page ? "default" : "outline"}
                       size="sm"
-                      className="h-8 w-8 p-0"
+                      className="size-8 p-0"
                       onClick={() => setPage(p)}
                     >
                       {p + 1}
@@ -390,7 +390,7 @@ export function RequestLogTable({
                 disabled={page >= totalPages - 1}
                 onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
               >
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="size-4" />
               </Button>
               <div className="flex items-center gap-1 ml-2">
                 <Input

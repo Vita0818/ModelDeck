@@ -66,11 +66,11 @@ export function ProxyToggle({ className, activeApp }: ProxyToggleProps) {
       title={tooltipText}
     >
       {isPending ? (
-        <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+        <Loader2 className="size-4 animate-spin text-muted-foreground" />
       ) : (
         <Radio
           className={cn(
-            "h-4 w-4 transition-colors",
+            "size-4 transition-colors",
             takeoverEnabled
               ? "text-success status-heartbeat"
               : "text-muted-foreground",

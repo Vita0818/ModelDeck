@@ -59,11 +59,11 @@ export function FailoverToggle({ className, activeApp }: FailoverToggleProps) {
       title={tooltipText}
     >
       {setEnabled.isPending || isLoading ? (
-        <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+        <Loader2 className="size-4 animate-spin text-muted-foreground" />
       ) : (
         <Shuffle
           className={cn(
-            "h-4 w-4 transition-colors",
+            "size-4 transition-colors",
             isEnabled
               ? "text-success status-heartbeat"
               : "text-muted-foreground",
