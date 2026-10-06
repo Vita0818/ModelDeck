@@ -22,7 +22,7 @@ export function ToolInstallRow({ inst }: { inst: ToolInstallation }) {
         className={
           inst.runnable
             ? "shrink-0 font-mono text-foreground"
-            : "shrink-0 text-yellow-600 dark:text-yellow-400"
+            : "shrink-0 text-warning"
         }
       >
         {inst.runnable ? inst.version : t("settings.toolConflictNotRunnable")}

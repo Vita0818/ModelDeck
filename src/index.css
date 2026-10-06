@@ -2,302 +2,219 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * Apple-like tokens.
+ *
+ * Light mode follows the macOS grouped-settings look: a slightly grey window
+ * with white content groups. Dark mode inverts that relationship -- the window
+ * is darkest and groups sit above it -- which is how Apple keeps depth legible
+ * without heavy shadows.
+ */
 @layer base {
   :root {
+    --canvas: 240 20% 98%; /* window behind content */
     --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --foreground: 0 0% 0%;
 
-    --primary: 210 100% 56%;
+    --sidebar: 240 20% 97%;
+    --sidebar-foreground: 240 6% 25%;
+    --sidebar-accent: 211 100% 50%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+
+    --primary: 211 100% 50%; /* systemBlue */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    --secondary: 240 24% 96%;
+    --secondary-foreground: 240 6% 10%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --muted: 240 24% 96%;
+    --muted-foreground: 240 2% 47%; /* secondaryLabel */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --accent: 240 24% 94%;
+    --accent-foreground: 240 6% 10%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 210 100% 56%;
+    --destructive: 4 100% 59%; /* systemRed */
+    --destructive-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    --success: 135 59% 49%; /* systemGreen */
+    --success-foreground: 0 0% 100%;
+
+    --warning: 35 100% 50%; /* systemOrange */
+    --warning-foreground: 0 0% 100%;
+
+    --border: 240 10% 88%;
+    --separator: 240 10% 92%;
+    --input: 240 10% 85%;
+    --ring: 211 100% 50%;
+
+    --radius: 0.625rem; /* 10px */
   }
 
   .dark {
-    --background: 240 5% 12%;
-    --foreground: 0 0% 98%;
-    --card: 240 5% 16%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 5% 16%;
-    --popover-foreground: 0 0% 98%;
+    --canvas: 0 0% 11%;
+    --background: 0 0% 11%;
+    --foreground: 0 0% 100%;
 
-    --primary: 210 100% 54%;
+    --sidebar: 0 0% 9%;
+    --sidebar-foreground: 240 5% 80%;
+    --sidebar-accent: 211 100% 52%;
+
+    --card: 240 3% 16%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 240 3% 18%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 211 100% 52%; /* systemBlue dark */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 5% 18%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 240 3% 22%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 240 5% 18%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 5% 18%;
-    --accent-foreground: 0 0% 98%;
+    --muted: 240 3% 20%;
+    --muted-foreground: 240 5% 65%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --accent: 240 3% 24%;
+    --accent-foreground: 0 0% 100%;
 
-    --border: 240 5% 24%;
-    --input: 240 5% 24%;
-    --ring: 210 100% 54%;
+    --destructive: 3 100% 61%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 135 60% 51%;
+    --success-foreground: 0 0% 0%;
+
+    --warning: 37 100% 52%;
+    --warning-foreground: 0 0% 0%;
+
+    --border: 240 3% 26%;
+    --separator: 240 3% 23%;
+    --input: 240 3% 30%;
+    --ring: 211 100% 52%;
   }
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    @apply font-sans antialiased;
+    color-scheme: light;
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply m-0 bg-canvas p-0 text-base text-foreground;
+  }
+
+  /* Apple shows a focus ring only for keyboard navigation. */
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3.5px hsl(var(--ring) / 0.35);
+    border-radius: inherit;
+  }
+
+  /* Native controls follow the theme. */
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    letter-spacing: inherit;
+  }
+
+  input[type="password"]::-ms-reveal,
+  input[type="password"]::-ms-clear {
+    display: none;
+  }
 }
 
-.dark .glass {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+@layer components {
+  /**
+   * Scrollbars stay hidden until the pointer is over a scrollable region,
+   * matching macOS overlay scrollers. The gutter is always reserved so
+   * content does not shift when they appear.
+   */
+  .scroll-area {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    transition: scrollbar-color 200ms ease;
+  }
+  .scroll-area:hover,
+  .scroll-area:focus-within {
+    scrollbar-color: hsl(var(--muted-foreground) / 0.4) transparent;
+  }
+  .scroll-area::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+  .scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scroll-area::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border: 2.5px solid transparent;
+    background-clip: content-box;
+    border-radius: 9999px;
+  }
+  .scroll-area:hover::-webkit-scrollbar-thumb,
+  .scroll-area:focus-within::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground) / 0.38);
+  }
+  .scroll-area::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.6);
+  }
+
+  /** Translucent chrome, as used by the sidebar and title bar. */
+  .material {
+    background-color: hsl(var(--sidebar) / 0.8);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+  }
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.dark .glass-card {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.01) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-}
-
-.glass-card-active {
-  background: rgba(59, 130, 246, 0.08);
-  border: 1px solid rgba(59, 130, 246, 0.4);
-}
-
-.dark .glass-card-active {
-  background: rgba(59, 130, 246, 0.12);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-}
-
-.glass-header {
-  background: hsl(var(--background));
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border: none;
-  border-top: 2px solid hsl(var(--border));
-}
-
-.dark .glass-header {
-  background: hsl(var(--background));
-  border: none;
-  border-top: 2px solid hsl(var(--border));
+@layer utilities {
+  /** 1px hairline that stays 1 device pixel on retina. */
+  .border-hairline {
+    border-width: 1px;
+    border-color: hsl(var(--separator));
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
 }
 
 [data-tauri-drag-region] {
   -webkit-app-region: drag;
 }
-
 [data-tauri-no-drag],
 [data-tauri-drag-region] .no-drag {
   -webkit-app-region: no-drag;
 }
 
-* {
-  box-sizing: border-box;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-html {
-  @apply font-sans antialiased;
-  line-height: 1.5;
-  color-scheme: light;
-  overscroll-behavior: none;
-}
-
-body {
-  @apply m-0 p-0 text-sm;
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-}
-
-html.dark {
-  color-scheme: dark;
-}
-
-.status-heartbeat {
-  opacity: 1;
-  transition-property: color, opacity;
-  transition-duration: 150ms, 300ms;
-  transition-timing-function: ease, ease-out;
-}
-
-html[data-window-active="true"][data-status-heartbeat="true"]
-  .status-heartbeat {
-  opacity: 0.5;
-}
-
-html[data-window-active="false"] .status-heartbeat {
-  opacity: 1;
-  transition-duration: 0s;
-}
-
-@keyframes pi-thinking-popover-in {
-  0% {
-    opacity: 0;
-    transform: translate3d(22px, 0, 0) scale(0.94);
-  }
-  68% {
-    opacity: 1;
-    transform: translate3d(-2px, 0, 0) scale(1.008);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
-@keyframes pi-thinking-popover-out {
-  0% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translate3d(12px, 0, 0) scale(0.97);
-  }
-}
-
-.pi-thinking-popover {
-  transform-origin: var(--radix-popover-content-transform-origin);
-  will-change: transform, opacity;
-}
-
-.pi-thinking-popover[data-state="open"] {
-  animation: pi-thinking-popover-in 260ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.pi-thinking-popover[data-state="closed"] {
-  animation: pi-thinking-popover-out 150ms cubic-bezier(0.4, 0, 1, 1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .status-heartbeat {
-    opacity: 1;
-    transition-property: color;
-  }
-
-  html[data-window-active="true"][data-status-heartbeat="true"]
-    .status-heartbeat {
-    opacity: 1;
-  }
-
-  .pi-thinking-popover[data-state] {
-    animation: none;
-  }
-
-  /*
-   * Global guard. Only a couple of components opted into reduced motion
-   * individually, so decorative CSS animation and transitions are collapsed
-   * here instead of per component.
-   *
-   * - 0.01ms rather than 0: `animationend` / `transitionend` still fire, so
-   *   Radix exit animations continue to unmount their content.
-   * - `.animate-spin` is exempt: a frozen loading spinner reads as a hung UI
-   *   rather than as a calmer one.
-   */
-  *:not(.animate-spin),
-  *:not(.animate-spin)::before,
-  *:not(.animate-spin)::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-::-webkit-scrollbar {
-  display: none;
-}
-
-/* Follow the themed ring token so the focus outline tracks light/dark and any
-   future accent change, instead of pinning one blue. */
-*:focus-visible {
-  outline: 2px solid hsl(var(--ring));
-  outline-offset: 2px;
-}
-
-@layer utilities {
-  .scroll-overlay {
-    scrollbar-gutter: stable both-edges;
-    padding-right: 0.5rem;
-    margin-right: -0.5rem;
-    overflow-x: hidden;
-  }
-
-  .border-default {
-    border-width: 1px;
-    border-color: hsl(var(--border));
-  }
-
-  .border-active {
-    border-width: 2px;
-  }
-
-  .border-border-default {
-    border-color: hsl(var(--border));
-  }
-
-  .border-border-active {
-    border-color: hsl(var(--primary));
-  }
-
-  .border-border-hover {
-    border-color: hsl(var(--primary) / 0.4);
-  }
-
-  .border-border-dragging {
-    border-color: hsl(var(--primary) / 0.6);
-  }
-}
-
-input[type="password"]::-ms-reveal,
-input[type="password"]::-ms-clear {
-  display: none;
-}
-
 /*
  * Usage date-range picker popover.
  *
- * The two-column layout (date fields | calendar) must depend on how much
- * width the popover itself actually has — not on the viewport. The popover is
- * clamped to `100vw - 2rem` and anchored to its trigger, so a viewport-based
- * breakpoint (e.g. Tailwind `sm:`) could enable the wide layout while the
- * popover only had room for one column, pushing the calendar off-screen.
- *
- * A container query keys the layout to the popover's own inline size. The base
- * (stacked) layout is the safe fallback when container queries are
- * unsupported, keeping the calendar fully visible at any width.
+ * The two-column layout must depend on the popover's own width, not the
+ * viewport: the popover is clamped to `100vw - 2rem`, so a viewport
+ * breakpoint could enable the wide layout with only room for one column and
+ * push the calendar off-screen. The stacked layout is the safe fallback where
+ * container queries are unsupported.
  */
 .usage-range-popover {
   container-type: inline-size;
@@ -307,14 +224,28 @@ input[type="password"]::-ms-clear {
   .usage-range-layout {
     flex-direction: row;
   }
-
   .usage-range-fields {
     width: 250px;
     flex: none;
   }
-
   .usage-range-calendar {
     min-width: 0;
     flex: 1 1 0%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /*
+   * 0.01ms rather than 0 so `animationend` still fires and Radix exit
+   * animations continue to unmount their content. Spinners keep turning: a
+   * frozen loader reads as a hung interface rather than a calmer one.
+   */
+  *:not(.animate-spin),
+  *:not(.animate-spin)::before,
+  *:not(.animate-spin)::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

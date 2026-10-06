@@ -222,7 +222,7 @@ export function AutoFailoverConfigPanel({
           </Alert>
         )}
 
-        <Alert className="border-blue-500/40 bg-blue-500/10">
+        <Alert className="border-primary/40/40 bg-primary/10">
           <Info className="h-4 w-4" />
           <AlertDescription className="text-sm">
             {t(

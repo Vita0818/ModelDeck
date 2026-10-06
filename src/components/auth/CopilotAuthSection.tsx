@@ -195,7 +195,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
             }
             className={
               isStatusSuccess && hasAnyAccount
-                ? "bg-green-500 hover:bg-green-600"
+                ? "bg-success hover:bg-success"
                 : ""
             }
           >
@@ -283,7 +283,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
       )}
 
       {mode === "manage" && migrationError && (
-        <p className="text-sm text-amber-600 dark:text-amber-400">
+        <p className="text-sm text-warning">
           {t("copilot.migrationFailed", {
             error: migrationError,
             defaultValue: `旧认证数据迁移失败：${migrationError}`,
@@ -360,7 +360,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7 text-muted-foreground hover:text-red-500"
+                    className="h-7 w-7 text-muted-foreground hover:text-destructive"
                     onClick={(e) => handleRemoveAccount(account.id, e)}
                     disabled={isRemovingAccount}
                     title={t("copilot.removeAccount", "移除账号")}
@@ -438,7 +438,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
                 title={t("copilot.copyCode", "复制代码")}
               >
                 {copied ? (
-                  <Check className="h-4 w-4 text-green-500" />
+                  <Check className="h-4 w-4 text-success" />
                 ) : (
                   <Copy className="h-4 w-4" />
                 )}
@@ -452,7 +452,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
               href={deviceCode.verification_uri}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-sm text-blue-500 hover:underline"
+              className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
             >
               {deviceCode.verification_uri}
               <ExternalLink className="h-3 w-3" />
@@ -476,7 +476,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
       {/* 错误状态 */}
       {mode === "manage" && pollingState === "error" && error && (
         <div className="space-y-2">
-          <p className="text-sm text-red-500">{error}</p>
+          <p className="text-sm text-destructive">{error}</p>
           <div className="flex gap-2">
             <Button
               type="button"
@@ -507,7 +507,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
             type="button"
             variant="outline"
             onClick={logout}
-            className="w-full text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950"
+            className="w-full text-destructive hover:text-destructive hover:bg-destructive/10 dark:hover:bg-destructive"
           >
             <LogOut className="mr-2 h-4 w-4" />
             {t("copilot.logoutAll", "注销所有账号")}

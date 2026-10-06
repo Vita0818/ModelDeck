@@ -53,7 +53,7 @@ export function AppVisibilitySettings({
           {t("settings.appVisibility.description")}
         </p>
       </header>
-      <div className="flex flex-wrap gap-1 rounded-md border border-border-default bg-background p-1">
+      <div className="flex flex-wrap gap-1 rounded-md border border-border bg-background p-1">
         {MODELDECK_CLIENTS.map((app) => {
           const isVisible = visibleApps[app.id] ?? true;
           // Disable button if this is the last visible app

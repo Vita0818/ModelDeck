@@ -111,18 +111,18 @@ export function EnvWarningBanner({
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-[100] bg-yellow-50 dark:bg-yellow-950 border-b border-yellow-200 dark:border-yellow-900 shadow-lg animate-slide-down">
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-warning/10 dark:bg-warning border-b border-warning/40 dark:border-warning/40 shadow-lg animate-slide-down">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-yellow-600 dark:text-yellow-500 flex-shrink-0 mt-0.5" />
+            <AlertTriangle className="h-5 w-5 text-warning flex-shrink-0 mt-0.5" />
 
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <h3 className="text-sm font-semibold text-yellow-900 dark:text-yellow-100">
+                  <h3 className="text-sm font-semibold text-warning">
                     {t("env.warning.title")}
                   </h3>
-                  <p className="text-sm text-yellow-800 dark:text-yellow-200 mt-0.5">
+                  <p className="text-sm text-warning mt-0.5">
                     {t("env.warning.description", { count: conflicts.length })}
                   </p>
                 </div>
@@ -132,7 +132,7 @@ export function EnvWarningBanner({
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="text-yellow-900 dark:text-yellow-100 hover:bg-yellow-100 dark:hover:bg-yellow-900/50"
+                    className="text-warning hover:bg-warning/10 dark:hover:bg-warning/50"
                   >
                     {isExpanded ? (
                       <>
@@ -151,7 +151,7 @@ export function EnvWarningBanner({
                     variant="ghost"
                     size="icon"
                     onClick={onDismiss}
-                    className="text-yellow-900 dark:text-yellow-100 hover:bg-yellow-100 dark:hover:bg-yellow-900/50"
+                    className="text-warning hover:bg-warning/10 dark:hover:bg-warning/50"
                   >
                     <X className="h-4 w-4" />
                   </Button>
@@ -160,7 +160,7 @@ export function EnvWarningBanner({
 
               {isExpanded && (
                 <div className="mt-4 space-y-3">
-                  <div className="flex items-center gap-2 pb-2 border-b border-yellow-200 dark:border-yellow-900/50">
+                  <div className="flex items-center gap-2 pb-2 border-b border-warning/40 dark:border-warning/40/50">
                     <Checkbox
                       id="select-all"
                       checked={selectedConflicts.size === conflicts.length}
@@ -168,7 +168,7 @@ export function EnvWarningBanner({
                     />
                     <label
                       htmlFor="select-all"
-                      className="text-sm font-medium text-yellow-900 dark:text-yellow-100 cursor-pointer"
+                      className="text-sm font-medium text-warning cursor-pointer"
                     >
                       {t("env.actions.selectAll")}
                     </label>
@@ -180,7 +180,7 @@ export function EnvWarningBanner({
                       return (
                         <div
                           key={key}
-                          className="flex items-start gap-3 p-3 bg-white dark:bg-gray-900 rounded-md border border-yellow-200 dark:border-yellow-900/50"
+                          className="flex items-start gap-3 p-3 bg-white dark:bg-muted rounded-md border border-warning/40 dark:border-warning/40/50"
                         >
                           <Checkbox
                             id={key}
@@ -208,13 +208,13 @@ export function EnvWarningBanner({
                     })}
                   </div>
 
-                  <div className="flex items-center justify-end gap-2 pt-2 border-t border-yellow-200 dark:border-yellow-900/50">
+                  <div className="flex items-center justify-end gap-2 pt-2 border-t border-warning/40 dark:border-warning/40/50">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => setSelectedConflicts(new Set())}
                       disabled={selectedConflicts.size === 0}
-                      className="text-yellow-900 dark:text-yellow-100 border-yellow-300 dark:border-yellow-800"
+                      className="text-warning border-warning/40 dark:border-warning/40"
                     >
                       {t("env.actions.clearSelection")}
                     </Button>
@@ -242,7 +242,7 @@ export function EnvWarningBanner({
       </div>
 
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-        <DialogContent className="max-w-md" zIndex="top">
+        <DialogContent className="max-w-md" layer="top">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-destructive" />

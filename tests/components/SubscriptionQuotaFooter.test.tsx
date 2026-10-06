@@ -87,7 +87,7 @@ describe("Claude Fable subscription quota", () => {
       expect(screen.getByText("12%")).toBeInTheDocument();
       expect(screen.getByText("25%")).toBeInTheDocument();
       const row = screen.getByText(/^Fable:?$/).parentElement!;
-      expect(within(row).getByText("95%")).toHaveClass("text-red-500");
+      expect(within(row).getByText("95%")).toHaveClass("text-destructive");
       expect(
         within(row).getByText(inline ? "2d12h" : "2d12h后重置"),
       ).toBeInTheDocument();
@@ -97,7 +97,7 @@ describe("Claude Fable subscription quota", () => {
   it("shows an unused Fable limit without a reset countdown", () => {
     renderQuota([{ name: "seven_day_fable", utilization: 0, resetsAt: null }]);
     const row = screen.getByText("Fable:").parentElement!;
-    expect(within(row).getByText("0%")).toHaveClass("text-green-600");
+    expect(within(row).getByText("0%")).toHaveClass("text-success");
     expect(row.querySelector("svg")).toBeNull();
   });
 

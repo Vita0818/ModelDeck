@@ -1131,12 +1131,12 @@ export function WebdavSyncSection({
             </p>
           )}
           {showAutoSyncError && (
-            <div className="rounded-lg border border-red-300/70 bg-red-50/80 px-3 py-2 text-xs text-red-900 dark:border-red-500/50 dark:bg-red-950/30 dark:text-red-200">
+            <div className="rounded-lg border border-destructive/40/70 bg-destructive/10/80 px-3 py-2 text-xs text-destructive dark:border-destructive/40/50 dark:bg-destructive/30 dark:text-destructive">
               <p className="font-medium">
                 {t("settings.webdavSync.autoSyncLastErrorTitle")}
               </p>
               <p className="mt-1 break-all whitespace-pre-wrap">{lastError}</p>
-              <p className="mt-1 text-[11px] text-red-700/90 dark:text-red-300/80">
+              <p className="mt-1 text-[11px] text-destructive/90 dark:text-destructive/80">
                 {t("settings.webdavSync.autoSyncLastErrorHint")}
               </p>
             </div>
@@ -1169,13 +1169,13 @@ export function WebdavSyncSection({
 
             {/* Save status indicator */}
             {dirty && (
-              <span className="inline-flex items-center gap-1.5 text-xs text-amber-500 dark:text-amber-400 animate-in fade-in duration-200">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
+              <span className="inline-flex items-center gap-1.5 text-xs text-warning animate-fade-in">
+                <span className="h-1.5 w-1.5 rounded-full bg-warning dark:bg-warning" />
                 {t("settings.webdavSync.unsaved")}
               </span>
             )}
             {!dirty && justSaved && (
-              <span className="inline-flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 animate-in fade-in duration-200">
+              <span className="inline-flex items-center gap-1.5 text-xs text-success animate-fade-in">
                 <Check className="h-3 w-3" />
                 {t("settings.webdavSync.saved")}
               </span>
@@ -1442,14 +1442,14 @@ export function WebdavSyncSection({
             </p>
           )}
           {s3ShowAutoSyncError && (
-            <div className="rounded-lg border border-red-300/70 bg-red-50/80 px-3 py-2 text-xs text-red-900 dark:border-red-500/50 dark:bg-red-950/30 dark:text-red-200">
+            <div className="rounded-lg border border-destructive/40/70 bg-destructive/10/80 px-3 py-2 text-xs text-destructive dark:border-destructive/40/50 dark:bg-destructive/30 dark:text-destructive">
               <p className="font-medium">
                 {t("settings.s3Sync.autoSyncLastErrorTitle")}
               </p>
               <p className="mt-1 break-all whitespace-pre-wrap">
                 {s3LastError}
               </p>
-              <p className="mt-1 text-[11px] text-red-700/90 dark:text-red-300/80">
+              <p className="mt-1 text-[11px] text-destructive/90 dark:text-destructive/80">
                 {t("settings.s3Sync.autoSyncLastErrorHint")}
               </p>
             </div>
@@ -1482,13 +1482,13 @@ export function WebdavSyncSection({
 
             {/* Save status indicator */}
             {s3Dirty && (
-              <span className="inline-flex items-center gap-1.5 text-xs text-amber-500 dark:text-amber-400 animate-in fade-in duration-200">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
+              <span className="inline-flex items-center gap-1.5 text-xs text-warning animate-fade-in">
+                <span className="h-1.5 w-1.5 rounded-full bg-warning dark:bg-warning" />
                 {t("settings.s3Sync.unsaved")}
               </span>
             )}
             {!s3Dirty && s3JustSaved && (
-              <span className="inline-flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 animate-in fade-in duration-200">
+              <span className="inline-flex items-center gap-1.5 text-xs text-success animate-fade-in">
                 <Check className="h-3 w-3" />
                 {t("settings.s3Sync.saved")}
               </span>
@@ -1546,7 +1546,7 @@ export function WebdavSyncSection({
           if (!open) closeDialog();
         }}
       >
-        <DialogContent className="max-w-sm" zIndex="alert">
+        <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
             <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
               <AlertTriangle className="h-5 w-5 text-destructive" />
@@ -1609,7 +1609,7 @@ export function WebdavSyncSection({
                   </p>
                 )}
                 {remoteInfo && remoteIsLegacy && (
-                  <p className="font-medium text-amber-600 dark:text-amber-400">
+                  <p className="font-medium text-warning">
                     {t("settings.webdavSync.confirmUpload.legacyNotice")}
                   </p>
                 )}
@@ -1634,7 +1634,7 @@ export function WebdavSyncSection({
           if (!open) closeDialog();
         }}
       >
-        <DialogContent className="max-w-sm" zIndex="alert">
+        <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
             <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
               <AlertTriangle className="h-5 w-5 text-destructive" />
@@ -1679,7 +1679,7 @@ export function WebdavSyncSection({
                   </dl>
                 )}
                 {remoteInfo?.layout === "legacy" && (
-                  <p className="font-medium text-amber-600 dark:text-amber-400">
+                  <p className="font-medium text-warning">
                     {t("settings.webdavSync.confirmDownload.legacyNotice")}
                   </p>
                 )}
@@ -1707,7 +1707,7 @@ export function WebdavSyncSection({
           if (!open) closeS3Dialog();
         }}
       >
-        <DialogContent className="max-w-sm" zIndex="alert">
+        <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
             <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
               <AlertTriangle className="h-5 w-5 text-destructive" />
@@ -1774,7 +1774,7 @@ export function WebdavSyncSection({
           if (!open) closeS3Dialog();
         }}
       >
-        <DialogContent className="max-w-sm" zIndex="alert">
+        <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
             <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
               <AlertTriangle className="h-5 w-5 text-destructive" />
@@ -1826,7 +1826,7 @@ export function WebdavSyncSection({
           if (!open) handleMutualExclusionCancel();
         }}
       >
-        <DialogContent className="max-w-sm" zIndex="alert">
+        <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
             <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
               <AlertTriangle className="h-5 w-5 text-destructive" />

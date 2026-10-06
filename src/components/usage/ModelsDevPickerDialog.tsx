@@ -167,7 +167,7 @@ export function ModelsDevPickerDialog({
       }}
     >
       <DialogContent
-        zIndex="top"
+        layer="top"
         className="max-w-3xl h-[80vh]"
         onEscapeKeyDown={(e) => {
           // 在搜索框里按 ESC 不应关闭弹窗丢掉已选模型（与 FullScreenPanel 的约定一致）

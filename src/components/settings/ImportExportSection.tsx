@@ -60,7 +60,7 @@ export function ImportExportSection({
           <div className="relative">
             <Button
               type="button"
-              className={`w-full h-auto py-3 px-4 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white ${selectedFile && !isImporting ? "flex-col items-start" : "items-center"}`}
+              className={`w-full h-auto py-3 px-4 bg-primary hover:bg-primary dark:bg-primary dark:hover:bg-primary text-white ${selectedFile && !isImporting ? "flex-col items-start" : "items-center"}`}
               onClick={!selectedFile ? onSelectFile : onImport}
               disabled={isImporting}
             >
@@ -92,7 +92,7 @@ export function ImportExportSection({
               <button
                 type="button"
                 onClick={onClear}
-                className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center shadow-lg transition-colors z-10"
+                className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-destructive hover:bg-destructive text-white flex items-center justify-center shadow-lg transition-colors z-10"
                 aria-label={t("common.clear")}
               >
                 <XCircle className="h-4 w-4" />
@@ -104,7 +104,7 @@ export function ImportExportSection({
           <div>
             <Button
               type="button"
-              className="w-full h-full py-3 px-4 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white items-center"
+              className="w-full h-full py-3 px-4 bg-primary hover:bg-primary dark:bg-primary dark:hover:bg-primary text-white items-center"
               onClick={onExport}
             >
               <Save className="mr-2 h-4 w-4" />
@@ -146,12 +146,12 @@ function ImportStatusMessage({
   if (status === "importing") {
     return (
       <div
-        className={`${baseClass} border-blue-500/30 bg-blue-500/10 text-blue-600 dark:text-blue-400`}
+        className={`${baseClass} border-primary/40/30 bg-primary/10 text-primary`}
       >
         <Loader2 className="mt-0.5 h-5 w-5 flex-shrink-0 animate-spin" />
         <div>
           <p className="font-semibold">{t("settings.importing")}</p>
-          <p className="text-blue-600/80 dark:text-blue-400/80">
+          <p className="text-primary/80 dark:text-primary/80">
             {t("common.loading")}
           </p>
         </div>
@@ -162,17 +162,17 @@ function ImportStatusMessage({
   if (status === "success") {
     return (
       <div
-        className={`${baseClass} border-green-500/30 bg-green-500/10 text-green-700 dark:text-green-400`}
+        className={`${baseClass} border-success/40/30 bg-success/10 text-success`}
       >
         <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0" />
         <div className="space-y-1.5">
           <p className="font-semibold">{t("settings.importSuccess")}</p>
           {backupId ? (
-            <p className="text-xs text-green-600/80 dark:text-green-400/80">
+            <p className="text-xs text-success/80 dark:text-success/80">
               {t("settings.backupId")}: {backupId}
             </p>
           ) : null}
-          <p className="text-green-600/80 dark:text-green-400/80">
+          <p className="text-success/80 dark:text-success/80">
             {t("settings.autoReload")}
           </p>
         </div>
@@ -183,12 +183,12 @@ function ImportStatusMessage({
   if (status === "partial-success") {
     return (
       <div
-        className={`${baseClass} border-yellow-500/30 bg-yellow-500/10 text-yellow-700 dark:text-yellow-400`}
+        className={`${baseClass} border-warning/40/30 bg-warning/10 text-warning`}
       >
         <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0" />
         <div className="space-y-1.5">
           <p className="font-semibold">{t("settings.importPartialSuccess")}</p>
-          <p className="text-yellow-600/80 dark:text-yellow-400/80">
+          <p className="text-warning/80 dark:text-warning/80">
             {t("settings.importPartialHint")}
           </p>
         </div>
@@ -200,12 +200,14 @@ function ImportStatusMessage({
 
   return (
     <div
-      className={`${baseClass} border-red-500/30 bg-red-500/10 text-red-600 dark:text-red-400`}
+      className={`${baseClass} border-destructive/40/30 bg-destructive/10 text-destructive`}
     >
       <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0" />
       <div className="space-y-1.5">
         <p className="font-semibold">{t("settings.importFailed")}</p>
-        <p className="text-red-600/80 dark:text-red-400/80">{message}</p>
+        <p className="text-destructive/80 dark:text-destructive/80">
+          {message}
+        </p>
       </div>
     </div>
   );

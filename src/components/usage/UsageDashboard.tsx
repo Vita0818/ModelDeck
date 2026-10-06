@@ -275,21 +275,21 @@ export function UsageDashboard({
   }, [modelOptionsData, model]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="space-y-8 pb-8"
-    >
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-2">
-        <div className="flex flex-col gap-1">
-          <h2 className="text-2xl font-bold tracking-tight">
+    <div className="flex min-h-0 flex-1 flex-col">
+      <header
+        className="sticky top-0 z-10 flex shrink-0 flex-wrap items-end justify-between gap-3 border-b border-border bg-background/80 px-7 py-4 backdrop-blur-xl"
+        data-tauri-drag-region
+      >
+        <div className="min-w-0">
+          <h1 className="text-xl font-semibold tracking-tight">
             {t("usage.title")}
-          </h2>
-          <p className="text-sm text-muted-foreground">{t("usage.subtitle")}</p>
+          </h1>
+          <p className="mt-0.5 text-sm text-muted-foreground">
+            {t("usage.subtitle")}
+          </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="no-drag flex flex-wrap items-center gap-2">
           <div className="flex items-center p-1 bg-muted/30 rounded-lg border border-border/50">
             {APP_FILTER_OPTIONS.map((type) => {
               const label = t(`usage.appFilter.${type}`);
@@ -328,7 +328,7 @@ export function UsageDashboard({
             onValueChange={(v) => changeProviderName(decodeOptionValue(v))}
           >
             <SelectTrigger
-              className="h-9 w-[100px] bg-background text-xs focus:border-border-default [&>span]:min-w-0 [&>span]:truncate"
+              className="h-9 w-[100px] bg-background text-xs focus:border-border [&>span]:min-w-0 [&>span]:truncate"
               title={providerName ?? t("usage.filterBySource")}
             >
               <SelectValue />
@@ -353,7 +353,7 @@ export function UsageDashboard({
             onValueChange={(v) => setModel(decodeOptionValue(v))}
           >
             <SelectTrigger
-              className="h-9 w-[100px] bg-background text-xs focus:border-border-default [&>span]:min-w-0 [&>span]:truncate"
+              className="h-9 w-[100px] bg-background text-xs focus:border-border [&>span]:min-w-0 [&>span]:truncate"
               title={model ?? t("usage.filterByModel")}
             >
               <SelectValue />
@@ -379,7 +379,7 @@ export function UsageDashboard({
               onValueChange={(v) => changeRefreshInterval(Number(v))}
             >
               <SelectTrigger
-                className="h-9 w-[100px] bg-background text-xs focus:border-border-default"
+                className="h-9 w-[100px] bg-background text-xs focus:border-border"
                 title={t("usage.refreshInterval")}
                 aria-label={t("usage.refreshInterval")}
               >
@@ -404,199 +404,201 @@ export function UsageDashboard({
             />
           </div>
         </div>
-      </div>
+      </header>
 
-      <UsageHero
-        range={range}
-        appType={appType === "all" ? undefined : appType}
-        providerName={providerName}
-        model={model}
-        refreshIntervalMs={refreshIntervalMs}
-      />
+      <div className="scroll-area flex-1 space-y-7 px-7 py-6">
+        <UsageHero
+          range={range}
+          appType={appType === "all" ? undefined : appType}
+          providerName={providerName}
+          model={model}
+          refreshIntervalMs={refreshIntervalMs}
+        />
 
-      <UsageTrendChart
-        range={range}
-        rangeLabel={rangeLabel}
-        appType={appType}
-        providerName={providerName}
-        model={model}
-        refreshIntervalMs={refreshIntervalMs}
-      />
+        <UsageTrendChart
+          range={range}
+          rangeLabel={rangeLabel}
+          appType={appType}
+          providerName={providerName}
+          model={model}
+          refreshIntervalMs={refreshIntervalMs}
+        />
 
-      <div className="space-y-4">
-        <Tabs defaultValue="logs" className="w-full">
-          <div className="flex items-center justify-between mb-4">
-            <TabsList className="bg-muted/50">
-              <TabsTrigger value="logs" className="gap-2">
-                <ListFilter className="h-4 w-4" />
-                {t("usage.requestLogs")}
-              </TabsTrigger>
-              <TabsTrigger value="providers" className="gap-2">
-                <Activity className="h-4 w-4" />
-                {t("usage.providerStats")}
-              </TabsTrigger>
-              <TabsTrigger value="models" className="gap-2">
-                <BarChart3 className="h-4 w-4" />
-                {t("usage.modelStats")}
-              </TabsTrigger>
-            </TabsList>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <TabsContent value="logs" className="mt-0">
-              <RequestLogTable
-                range={range}
-                rangeLabel={rangeLabel}
-                appType={appType}
-                providerName={providerName}
-                model={model}
-                refreshIntervalMs={refreshIntervalMs}
-                onRangeChange={setRange}
-              />
-            </TabsContent>
-
-            <TabsContent value="providers" className="mt-0">
-              <ProviderStatsTable
-                range={range}
-                appType={appType}
-                providerName={providerName}
-                model={model}
-                refreshIntervalMs={refreshIntervalMs}
-              />
-            </TabsContent>
-
-            <TabsContent value="models" className="mt-0">
-              <ModelStatsTable
-                range={range}
-                appType={appType}
-                providerName={providerName}
-                model={model}
-                refreshIntervalMs={refreshIntervalMs}
-              />
-            </TabsContent>
-          </motion.div>
-        </Tabs>
-      </div>
-
-      <div className="space-y-4">
-        <div className="rounded-xl glass-card px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <ScanSearch className="h-5 w-5 text-sky-500" />
-            <div>
-              <h3 className="text-base font-semibold">
-                {t("usage.sessionSync.title")}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {t("usage.sessionSync.description")}
-              </p>
+        <div className="space-y-4">
+          <Tabs defaultValue="logs" className="w-full">
+            <div className="flex items-center justify-between mb-4">
+              <TabsList className="bg-muted/50">
+                <TabsTrigger value="logs" className="gap-2">
+                  <ListFilter className="h-4 w-4" />
+                  {t("usage.requestLogs")}
+                </TabsTrigger>
+                <TabsTrigger value="providers" className="gap-2">
+                  <Activity className="h-4 w-4" />
+                  {t("usage.providerStats")}
+                </TabsTrigger>
+                <TabsTrigger value="models" className="gap-2">
+                  <BarChart3 className="h-4 w-4" />
+                  {t("usage.modelStats")}
+                </TabsTrigger>
+              </TabsList>
             </div>
-          </div>
-          <div className="flex items-center gap-3 shrink-0">
-            {!sessionAutoSyncEnabled && (
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={syncingSession}
-                onClick={() => void runManualSessionSync()}
-              >
-                {syncingSession ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <RefreshCw className="mr-2 h-4 w-4" />
-                )}
-                {t("usage.sessionSync.syncNow")}
-              </Button>
-            )}
-            <Switch
-              checked={sessionAutoSyncEnabled}
-              onCheckedChange={(value) =>
-                void onSessionAutoSyncEnabledChange?.(value)
-              }
-              aria-label={t("usage.sessionSync.title")}
-            />
-          </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <TabsContent value="logs" className="mt-0">
+                <RequestLogTable
+                  range={range}
+                  rangeLabel={rangeLabel}
+                  appType={appType}
+                  providerName={providerName}
+                  model={model}
+                  refreshIntervalMs={refreshIntervalMs}
+                  onRangeChange={setRange}
+                />
+              </TabsContent>
+
+              <TabsContent value="providers" className="mt-0">
+                <ProviderStatsTable
+                  range={range}
+                  appType={appType}
+                  providerName={providerName}
+                  model={model}
+                  refreshIntervalMs={refreshIntervalMs}
+                />
+              </TabsContent>
+
+              <TabsContent value="models" className="mt-0">
+                <ModelStatsTable
+                  range={range}
+                  appType={appType}
+                  providerName={providerName}
+                  model={model}
+                  refreshIntervalMs={refreshIntervalMs}
+                />
+              </TabsContent>
+            </motion.div>
+          </Tabs>
         </div>
 
-        <Accordion
-          type="multiple"
-          defaultValue={[]}
-          className="w-full space-y-4"
-        >
-          <AccordionItem
-            value="pricing"
-            className="rounded-xl glass-card overflow-hidden"
-          >
-            <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 data-[state=open]:bg-muted/50">
-              <div className="flex items-center gap-3">
-                <Coins className="h-5 w-5 text-yellow-500" />
-                <div className="text-left">
-                  <h3 className="text-base font-semibold">
-                    {t("settings.advanced.pricing.title")}
-                  </h3>
-                  <p className="text-sm text-muted-foreground font-normal">
-                    {t("settings.advanced.pricing.description")}
-                  </p>
-                </div>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
-              <PricingConfigPanel />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem
-            value="maintenance"
-            className="rounded-xl glass-card overflow-hidden"
-          >
-            <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 data-[state=open]:bg-muted/50">
-              <div className="flex items-center gap-3">
-                <DatabaseBackup className="h-5 w-5 text-orange-500" />
-                <div className="text-left">
-                  <h3 className="text-base font-semibold">
-                    {t("usage.rebuildCodex.title")}
-                  </h3>
-                  <p className="text-sm text-muted-foreground font-normal">
-                    {t("usage.rebuildCodex.description")}
-                  </p>
-                </div>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
-              <div className="flex items-center justify-between gap-4 rounded-lg border border-destructive/20 bg-destructive/5 p-4">
+        <div className="space-y-4">
+          <div className="rounded-xl rounded-xl border border-border bg-card shadow-xs px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <ScanSearch className="h-5 w-5 text-primary" />
+              <div>
+                <h3 className="text-base font-semibold">
+                  {t("usage.sessionSync.title")}
+                </h3>
                 <p className="text-sm text-muted-foreground">
-                  {t("usage.rebuildCodex.warning")}
+                  {t("usage.sessionSync.description")}
                 </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 shrink-0">
+              {!sessionAutoSyncEnabled && (
                 <Button
-                  variant="destructive"
-                  disabled={rebuildingCodex}
-                  onClick={() => setShowRebuildConfirm(true)}
-                  className="shrink-0"
+                  variant="outline"
+                  size="sm"
+                  disabled={syncingSession}
+                  onClick={() => void runManualSessionSync()}
                 >
-                  {rebuildingCodex ? (
+                  {syncingSession ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
-                    <DatabaseBackup className="mr-2 h-4 w-4" />
+                    <RefreshCw className="mr-2 h-4 w-4" />
                   )}
-                  {t("usage.rebuildCodex.action")}
+                  {t("usage.sessionSync.syncNow")}
                 </Button>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      </div>
+              )}
+              <Switch
+                checked={sessionAutoSyncEnabled}
+                onCheckedChange={(value) =>
+                  void onSessionAutoSyncEnabledChange?.(value)
+                }
+                aria-label={t("usage.sessionSync.title")}
+              />
+            </div>
+          </div>
 
-      <ConfirmDialog
-        isOpen={showRebuildConfirm}
-        title={t("usage.rebuildCodex.confirmTitle")}
-        message={t("usage.rebuildCodex.confirmMessage")}
-        confirmText={t("usage.rebuildCodex.confirmAction")}
-        variant="destructive"
-        onConfirm={() => void rebuildCodexUsage()}
-        onCancel={() => setShowRebuildConfirm(false)}
-      />
-    </motion.div>
+          <Accordion
+            type="multiple"
+            defaultValue={[]}
+            className="w-full space-y-4"
+          >
+            <AccordionItem
+              value="pricing"
+              className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
+            >
+              <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 data-[state=open]:bg-muted/50">
+                <div className="flex items-center gap-3">
+                  <Coins className="h-5 w-5 text-warning" />
+                  <div className="text-left">
+                    <h3 className="text-base font-semibold">
+                      {t("settings.advanced.pricing.title")}
+                    </h3>
+                    <p className="text-sm text-muted-foreground font-normal">
+                      {t("settings.advanced.pricing.description")}
+                    </p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+                <PricingConfigPanel />
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem
+              value="maintenance"
+              className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
+            >
+              <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 data-[state=open]:bg-muted/50">
+                <div className="flex items-center gap-3">
+                  <DatabaseBackup className="h-5 w-5 text-warning" />
+                  <div className="text-left">
+                    <h3 className="text-base font-semibold">
+                      {t("usage.rebuildCodex.title")}
+                    </h3>
+                    <p className="text-sm text-muted-foreground font-normal">
+                      {t("usage.rebuildCodex.description")}
+                    </p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+                <div className="flex items-center justify-between gap-4 rounded-lg border border-destructive/20 bg-destructive/5 p-4">
+                  <p className="text-sm text-muted-foreground">
+                    {t("usage.rebuildCodex.warning")}
+                  </p>
+                  <Button
+                    variant="destructive"
+                    disabled={rebuildingCodex}
+                    onClick={() => setShowRebuildConfirm(true)}
+                    className="shrink-0"
+                  >
+                    {rebuildingCodex ? (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                      <DatabaseBackup className="mr-2 h-4 w-4" />
+                    )}
+                    {t("usage.rebuildCodex.action")}
+                  </Button>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+
+        <ConfirmDialog
+          isOpen={showRebuildConfirm}
+          title={t("usage.rebuildCodex.confirmTitle")}
+          message={t("usage.rebuildCodex.confirmMessage")}
+          confirmText={t("usage.rebuildCodex.confirmAction")}
+          variant="destructive"
+          onConfirm={() => void rebuildCodexUsage()}
+          onCancel={() => setShowRebuildConfirm(false)}
+        />
+      </div>
+    </div>
   );
 }

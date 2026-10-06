@@ -314,8 +314,8 @@ export function RequestLogTable({
                           <span
                             className={
                               log.statusCode >= 200 && log.statusCode < 300
-                                ? "text-green-600"
-                                : "text-red-600"
+                                ? "text-success"
+                                : "text-destructive"
                             }
                           >
                             {log.statusCode}

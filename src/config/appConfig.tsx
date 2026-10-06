@@ -85,33 +85,33 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
     label: "Claude",
     icon: <ClaudeIcon size={14} />,
     activeClass:
-      "bg-orange-500/10 ring-1 ring-orange-500/20 hover:bg-orange-500/20 text-orange-600 dark:text-orange-400",
+      "bg-warning/10 ring-1 ring-orange-500/20 hover:bg-warning/20 text-warning",
     badgeClass:
-      "bg-orange-500/10 text-orange-700 dark:text-orange-300 hover:bg-orange-500/20 border-0 gap-1.5",
+      "bg-warning/10 text-warning hover:bg-warning/20 border-0 gap-1.5",
   },
   "claude-desktop": {
     label: "Claude Desktop",
     icon: <ClaudeIcon size={14} />,
     activeClass:
-      "bg-amber-500/10 ring-1 ring-amber-500/20 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300",
+      "bg-warning/10 ring-1 ring-amber-500/20 hover:bg-warning/20 text-warning",
     badgeClass:
-      "bg-amber-500/10 text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 border-0 gap-1.5",
+      "bg-warning/10 text-warning hover:bg-warning/20 border-0 gap-1.5",
   },
   codex: {
     label: "Codex",
     icon: <CodexIcon size={14} />,
     activeClass:
-      "bg-green-500/10 ring-1 ring-green-500/20 hover:bg-green-500/20 text-green-600 dark:text-green-400",
+      "bg-success/10 ring-1 ring-green-500/20 hover:bg-success/20 text-success",
     badgeClass:
-      "bg-green-500/10 text-green-700 dark:text-green-300 hover:bg-green-500/20 border-0 gap-1.5",
+      "bg-success/10 text-success hover:bg-success/20 border-0 gap-1.5",
   },
   gemini: {
     label: "Gemini",
     icon: <GeminiIcon size={14} />,
     activeClass:
-      "bg-blue-500/10 ring-1 ring-blue-500/20 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400",
+      "bg-primary/10 ring-1 ring-blue-500/20 hover:bg-primary/20 text-primary",
     badgeClass:
-      "bg-blue-500/10 text-blue-700 dark:text-blue-300 hover:bg-blue-500/20 border-0 gap-1.5",
+      "bg-primary/10 text-primary hover:bg-primary/20 border-0 gap-1.5",
   },
   grokbuild: {
     label: "Grok Build",
@@ -124,9 +124,9 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
       />
     ),
     activeClass:
-      "bg-cyan-500/10 ring-1 ring-cyan-500/20 hover:bg-cyan-500/20 text-cyan-700 dark:text-cyan-300",
+      "bg-primary/10 ring-1 ring-cyan-500/20 hover:bg-primary/20 text-primary",
     badgeClass:
-      "bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-500/20 border-0 gap-1.5",
+      "bg-primary/10 text-primary hover:bg-primary/20 border-0 gap-1.5",
   },
   opencode: {
     label: "OpenCode",
@@ -139,17 +139,17 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
       />
     ),
     activeClass:
-      "bg-indigo-500/10 ring-1 ring-indigo-500/20 hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400",
+      "bg-primary/10 ring-1 ring-indigo-500/20 hover:bg-primary/20 text-primary",
     badgeClass:
-      "bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-500/20 border-0 gap-1.5",
+      "bg-primary/10 text-primary hover:bg-primary/20 border-0 gap-1.5",
   },
   openclaw: {
     label: "OpenClaw",
     icon: <OpenClawIcon size={14} />,
     activeClass:
-      "bg-rose-500/10 ring-1 ring-rose-500/20 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400",
+      "bg-destructive/10 ring-1 ring-rose-500/20 hover:bg-destructive/20 text-destructive",
     badgeClass:
-      "bg-rose-500/10 text-rose-700 dark:text-rose-300 hover:bg-rose-500/20 border-0 gap-1.5",
+      "bg-destructive/10 text-destructive hover:bg-destructive/20 border-0 gap-1.5",
   },
   hermes: {
     label: "Hermes",
@@ -162,24 +162,23 @@ export const APP_ICON_MAP: Record<AppId, AppConfig> = {
       />
     ),
     activeClass:
-      "bg-violet-500/10 ring-1 ring-violet-500/20 hover:bg-violet-500/20 text-violet-600 dark:text-violet-400",
+      "bg-system-purple/10 ring-1 ring-violet-500/20 hover:bg-system-purple/20 text-system-purple dark:text-system-purple",
     badgeClass:
-      "bg-violet-500/10 text-violet-700 dark:text-violet-300 hover:bg-violet-500/20 border-0 gap-1.5",
+      "bg-system-purple/10 text-system-purple dark:text-system-purple hover:bg-system-purple/20 border-0 gap-1.5",
   },
   mcode: {
     label: "MiniMax Code",
     icon: <ProviderIcon icon="minimax" name="MiniMax Code" size={14} />,
-    activeClass: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
-    badgeClass:
-      "bg-orange-500/10 text-orange-700 dark:text-orange-300 border-0 gap-1.5",
+    activeClass: "bg-warning/10 text-warning",
+    badgeClass: "bg-warning/10 text-warning border-0 gap-1.5",
   },
   pi: {
     label: "Pi",
     icon: <ProviderIcon icon="pi" name="Pi" size={14} showFallback={false} />,
     activeClass:
-      "bg-fuchsia-500/10 ring-1 ring-fuchsia-500/20 hover:bg-fuchsia-500/20 text-fuchsia-600 dark:text-fuchsia-400",
+      "bg-system-purple/10 ring-1 ring-fuchsia-500/20 hover:bg-system-purple/20 text-system-purple dark:text-system-purple",
     badgeClass:
-      "bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300 hover:bg-fuchsia-500/20 border-0 gap-1.5",
+      "bg-system-purple/10 text-system-purple dark:text-system-purple hover:bg-system-purple/20 border-0 gap-1.5",
   },
 };
 

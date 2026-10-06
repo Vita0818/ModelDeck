@@ -41,10 +41,10 @@ export function FirstRunNoticeDialog() {
         if (!open) void handleAcknowledge();
       }}
     >
-      <DialogContent className="max-w-md" zIndex="top">
+      <DialogContent className="max-w-md" layer="top">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-blue-500" />
+            <Sparkles className="h-5 w-5 text-primary" />
             {t("firstRunNotice.title")}
           </DialogTitle>
         </DialogHeader>

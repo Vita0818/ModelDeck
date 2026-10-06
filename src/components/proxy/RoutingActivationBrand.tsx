@@ -6,18 +6,18 @@ import { APP_NAME } from "@/lib/product";
 const BURST_LIFETIME_MS = 980;
 
 const PARTICLES = [
-  { x: -76, y: -16, size: 3, delay: 0.01, color: "#60a5fa" },
-  { x: -63, y: 17, size: 2, delay: 0.05, color: "#22d3ee" },
-  { x: -51, y: -25, size: 2, delay: 0.09, color: "#34d399" },
-  { x: -38, y: 24, size: 4, delay: 0.03, color: "#34d399" },
-  { x: -24, y: -19, size: 2, delay: 0.12, color: "#93c5fd" },
-  { x: -11, y: 27, size: 3, delay: 0.08, color: "#5eead4" },
-  { x: 8, y: -26, size: 3, delay: 0.04, color: "#22d3ee" },
-  { x: 19, y: 24, size: 2, delay: 0.13, color: "#34d399" },
-  { x: 34, y: -22, size: 4, delay: 0.07, color: "#6ee7b7" },
-  { x: 47, y: 21, size: 2, delay: 0.02, color: "#60a5fa" },
-  { x: 61, y: -15, size: 3, delay: 0.11, color: "#2dd4bf" },
-  { x: 76, y: 13, size: 2, delay: 0.06, color: "#34d399" },
+  { x: -76, y: -16, size: 3, delay: 0.01, color: "#0A84FF" },
+  { x: -63, y: 17, size: 2, delay: 0.05, color: "#5AC8FA" },
+  { x: -51, y: -25, size: 2, delay: 0.09, color: "#34C759" },
+  { x: -38, y: 24, size: 4, delay: 0.03, color: "#34C759" },
+  { x: -24, y: -19, size: 2, delay: 0.12, color: "#5AC8FA" },
+  { x: -11, y: 27, size: 3, delay: 0.08, color: "#34C759" },
+  { x: 8, y: -26, size: 3, delay: 0.04, color: "#5AC8FA" },
+  { x: 19, y: 24, size: 2, delay: 0.13, color: "#34C759" },
+  { x: 34, y: -22, size: 4, delay: 0.07, color: "#30D158" },
+  { x: 47, y: 21, size: 2, delay: 0.02, color: "#0A84FF" },
+  { x: 61, y: -15, size: 3, delay: 0.11, color: "#34C759" },
+  { x: 76, y: 13, size: 2, delay: 0.06, color: "#34C759" },
 ] as const;
 
 interface RoutingActivationBrandProps {
@@ -70,7 +70,7 @@ export function RoutingActivationBrand({
         <motion.span
           key={`glow-${burstSequence}`}
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-x-3 -inset-y-2 -z-10 rounded-full bg-emerald-400/20 blur-md"
+          className="pointer-events-none absolute -inset-x-3 -inset-y-2 -z-10 rounded-full bg-success/20 blur-md"
           initial={{ opacity: 0, scaleX: 0.3, scaleY: 0.65 }}
           animate={{
             opacity: [0, 0.8, 0],
@@ -89,8 +89,8 @@ export function RoutingActivationBrand({
         className={cn(
           "relative z-10 text-xl font-semibold transition-colors duration-500",
           active
-            ? "text-emerald-500 hover:text-emerald-600 dark:text-emerald-400 dark:hover:text-emerald-300"
-            : "text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300",
+            ? "text-success hover:text-success dark:hover:text-success"
+            : "text-primary hover:text-primary dark:hover:text-primary",
         )}
         animate={
           showBurst

@@ -125,11 +125,11 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
   const isIncompatible = phase === "incompatible";
   const accent = isIncompatible
     ? {
-        chip: "bg-red-100 text-red-600 dark:bg-red-950/50 dark:text-red-400",
+        chip: "bg-destructive/10 text-destructive dark:bg-destructive/50 dark:text-destructive",
         Icon: AlertTriangle,
       }
     : {
-        chip: "bg-amber-100 text-amber-600 dark:bg-amber-950/50 dark:text-amber-400",
+        chip: "bg-warning/10 text-warning dark:bg-warning/50 dark:text-warning",
         Icon: Database,
       };
   const AccentIcon = accent.Icon;
@@ -194,7 +194,7 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
         )}
 
         {phase === "incompatible" && (
-          <div className="space-y-2 rounded-lg border border-red-300/60 bg-red-50 p-3 text-sm text-red-700 dark:border-red-500/40 dark:bg-red-950/40 dark:text-red-300">
+          <div className="space-y-2 rounded-lg border border-destructive/40/60 bg-destructive/10 p-3 text-sm text-destructive dark:border-destructive/40/40 dark:bg-destructive/40 dark:text-destructive">
             <p className="font-medium">
               {t("dbUpgrade.title", "数据库版本过新")}
             </p>
@@ -221,7 +221,7 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
             </div>
             <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
               <div
-                className={`h-full rounded-full bg-amber-500 transition-all duration-200 ${
+                className={`h-full rounded-full bg-warning transition-all duration-200 ${
                   percent === null ? "w-1/3 animate-pulse" : ""
                 }`}
                 style={percent === null ? undefined : { width: `${percent}%` }}
@@ -237,7 +237,7 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
         )}
 
         {phase === "error" && errorMsg && (
-          <p className="rounded-lg border border-red-300/60 bg-red-50 p-3 text-sm text-red-700 dark:border-red-500/40 dark:bg-red-950/40 dark:text-red-300">
+          <p className="rounded-lg border border-destructive/40/60 bg-destructive/10 p-3 text-sm text-destructive dark:border-destructive/40/40 dark:bg-destructive/40 dark:text-destructive">
             {errorMsg}
           </p>
         )}
@@ -247,7 +247,7 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
             (phase === "upgradable" || phase === "error") && (
               <Button
                 onClick={startUpgrade}
-                className="gap-2 bg-amber-500 text-white hover:bg-amber-600"
+                className="gap-2 bg-warning text-white hover:bg-warning"
               >
                 {phase === "error" ? (
                   <RefreshCw className="h-4 w-4" />

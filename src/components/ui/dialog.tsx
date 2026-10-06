@@ -1,92 +1,96 @@
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Dialog = DialogPrimitive.Root;
-
 const DialogTrigger = DialogPrimitive.Trigger;
-
 const DialogPortal = DialogPrimitive.Portal;
-
 const DialogClose = DialogPrimitive.Close;
+
+/**
+ * Stacking order. Sheets open above the shell, alerts above sheets, and the
+ * deep-link importer above everything because it can arrive unprompted.
+ */
+const LAYER = {
+  base: "z-40",
+  sheet: "z-50",
+  alert: "z-[60]",
+  top: "z-[110]",
+} as const;
+export type DialogLayer = keyof typeof LAYER;
 
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> & {
-    zIndex?: "base" | "nested" | "alert" | "top";
+    layer?: DialogLayer;
   }
->(({ className, zIndex = "base", ...props }, ref) => {
-  const zIndexMap = {
-    base: "z-40",
-    nested: "z-50",
-    alert: "z-[60]",
-    top: "z-[110]",
-  };
-
-  return (
-    <DialogPrimitive.Overlay
-      ref={ref}
-      className={cn(
-        "fixed inset-0 bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-        zIndexMap[zIndex],
-        className,
-      )}
-      {...props}
-    />
-  );
-});
+>(({ className, layer = "sheet", ...props }, ref) => (
+  <DialogPrimitive.Overlay
+    ref={ref}
+    className={cn(
+      LAYER[layer],
+      "fixed inset-0 bg-black/25 backdrop-blur-[2px] dark:bg-black/50",
+      "enter-fade-in exit-fade-out",
+      className,
+    )}
+    {...props}
+  />
+));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
+
+export interface DialogContentProps
+  extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
+  layer?: DialogLayer;
+  overlayClassName?: string;
+  /** Hide the default close affordance for flows that must be resolved. */
+  hideClose?: boolean;
+}
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
-    zIndex?: "base" | "nested" | "alert" | "top";
-    variant?: "default" | "fullscreen";
-    overlayClassName?: string;
-  }
+  DialogContentProps
 >(
   (
     {
       className,
       children,
-      zIndex = "base",
-      variant = "default",
+      layer = "sheet",
       overlayClassName,
+      hideClose,
       ...props
     },
     ref,
-  ) => {
-    const zIndexMap = {
-      base: "z-40",
-      nested: "z-50",
-      alert: "z-[60]",
-      top: "z-[110]",
-    };
-
-    const variantClass = {
-      default:
-        "fixed left-1/2 top-1/2 flex flex-col w-full max-w-lg max-h-[90vh] translate-x-[-50%] translate-y-[-50%] border border-border-default bg-background text-foreground shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
-      fullscreen:
-        "fixed inset-0 flex flex-col w-screen h-screen translate-x-0 translate-y-0 bg-background text-foreground p-0 sm:rounded-none shadow-none",
-    }[variant];
-
-    return (
-      <DialogPortal>
-        <DialogOverlay zIndex={zIndex} className={overlayClassName} />
-        <DialogPrimitive.Content
-          ref={ref}
-          className={cn(variantClass, zIndexMap[zIndex], className)}
-          onInteractOutside={(e) => {
-            // 防止点击遮罩层关闭对话框
-            e.preventDefault();
-          }}
-          {...props}
-        >
-          {children}
-        </DialogPrimitive.Content>
-      </DialogPortal>
-    );
-  },
+  ) => (
+    <DialogPortal>
+      <DialogOverlay layer={layer} className={overlayClassName} />
+      <DialogPrimitive.Content
+        ref={ref}
+        className={cn(
+          LAYER[layer],
+          "fixed left-1/2 top-1/2 w-full max-w-lg -translate-x-1/2 -translate-y-1/2",
+          "overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-xl",
+          "enter-sheet-in exit-sheet-out",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+        {!hideClose && (
+          <DialogPrimitive.Close
+            className={cn(
+              "absolute right-3.5 top-3.5 grid size-7 place-items-center rounded-md",
+              "text-muted-foreground transition-colors hover:bg-accent hover:text-foreground",
+              "focus-visible:outline-none focus-visible:ring-[3.5px] focus-visible:ring-ring/35",
+            )}
+          >
+            <X className="size-4" />
+            <span className="sr-only">Close</span>
+          </DialogPrimitive.Close>
+        )}
+      </DialogPrimitive.Content>
+    </DialogPortal>
+  ),
 );
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
@@ -95,14 +99,22 @@ const DialogHeader = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn(
-      "flex flex-col space-y-1.5 text-center sm:text-left px-6 py-5 border-b border-border-default bg-muted/20 flex-shrink-0",
-      className,
-    )}
+    className={cn("flex flex-col gap-1 px-5 pb-3 pt-5", className)}
     {...props}
   />
 );
 DialogHeader.displayName = "DialogHeader";
+
+const DialogBody = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn("scroll-area max-h-[65vh] px-5 pb-1", className)}
+    {...props}
+  />
+);
+DialogBody.displayName = "DialogBody";
 
 const DialogFooter = ({
   className,
@@ -110,7 +122,7 @@ const DialogFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:items-center px-6 py-5 border-t border-border-default bg-muted/20 flex-shrink-0",
+      "flex flex-col-reverse gap-2 px-5 pb-5 pt-4 sm:flex-row sm:justify-end",
       className,
     )}
     {...props}
@@ -124,10 +136,7 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn(
-      "text-lg font-semibold leading-tight tracking-tight",
-      className,
-    )}
+    className={cn("text-lg font-semibold tracking-tight", className)}
     {...props}
   />
 ));
@@ -147,11 +156,14 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export {
   Dialog,
+  DialogPortal,
+  DialogOverlay,
   DialogTrigger,
+  DialogClose,
   DialogContent,
   DialogHeader,
+  DialogBody,
   DialogFooter,
   DialogTitle,
   DialogDescription,
-  DialogClose,
 };

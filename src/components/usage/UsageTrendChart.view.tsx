@@ -14,6 +14,7 @@ import { useUsageTrends } from "@/lib/query/usage";
 import { Loader2 } from "lucide-react";
 import { fmtInt, fmtUsd, getLocaleFromLanguage } from "./format";
 import { resolveUsageRange } from "@/lib/usageRange";
+import { CHART_COLORS } from "./chartPalette";
 import type { UsageTrendChartProps } from "./UsageTrendChart";
 import {
   buildUsageTrendChartData,
@@ -117,12 +118,28 @@ export default function UsageTrendChartView({
           >
             <defs>
               <linearGradient id="colorInput" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                <stop
+                  offset="5%"
+                  stopColor={CHART_COLORS.input}
+                  stopOpacity={0.2}
+                />
+                <stop
+                  offset="95%"
+                  stopColor={CHART_COLORS.input}
+                  stopOpacity={0}
+                />
               </linearGradient>
               <linearGradient id="colorOutput" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#22c55e" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
+                <stop
+                  offset="5%"
+                  stopColor={CHART_COLORS.output}
+                  stopOpacity={0.2}
+                />
+                <stop
+                  offset="95%"
+                  stopColor={CHART_COLORS.output}
+                  stopOpacity={0}
+                />
               </linearGradient>
               <linearGradient
                 id="colorCacheCreation"
@@ -131,12 +148,28 @@ export default function UsageTrendChartView({
                 x2="0"
                 y2="1"
               >
-                <stop offset="5%" stopColor="#f97316" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
+                <stop
+                  offset="5%"
+                  stopColor={CHART_COLORS.cacheCreation}
+                  stopOpacity={0.2}
+                />
+                <stop
+                  offset="95%"
+                  stopColor={CHART_COLORS.cacheCreation}
+                  stopOpacity={0}
+                />
               </linearGradient>
               <linearGradient id="colorCacheRead" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#a855f7" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="#a855f7" stopOpacity={0} />
+                <stop
+                  offset="5%"
+                  stopColor={CHART_COLORS.cacheRead}
+                  stopOpacity={0.2}
+                />
+                <stop
+                  offset="95%"
+                  stopColor={CHART_COLORS.cacheRead}
+                  stopOpacity={0}
+                />
               </linearGradient>
             </defs>
             <CartesianGrid
@@ -184,7 +217,7 @@ export default function UsageTrendChartView({
               type="monotone"
               dataKey="inputTokens"
               name={t("usage.inputTokens", "输入 Tokens")}
-              stroke="#3b82f6"
+              stroke={CHART_COLORS.input}
               fillOpacity={1}
               fill="url(#colorInput)"
               strokeWidth={2}
@@ -194,7 +227,7 @@ export default function UsageTrendChartView({
               type="monotone"
               dataKey="outputTokens"
               name={t("usage.outputTokens", "输出 Tokens")}
-              stroke="#22c55e"
+              stroke={CHART_COLORS.output}
               fillOpacity={1}
               fill="url(#colorOutput)"
               strokeWidth={2}
@@ -204,7 +237,7 @@ export default function UsageTrendChartView({
               type="monotone"
               dataKey="cacheCreationTokens"
               name={t("usage.cacheCreationTokens", "缓存创建")}
-              stroke="#f97316"
+              stroke={CHART_COLORS.cacheCreation}
               fillOpacity={1}
               fill="url(#colorCacheCreation)"
               strokeWidth={2}
@@ -214,7 +247,7 @@ export default function UsageTrendChartView({
               type="monotone"
               dataKey="cacheReadTokens"
               name={t("usage.cacheReadTokens", "缓存命中")}
-              stroke="#a855f7"
+              stroke={CHART_COLORS.cacheRead}
               fillOpacity={1}
               fill="url(#colorCacheRead)"
               strokeWidth={2}
@@ -224,7 +257,7 @@ export default function UsageTrendChartView({
               type="monotone"
               dataKey="cost"
               name={t("usage.cost", "成本")}
-              stroke="#f43f5e"
+              stroke={CHART_COLORS.cost}
               fill="none"
               strokeWidth={2}
               strokeDasharray="4 4"

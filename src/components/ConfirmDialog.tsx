@@ -19,7 +19,7 @@ interface ConfirmDialogProps {
   confirmText?: string;
   cancelText?: string;
   variant?: "destructive" | "info";
-  zIndex?: "base" | "nested" | "alert" | "top";
+  layer?: "base" | "sheet" | "alert" | "top";
   /** 可选勾选项：提供 label 即显示，勾选状态经 onConfirm 参数回传 */
   checkboxLabel?: string;
   checkboxDefaultChecked?: boolean;
@@ -35,7 +35,7 @@ export function ConfirmDialog({
   confirmText,
   cancelText,
   variant = "destructive",
-  zIndex = "alert",
+  layer = "alert",
   checkboxLabel,
   checkboxDefaultChecked = false,
   pending = false,
@@ -55,7 +55,7 @@ export function ConfirmDialog({
 
   const IconComponent = variant === "info" ? Info : AlertTriangle;
   const iconClass =
-    variant === "info" ? "h-5 w-5 text-blue-500" : "h-5 w-5 text-destructive";
+    variant === "info" ? "h-5 w-5 text-primary" : "h-5 w-5 text-destructive";
 
   return (
     <Dialog
@@ -66,7 +66,7 @@ export function ConfirmDialog({
         }
       }}
     >
-      <DialogContent className="max-w-sm" zIndex={zIndex}>
+      <DialogContent className="max-w-sm" layer={layer}>
         <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
           <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
             <IconComponent className={iconClass} />

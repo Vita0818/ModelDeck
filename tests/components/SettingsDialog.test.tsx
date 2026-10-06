@@ -352,8 +352,10 @@ describe("SettingsPage Component", () => {
 
   it("should reset tab content scroll position when switching settings tabs", () => {
     const { container } = renderSettingsPage();
+    // The tab body owns the scroll; .scroll-area is the shared overlay-scroller
+    // utility it uses.
     const scrollContainer = container.querySelector(
-      ".overflow-y-auto",
+      ".scroll-area",
     ) as HTMLDivElement | null;
 
     expect(scrollContainer).not.toBeNull();

@@ -41,10 +41,10 @@ export function ToolUpgradeConfirmDialog({
         if (!open) onCancel();
       }}
     >
-      <DialogContent className="max-w-md" zIndex="alert">
+      <DialogContent className="max-w-md" layer="alert">
         <DialogHeader className="space-y-2 border-b-0 bg-transparent pb-0">
           <DialogTitle className="flex items-center gap-2 text-base font-semibold">
-            <AlertTriangle className="h-5 w-5 text-yellow-500" />
+            <AlertTriangle className="h-5 w-5 text-warning" />
             {t("settings.toolUpgradeConfirmTitle")}
           </DialogTitle>
           <DialogDescription className="text-sm leading-relaxed">
@@ -56,13 +56,13 @@ export function ToolUpgradeConfirmDialog({
           {plans.map((plan) => (
             <div
               key={plan.tool}
-              className="space-y-1.5 rounded-lg border border-yellow-500/20 bg-yellow-500/5 p-2.5"
+              className="space-y-1.5 rounded-lg border border-warning/40/20 bg-warning/5 p-2.5"
             >
               <div className="text-xs font-medium">
                 {displayName(plan.tool)}
               </div>
               {!plan.anchored && (
-                <div className="text-[10px] leading-snug text-yellow-600 dark:text-yellow-400">
+                <div className="text-[10px] leading-snug text-warning">
                   {t("settings.toolUpgradeUnanchoredHint")}
                 </div>
               )}

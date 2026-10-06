@@ -208,7 +208,7 @@ function AutoSyncDialog({ state, onClose, onSaved }: AutoSyncDialogProps) {
   return (
     <Dialog open onOpenChange={(open) => !open && !isSaving && onClose()}>
       <DialogContent
-        zIndex="top"
+        layer="top"
         className="max-w-4xl h-[84vh]"
         onEscapeKeyDown={(event) => {
           if (isTextEditableTarget(event.target)) event.preventDefault();

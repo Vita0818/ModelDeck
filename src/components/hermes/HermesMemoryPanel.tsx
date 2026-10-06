@@ -63,7 +63,7 @@ const MemoryTabPane: React.FC<MemoryTabPaneProps> = ({
       <div
         className={cn(
           "flex items-center justify-between px-3 py-2 rounded-md border",
-          enabled ? "bg-muted/30" : "bg-amber-500/10 border-amber-500/30",
+          enabled ? "bg-muted/30" : "bg-warning/10 border-warning/40/30",
         )}
       >
         <div className="flex items-center gap-2">
@@ -81,7 +81,7 @@ const MemoryTabPane: React.FC<MemoryTabPaneProps> = ({
           </span>
         </div>
         {!enabled && (
-          <span className="text-xs text-amber-700 dark:text-amber-400">
+          <span className="text-xs text-warning">
             {t("hermes.memory.disabledHint")}
           </span>
         )}
@@ -104,7 +104,7 @@ const MemoryTabPane: React.FC<MemoryTabPaneProps> = ({
         <span
           className={cn(
             "text-muted-foreground",
-            isOver && "text-red-600 dark:text-red-400 font-medium",
+            isOver && "text-destructive font-medium",
           )}
         >
           {t("hermes.memory.usage", { current: charCount, limit })}

@@ -144,8 +144,8 @@ export function RequestDetailPanel({
                   <span
                     className={`inline-flex rounded-full px-2 py-1 text-xs ${
                       request.statusCode >= 200 && request.statusCode < 300
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
+                        ? "bg-success/10 text-success"
+                        : "bg-destructive/10 text-destructive"
                     }`}
                   >
                     {request.statusCode}
@@ -317,11 +317,11 @@ export function RequestDetailPanel({
 
           {/* 错误信息 */}
           {request.errorMessage && (
-            <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-              <h3 className="mb-2 font-semibold text-red-800">
+            <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-4">
+              <h3 className="mb-2 font-semibold text-destructive">
                 {t("usage.errorMessage", "错误信息")}
               </h3>
-              <p className="text-sm text-red-700">{request.errorMessage}</p>
+              <p className="text-sm text-destructive">{request.errorMessage}</p>
             </div>
           )}
         </div>
