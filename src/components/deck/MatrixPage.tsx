@@ -58,7 +58,7 @@ export default function MatrixPage() {
       ) : (
         <section>
           <GroupTitle>{t("deck.compatibleModels")}</GroupTitle>
-          <Group className="[&>*+*]:border-t-0">
+          <Group>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse text-base">
                 <thead>

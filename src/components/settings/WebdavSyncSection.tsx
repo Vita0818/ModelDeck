@@ -1547,7 +1547,7 @@ export function WebdavSyncSection({
         }}
       >
         <DialogContent className="max-w-sm" layer="alert">
-          <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
+          <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <AlertTriangle className="size-5 text-destructive" />
               {t("settings.webdavSync.confirmUpload.title")}
@@ -1635,7 +1635,7 @@ export function WebdavSyncSection({
         }}
       >
         <DialogContent className="max-w-sm" layer="alert">
-          <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
+          <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <AlertTriangle className="size-5 text-destructive" />
               {t("settings.webdavSync.confirmDownload.title")}
@@ -1708,7 +1708,7 @@ export function WebdavSyncSection({
         }}
       >
         <DialogContent className="max-w-sm" layer="alert">
-          <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
+          <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <AlertTriangle className="size-5 text-destructive" />
               {t("settings.s3Sync.confirmUpload.title")}
@@ -1775,7 +1775,7 @@ export function WebdavSyncSection({
         }}
       >
         <DialogContent className="max-w-sm" layer="alert">
-          <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
+          <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <AlertTriangle className="size-5 text-destructive" />
               {t("settings.s3Sync.confirmDownload.title")}
@@ -1827,7 +1827,7 @@ export function WebdavSyncSection({
         }}
       >
         <DialogContent className="max-w-sm" layer="alert">
-          <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
+          <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <AlertTriangle className="size-5 text-destructive" />
               {t("settings.s3Sync.mutualExclusionTitle")}

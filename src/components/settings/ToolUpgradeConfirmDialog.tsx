@@ -42,7 +42,7 @@ export function ToolUpgradeConfirmDialog({
       }}
     >
       <DialogContent className="max-w-md" layer="alert">
-        <DialogHeader className="space-y-2 border-b-0 bg-transparent pb-0">
+        <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <AlertTriangle className="size-5 text-warning" />
             {t("settings.toolUpgradeConfirmTitle")}

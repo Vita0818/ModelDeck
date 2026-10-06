@@ -191,7 +191,7 @@ export function DeepLinkImportDialog() {
         {request && (
           <>
             {/* 标题显式左对齐，避免默认居中样式影响 */}
-            <DialogHeader className="text-left sm:text-left">
+            <DialogHeader>
               <DialogTitle>{getTitle()}</DialogTitle>
               <DialogDescription>{getDescription()}</DialogDescription>
             </DialogHeader>
