@@ -1548,7 +1548,7 @@ export function WebdavSyncSection({
       >
         <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
-            <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
+            <DialogTitle className="flex items-center gap-2">
               <AlertTriangle className="size-5 text-destructive" />
               {t("settings.webdavSync.confirmUpload.title")}
             </DialogTitle>
@@ -1636,7 +1636,7 @@ export function WebdavSyncSection({
       >
         <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
-            <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
+            <DialogTitle className="flex items-center gap-2">
               <AlertTriangle className="size-5 text-destructive" />
               {t("settings.webdavSync.confirmDownload.title")}
             </DialogTitle>
@@ -1709,7 +1709,7 @@ export function WebdavSyncSection({
       >
         <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
-            <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
+            <DialogTitle className="flex items-center gap-2">
               <AlertTriangle className="size-5 text-destructive" />
               {t("settings.s3Sync.confirmUpload.title")}
             </DialogTitle>
@@ -1776,7 +1776,7 @@ export function WebdavSyncSection({
       >
         <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
-            <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
+            <DialogTitle className="flex items-center gap-2">
               <AlertTriangle className="size-5 text-destructive" />
               {t("settings.s3Sync.confirmDownload.title")}
             </DialogTitle>
@@ -1828,7 +1828,7 @@ export function WebdavSyncSection({
       >
         <DialogContent className="max-w-sm" layer="alert">
           <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
-            <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
+            <DialogTitle className="flex items-center gap-2">
               <AlertTriangle className="size-5 text-destructive" />
               {t("settings.s3Sync.mutualExclusionTitle")}
             </DialogTitle>

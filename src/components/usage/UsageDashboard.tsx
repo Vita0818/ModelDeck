@@ -42,6 +42,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { PricingConfigPanel } from "@/components/usage/PricingConfigPanel";
+import { Group, Row } from "@/components/ui/group";
 import { cn } from "@/lib/utils";
 import { getLocaleFromLanguage } from "./format";
 import { getUsageRangePresetLabel, resolveUsageRange } from "@/lib/usageRange";
@@ -485,43 +486,39 @@ export function UsageDashboard({
         </div>
 
         <div className="space-y-4">
-          <div className="rounded-xl rounded-xl border border-border bg-card shadow-xs px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <ScanSearch className="size-5 text-primary" />
-              <div>
-                <h3 className="text-base font-semibold">
-                  {t("usage.sessionSync.title")}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {t("usage.sessionSync.description")}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 shrink-0">
-              {!sessionAutoSyncEnabled && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={syncingSession}
-                  onClick={() => void runManualSessionSync()}
-                >
-                  {syncingSession ? (
-                    <Loader2 className="mr-2 size-4 animate-spin" />
-                  ) : (
-                    <RefreshCw className="mr-2 size-4" />
+          <Group>
+            <Row
+              icon={<ScanSearch className="size-[17px]" />}
+              label={t("usage.sessionSync.title")}
+              description={t("usage.sessionSync.description")}
+              trailing={
+                <>
+                  {!sessionAutoSyncEnabled && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={syncingSession}
+                      onClick={() => void runManualSessionSync()}
+                    >
+                      {syncingSession ? (
+                        <Loader2 className="mr-2 size-4 animate-spin" />
+                      ) : (
+                        <RefreshCw className="mr-2 size-4" />
+                      )}
+                      {t("usage.sessionSync.syncNow")}
+                    </Button>
                   )}
-                  {t("usage.sessionSync.syncNow")}
-                </Button>
-              )}
-              <Switch
-                checked={sessionAutoSyncEnabled}
-                onCheckedChange={(value) =>
-                  void onSessionAutoSyncEnabledChange?.(value)
-                }
-                aria-label={t("usage.sessionSync.title")}
-              />
-            </div>
-          </div>
+                  <Switch
+                    checked={sessionAutoSyncEnabled}
+                    onCheckedChange={(value) =>
+                      void onSessionAutoSyncEnabledChange?.(value)
+                    }
+                    aria-label={t("usage.sessionSync.title")}
+                  />
+                </>
+              }
+            />
+          </Group>
 
           <Accordion
             type="multiple"

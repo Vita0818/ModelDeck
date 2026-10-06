@@ -68,7 +68,7 @@ export function ConfirmDialog({
     >
       <DialogContent className="max-w-sm" layer={layer}>
         <DialogHeader className="space-y-3 border-b-0 bg-transparent pb-0">
-          <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
+          <DialogTitle className="flex items-center gap-2">
             <IconComponent className={iconClass} />
             {title}
           </DialogTitle>
