@@ -38,6 +38,7 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
+  AccordionHeading,
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { PricingConfigPanel } from "@/components/usage/PricingConfigPanel";
@@ -528,38 +529,26 @@ export function UsageDashboard({
             className="w-full space-y-4"
           >
             <AccordionItem value="pricing">
-              <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted data-[state=open]:bg-muted">
-                <div className="flex items-center gap-3">
-                  <Coins className="size-5 text-warning" />
-                  <div className="text-left">
-                    <h3 className="text-base font-semibold">
-                      {t("settings.advanced.pricing.title")}
-                    </h3>
-                    <p className="text-sm text-muted-foreground font-normal">
-                      {t("settings.advanced.pricing.description")}
-                    </p>
-                  </div>
-                </div>
+              <AccordionTrigger>
+                <AccordionHeading
+                  icon={<Coins />}
+                  title={t("settings.advanced.pricing.title")}
+                  description={t("settings.advanced.pricing.description")}
+                />
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
+              <AccordionContent>
                 <PricingConfigPanel />
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="maintenance">
-              <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted data-[state=open]:bg-muted">
-                <div className="flex items-center gap-3">
-                  <DatabaseBackup className="size-5 text-warning" />
-                  <div className="text-left">
-                    <h3 className="text-base font-semibold">
-                      {t("usage.rebuildCodex.title")}
-                    </h3>
-                    <p className="text-sm text-muted-foreground font-normal">
-                      {t("usage.rebuildCodex.description")}
-                    </p>
-                  </div>
-                </div>
+              <AccordionTrigger>
+                <AccordionHeading
+                  icon={<DatabaseBackup />}
+                  title={t("usage.rebuildCodex.title")}
+                  description={t("usage.rebuildCodex.description")}
+                />
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
+              <AccordionContent>
                 <div className="flex items-center justify-between gap-4 rounded-lg border border-destructive/20 bg-destructive/5 p-4">
                   <p className="text-sm text-muted-foreground">
                     {t("usage.rebuildCodex.warning")}

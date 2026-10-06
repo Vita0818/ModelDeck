@@ -6,6 +6,7 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
+  AccordionHeading,
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -99,30 +100,24 @@ export function ProxyTabContent({
         {/* Local Proxy */}
         <AccordionItem value="proxy">
           <AccordionTrigger>
-            <div className="flex items-center gap-3">
-              <Server className="size-5 text-success" />
-              <div className="text-left">
-                <h3 className="text-base font-medium text-foreground">
-                  {t("settings.advanced.proxy.title")}
-                </h3>
-                <p className="text-sm font-normal text-muted-foreground">
-                  {t("settings.advanced.proxy.description")}
-                </p>
-              </div>
-              <Badge
-                variant={isRunning ? "default" : "secondary"}
-                className="gap-1.5 h-6 ml-auto mr-2"
-              >
-                <Activity
-                  className={`size-3 ${isRunning ? "status-heartbeat" : ""}`}
-                />
-                {isRunning
-                  ? t("settings.advanced.proxy.running")
-                  : t("settings.advanced.proxy.stopped")}
-              </Badge>
-            </div>
+            <AccordionHeading
+              icon={<Server />}
+              title={t("settings.advanced.proxy.title")}
+              description={t("settings.advanced.proxy.description")}
+            />
+            <Badge
+              variant={isRunning ? "default" : "secondary"}
+              className="mr-2 h-6 gap-1.5"
+            >
+              <Activity
+                className={`size-3 ${isRunning ? "status-heartbeat" : ""}`}
+              />
+              {isRunning
+                ? t("settings.advanced.proxy.running")
+                : t("settings.advanced.proxy.stopped")}
+            </Badge>
           </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
+          <AccordionContent>
             <ProxyPanel
               enableLocalProxy={settings?.enableLocalProxy ?? false}
               onEnableLocalProxyChange={(checked) =>
@@ -137,22 +132,16 @@ export function ProxyTabContent({
         {/* Auto Failover */}
         <AccordionItem value="failover">
           <AccordionTrigger>
-            <div className="flex items-center gap-3">
-              <Activity className="size-5 text-warning" />
-              <div className="text-left">
-                <h3 className="text-base font-medium text-foreground">
-                  {t("settings.advanced.failover.title")}
-                </h3>
-                <p className="text-sm font-normal text-muted-foreground">
-                  {t("settings.advanced.failover.description")}
-                </p>
-              </div>
-            </div>
+            <AccordionHeading
+              icon={<Activity />}
+              title={t("settings.advanced.failover.title")}
+              description={t("settings.advanced.failover.description")}
+            />
           </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
+          <AccordionContent>
             <div className="space-y-6">
               <ToggleRow
-                icon={<ShieldAlert className="size-4 text-warning" />}
+                icon={<ShieldAlert className="size-4" />}
                 title={t("settings.advanced.proxy.enableFailoverToggle")}
                 description={t(
                   "settings.advanced.proxy.enableFailoverToggleDescription",
@@ -219,19 +208,13 @@ export function ProxyTabContent({
         {/* Rectifier */}
         <AccordionItem value="rectifier">
           <AccordionTrigger>
-            <div className="flex items-center gap-3">
-              <Zap className="size-5 text-system-purple" />
-              <div className="text-left">
-                <h3 className="text-base font-medium text-foreground">
-                  {t("settings.advanced.rectifier.title")}
-                </h3>
-                <p className="text-sm font-normal text-muted-foreground">
-                  {t("settings.advanced.rectifier.description")}
-                </p>
-              </div>
-            </div>
+            <AccordionHeading
+              icon={<Zap />}
+              title={t("settings.advanced.rectifier.title")}
+              description={t("settings.advanced.rectifier.description")}
+            />
           </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
+          <AccordionContent>
             <RectifierConfigPanel />
           </AccordionContent>
         </AccordionItem>
@@ -239,19 +222,13 @@ export function ProxyTabContent({
         {/* Global Outbound Proxy */}
         <AccordionItem value="globalProxy">
           <AccordionTrigger>
-            <div className="flex items-center gap-3">
-              <Globe className="size-[17px] text-muted-foreground" />
-              <div className="text-left">
-                <h3 className="text-base font-medium text-foreground">
-                  {t("settings.advanced.globalProxy.title")}
-                </h3>
-                <p className="text-sm font-normal text-muted-foreground">
-                  {t("settings.advanced.globalProxy.description")}
-                </p>
-              </div>
-            </div>
+            <AccordionHeading
+              icon={<Globe />}
+              title={t("settings.advanced.globalProxy.title")}
+              description={t("settings.advanced.globalProxy.description")}
+            />
           </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
+          <AccordionContent>
             <GlobalProxySettings />
           </AccordionContent>
         </AccordionItem>

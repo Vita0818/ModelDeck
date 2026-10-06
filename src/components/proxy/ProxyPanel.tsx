@@ -230,7 +230,7 @@ export function ProxyPanel({
       <section className="space-y-4">
         {/* [1] Enable proxy button on main page — always visible */}
         <ToggleRow
-          icon={<Zap className="size-4 text-success" />}
+          icon={<Zap className="size-4" />}
           title={t("settings.advanced.proxy.enableFeature")}
           description={t("settings.advanced.proxy.enableFeatureDescription")}
           checked={enableLocalProxy}

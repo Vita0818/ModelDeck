@@ -53,7 +53,7 @@ function AccordionHeading({
   description?: React.ReactNode;
 }) {
   return (
-    <span className="flex min-w-0 items-center gap-3">
+    <span className="flex min-w-0 flex-1 items-center gap-3">
       {icon && (
         <span className="grid size-[17px] shrink-0 place-items-center text-muted-foreground [&>svg]:size-[17px]">
           {icon}
