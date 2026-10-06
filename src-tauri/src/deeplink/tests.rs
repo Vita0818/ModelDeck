@@ -233,9 +233,6 @@ fn test_build_gemini_provider_with_model() {
         config_format: None,
         config_url: None,
         apps: None,
-        repo: None,
-        directory: None,
-        branch: None,
         content: None,
         description: None,
         enabled: None,
@@ -286,9 +283,6 @@ fn test_build_gemini_provider_without_model() {
         config_format: None,
         config_url: None,
         apps: None,
-        repo: None,
-        directory: None,
-        branch: None,
         content: None,
         description: None,
         enabled: None,
@@ -332,9 +326,6 @@ fn test_deeplink_usage_script_does_not_copy_provider_credentials() {
         config_format: None,
         config_url: None,
         apps: None,
-        repo: None,
-        directory: None,
-        branch: None,
         content: None,
         description: None,
         enabled: None,
@@ -379,9 +370,6 @@ fn usage_script_request(code: &str, usage_enabled: Option<bool>) -> DeepLinkImpo
         config_format: None,
         config_url: None,
         apps: None,
-        repo: None,
-        directory: None,
-        branch: None,
         content: None,
         description: None,
         enabled: None,
@@ -462,9 +450,6 @@ fn test_deeplink_usage_script_omits_explicit_credentials_that_match_provider() {
         config_format: None,
         config_url: None,
         apps: None,
-        repo: None,
-        directory: None,
-        branch: None,
         content: None,
         description: None,
         enabled: None,
@@ -510,9 +495,6 @@ fn test_deeplink_usage_script_preserves_distinct_usage_credentials() {
         config_format: None,
         config_url: None,
         apps: None,
-        repo: None,
-        directory: None,
-        branch: None,
         content: None,
         description: None,
         enabled: None,
@@ -563,9 +545,6 @@ fn test_parse_and_merge_config_claude() {
         config_format: Some("json".to_string()),
         config_url: None,
         apps: None,
-        repo: None,
-        directory: None,
-        branch: None,
         content: None,
         description: None,
         enabled: None,
@@ -686,9 +665,6 @@ fn test_parse_and_merge_config_url_override() {
         config_format: Some("json".to_string()),
         config_url: None,
         apps: None,
-        repo: None,
-        directory: None,
-        branch: None,
         content: None,
         description: None,
         enabled: None,
@@ -749,9 +725,6 @@ fn test_build_claude_provider_preserves_custom_env_fields() {
         config_format: Some("json".to_string()),
         config_url: None,
         apps: None,
-        repo: None,
-        directory: None,
-        branch: None,
         content: None,
         description: None,
         enabled: None,
@@ -804,9 +777,6 @@ fn test_build_claude_provider_without_config_unchanged() {
         config_format: None,
         config_url: None,
         apps: None,
-        repo: None,
-        directory: None,
-        branch: None,
         content: None,
         description: None,
         enabled: None,
@@ -938,17 +908,6 @@ fn test_parse_grokbuild_mcp_deeplink() {
     let request = parse_deeplink_url(&url).expect("parse Grok Build MCP deeplink");
 
     assert_eq!(request.apps.as_deref(), Some("grokbuild"));
-}
-
-#[test]
-fn test_parse_skill_deeplink() {
-    let url = "ccswitch://v1/import?resource=skill&repo=owner/repo&directory=skills&branch=dev";
-    let request = parse_deeplink_url(url).unwrap();
-
-    assert_eq!(request.resource, "skill");
-    assert_eq!(request.repo.unwrap(), "owner/repo");
-    assert_eq!(request.directory.unwrap(), "skills");
-    assert_eq!(request.branch.unwrap(), "dev");
 }
 
 // =============================================================================

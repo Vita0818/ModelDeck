@@ -19,7 +19,6 @@
 //!     ├── providers.rs
 //!     ├── mcp.rs
 //!     ├── prompts.rs
-//!     ├── skills.rs
 //!     └── settings.rs
 //! ```
 
