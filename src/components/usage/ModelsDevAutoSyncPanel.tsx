@@ -224,7 +224,7 @@ function AutoSyncDialog({ state, onClose, onSaved }: AutoSyncDialogProps) {
         </DialogHeader>
 
         <div className="flex flex-1 min-h-0 flex-col gap-3 px-6 py-4">
-          <div className="flex items-center justify-between gap-4 rounded-lg border border-border/50 bg-muted/20 px-3 py-2.5">
+          <div className="flex items-center justify-between gap-4 rounded-lg border border-border bg-secondary px-3 py-2.5">
             <div>
               <div className="text-sm font-medium">
                 {t("usage.modelsDevAutoSync.commonModels")}
@@ -316,7 +316,7 @@ function AutoSyncDialog({ state, onClose, onSaved }: AutoSyncDialogProps) {
                 <span>{t("usage.modelsDevAutoSync.selectionHint")}</span>
               </div>
 
-              <div className="flex-1 min-h-0 overflow-y-auto rounded-md border border-border/50">
+              <div className="flex-1 min-h-0 overflow-y-auto rounded-md border border-border">
                 {filtered.length === 0 ? (
                   <div className="flex h-full items-center justify-center py-8 text-sm text-muted-foreground">
                     {t("usage.modelsDevNoResults")}
@@ -333,7 +333,7 @@ function AutoSyncDialog({ state, onClose, onSaved }: AutoSyncDialogProps) {
                           aria-pressed={selected}
                           onClick={() => toggleEntry(entry)}
                           className={`flex w-full items-center gap-3 px-3 py-2 text-left ${
-                            selected ? "bg-accent/50" : "hover:bg-muted/40"
+                            selected ? "bg-accent/50" : "hover:bg-muted"
                           }`}
                         >
                           <span
@@ -511,7 +511,7 @@ export function ModelsDevAutoSyncPanel() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center rounded-lg border border-border/50 py-6">
+      <div className="flex items-center justify-center rounded-lg border border-border py-6">
         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
       </div>
     );
@@ -548,7 +548,7 @@ export function ModelsDevAutoSyncPanel() {
 
   return (
     <>
-      <div className="space-y-3 rounded-lg border border-border/50 bg-muted/15 p-4">
+      <div className="space-y-3 rounded-lg border border-border bg-secondary p-4">
         <div className="flex items-start justify-between gap-4">
           <div>
             <h5 className="text-sm font-medium">
@@ -595,7 +595,7 @@ export function ModelsDevAutoSyncPanel() {
           </Alert>
         )}
 
-        <div className="rounded-md bg-background/60 px-3 py-2">
+        <div className="rounded-md bg-secondary px-3 py-2">
           <div className="text-[11px] text-muted-foreground">
             {t("usage.modelsDevAutoSync.localFile")}
           </div>

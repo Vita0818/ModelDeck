@@ -437,7 +437,7 @@ export const CodexOAuthSection: React.FC<CodexOAuthSectionProps> = ({
       )}
 
       {onFastModeChange && (
-        <div className="flex items-center justify-between rounded-md border bg-muted/30 p-3">
+        <div className="flex items-center justify-between rounded-md border bg-secondary p-3">
           <div className="space-y-1 pr-4">
             <Label className="text-sm font-medium">
               {t("codexOauth.fastMode", "FAST mode")}
@@ -470,7 +470,7 @@ export const CodexOAuthSection: React.FC<CodexOAuthSectionProps> = ({
                 className={`space-y-2 rounded-md border p-2 ${
                   account.reauth_required
                     ? "border-warning/40/70 bg-warning/10/70 dark:border-warning/40/40 dark:bg-warning/30"
-                    : "bg-muted/30"
+                    : "bg-secondary"
                 }`}
               >
                 <div className="flex items-center justify-between gap-2">
@@ -584,7 +584,7 @@ export const CodexOAuthSection: React.FC<CodexOAuthSectionProps> = ({
 
       {/* 轮询中状态 */}
       {mode === "manage" && isPolling && deviceCode && (
-        <div className="space-y-3 p-4 rounded-lg border border-border bg-muted/50">
+        <div className="space-y-3 p-4 rounded-lg border border-border bg-muted">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <Loader2 className="h-4 w-4 animate-spin" />
             {t("codexOauth.waitingForAuth", "等待授权中...")}

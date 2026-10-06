@@ -305,7 +305,7 @@ export function BackupListSection({
             {backups.map((backup) => (
               <div
                 key={backup.filename}
-                className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors text-sm"
+                className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-secondary hover:bg-muted transition-colors text-sm"
               >
                 <div className="flex-1 min-w-0">
                   {editingFilename === backup.filename ? (

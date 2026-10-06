@@ -30,7 +30,7 @@ const UsageTrendChartView = lazy(() => import("./UsageTrendChart.view"));
 
 function UsageTrendChartFallback() {
   return (
-    <div className="flex h-[350px] items-center justify-center rounded-xl bg-card/40 border border-border/50">
+    <div className="flex h-[350px] items-center justify-center rounded-xl bg-card border border-border">
       <Loader2 className="h-8 w-8 animate-spin text-muted-foreground/30" />
     </div>
   );

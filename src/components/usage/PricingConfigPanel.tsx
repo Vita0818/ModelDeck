@@ -252,10 +252,10 @@ export function PricingConfigPanel() {
             <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
           </div>
         ) : (
-          <div className="rounded-md border border-border/50 overflow-hidden">
+          <div className="rounded-md border border-border overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border/50 bg-muted/30">
+                <tr className="border-b border-border bg-secondary">
                   <th className="px-3 py-2 text-left font-medium text-muted-foreground w-24">
                     {t("settings.globalProxy.pricingAppLabel")}
                   </th>
@@ -273,7 +273,7 @@ export function PricingConfigPanel() {
                     key={app}
                     className={
                       idx < PRICING_APPS.length - 1
-                        ? "border-b border-border/30"
+                        ? "border-b border-border"
                         : ""
                     }
                   >
@@ -338,7 +338,7 @@ export function PricingConfigPanel() {
       </div>
 
       {/* 分隔线 */}
-      <div className="border-t border-border/50" />
+      <div className="border-t border-border" />
 
       {/* 模型定价配置 */}
       <div className="space-y-4">
@@ -366,7 +366,7 @@ export function PricingConfigPanel() {
               <AlertDescription>{t("usage.noPricingData")}</AlertDescription>
             </Alert>
           ) : (
-            <div className="rounded-md bg-card/60 shadow-sm">
+            <div className="rounded-md bg-card shadow-sm">
               <Table>
                 <TableHeader>
                   <TableRow>

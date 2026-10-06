@@ -260,10 +260,10 @@ export function UsageDateRangePicker({
         className={cn(
           "rounded-lg border px-3 py-2 transition-all",
           isEndLive
-            ? "border-border/30 bg-muted/30 cursor-not-allowed opacity-50"
+            ? "border-border bg-secondary cursor-not-allowed opacity-50"
             : isActive
               ? "border-primary ring-1 ring-primary/30 bg-primary/5 cursor-pointer"
-              : "border-border/50 hover:border-border cursor-pointer",
+              : "border-border hover:border-border cursor-pointer",
         )}
         onClick={() => {
           if (!isEndLive) setActiveField(field);
@@ -335,7 +335,7 @@ export function UsageDateRangePicker({
         align="end"
       >
         {/* Preset shortcuts */}
-        <div className="flex flex-wrap gap-1.5 pb-2 border-b border-border/40">
+        <div className="flex flex-wrap gap-1.5 pb-2 border-b border-border">
           {PRESETS.map((preset) => (
             <Button
               key={preset}
@@ -403,7 +403,7 @@ export function UsageDateRangePicker({
           </div>
 
           {/* Right: calendar */}
-          <div className="usage-range-calendar rounded-lg border border-border/50 bg-muted/30 p-2.5">
+          <div className="usage-range-calendar rounded-lg border border-border bg-secondary p-2.5">
             {/* Month navigation */}
             <div className="flex items-center justify-between mb-1.5">
               <Button

@@ -245,7 +245,7 @@ export function ModelsDevPickerDialog({
                 </div>
               </div>
 
-              <div className="flex-1 min-h-0 overflow-y-auto rounded-md border border-border/50">
+              <div className="flex-1 min-h-0 overflow-y-auto rounded-md border border-border">
                 {filtered.length === 0 ? (
                   <div className="flex h-full items-center justify-center py-8 text-sm text-muted-foreground">
                     {t("usage.modelsDevNoResults", "没有匹配的模型")}
@@ -261,7 +261,7 @@ export function ModelsDevPickerDialog({
                         className={`flex cursor-pointer items-center gap-3 px-3 py-2 ${
                           selected?.key === entry.key
                             ? "bg-accent/50"
-                            : "hover:bg-muted/40"
+                            : "hover:bg-muted"
                         }`}
                       >
                         <Check

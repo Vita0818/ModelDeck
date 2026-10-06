@@ -156,7 +156,7 @@ export const XaiOAuthSection: React.FC<XaiOAuthSectionProps> = ({
             {accounts.map((account) => (
               <div
                 key={account.id}
-                className="flex items-center justify-between rounded-md border bg-muted/30 p-2"
+                className="flex items-center justify-between rounded-md border bg-secondary p-2"
               >
                 <div className="flex min-w-0 items-center gap-2">
                   {account.requires_reauth ? (
@@ -233,7 +233,7 @@ export const XaiOAuthSection: React.FC<XaiOAuthSectionProps> = ({
       )}
 
       {isPolling && deviceCode && (
-        <div className="space-y-3 rounded-lg border bg-muted/50 p-4">
+        <div className="space-y-3 rounded-lg border bg-muted p-4">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <Loader2 className="h-4 w-4 animate-spin" />
             {t("xaiOauth.waitingForAuth", "等待 xAI 授权中…")}

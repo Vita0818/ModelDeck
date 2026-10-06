@@ -238,7 +238,7 @@ export function ProxyPanel({
         />
 
         {/* [2] Proxy service toggle — always visible */}
-        <div className="flex items-center justify-between rounded-xl border border-border bg-card/50 p-4 transition-colors hover:bg-muted/50">
+        <div className="flex items-center justify-between rounded-xl border border-border bg-card p-4 transition-colors hover:bg-muted">
           <div className="flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-background ring-1 ring-border">
               <Power className="h-4 w-4 text-success" />
@@ -285,7 +285,7 @@ export function ProxyPanel({
                     return (
                       <div
                         key={appType}
-                        className="flex items-center justify-between rounded-md border border-primary/20 bg-background/60 px-3 py-2"
+                        className="flex items-center justify-between rounded-md border border-primary/20 bg-secondary px-3 py-2"
                       >
                         <span className="text-sm font-medium">
                           {getAppLabel(appType)}
@@ -316,7 +316,7 @@ export function ProxyPanel({
         {isRunning && status ? (
           <div className="space-y-6">
             {/* [4] Running info: address + current provider */}
-            <div className="rounded-lg border border-border bg-muted/40 p-4 space-y-4">
+            <div className="rounded-lg border border-border bg-muted p-4 space-y-4">
               <div>
                 <p className="text-xs text-muted-foreground mb-2">
                   {t("proxy.panel.serviceAddress", {
@@ -324,7 +324,7 @@ export function ProxyPanel({
                   })}
                 </p>
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                  <code className="flex-1 text-sm bg-background px-3 py-2 rounded border border-border/60">
+                  <code className="flex-1 text-sm bg-background px-3 py-2 rounded border border-border">
                     {formatAddressForUrl(status.address, status.port)}
                   </code>
                   <Button
@@ -361,7 +361,7 @@ export function ProxyPanel({
                     {status.active_targets.map((target) => (
                       <div
                         key={target.app_type}
-                        className="flex items-center justify-between rounded-md border border-border bg-background/60 px-2 py-1.5 text-xs"
+                        className="flex items-center justify-between rounded-md border border-border bg-secondary px-2 py-1.5 text-xs"
                       >
                         <span className="text-muted-foreground">
                           {target.app_type}
@@ -395,7 +395,7 @@ export function ProxyPanel({
 
               {/* [5] Logging toggle */}
               <div className="pt-3 border-t border-border">
-                <div className="flex items-center justify-between rounded-md border border-border bg-background/60 px-3 py-2">
+                <div className="flex items-center justify-between rounded-md border border-border bg-secondary px-3 py-2">
                   <div className="space-y-0.5">
                     <Label className="text-sm font-medium">
                       {t("proxy.settings.fields.enableLogging.label", {
@@ -516,7 +516,7 @@ export function ProxyPanel({
         ) : (
           <div className="space-y-6">
             {/* [8] Basic settings — address/port (only when stopped) */}
-            <div className="rounded-lg border border-border bg-muted/40 p-4 space-y-4">
+            <div className="rounded-lg border border-border bg-muted p-4 space-y-4">
               <div>
                 <h4 className="text-sm font-semibold">
                   {t("proxy.settings.basic.title", {
@@ -642,7 +642,7 @@ function StatCard({ icon, label, value, variant = "default" }: StatCardProps) {
 
   return (
     <div
-      className={`rounded-lg border border-border bg-card/60 p-4 text-sm text-muted-foreground ${variantStyles[variant]}`}
+      className={`rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground ${variantStyles[variant]}`}
     >
       <div className="flex items-center gap-2 text-muted-foreground mb-2">
         {icon}
@@ -724,7 +724,7 @@ function ProviderQueueItem({
       className={`flex items-center justify-between rounded-md border px-3 py-2 text-sm transition-colors ${
         isCurrent
           ? "border-primary/40 bg-primary/10 text-primary font-medium"
-          : "border-border bg-background/60"
+          : "border-border bg-secondary"
       }`}
     >
       <div className="flex items-center gap-2">

@@ -24,7 +24,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = (props) => {
     <Suspense
       fallback={
         <div
-          className={`animate-pulse rounded-md border border-border bg-muted/40 ${className}`}
+          className={`animate-pulse rounded-md border border-border bg-muted ${className}`}
           style={{ minHeight }}
         />
       }

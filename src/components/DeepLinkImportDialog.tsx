@@ -389,7 +389,7 @@ export function DeepLinkImportDialog() {
 
                       {/* Parsed Config Details */}
                       {parsedConfig && (
-                        <div className="rounded-lg bg-muted/50 p-3 space-y-2">
+                        <div className="rounded-lg bg-muted p-3 space-y-2">
                           <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                             {t("deeplink.configDetails")}
                           </div>
@@ -538,7 +538,7 @@ export function DeepLinkImportDialog() {
                             <div className="font-medium text-sm text-muted-foreground">
                               {t("deeplink.usageScriptCode")}
                             </div>
-                            <pre className="max-h-48 overflow-auto rounded border border-border bg-muted/40 p-2 text-xs font-mono whitespace-pre-wrap break-all">
+                            <pre className="max-h-48 overflow-auto rounded border border-border bg-muted p-2 text-xs font-mono whitespace-pre-wrap break-all">
                               {decodeDeeplinkPayload(
                                 request.usageScript,
                                 decodeBase64Utf8,

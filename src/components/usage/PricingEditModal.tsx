@@ -104,7 +104,7 @@ export function PricingEditModal({
         </DialogHeader>
         <DialogBody>
           {isNew && (
-            <div className="mb-6 flex items-center justify-between gap-3 rounded-md border border-border/50 bg-muted/20 px-3 py-2.5">
+            <div className="mb-6 flex items-center justify-between gap-3 rounded-md border border-border bg-secondary px-3 py-2.5">
               <p className="text-xs text-muted-foreground">
                 {t(
                   "usage.modelsDevHint",

@@ -351,7 +351,7 @@ export function SettingsPage({
                             </div>
                           </div>
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
                           <DirectorySettings
                             appConfigDir={appConfigDir}
                             resolvedDirs={resolvedDirs}
@@ -390,7 +390,7 @@ export function SettingsPage({
                             </div>
                           </div>
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
                           <ImportExportSection
                             status={importStatus}
                             selectedFile={selectedFile}
@@ -427,7 +427,7 @@ export function SettingsPage({
                             </div>
                           </div>
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
                           <BackupListSection
                             backupIntervalHours={settings.backupIntervalHours}
                             backupRetainCount={settings.backupRetainCount}
@@ -455,7 +455,7 @@ export function SettingsPage({
                             </div>
                           </div>
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
                           <WebdavSyncSection
                             config={settings?.webdavSync}
                             s3Config={settings?.s3Sync}
@@ -484,7 +484,7 @@ export function SettingsPage({
                             </div>
                           </div>
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
                           <ConnectivityCheckConfigPanel />
                         </AccordionContent>
                       </AccordionItem>
@@ -506,7 +506,7 @@ export function SettingsPage({
                             </div>
                           </div>
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+                        <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
                           <LogConfigPanel />
                         </AccordionContent>
                       </AccordionItem>
@@ -563,7 +563,7 @@ export function SettingsPage({
             <Button
               variant="ghost"
               onClick={handleRestartLater}
-              className="hover:bg-muted/50"
+              className="hover:bg-muted"
             >
               {t("settings.restartLater")}
             </Button>

@@ -993,7 +993,7 @@ export function WebdavSyncSection({
 
       {/* ─── WebDAV form ──────────────────────────────────── */}
       {syncType === "webdav" && (
-        <div className="space-y-4 rounded-lg border border-border bg-muted/40 p-6">
+        <div className="space-y-4 rounded-lg border border-border bg-muted p-6">
           {/* Config fields */}
           <div className="space-y-3">
             {/* Service preset selector */}
@@ -1228,7 +1228,7 @@ export function WebdavSyncSection({
 
       {/* ─── S3 form ──────────────────────────────────────── */}
       {syncType === "s3" && (
-        <div className="space-y-4 rounded-lg border border-border bg-muted/40 p-6">
+        <div className="space-y-4 rounded-lg border border-border bg-muted p-6">
           <div className="space-y-3">
             {/* S3 preset selector */}
             <div className="flex items-center gap-4">
@@ -1567,7 +1567,7 @@ export function WebdavSyncSection({
                   </code>
                 </p>
                 {remoteInfo && (
-                  <div className="rounded-lg border border-border bg-muted/50 p-3 space-y-2">
+                  <div className="rounded-lg border border-border bg-muted p-3 space-y-2">
                     <p className="text-xs font-medium text-foreground">
                       {t("settings.webdavSync.confirmUpload.existingData")}
                     </p>
@@ -1728,7 +1728,7 @@ export function WebdavSyncSection({
                   </code>
                 </p>
                 {s3RemoteInfo && (
-                  <div className="rounded-lg border border-border bg-muted/50 p-3 space-y-2">
+                  <div className="rounded-lg border border-border bg-muted p-3 space-y-2">
                     <p className="text-xs font-medium text-foreground">
                       {t("settings.s3Sync.confirmUpload.existingData")}
                     </p>

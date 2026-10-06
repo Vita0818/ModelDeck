@@ -124,7 +124,7 @@ export function FailoverQueueManager({
   return (
     <div className="space-y-4">
       {/* 自动故障转移开关 */}
-      <div className="flex items-center justify-between p-4 rounded-lg bg-muted/50 border border-border/50">
+      <div className="flex items-center justify-between p-4 rounded-lg bg-muted border border-border">
         <div className="space-y-0.5">
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium">

@@ -125,7 +125,7 @@ export function ProxyTabContent({
               </Badge>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+          <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
             <ProxyPanel
               enableLocalProxy={settings?.enableLocalProxy ?? false}
               onEnableLocalProxyChange={(checked) =>
@@ -155,7 +155,7 @@ export function ProxyTabContent({
               </div>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+          <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
             <div className="space-y-6">
               <ToggleRow
                 icon={<ShieldAlert className="h-4 w-4 text-warning" />}
@@ -208,7 +208,7 @@ export function ProxyTabContent({
                           disabled={failoverDisabled}
                         />
                       </div>
-                      <div className="border-t border-border/50 pt-6">
+                      <div className="border-t border-border pt-6">
                         <AutoFailoverConfigPanel
                           appType={appType}
                           disabled={failoverDisabled}
@@ -240,7 +240,7 @@ export function ProxyTabContent({
               </div>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+          <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
             <RectifierConfigPanel />
           </AccordionContent>
         </AccordionItem>
@@ -263,7 +263,7 @@ export function ProxyTabContent({
               </div>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+          <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
             <GlobalProxySettings />
           </AccordionContent>
         </AccordionItem>

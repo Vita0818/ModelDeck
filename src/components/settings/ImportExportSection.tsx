@@ -53,7 +53,7 @@ export function ImportExportSection({
         </p>
       </header>
 
-      <div className="space-y-4 rounded-lg border border-border bg-muted/40 p-6">
+      <div className="space-y-4 rounded-lg border border-border bg-muted p-6">
         {/* Import and Export Buttons Side by Side */}
         <div className="grid grid-cols-2 gap-4 items-stretch">
           {/* Import Button */}
@@ -141,7 +141,7 @@ function ImportStatusMessage({
   }
 
   const baseClass =
-    "flex items-start gap-3 rounded-xl border p-4 text-sm leading-relaxed backdrop-blur-sm";
+    "flex items-start gap-3 rounded-xl border p-4 text-sm leading-relaxed";
 
   if (status === "importing") {
     return (

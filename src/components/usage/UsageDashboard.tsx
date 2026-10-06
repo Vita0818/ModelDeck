@@ -277,7 +277,7 @@ export function UsageDashboard({
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <header
-        className="sticky top-0 z-10 flex shrink-0 flex-wrap items-end justify-between gap-3 border-b border-border bg-background/80 px-7 py-4 backdrop-blur-xl"
+        className="sticky top-0 z-10 flex shrink-0 flex-wrap items-end justify-between gap-3 border-b border-border bg-background/80 px-7 py-4"
         data-tauri-drag-region
       >
         <div className="min-w-0">
@@ -290,7 +290,7 @@ export function UsageDashboard({
         </div>
 
         <div className="no-drag flex flex-wrap items-center gap-2">
-          <div className="flex items-center p-1 bg-muted/30 rounded-lg border border-border/50">
+          <div className="flex items-center p-1 bg-secondary rounded-lg border border-border">
             {APP_FILTER_OPTIONS.map((type) => {
               const label = t(`usage.appFilter.${type}`);
               return (
@@ -304,7 +304,7 @@ export function UsageDashboard({
                     "flex h-8 items-center justify-center px-2.5 rounded-md transition-all",
                     appType === type
                       ? "bg-background text-primary shadow-sm"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted",
                   )}
                 >
                   {type === "all" ? (
@@ -427,7 +427,7 @@ export function UsageDashboard({
         <div className="space-y-4">
           <Tabs defaultValue="logs" className="w-full">
             <div className="flex items-center justify-between mb-4">
-              <TabsList className="bg-muted/50">
+              <TabsList className="bg-muted">
                 <TabsTrigger value="logs" className="gap-2">
                   <ListFilter className="h-4 w-4" />
                   {t("usage.requestLogs")}
@@ -531,7 +531,7 @@ export function UsageDashboard({
               value="pricing"
               className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
             >
-              <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 data-[state=open]:bg-muted/50">
+              <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted data-[state=open]:bg-muted">
                 <div className="flex items-center gap-3">
                   <Coins className="h-5 w-5 text-warning" />
                   <div className="text-left">
@@ -544,7 +544,7 @@ export function UsageDashboard({
                   </div>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+              <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
                 <PricingConfigPanel />
               </AccordionContent>
             </AccordionItem>
@@ -552,7 +552,7 @@ export function UsageDashboard({
               value="maintenance"
               className="overflow-hidden rounded-xl border border-border bg-card shadow-xs"
             >
-              <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 data-[state=open]:bg-muted/50">
+              <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted data-[state=open]:bg-muted">
                 <div className="flex items-center gap-3">
                   <DatabaseBackup className="h-5 w-5 text-warning" />
                   <div className="text-left">
@@ -565,7 +565,7 @@ export function UsageDashboard({
                   </div>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-6 pt-4 border-t border-border/50">
+              <AccordionContent className="px-6 pb-6 pt-4 border-t border-border">
                 <div className="flex items-center justify-between gap-4 rounded-lg border border-destructive/20 bg-destructive/5 p-4">
                   <p className="text-sm text-muted-foreground">
                     {t("usage.rebuildCodex.warning")}

@@ -321,7 +321,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
             {accounts.map((account) => (
               <div
                 key={account.id}
-                className="flex items-center justify-between p-2 rounded-md border bg-muted/30"
+                className="flex items-center justify-between p-2 rounded-md border bg-secondary"
               >
                 <div className="flex items-center gap-2">
                   {renderAvatar(account)}
@@ -415,7 +415,7 @@ export const CopilotAuthSection: React.FC<CopilotAuthSectionProps> = ({
 
       {/* 轮询中状态 */}
       {mode === "manage" && isPolling && deviceCode && (
-        <div className="space-y-3 p-4 rounded-lg border border-border bg-muted/50">
+        <div className="space-y-3 p-4 rounded-lg border border-border bg-muted">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <Loader2 className="h-4 w-4 animate-spin" />
             {t("copilot.waitingForAuth", "等待授权中...")}

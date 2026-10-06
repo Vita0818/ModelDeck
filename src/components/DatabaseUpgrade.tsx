@@ -136,7 +136,7 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-6 text-foreground">
-      <div className="w-full max-w-lg space-y-5 rounded-2xl border border-border/60 bg-card/80 p-7 shadow-xl">
+      <div className="w-full max-w-lg space-y-5 rounded-2xl border border-border bg-card p-7 shadow-xl">
         <div className="flex items-start gap-4">
           <div
             className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${accent.chip}`}
@@ -166,7 +166,7 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
         </div>
 
         {/* 错误详情 / 数据库路径 */}
-        <div className="space-y-1 rounded-lg border border-border/50 bg-muted/40 p-3 text-xs text-muted-foreground">
+        <div className="space-y-1 rounded-lg border border-border bg-muted p-3 text-xs text-muted-foreground">
           {payload.error && (
             <p className="break-words font-mono">{payload.error}</p>
           )}
