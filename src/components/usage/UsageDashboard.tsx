@@ -527,10 +527,7 @@ export function UsageDashboard({
             defaultValue={[]}
             className="w-full space-y-4"
           >
-            <AccordionItem
-              value="pricing"
-             
-            >
+            <AccordionItem value="pricing">
               <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted data-[state=open]:bg-muted">
                 <div className="flex items-center gap-3">
                   <Coins className="size-5 text-warning" />
@@ -548,10 +545,7 @@ export function UsageDashboard({
                 <PricingConfigPanel />
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem
-              value="maintenance"
-             
-            >
+            <AccordionItem value="maintenance">
               <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted data-[state=open]:bg-muted">
                 <div className="flex items-center gap-3">
                   <DatabaseBackup className="size-5 text-warning" />

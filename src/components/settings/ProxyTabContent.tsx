@@ -97,10 +97,7 @@ export function ProxyTabContent({
     >
       <Accordion type="multiple" defaultValue={[]} className="w-full space-y-4">
         {/* Local Proxy */}
-        <AccordionItem
-          value="proxy"
-         
-        >
+        <AccordionItem value="proxy">
           <AccordionTrigger>
             <div className="flex items-center gap-3">
               <Server className="size-5 text-success" />
@@ -138,10 +135,7 @@ export function ProxyTabContent({
         </AccordionItem>
 
         {/* Auto Failover */}
-        <AccordionItem
-          value="failover"
-         
-        >
+        <AccordionItem value="failover">
           <AccordionTrigger>
             <div className="flex items-center gap-3">
               <Activity className="size-5 text-warning" />
@@ -223,10 +217,7 @@ export function ProxyTabContent({
         </AccordionItem>
 
         {/* Rectifier */}
-        <AccordionItem
-          value="rectifier"
-         
-        >
+        <AccordionItem value="rectifier">
           <AccordionTrigger>
             <div className="flex items-center gap-3">
               <Zap className="size-5 text-system-purple" />
@@ -246,10 +237,7 @@ export function ProxyTabContent({
         </AccordionItem>
 
         {/* Global Outbound Proxy */}
-        <AccordionItem
-          value="globalProxy"
-         
-        >
+        <AccordionItem value="globalProxy">
           <AccordionTrigger>
             <div className="flex items-center gap-3">
               <Globe className="size-[17px] text-muted-foreground" />
