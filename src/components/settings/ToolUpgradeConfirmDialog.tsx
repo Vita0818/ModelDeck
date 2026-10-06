@@ -47,7 +47,7 @@ export function ToolUpgradeConfirmDialog({
             <AlertTriangle className="size-5 text-warning" />
             {t("settings.toolUpgradeConfirmTitle")}
           </DialogTitle>
-          <DialogDescription className="text-sm leading-relaxed">
+          <DialogDescription className="leading-relaxed">
             {t("settings.toolUpgradeConfirmHint")}
           </DialogDescription>
         </DialogHeader>
