@@ -160,7 +160,7 @@ export function EnvWarningBanner({
 
               {isExpanded && (
                 <div className="mt-4 space-y-3">
-                  <div className="flex items-center gap-2 pb-2 border-b border-warning/40 dark:border-warning/40/50">
+                  <div className="flex items-center gap-2 pb-2 border-b border-warning/40 dark:border-warning/20">
                     <Checkbox
                       id="select-all"
                       checked={selectedConflicts.size === conflicts.length}
@@ -180,7 +180,7 @@ export function EnvWarningBanner({
                       return (
                         <div
                           key={key}
-                          className="flex items-start gap-3 p-3 bg-white dark:bg-muted rounded-md border border-warning/40 dark:border-warning/40/50"
+                          className="flex items-start gap-3 p-3 bg-white dark:bg-muted rounded-md border border-warning/40 dark:border-warning/20"
                         >
                           <Checkbox
                             id={key}
@@ -208,7 +208,7 @@ export function EnvWarningBanner({
                     })}
                   </div>
 
-                  <div className="flex items-center justify-end gap-2 pt-2 border-t border-warning/40 dark:border-warning/40/50">
+                  <div className="flex items-center justify-end gap-2 pt-2 border-t border-warning/40 dark:border-warning/20">
                     <Button
                       variant="outline"
                       size="sm"

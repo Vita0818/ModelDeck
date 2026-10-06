@@ -162,7 +162,7 @@ export function ProxyTabContent({
               />
 
               {!isRunning && (
-                <div className="p-4 rounded-lg bg-warning/10 border border-warning/40/20">
+                <div className="p-4 rounded-lg bg-warning/10 border border-warning/10">
                   <p className="text-sm text-warning">
                     {t("proxy.failover.proxyRequired", {
                       defaultValue: "需要先启动代理服务才能配置故障转移",

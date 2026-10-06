@@ -395,7 +395,7 @@ export const CodexOAuthSection: React.FC<CodexOAuthSectionProps> = ({
 
       {/* 旧账号需重新登录提示（缺少 id_token） */}
       {mode === "manage" && hasReauthAccounts && (
-        <div className="flex items-start gap-3 rounded-lg border border-warning/40/70 bg-warning/10 p-3 text-warning dark:border-warning/40/40 dark:bg-warning/40 dark:text-warning">
+        <div className="flex items-start gap-3 rounded-lg border border-warning/30 bg-warning/10 p-3 text-warning dark:border-warning/15 dark:bg-warning/40 dark:text-warning">
           <AlertTriangle className="mt-0.5 size-4 shrink-0 text-warning" />
           <div className="space-y-1">
             <p className="text-sm font-medium">
@@ -416,7 +416,7 @@ export const CodexOAuthSection: React.FC<CodexOAuthSectionProps> = ({
 
       {/* select 模式：所选账号需重新登录的内联提示 */}
       {mode === "select" && selectedAccountNeedsReauth && (
-        <div className="flex items-start gap-2 rounded-md border border-warning/40/70 bg-warning/10 px-3 py-2 text-xs text-warning dark:border-warning/40/40 dark:bg-warning/40 dark:text-warning">
+        <div className="flex items-start gap-2 rounded-md border border-warning/30 bg-warning/10 px-3 py-2 text-xs text-warning dark:border-warning/15 dark:bg-warning/40 dark:text-warning">
           <AlertTriangle className="mt-0.5 size-3.5 shrink-0 text-warning" />
           <div className="flex-1 leading-relaxed">
             {t(
@@ -469,7 +469,7 @@ export const CodexOAuthSection: React.FC<CodexOAuthSectionProps> = ({
                 key={account.id}
                 className={`space-y-2 rounded-md border p-2 ${
                   account.reauth_required
-                    ? "border-warning/40/70 bg-warning/10/70 dark:border-warning/40/40 dark:bg-warning/30"
+                    ? "border-warning/30 bg-warning/5 dark:border-warning/15 dark:bg-warning/30"
                     : "bg-secondary"
                 }`}
               >
@@ -492,7 +492,7 @@ export const CodexOAuthSection: React.FC<CodexOAuthSectionProps> = ({
                     {account.reauth_required && (
                       <Badge
                         variant="outline"
-                        className="shrink-0 gap-1 border-warning/40/70 text-xs text-warning dark:border-warning/40/50 dark:text-warning"
+                        className="shrink-0 gap-1 border-warning/30 text-xs text-warning dark:border-warning/20 dark:text-warning"
                       >
                         <AlertTriangle className="size-3" />
                         {t("codexOauth.reauthBadge", "需要重新登录")}
@@ -506,7 +506,7 @@ export const CodexOAuthSection: React.FC<CodexOAuthSectionProps> = ({
                       size="sm"
                       className={`h-7 gap-1 px-2 text-xs ${
                         account.reauth_required
-                          ? "border-warning/40/70 text-warning hover:bg-warning/10 dark:border-warning/40/50 dark:text-warning dark:hover:bg-warning/40"
+                          ? "border-warning/30 text-warning hover:bg-warning/10 dark:border-warning/20 dark:text-warning dark:hover:bg-warning/40"
                           : "text-muted-foreground"
                       }`}
                       onClick={() => reauthAccount(account.id)}

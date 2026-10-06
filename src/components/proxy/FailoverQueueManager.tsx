@@ -153,7 +153,7 @@ export function FailoverQueueManager({
       </div>
 
       {/* 说明信息 */}
-      <Alert className="border-primary/40/40 bg-primary/10">
+      <Alert className="border-primary/15 bg-primary/10">
         <Info className="size-4" />
         <AlertDescription className="text-sm">
           {t(

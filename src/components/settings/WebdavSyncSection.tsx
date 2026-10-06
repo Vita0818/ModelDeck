@@ -1131,7 +1131,7 @@ export function WebdavSyncSection({
             </p>
           )}
           {showAutoSyncError && (
-            <div className="rounded-lg border border-destructive/40/70 bg-destructive/10/80 px-3 py-2 text-xs text-destructive dark:border-destructive/40/50 dark:bg-destructive/30 dark:text-destructive">
+            <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive dark:border-destructive/20 dark:bg-destructive/30 dark:text-destructive">
               <p className="font-medium">
                 {t("settings.webdavSync.autoSyncLastErrorTitle")}
               </p>
@@ -1442,7 +1442,7 @@ export function WebdavSyncSection({
             </p>
           )}
           {s3ShowAutoSyncError && (
-            <div className="rounded-lg border border-destructive/40/70 bg-destructive/10/80 px-3 py-2 text-xs text-destructive dark:border-destructive/40/50 dark:bg-destructive/30 dark:text-destructive">
+            <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive dark:border-destructive/20 dark:bg-destructive/30 dark:text-destructive">
               <p className="font-medium">
                 {t("settings.s3Sync.autoSyncLastErrorTitle")}
               </p>

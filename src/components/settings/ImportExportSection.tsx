@@ -146,7 +146,7 @@ function ImportStatusMessage({
   if (status === "importing") {
     return (
       <div
-        className={`${baseClass} border-primary/40/30 bg-primary/10 text-primary`}
+        className={`${baseClass} border-primary/10 bg-primary/10 text-primary`}
       >
         <Loader2 className="mt-0.5 size-5 flex-shrink-0 animate-spin" />
         <div>
@@ -162,7 +162,7 @@ function ImportStatusMessage({
   if (status === "success") {
     return (
       <div
-        className={`${baseClass} border-success/40/30 bg-success/10 text-success`}
+        className={`${baseClass} border-success/10 bg-success/10 text-success`}
       >
         <CheckCircle2 className="mt-0.5 size-5 flex-shrink-0" />
         <div className="space-y-1.5">
@@ -183,7 +183,7 @@ function ImportStatusMessage({
   if (status === "partial-success") {
     return (
       <div
-        className={`${baseClass} border-warning/40/30 bg-warning/10 text-warning`}
+        className={`${baseClass} border-warning/10 bg-warning/10 text-warning`}
       >
         <AlertCircle className="mt-0.5 size-5 flex-shrink-0" />
         <div className="space-y-1.5">
@@ -200,7 +200,7 @@ function ImportStatusMessage({
 
   return (
     <div
-      className={`${baseClass} border-destructive/40/30 bg-destructive/10 text-destructive`}
+      className={`${baseClass} border-destructive/10 bg-destructive/10 text-destructive`}
     >
       <AlertCircle className="mt-0.5 size-5 flex-shrink-0" />
       <div className="space-y-1.5">

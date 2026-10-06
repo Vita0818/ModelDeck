@@ -194,7 +194,7 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
         )}
 
         {phase === "incompatible" && (
-          <div className="space-y-2 rounded-lg border border-destructive/40/60 bg-destructive/10 p-3 text-sm text-destructive dark:border-destructive/40/40 dark:bg-destructive/40 dark:text-destructive">
+          <div className="space-y-2 rounded-lg border border-destructive/25 bg-destructive/10 p-3 text-sm text-destructive dark:border-destructive/15 dark:bg-destructive/40 dark:text-destructive">
             <p className="font-medium">
               {t("dbUpgrade.title", "数据库版本过新")}
             </p>
@@ -237,7 +237,7 @@ export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
         )}
 
         {phase === "error" && errorMsg && (
-          <p className="rounded-lg border border-destructive/40/60 bg-destructive/10 p-3 text-sm text-destructive dark:border-destructive/40/40 dark:bg-destructive/40 dark:text-destructive">
+          <p className="rounded-lg border border-destructive/25 bg-destructive/10 p-3 text-sm text-destructive dark:border-destructive/15 dark:bg-destructive/40 dark:text-destructive">
             {errorMsg}
           </p>
         )}

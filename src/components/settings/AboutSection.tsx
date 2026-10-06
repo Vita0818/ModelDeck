@@ -78,11 +78,11 @@ const ENV_BADGE_CONFIG: Record<
 > = {
   wsl: {
     labelKey: "settings.envBadge.wsl",
-    className: "bg-warning/10 text-warning border-warning/40/20",
+    className: "bg-warning/10 text-warning border-warning/10",
   },
   windows: {
     labelKey: "settings.envBadge.windows",
-    className: "bg-primary/10 text-primary border-primary/40/20",
+    className: "bg-primary/10 text-primary border-primary/10",
   },
   macos: {
     labelKey: "settings.envBadge.macos",
@@ -90,7 +90,7 @@ const ENV_BADGE_CONFIG: Record<
   },
   linux: {
     labelKey: "settings.envBadge.linux",
-    className: "bg-success/10 text-success border-success/40/20",
+    className: "bg-success/10 text-success border-success/10",
   },
 };
 
@@ -1074,7 +1074,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
                     <Loader2 className="mt-1 size-4 animate-spin text-muted-foreground" />
                   ) : tool?.version ? (
                     isOutdated ? (
-                      <span className="mt-1 shrink-0 rounded-full border border-warning/40/20 bg-warning/10 px-1.5 py-0.5 text-[10px] text-warning">
+                      <span className="mt-1 shrink-0 rounded-full border border-warning/10 bg-warning/10 px-1.5 py-0.5 text-[10px] text-warning">
                         {t("settings.updateAvailableShort")}
                       </span>
                     ) : (
@@ -1163,7 +1163,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
 
                 {/* 多处安装冲突诊断结果：仅在懒触发后有数据时渲染。 */}
                 {conflicts && conflicts.length > 0 && (
-                  <div className="space-y-1.5 rounded-lg border border-warning/40/20 bg-warning/5 p-2.5">
+                  <div className="space-y-1.5 rounded-lg border border-warning/10 bg-warning/5 p-2.5">
                     <div className="text-[11px] font-medium text-warning">
                       {t("settings.toolConflictTitle")}
                     </div>

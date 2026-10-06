@@ -56,7 +56,7 @@ export function ToolUpgradeConfirmDialog({
           {plans.map((plan) => (
             <div
               key={plan.tool}
-              className="space-y-1.5 rounded-lg border border-warning/40/20 bg-warning/5 p-2.5"
+              className="space-y-1.5 rounded-lg border border-warning/10 bg-warning/5 p-2.5"
             >
               <div className="text-xs font-medium">
                 {displayName(plan.tool)}

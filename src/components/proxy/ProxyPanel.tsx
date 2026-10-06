@@ -636,8 +636,8 @@ interface StatCardProps {
 function StatCard({ icon, label, value, variant = "default" }: StatCardProps) {
   const variantStyles = {
     default: "",
-    success: "border-success/40/40 bg-success/5",
-    warning: "border-warning/40/40 bg-warning/5",
+    success: "border-success/15 bg-success/5",
+    warning: "border-warning/15 bg-warning/5",
   };
 
   return (
