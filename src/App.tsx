@@ -30,7 +30,6 @@ import {
 import type { VisibleApps } from "@/types";
 import { useProvidersQuery, useSettingsQuery } from "@/lib/query";
 import { providersApi, type AppId } from "@/lib/api";
-import { useOpenClawHealth } from "@/hooks/useOpenClaw";
 import { useOpenHermesWebUI } from "@/hooks/useHermes";
 import { hermesApi } from "@/lib/api/hermes";
 import { useProxyStatus } from "@/hooks/useProxyStatus";
@@ -50,7 +49,6 @@ import { EnvWarningBanner } from "@/components/env/EnvWarningBanner";
 import { RoutingActivationBrand } from "@/components/proxy/RoutingActivationBrand";
 import { FirstRunNoticeDialog } from "@/components/FirstRunNoticeDialog";
 import { Button } from "@/components/ui/button";
-import OpenClawHealthBanner from "@/components/openclaw/OpenClawHealthBanner";
 import DeckPanel from "@/components/deck/DeckPanel";
 import { isProxyAppId } from "@/config/appConfig";
 import {
@@ -81,14 +79,6 @@ const AgentsPanel = lazy(() =>
     default: m.AgentsPanel,
   })),
 );
-const WorkspaceFilesPanel = lazy(
-  () => import("@/components/workspace/WorkspaceFilesPanel"),
-);
-const EnvPanel = lazy(() => import("@/components/openclaw/EnvPanel"));
-const ToolsPanel = lazy(() => import("@/components/openclaw/ToolsPanel"));
-const AgentsDefaultsPanel = lazy(
-  () => import("@/components/openclaw/AgentsDefaultsPanel"),
-);
 const DeepLinkImportDialog = lazy(() =>
   import("@/components/DeepLinkImportDialog").then((m) => ({
     default: m.DeepLinkImportDialog,
@@ -113,7 +103,6 @@ const VALID_VIEWS: View[] = [
   "settings",
   "agents",
   "universal",
-  "workspace",
   "hermesMemory",
 ];
 
@@ -221,15 +210,6 @@ function App() {
     enabled: currentView !== "providers",
     isProxyRunning: currentAppUsesProxy && isProxyRunning,
   });
-  const isOpenClawView =
-    activeApp === "openclaw" &&
-    (currentView === "providers" ||
-      currentView === "workspace" ||
-      currentView === "openclawEnv" ||
-      currentView === "openclawTools" ||
-      currentView === "openclawAgents");
-  const { data: openclawHealthWarnings = [] } =
-    useOpenClawHealth(isOpenClawView);
   const [launchDashboardOpen, setLaunchDashboardOpen] = useState(false);
   const openHermesWebUI = useOpenHermesWebUI(() =>
     setLaunchDashboardOpen(true),
@@ -278,14 +258,6 @@ function App() {
           return (
             <AgentsPanel onOpenChange={() => setCurrentView("providers")} />
           );
-        case "workspace":
-          return <WorkspaceFilesPanel />;
-        case "openclawEnv":
-          return <EnvPanel />;
-        case "openclawTools":
-          return <ToolsPanel />;
-        case "openclawAgents":
-          return <AgentsDefaultsPanel />;
         default:
           return null;
       }
@@ -563,9 +535,6 @@ function App() {
         ref={mainScrollRef}
         className="flex-1 min-h-0 flex flex-col overflow-y-auto"
       >
-        {isOpenClawView && openclawHealthWarnings.length > 0 && (
-          <OpenClawHealthBanner warnings={openclawHealthWarnings} />
-        )}
         <DeckPanel
           client={activeClient}
           onBusyChange={setModelClientBusy}

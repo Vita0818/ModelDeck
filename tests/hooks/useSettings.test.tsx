@@ -14,7 +14,6 @@ const updateTrayMenuMock = vi.fn();
 const getCurrentMock = vi.fn();
 const getAllMock = vi.fn();
 const getQueryDataMock = vi.fn();
-const invalidatePiDirectoryCachesMock = vi.fn();
 const toastErrorMock = vi.fn();
 const toastSuccessMock = vi.fn();
 
@@ -43,8 +42,6 @@ vi.mock("@/hooks/useSettingsMetadata", () => ({
 }));
 
 vi.mock("@/lib/query", () => ({
-  invalidatePiDirectoryCaches: (...args: unknown[]) =>
-    invalidatePiDirectoryCachesMock(...args),
   useSettingsQuery: (...args: unknown[]) => useSettingsQueryMock(...args),
   useSaveSettingsMutation: () => ({
     mutateAsync: mutateAsyncMock,
@@ -151,7 +148,6 @@ describe("useSettings hook", () => {
     applyClaudeOnboardingSkipMock.mockReset();
     clearClaudeOnboardingSkipMock.mockReset();
     syncCurrentProvidersLiveMock.mockReset();
-    invalidatePiDirectoryCachesMock.mockReset();
     getCurrentMock.mockReset();
     getAllMock.mockReset();
     getQueryDataMock.mockReset();
@@ -356,26 +352,6 @@ describe("useSettings hook", () => {
     expect(metadataMock.setRequiresRestart).toHaveBeenCalledWith(false);
     // 目录未变化，不应触发同步
     expect(syncCurrentProvidersLiveMock).not.toHaveBeenCalled();
-  });
-
-  it("sanitizes the Pi directory without projecting providers", async () => {
-    settingsFormMock = createSettingsFormMock({
-      settings: {
-        ...serverSettings,
-        piConfigDir: "  /custom/pi  ",
-      },
-    });
-
-    const { result } = renderHook(() => useSettings());
-
-    await act(async () => {
-      await result.current.saveSettings(undefined, { silent: true });
-    });
-
-    const payload = mutateAsyncMock.mock.calls[0][0] as Settings;
-    expect(payload.piConfigDir).toBe("/custom/pi");
-    expect(syncCurrentProvidersLiveMock).not.toHaveBeenCalled();
-    expect(invalidatePiDirectoryCachesMock).toHaveBeenCalledTimes(1);
   });
 
   it("shows toast when Claude plugin sync fails but continues flow", async () => {

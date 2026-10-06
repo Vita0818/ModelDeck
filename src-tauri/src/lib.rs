@@ -1299,9 +1299,6 @@ pub fn run() {
             commands::get_coding_plan_quota,
             commands::get_balance,
             // Pi native provider and session views
-            commands::get_pi_current_state,
-            commands::update_pi_provider_usage_script,
-            commands::get_pi_session_discovery,
             // Fetch OpenAI-compatible and Anthropic model lists. Response data structure:
             // data[].id, data[]?.owned_by. Special: supports Zhipu OpenAI Responses models[].slug.
             commands::fetch_models_for_config,
@@ -1425,20 +1422,6 @@ pub fn run() {
             commands::import_opencode_providers_from_live,
             commands::get_opencode_live_provider_ids,
             // OpenClaw specific
-            commands::import_openclaw_providers_from_live,
-            commands::get_openclaw_live_provider_ids,
-            commands::get_openclaw_live_provider,
-            commands::scan_openclaw_config_health,
-            commands::get_openclaw_default_model,
-            commands::set_openclaw_default_model,
-            commands::get_openclaw_model_catalog,
-            commands::set_openclaw_model_catalog,
-            commands::get_openclaw_agents_defaults,
-            commands::set_openclaw_agents_defaults,
-            commands::get_openclaw_env,
-            commands::set_openclaw_env,
-            commands::get_openclaw_tools,
-            commands::set_openclaw_tools,
             // Hermes specific
             commands::import_hermes_providers_from_live,
             commands::get_hermes_live_provider_ids,
