@@ -1,0 +1,67 @@
+{
+  "sessionId": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+  "source": "native Codex CLI rollout",
+  "events": [
+    {
+      "type": "response_item",
+      "payload": {
+        "type": "message",
+        "id": "msg_01a1197b-3048-7902-8a08-ad01f4bb5b85",
+        "role": "user",
+        "content": [
+          {
+            "type": "input_text",
+            "text": "<environment_context>\n  <cwd>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway</cwd>\n  <shell>zsh</shell>\n  <current_date>2026-10-08</current_date>\n  <timezone>Australia/Perth</timezone>\n  <filesystem><workspace_roots><root>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway</root></workspace_roots><permission_profile type=\"managed\"><file_system type=\"restricted\"><entry access=\"read\"><special>:root</special></entry><entry access=\"write\"><path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway</path></entry><entry access=\"write\"><special>:slash_tmp</special></entry><entry access=\"write\"><special>:tmpdir</special></entry><entry access=\"read\"><path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway/.git</path></entry><entry access=\"read\"><path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway/.agents</path></entry><entry access=\"read\"><path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway/.codex</path></entry><entry access=\"read\"><path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway/.aws</path></entry></file_system></permission_profile></filesystem>\n</environment_context>"
+          }
+        ],
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1197b-1bd8-7ff2-8ef7-79ca64d54ec8",
+          "create_time": 1791428866.120495,
+          "content_item_kinds": [
+            "environments.environment_context"
+          ]
+        }
+      }
+    },
+    {
+      "type": "response_item",
+      "payload": {
+        "type": "message",
+        "id": "msg_01a1197b-3064-7123-afed-514119baf319",
+        "role": "user",
+        "content": [
+          {
+            "type": "input_text",
+            "text": "Use tools to read fixture.json in this workspace. Sum its numbers and write only the integer to result.txt. Finish with MD_TEST_OK. Do not create subagents or read files outside this workspace."
+          }
+        ],
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1197b-1bd8-7ff2-8ef7-79ca64d54ec8",
+          "create_time": 1791428866.148066,
+          "content_item_kinds": [
+            "user.text"
+          ]
+        }
+      }
+    },
+    {
+      "type": "event_msg",
+      "payload": {
+        "type": "task_complete",
+        "turn_id": "01a1197b-1bd8-7ff2-8ef7-79ca64d54ec8",
+        "last_agent_message": null,
+        "error": {
+          "message": "unexpected status 403 Forbidden: Upstream returned HTTP 403, url: http://127.0.0.1:58672/responses",
+          "codex_error_info": {
+            "http_connection_failed": {
+              "http_status_code": 403
+            }
+          }
+        },
+        "started_at": 1791428860,
+        "completed_at": 1791428913,
+        "duration_ms": 53059
+      }
+    }
+  ]
+}

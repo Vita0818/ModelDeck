@@ -1,0 +1,158 @@
+{
+  "client": "claude",
+  "requested": "coding-router-preview",
+  "case": "arena",
+  "session_id": "0cf54fa6-efb6-4f46-af5f-4fda90fe2a7c",
+  "apply_status": 200,
+  "model_used": "coding-router-preview",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/claude/api/hello",
+      "method": "HEAD",
+      "model": null,
+      "stream": null,
+      "tools": null,
+      "status": 401,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Invalid ModelDeck endpoint credential"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "tools": 2,
+      "status": 401,
+      "latencyMs": 2218,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Upstream returned HTTP 401"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "tools": 2,
+      "status": 401,
+      "latencyMs": 1384,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Upstream returned HTTP 401"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "tools": 2,
+      "status": 401,
+      "latencyMs": 1924,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Upstream returned HTTP 401"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "tools": 2,
+      "status": 401,
+      "latencyMs": 2143,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Upstream returned HTTP 401"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "tools": 2,
+      "status": 401,
+      "latencyMs": 1775,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Upstream returned HTTP 401"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "tools": 2,
+      "status": 401,
+      "latencyMs": 2859,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Upstream returned HTTP 401"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "tools": 2,
+      "status": 401,
+      "latencyMs": 1499,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Upstream returned HTTP 401"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "tools": 2,
+      "status": 401,
+      "latencyMs": 1850,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Upstream returned HTTP 401"
+        }
+      }
+    }
+  ],
+  "passed": false,
+  "pid": 64285,
+  "exit_code": 143,
+  "timeout": true,
+  "seconds": 125.51,
+  "runtime_session_ids": [
+    "0cf54fa6-efb6-4f46-af5f-4fda90fe2a7c"
+  ],
+  "output_log": "logs/claude/arena.log",
+  "result_file_value": "",
+  "failure": "cp_tool_ui_meta_v1\"],\"analytics_disabled\":false,\"product_feedback_disabled\":false,\"uuid\":\"77772679-cfee-432d-b09b-a89317b940ac\",\"fast_mode_state\":\"off\",\"fast_mode_disabled_reason\":\"sdk_opt_in_required\"}\n[claude-code:unrecognized_model] {\"model\":\"md-arena\",\"query_source\":\"sdk\"}\n{\"type\":\"system\",\"subtype\":\"api_retry\",\"attempt\":1,\"max_retries\":10,\"retry_delay_ms\":564,\"error_status\":401,\"error\":\"authentication_failed\",\"session_id\":\"0cf54fa6-efb6-4f46-af5f-4fda90fe2a7c\",\"uuid\":\"eef63b56-d835-4627-b048-134d0950c067\"}\n{\"type\":\"system\",\"subtype\":\"api_retry\",\"attempt\":2,\"max_retries\":10,\"retry_delay_ms\":1018,\"error_status\":401,\"error\":\"authentication_failed\",\"session_id\":\"0cf54fa6-efb6-4f46-af5f-4fda90fe2a7c\",\"uuid\":\"5808fafe-8ea7-4e6c-b58c-c70ccd528d8a\"}\n{\"type\":\"system\",\"subtype\":\"api_retry\",\"attempt\":3,\"max_retries\":10,\"retry_delay_ms\":2045,\"error_status\":401,\"error\":\"authentication_failed\",\"session_id\":\"0cf54fa6-efb6-4f46-af5f-4fda90fe2a7c\",\"uuid\":\"55dfc5d4-0744-44dc-9d54-2b3938452c2b\"}\n{\"type\":\"system\",\"subtype\":\"api_retry\",\"attempt\":4,\"max_retries\":10,\"retry_delay_ms\":4844,\"error_status\":401,\"error\":\"authentication_failed\",\"session_id\":\"0cf54fa6-efb6-4f46-af5f-4fda90fe2a7c\",\"uuid\":\"36e806e0-91b7-4c07-b22f-6e9ac0526655\"}\n{\"type\":\"system\",\"subtype\":\"api_retry\",\"attempt\":5,\"max_retries\":10,\"retry_delay_ms\":8540,\"error_status\":401,\"error\":\"authentication_failed\",\"session_id\":\"0cf54fa6-efb6-4f46-af5f-4fda90fe2a7c\",\"uuid\":\"e8790bd5-2eaf-4119-bde5-f067350bd7da\"}\n{\"type\":\"system\",\"subtype\":\"api_retry\",\"attempt\":6,\"max_retries\":10,\"retry_delay_ms\":18918,\"error_status\":401,\"error\":\"authentication_failed\",\"session_id\":\"0cf54fa6-efb6-4f46-af5f-4fda90fe2a7c\",\"uuid\":\"85e5781b-9ed0-413a-9ce1-2bd35699d62d\"}\n{\"type\":\"system\",\"subtype\":\"api_retry\",\"attempt\":7,\"max_retries\":10,\"retry_delay_ms\":32676,\"error_status\":401,\"error\":\"authentication_failed\",\"session_id\":\"0cf54fa6-efb6-4f46-af5f-4fda90fe2a7c\",\"uuid\":\"2b349782-6231-4820-ba44-7891eb51f5b5\"}\n{\"type\":\"system\",\"subtype\":\"api_retry\",\"attempt\":8,\"max_retries\":10,\"retry_delay_ms\":39382,\"error_status\":401,\"error\":\"authentication_failed\",\"session_id\":\"0cf54fa6-efb6-4f46-af5f-4fda90fe2a7c\",\"uuid\":\"276c5c8e-c0fe-469b-93f1-bcd1c2065858\"}\n",
+  "free_rate_limit_429": false
+}

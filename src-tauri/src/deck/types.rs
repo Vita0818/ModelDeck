@@ -28,6 +28,8 @@ pub struct UpstreamProvider {
     pub name: String,
     pub base_url: String,
     pub protocol: Protocol,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub provider_meta: Option<serde_json::Value>,
     #[serde(default)]
     pub api_key: String,
     #[serde(default)]

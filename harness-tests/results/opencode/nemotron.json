@@ -1,0 +1,48 @@
+{
+  "client": "opencode",
+  "requested": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "case": "nemotron",
+  "session_id": "f3cd2088-17da-4294-ad4b-5857c23a00cb",
+  "apply_status": 200,
+  "model_used": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/opencode/v1/messages",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "tools": 3,
+      "status": 200,
+      "latencyMs": 2986
+    },
+    {
+      "path": "/deck-clients/opencode/v1/messages",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "tools": 3,
+      "status": 200,
+      "latencyMs": 2432
+    },
+    {
+      "path": "/deck-clients/opencode/v1/messages",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "tools": 3,
+      "status": 200,
+      "latencyMs": 2883
+    }
+  ],
+  "passed": true,
+  "pid": 62651,
+  "exit_code": 0,
+  "seconds": 20.85,
+  "output_log": "logs/opencode/nemotron.log",
+  "result_file_value": "89",
+  "free_rate_limit_429": false,
+  "runtime_session_ids": [
+    "ses_eeaca9fa9ffer58U3IF2P1mVdl"
+  ]
+}

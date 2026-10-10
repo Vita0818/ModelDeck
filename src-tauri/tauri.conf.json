@@ -6,8 +6,8 @@
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:3000",
-    "beforeDevCommand": "pnpm run dev:renderer",
-    "beforeBuildCommand": "pnpm run build:renderer"
+    "beforeDevCommand": "node node_modules/vite/bin/vite.js",
+    "beforeBuildCommand": "node scripts/build-renderer.mjs"
   },
   "app": {
     "windows": [
@@ -56,9 +56,7 @@
   "plugins": {
     "deep-link": {
       "desktop": {
-        "schemes": [
-          "modeldeck"
-        ]
+        "schemes": ["modeldeck"]
       }
     }
   }

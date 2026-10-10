@@ -1,0 +1,37 @@
+{
+  "ownedProcessesStopped": [
+    95103,
+    95112,
+    95151,
+    96208,
+    97745
+  ],
+  "ownedPorts": {
+    "56205": "closed",
+    "57518": "closed",
+    "58213": "closed",
+    "58400": "closed",
+    "58490": "closed",
+    "58566": "closed",
+    "58672": "closed",
+    "57901": "closed"
+  },
+  "privateRuntimeRemoved": true,
+  "nativeCodexSessions": "archived_recoverable",
+  "archivedCodexSessionIds": [
+    "01a116f2-4b2c-7de1-bc98-127335b2126e",
+    "01a11706-cead-7670-9846-cee3bb3ac23f",
+    "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+    "01a11991-9eba-7020-8c28-a13cc5280585",
+    "01a11980-95b9-7f70-ae81-928dce9ade36",
+    "01a11986-fa1f-7a12-8fab-d8b1a61bd658",
+    "01a1198c-8504-73c3-a053-c930220080d6"
+  ],
+  "officialOAuthUnchanged": true,
+  "originalArenaTokenUnchanged": true,
+  "onlyOwnedTrustEntryRemoved": true,
+  "concurrentCodexSettingsPreserved": true,
+  "openCodeAndClaudeSessionDataRemoved": true,
+  "isolatedEntryTokensRemoved": true,
+  "remainingOwnedProcessIds": []
+}

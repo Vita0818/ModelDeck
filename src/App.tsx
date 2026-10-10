@@ -1,13 +1,10 @@
 import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { Loader2, Maximize2, Minimize2, Minus, X } from "lucide-react";
 import type { VisibleApps } from "@/types";
 import { useSettingsQuery } from "@/lib/query";
 import { providersApi, type AppId } from "@/lib/api";
-import { useOpenHermesWebUI } from "@/hooks/useHermes";
-import { hermesApi } from "@/lib/api/hermes";
 import { useUsageCacheBridge } from "@/hooks/useUsageCacheBridge";
 import { useTauriEvent } from "@/hooks/useTauriEvent";
 import { useWindowChrome } from "@/hooks/app/useWindowChrome";
@@ -15,8 +12,6 @@ import { useEnvConflicts } from "@/hooks/app/useEnvConflicts";
 import { useStartupMigrations } from "@/hooks/app/useStartupMigrations";
 import { useAppEventBridges } from "@/hooks/app/useAppEventBridges";
 import { useDeck } from "@/lib/query/deck";
-import { extractErrorMessage } from "@/utils/errorUtils";
-import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { EnvWarningBanner } from "@/components/env/EnvWarningBanner";
 import { FirstRunNoticeDialog } from "@/components/FirstRunNoticeDialog";
 import { UpdateBadge } from "@/components/UpdateBadge";
@@ -45,9 +40,6 @@ const UsageDashboard = lazy(() =>
     default: m.UsageDashboard,
   })),
 );
-const HermesMemoryPanel = lazy(
-  () => import("@/components/hermes/HermesMemoryPanel"),
-);
 const DeepLinkImportDialog = lazy(() =>
   import("@/components/DeepLinkImportDialog").then((m) => ({
     default: m.DeepLinkImportDialog,
@@ -68,7 +60,7 @@ function PageFallback() {
   );
 }
 
-/** Deck resources are per-client only for Hermes' memory tool. */
+/** Legacy environment checks use the provider clients' identifiers. */
 const toAppId = (client: ClientId): AppId =>
   isModelClientId(client) ? "claude" : client;
 
@@ -77,7 +69,6 @@ function App() {
   const queryClient = useQueryClient();
 
   const [route, setRoute] = useState<Route>(loadRoute);
-  const [launchDashboardOpen, setLaunchDashboardOpen] = useState(false);
 
   useEffect(() => persistRoute(route), [route]);
 
@@ -95,7 +86,6 @@ function App() {
   useStartupMigrations();
   useAppEventBridges();
   useUsageCacheBridge();
-  useOpenHermesWebUI(() => setLaunchDashboardOpen(true));
 
   const visibleApps = useMemo<VisibleApps>(
     () => resolveClientVisibility(settingsData?.visibleApps),
@@ -169,8 +159,6 @@ function App() {
             defaultTab={route.tab ?? "general"}
           />
         );
-      case "hermesMemory":
-        return <HermesMemoryPanel />;
     }
   };
 
@@ -234,7 +222,6 @@ function App() {
           onNavigate={setRoute}
           visibleApps={visibleApps}
           appliedClients={appliedClients}
-          showHermesMemory={Boolean(visibleApps.hermes)}
           width={SIDEBAR_WIDTH}
         />
         <main className="flex min-w-0 flex-1 flex-col bg-background">
@@ -245,28 +232,6 @@ function App() {
       <UpdateBadge
         className="fixed bottom-4 right-4 z-40"
         onClick={() => setRoute({ kind: "settings", tab: "about" })}
-      />
-
-      <ConfirmDialog
-        isOpen={launchDashboardOpen}
-        title={t("hermes.webui.launchConfirmTitle")}
-        message={t("hermes.webui.launchConfirmMessage")}
-        confirmText={t("hermes.webui.launchConfirmAction")}
-        variant="info"
-        onConfirm={() => {
-          setLaunchDashboardOpen(false);
-          void (async () => {
-            try {
-              await hermesApi.launchDashboard();
-              toast.success(t("hermes.webui.launching"));
-            } catch (error) {
-              toast.error(t("hermes.webui.launchFailed"), {
-                description: extractErrorMessage(error) || undefined,
-              });
-            }
-          })();
-        }}
-        onCancel={() => setLaunchDashboardOpen(false)}
       />
 
       <Suspense fallback={null}>

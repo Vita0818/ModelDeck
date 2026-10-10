@@ -120,7 +120,6 @@ pub async fn open_file_dialog<R: tauri::Runtime>(
     Ok(result.map(|p| p.to_string()))
 }
 
-
 // ─── Database backup management ─────────────────────────────
 
 /// Manually create a database backup

@@ -1,0 +1,20 @@
+{
+  "filesUnchanged": {
+    "/Users/vita/.codex/config.toml": false,
+    "/Users/vita/.codex/auth.json": true,
+    "/Users/vita/.config/codex-cli/config.toml": true,
+    "/Users/vita/.claude/settings.json": true,
+    "/Users/vita/.config/opencode/opencode.json": true,
+    "/Users/vita/.local/share/opencode/auth.json": true,
+    "/Users/vita/.cc-switch/model-clients.json": true,
+    "/Users/vita/.grok/config.toml": true,
+    "/Users/vita/.config/muse/settings.json": true,
+    "/Users/vita/.gemini/antigravity-cli/settings.json": true,
+    "/Users/vita/.arena/token": true
+  },
+  "officialOAuthUnchanged": true,
+  "allExceptConcurrentCodexConfigUnchanged": true,
+  "codexConfigConcurrentChangesPreserved": true,
+  "ownedCodexTrustEntryRemoved": true,
+  "note": "The current Codex model changed during the test; cleanup preserved current settings and removed only our fixture trust entry."
+}

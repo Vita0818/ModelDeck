@@ -1,0 +1,109 @@
+{
+  "client": "antigravity",
+  "requested": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "case": "nemotron",
+  "session_id": "974f9fd5-3a7a-4725-ad41-eec989dde791",
+  "apply_status": 200,
+  "model_used": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/gemini-3.1-flash-lite-preview:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "tools": null,
+      "status": 200,
+      "latencyMs": 2089
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/md-nemotron:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "tools": 1,
+      "status": 200,
+      "latencyMs": 3800
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/md-nemotron:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "tools": 1,
+      "status": 200,
+      "latencyMs": 2672
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/md-nemotron:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "tools": 1,
+      "status": 200,
+      "latencyMs": 3665
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/md-nemotron:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "tools": 1,
+      "status": 200,
+      "latencyMs": 2998
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/md-nemotron:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "tools": 1,
+      "status": 200,
+      "latencyMs": 2571
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/md-nemotron:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "tools": 1,
+      "status": 200,
+      "latencyMs": 3107
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/md-nemotron:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "tools": 1,
+      "status": 200,
+      "latencyMs": 2921
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/md-nemotron:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "tools": 1,
+      "status": 200,
+      "latencyMs": 2454
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/md-nemotron:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "tools": 1,
+      "status": 200,
+      "latencyMs": 2992
+    }
+  ],
+  "passed": false,
+  "pid": 63236,
+  "exit_code": 0,
+  "seconds": 113.88,
+  "output_log": "logs/antigravity/nemotron.log",
+  "result_file_value": "89",
+  "failure": "E\",\"step_type\":\"tool\",\"tool_name\":\"view_file\",\"duration_seconds\":0.00836,\"tool_info\":{\"name\":\"view_file\",\"parameters\":{\"AbsolutePath\":\"/Users/vita/Others/ModelDeck/harness-tests/.runtime/workspaces/antigravity/nemotron/fixture.json\"},\"output\":\"9 lines, 80 bytes\"}}}\n{\"event\":\"step_update\",\"step_update\":{\"conversation_id\":\"08ecf90b-5c3b-470a-a442-2616c6cd6ac2\",\"step_index\":7,\"state\":\"DONE\",\"step_type\":\"agent_response\",\"duration_seconds\":6.842363,\"usage\":{\"input_tokens\":13651,\"output_tokens\":194,\"thinking_tokens\":0,\"cache_read_tokens\":0,\"total_tokens\":13845}}}\n{\"event\":\"step_update\",\"step_update\":{\"conversation_id\":\"08ecf90b-5c3b-470a-a442-2616c6cd6ac2\",\"step_index\":8,\"state\":\"ACTIVE\",\"step_type\":\"tool\",\"tool_name\":\"write_to_file\",\"tool_info\":{\"name\":\"write_to_file\",\"parameters\":{\"TargetFile\":\"/Users/vita/Others/ModelDeck/harness-tests/.runtime/workspaces/antigravity/nemotron/result.txt\"}}}}\n{\"event\":\"step_update\",\"step_update\":{\"conversation_id\":\"08ecf90b-5c3b-470a-a442-2616c6cd6ac2\",\"step_index\":8,\"state\":\"DONE\",\"step_type\":\"tool\",\"tool_name\":\"write_to_file\",\"duration_seconds\":0.009521,\"tool_info\":{\"name\":\"write_to_file\",\"parameters\":{\"TargetFile\":\"/Users/vita/Others/ModelDeck/harness-tests/.runtime/workspaces/antigravity/nemotron/result.txt\"}}}}\n{\"event\":\"step_update\",\"step_update\":{\"conversation_id\":\"08ecf90b-5c3b-470a-a442-2616c6cd6ac2\",\"step_index\":9,\"state\":\"DONE\",\"step_type\":\"error_message\",\"duration_seconds\":0}}\n{\"event\":\"step_update\",\"step_update\":{\"conversation_id\":\"08ecf90b-5c3b-470a-a442-2616c6cd6ac2\",\"step_index\":10,\"state\":\"DONE\",\"step_type\":\"error_message\",\"duration_seconds\":0}}\n{\"event\":\"step_update\",\"step_update\":{\"conversation_id\":\"08ecf90b-5c3b-470a-a442-2616c6cd6ac2\",\"step_index\":11,\"state\":\"DONE\",\"step_type\":\"error_message\",\"duration_seconds\":0}}\n[agy] print timeout after 1m50s with turn in progress; returning partial output\n{\"event\":\"result\",\"result\":{\"conversation_id\":\"08ecf90b-5c3b-470a-a442-2616c6cd6ac2\",\"status\":\"ERROR\",\"response\":\"\",\"error\":\"API error (attempt 3): unexpected EOF\",\"duration_seconds\":101.123201,\"num_turns\":1,\"usage\":{\"input_tokens\":26958,\"output_tokens\":330,\"thinking_tokens\":0,\"cache_read_tokens\":0,\"total_tokens\":27288}}}\n",
+  "free_rate_limit_429": false
+}

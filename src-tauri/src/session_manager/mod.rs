@@ -1,10 +1,11 @@
 pub mod providers;
 
-use serde::{Deserialize, Serialize};
-
+#[cfg(test)]
+use serde::Serialize;
 
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
+#[cfg(test)]
 pub struct SessionMeta {
     pub provider_id: String,
     pub session_id: String,
@@ -26,28 +27,10 @@ pub struct SessionMeta {
 
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
+#[cfg(test)]
 pub struct SessionMessage {
     pub role: String,
     pub content: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ts: Option<i64>,
-}
-
-#[derive(Debug, Clone, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct DeleteSessionRequest {
-    pub provider_id: String,
-    pub session_id: String,
-    pub source_path: String,
-}
-
-#[derive(Debug, Clone, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct DeleteSessionOutcome {
-    pub provider_id: String,
-    pub session_id: String,
-    pub source_path: String,
-    pub success: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub error: Option<String>,
 }

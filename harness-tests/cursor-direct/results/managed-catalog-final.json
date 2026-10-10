@@ -1,0 +1,18 @@
+{
+  "case": "managed-catalog-final",
+  "model": "md-nemotron",
+  "seconds": 1.0,
+  "exitCode": 0,
+  "finalTextSeen": true,
+  "sessionIds": [],
+  "resultFileValue": "",
+  "cursorAccountCredentialsProvided": false,
+  "nativeVendorBinaryUnmodified": true,
+  "network": [],
+  "managedLauncher": "/Users/vita/Others/ModelDeck/.build/cursor-direct/.runtime/gateway/home/.cc-switch/bin/cursor-agent",
+  "modelCatalogProbe": true,
+  "passed": true,
+  "toolTrace": [],
+  "upstreamStreamErrors": [],
+  "outputLog": "logs/managed-catalog-final.log"
+}

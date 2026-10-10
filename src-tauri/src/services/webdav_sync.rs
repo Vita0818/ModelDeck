@@ -29,7 +29,6 @@ pub(crate) fn sync_mutex() -> &'static tokio::sync::Mutex<()> {
     super::sync_protocol::sync_mutex()
 }
 
-
 struct RemoteSnapshot {
     layout: RemoteLayout,
     manifest: SyncManifest,

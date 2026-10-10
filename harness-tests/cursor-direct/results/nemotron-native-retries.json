@@ -1,0 +1,89 @@
+{
+  "case": "nemotron-native-retries",
+  "model": "md-nemotron",
+  "seconds": 42.54,
+  "exitCode": 1,
+  "finalTextSeen": false,
+  "sessionIds": [
+    "a0b9eb31-a265-448a-bbb5-7c7963489ac1"
+  ],
+  "resultFileValue": "89",
+  "cursorAccountCredentialsProvided": false,
+  "nativeVendorBinaryUnmodified": true,
+  "network": [
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck/cursor-local/v1/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck/cursor-local/v1/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck/cursor-local/v1/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck/cursor-local/v1/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck/cursor-local/v1/chat/completions",
+      "blocked": false
+    }
+  ],
+  "passed": false,
+  "toolTrace": [
+    {
+      "tool": "readToolCall",
+      "succeeded": true
+    },
+    {
+      "tool": "editToolCall",
+      "succeeded": true
+    }
+  ],
+  "upstreamStreamErrors": [
+    {
+      "provider": "Nvidia",
+      "error": {
+        "code": 503,
+        "message": "Upstream error from Nvidia: Service temporarily overloaded",
+        "metadata": {
+          "error_type": "provider_overloaded"
+        }
+      }
+    },
+    {
+      "provider": "Nvidia",
+      "error": {
+        "code": 503,
+        "message": "Upstream error from Nvidia: Service temporarily overloaded",
+        "metadata": {
+          "error_type": "provider_overloaded"
+        }
+      }
+    },
+    {
+      "provider": "Nvidia",
+      "error": {
+        "code": 503,
+        "message": "Upstream error from Nvidia: Service temporarily overloaded",
+        "metadata": {
+          "error_type": "provider_overloaded"
+        }
+      }
+    }
+  ],
+  "outputLog": "logs/nemotron-native-retries.log"
+}

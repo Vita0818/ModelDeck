@@ -1,0 +1,31 @@
+[
+  {
+    "probe": "models",
+    "status": 200,
+    "seconds": 1.69,
+    "credentialSource": "resolved_file",
+    "unresolvedReferenceSent": false,
+    "modelIds": [
+      "claude-coding-router-preview",
+      "coding-router-preview",
+      "exo"
+    ],
+    "error": null
+  },
+  {
+    "probe": "inference",
+    "status": 403,
+    "seconds": 1.86,
+    "credentialSource": "resolved_file",
+    "unresolvedReferenceSent": false,
+    "response": {
+      "error": {
+        "code": "organization_client_restricted",
+        "message": "Free router accounts can only use the interactive Claude Code CLI, Claude Code Desktop, OpenCode, or Codex; Claude Code Agent SDK, headless mode, and other clients are not supported.",
+        "trace_id": "f014a8ce-5f7a-4b55-9c2f-95358c6c7857",
+        "type": "invalid_request_error"
+      }
+    },
+    "body": null
+  }
+]

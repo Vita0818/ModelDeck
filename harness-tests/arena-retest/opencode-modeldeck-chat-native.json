@@ -1,0 +1,68 @@
+{
+  "sessionId": "ses_ee90d3a65ffe7zUllzgL82EjvC",
+  "messages": [
+    {
+      "role": "user",
+      "time": {
+        "created": 1791386371531
+      },
+      "agent": "build",
+      "model": {
+        "providerID": "modeldeck",
+        "modelID": "md-arena"
+      },
+      "summary": {
+        "diffs": []
+      }
+    },
+    {
+      "parentID": "msg_116f2c59f001upt4XHU7Vf7FLb",
+      "role": "assistant",
+      "mode": "build",
+      "agent": "build",
+      "path": {
+        "cwd": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena",
+        "root": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "modelID": "md-arena",
+      "providerID": "modeldeck",
+      "time": {
+        "created": 1791386371540,
+        "completed": 1791386374266
+      },
+      "error": {
+        "name": "APIError",
+        "data": {
+          "message": "Upstream returned HTTP 403",
+          "statusCode": 403,
+          "isRetryable": false,
+          "responseHeaders": {
+            "content-length": "75",
+            "content-type": "application/json",
+            "date": "Wed, 07 Oct 2026 15:19:34 GMT"
+          },
+          "responseBody": "{\"error\":{\"type\":\"modeldeck_error\",\"message\":\"Upstream returned HTTP 403\"}}",
+          "metadata": {
+            "url": "http://127.0.0.1:56205/deck-clients/opencode/v1/chat/completions"
+          }
+        }
+      }
+    }
+  ],
+  "parts": [
+    {
+      "type": "text",
+      "text": "Use tools to read fixture.json in this workspace. Sum its numbers and write only the integer to result.txt. Finish with MD_TEST_OK. Do not create subagents or read files outside this workspace."
+    }
+  ]
+}

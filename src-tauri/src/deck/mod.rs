@@ -1,8 +1,10 @@
 //! ModelDeck's two independent layers: upstream resources and public routes.
 //! Harnesses store references into the graph; native catalogs are projections.
+mod credentials;
 pub(crate) mod gateway;
 mod migration;
 mod native;
+mod reasoning;
 mod types;
 
 use crate::config::{atomic_write_private, get_app_config_dir};
@@ -221,13 +223,24 @@ pub fn compatible_models(
         .collect()
 }
 
+fn requires_public_endpoint(client: &str, executable: &str) -> bool {
+    client == "cursor"
+        || (client == "cursor-agent"
+            && !crate::model_clients::native::cursor_agent_is_local(executable))
+}
+
 fn compatibility(store: &DeckStore) -> Vec<Compatibility> {
     CLIENTS
         .iter()
         .flat_map(|client| {
             store.endpoints.values().map(move |endpoint| {
                 let models = compatible_models(store, client, endpoint);
-                let issue = if matches!(*client, "cursor" | "cursor-agent")
+                let executable = store
+                    .bindings
+                    .get(*client)
+                    .map(|b| b.executable.as_str())
+                    .unwrap_or("");
+                let issue = if requires_public_endpoint(client, executable)
                     && !public_url(&endpoint.public_url)
                 {
                     Some(
@@ -276,7 +289,9 @@ pub fn validate_binding(
             return Err("The auxiliary model requires a different harness protocol".into());
         }
     }
-    if applying && matches!(client, "cursor" | "cursor-agent") && !public_url(&endpoint.public_url)
+    if applying
+        && requires_public_endpoint(client, &binding.executable)
+        && !public_url(&endpoint.public_url)
     {
         return Err(
             "Configure a public HTTPS address for the ModelDeck endpoint before applying Cursor"
@@ -291,6 +306,11 @@ pub fn validate(store: &DeckStore) -> Result<(), String> {
         return Err("Unsupported ModelDeck resource schema".into());
     }
     for (id, provider) in &store.providers {
+        if provider.provider_meta.as_ref().is_some_and(|meta| {
+            serde_json::from_value::<crate::provider::ProviderMeta>(meta.clone()).is_err()
+        }) {
+            return Err("Invalid upstream provider adapter metadata".into());
+        }
         if provider
             .key_source
             .as_deref()
@@ -366,7 +386,7 @@ pub fn validate(store: &DeckStore) -> Result<(), String> {
         for (alias, route) in &endpoint.routes {
             if alias.trim().is_empty()
                 || alias.len() > 256
-                || alias.contains(['\r', '\n', '?', '#', ':', '[', ']'])
+                || alias.contains(['\r', '\n', '?', '#', '[', ']'])
             {
                 return Err("Enter a valid public model name".into());
             }
@@ -408,18 +428,7 @@ pub fn validate(store: &DeckStore) -> Result<(), String> {
 }
 
 pub fn resolve_key(provider: &UpstreamProvider) -> Result<String, String> {
-    if provider.key_env.is_empty() {
-        return Ok(provider.api_key.clone());
-    }
-    std::env::var(&provider.key_env)
-        .ok()
-        .filter(|s| !s.trim().is_empty())
-        .ok_or_else(|| {
-            format!(
-                "The credential environment variable for {} is unavailable",
-                provider.name
-            )
-        })
+    credentials::resolve(provider, &get_app_config_dir())
 }
 
 /// In-memory adapter projection. It is never saved as a second model catalog.
@@ -447,24 +456,26 @@ pub fn project_profile(
                 context: model.context,
                 output: model.output,
                 reasoning: model.reasoning.clone(),
+                default_effort: route.effort.clone(),
                 reasoning_supported: model.reasoning_supported,
             }
         })
         .collect();
     Ok(ClientProfile {
         connection_name: endpoint.name.clone(),
-        endpoint: if matches!(client, "cursor" | "cursor-agent") {
+        endpoint: if requires_public_endpoint(client, &binding.executable) {
             format!("{}/v1", endpoint.public_url.trim_end_matches('/'))
         } else {
             format!("{origin}/deck-clients/{client}")
         },
         protocol: input.as_str().into(),
+        provider_meta: None,
         api_key: endpoint.token.clone(),
         key_env: String::new(),
         models,
         default_model: binding.model.clone(),
         utility_model: binding.utility_model.clone(),
-        effort: String::new(),
+        effort: endpoint.routes[&binding.model].effort.clone(),
         executable: binding.executable.clone(),
         enabled: true,
         local_token: endpoint.token.clone(),

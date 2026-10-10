@@ -1,0 +1,22 @@
+{
+  "case": "mock",
+  "model": "md-nemotron",
+  "seconds": 4.08,
+  "exitCode": 0,
+  "finalTextSeen": true,
+  "resultFileValue": "",
+  "cursorAccountCredentialsProvided": false,
+  "nativeVendorBinaryUnmodified": true,
+  "network": [
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/v1/chat/completions",
+      "blocked": false
+    }
+  ],
+  "passed": true,
+  "toolTrace": [],
+  "upstreamStreamErrors": [],
+  "outputLog": "logs/mock.log"
+}

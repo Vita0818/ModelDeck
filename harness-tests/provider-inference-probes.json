@@ -1,0 +1,23 @@
+[
+  {
+    "label": "nemotron",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"id\":\"gen-1791357990-r4Li8Wlpq3vsRPZrejY5\",\"error\":{\"message\":\"Upstream error from Nvidia: Service temporarily overloaded\",\"code\":503,\"metadata\":{\"error_type\":\"provider_overloaded\"}}}"
+  },
+  {
+    "label": "inkling",
+    "model": "thinkingmachines/inkling:free",
+    "status": 403,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"thinkingmachines/inkling:free is only available on agentic harnesses. Try plugging it into a coding agent or productivity app listed on https://openrouter.ai/apps\",\"code\":403,\"metadata\":{\"routing_funnel\":[{\"step\":\"Initial Endpoints\",\"endpoint_count\":1}],\"failed_routing_step\":\"Gate Free Endpoints by Agentic Harness\"}}}"
+  },
+  {
+    "label": "arena",
+    "model": "coding-router-preview",
+    "status": 401,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"code\":\"missing_or_invalid_bearer_token\",\"message\":\"missing or invalid bearer token\",\"trace_id\":\"66957424-fff8-4831-a645-af37acbf10c6\",\"type\":\"invalid_request_error\"}}\n"
+  }
+]

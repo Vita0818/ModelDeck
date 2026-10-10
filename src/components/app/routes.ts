@@ -17,8 +17,7 @@ export type Route =
   | { kind: "resources"; tab: ResourceTab }
   | { kind: "client"; client: ClientId }
   | { kind: "usage" }
-  | { kind: "settings"; tab?: string }
-  | { kind: "hermesMemory" };
+  | { kind: "settings"; tab?: string };
 
 const STORAGE_KEY = "modeldeck-route";
 
@@ -58,8 +57,6 @@ export function parseRoute(raw: string | null): Route | null {
       return { kind: "usage" };
     case "settings":
       return { kind: "settings", tab: value };
-    case "hermesMemory":
-      return { kind: "hermesMemory" };
     default:
       return null;
   }

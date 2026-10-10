@@ -1,0 +1,38 @@
+{
+  "stoppedOwnedServices": [
+    {
+      "label": "gateway",
+      "pid": 84266
+    },
+    {
+      "label": "mock",
+      "pid": 78798
+    }
+  ],
+  "portsClosed": {
+    "54028": true,
+    "64533": true,
+    "64841": true,
+    "53263": true
+  },
+  "privateRuntimeRemoved": true,
+  "nativeCliSessionDataRemoved": true,
+  "temporaryTokensRemoved": true,
+  "removedFixtureGitDirectories": [
+    "harness-tests/workspaces/cursor-agent-local/managed-catalog/.git",
+    "harness-tests/workspaces/cursor-agent-local/mock-tools/.git",
+    "harness-tests/workspaces/cursor-agent-local/inkling/.git",
+    "harness-tests/workspaces/cursor-agent-local/nemotron-retry/.git",
+    "harness-tests/workspaces/cursor-agent-local/mock/.git",
+    "harness-tests/workspaces/cursor-agent-local/managed-inkling/.git",
+    "harness-tests/workspaces/cursor-agent-local/nemotron-native-retries/.git",
+    "harness-tests/workspaces/cursor-agent-local/managed-catalog-final/.git",
+    "harness-tests/workspaces/cursor-agent-local/managed-nemotron/.git",
+    "harness-tests/workspaces/cursor-agent-local/nemotron/.git"
+  ],
+  "officialCliUnmodified": true,
+  "existingCursorGuiClosedByTest": false,
+  "localVendorPackageRetainedForUse": true,
+  "protectedConfigurationsUnchanged": true,
+  "remainingOwnedProcessIds": []
+}

@@ -1,0 +1,154 @@
+{
+  "sessionId": "01a1198c-8504-73c3-a053-c930220080d6",
+  "source": "native Codex CLI rollout",
+  "events": [
+    {
+      "type": "response_item",
+      "payload": {
+        "type": "message",
+        "id": "msg_01a1198c-9a10-7ce3-b6ac-4c2c982294c6",
+        "role": "user",
+        "content": [
+          {
+            "type": "input_text",
+            "text": "<environment_context>\n  <cwd>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway</cwd>\n  <shell>zsh</shell>\n  <current_date>2026-10-08</current_date>\n  <timezone>Australia/Perth</timezone>\n  <filesystem><workspace_roots><root>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway</root></workspace_roots><permission_profile type=\"managed\"><file_system type=\"restricted\"><entry access=\"read\"><special>:root</special></entry><entry access=\"write\"><path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway</path></entry><entry access=\"write\"><special>:slash_tmp</special></entry><entry access=\"write\"><special>:tmpdir</special></entry><entry access=\"read\"><path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway/.git</path></entry><entry access=\"read\"><path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway/.agents</path></entry><entry access=\"read\"><path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway/.codex</path></entry><entry access=\"read\"><path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway/.aws</path></entry></file_system></permission_profile></filesystem>\n</environment_context>"
+          }
+        ],
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1198c-85a4-73c1-b298-7cef227b7700",
+          "create_time": 1791430007.312396,
+          "content_item_kinds": [
+            "environments.environment_context"
+          ]
+        }
+      }
+    },
+    {
+      "type": "response_item",
+      "payload": {
+        "type": "message",
+        "id": "msg_01a1198c-9a3b-7c63-97ed-c97a9449f591",
+        "role": "user",
+        "content": [
+          {
+            "type": "input_text",
+            "text": "Use tools to read fixture.json in this workspace. Sum its numbers and write only the integer to result.txt. Finish with MD_TEST_OK. Do not create subagents or read files outside this workspace."
+          }
+        ],
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1198c-85a4-73c1-b298-7cef227b7700",
+          "create_time": 1791430007.355227,
+          "content_item_kinds": [
+            "user.text"
+          ]
+        }
+      }
+    },
+    {
+      "type": "response_item",
+      "payload": {
+        "type": "function_call",
+        "id": "fc_msg_vrtx_011Cfp4KfLFWVZ3cCPqVYej4_0",
+        "name": "exec_command",
+        "arguments": "{\"cmd\": \"cat fixture.json\"}",
+        "call_id": "toolu_vrtx_01QVuWfwbmkT29RpzJjxNUgD",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1198c-85a4-73c1-b298-7cef227b7700"
+        }
+      }
+    },
+    {
+      "type": "response_item",
+      "payload": {
+        "type": "function_call_output",
+        "id": "fco_01a1198c-bba5-7133-b9d6-a70c2af3cc01",
+        "call_id": "toolu_vrtx_01QVuWfwbmkT29RpzJjxNUgD",
+        "output": "Chunk ID: ada8e8\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 21\nOutput:\n{\n  \"numbers\": [\n    17,\n    29,\n    43\n  ],\n  \"case\": \"codex/arena-interactive\"\n}\n",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1198c-85a4-73c1-b298-7cef227b7700",
+          "create_time": 1791430015.909508
+        }
+      }
+    },
+    {
+      "type": "response_item",
+      "payload": {
+        "type": "message",
+        "id": "msg_msg_vrtx_011Cfp4L7Pez1EJK4cjqVekC_0",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "output_text",
+            "text": "Sum is 89."
+          }
+        ],
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1198c-85a4-73c1-b298-7cef227b7700",
+          "content_item_kinds": [
+            "unknown"
+          ]
+        }
+      }
+    },
+    {
+      "type": "response_item",
+      "payload": {
+        "type": "function_call",
+        "id": "fc_msg_vrtx_011Cfp4L7Pez1EJK4cjqVekC_1",
+        "name": "exec_command",
+        "arguments": "{\"cmd\": \"printf 89 > result.txt && cat result.txt\"}",
+        "call_id": "toolu_vrtx_01QzUYBYH6aL3biBdPfxyyae",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1198c-85a4-73c1-b298-7cef227b7700"
+        }
+      }
+    },
+    {
+      "type": "response_item",
+      "payload": {
+        "type": "function_call_output",
+        "id": "fco_01a1198c-d562-72d1-b7fa-ad1cedc5f550",
+        "call_id": "toolu_vrtx_01QzUYBYH6aL3biBdPfxyyae",
+        "output": "Chunk ID: d7c509\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 1\nOutput:\n89",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1198c-85a4-73c1-b298-7cef227b7700",
+          "create_time": 1791430022.498682
+        }
+      }
+    },
+    {
+      "type": "response_item",
+      "payload": {
+        "type": "message",
+        "id": "msg_00d78a7152063bd1016ac70d8e6bdc87d1a85182ef7485b9e8",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "output_text",
+            "text": "MD_TEST_OK"
+          }
+        ],
+        "phase": "final_answer",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1198c-85a4-73c1-b298-7cef227b7700",
+          "create_time": 1791430029.955921,
+          "content_item_kinds": [
+            "unknown"
+          ]
+        }
+      }
+    },
+    {
+      "type": "event_msg",
+      "payload": {
+        "type": "task_complete",
+        "turn_id": "01a1198c-85a4-73c1-b298-7cef227b7700",
+        "last_agent_message": "MD_TEST_OK",
+        "started_at": 1791430002,
+        "completed_at": 1791430033,
+        "duration_ms": 31537,
+        "time_to_first_token_ms": 13516
+      }
+    }
+  ]
+}

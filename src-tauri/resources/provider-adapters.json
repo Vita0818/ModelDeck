@@ -1,0 +1,216 @@
+[
+  {
+    "name": "PPIO",
+    "baseUrl": "https://api.ppio.com/openai/v1",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": true,
+        "supportsEffort": false,
+        "thinkingParam": "thinking",
+        "effortParam": "none",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "SiliconFlow",
+    "baseUrl": "https://api.siliconflow.cn/v1",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": true,
+        "supportsEffort": true,
+        "thinkingParam": "enable_thinking",
+        "effortParam": "reasoning_effort",
+        "effortValueMode": "deepseek",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "AtlasCloud",
+    "baseUrl": "https://api.atlascloud.ai/v1",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": false,
+        "supportsEffort": false,
+        "thinkingParam": "none",
+        "effortParam": "none",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "Baidu Qianfan Coding Plan",
+    "baseUrl": "https://qianfan.baidubce.com/v2/coding",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": true,
+        "supportsEffort": false,
+        "thinkingParam": "thinking",
+        "effortParam": "none",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "Baidu Qianfan Token Plan",
+    "baseUrl": "https://qianfan.baidubce.com/v2/tokenplan/personal",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": true,
+        "supportsEffort": true,
+        "thinkingParam": "thinking",
+        "effortParam": "reasoning_effort",
+        "effortValueMode": "deepseek",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "Tencent Token Plan",
+    "baseUrl": "https://api.lkeap.cloud.tencent.com/plan/v3",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": true,
+        "supportsEffort": true,
+        "thinkingParam": "thinking",
+        "effortParam": "reasoning_effort",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "Tencent Token Plan (Intl)",
+    "baseUrl": "https://tokenhub-intl.tencentcloudmaas.com/plan/v3",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": true,
+        "supportsEffort": true,
+        "thinkingParam": "thinking",
+        "effortParam": "reasoning_effort",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "Tencent Token Plan Enterprise Pro",
+    "baseUrl": "https://tokenhub.tencentmaas.com/plan/v3",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": true,
+        "supportsEffort": true,
+        "thinkingParam": "thinking",
+        "effortParam": "reasoning_effort",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "Tencent Token Plan Enterprise Pro (Intl)",
+    "baseUrl": "https://tokenhub-intl.tencentcloudmaas.com/plan/v3",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": true,
+        "supportsEffort": true,
+        "thinkingParam": "thinking",
+        "effortParam": "reasoning_effort",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "Tencent Token Plan Enterprise Lite",
+    "baseUrl": "https://tokenhub.tencentmaas.com/plan/v3",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": true,
+        "supportsEffort": true,
+        "thinkingParam": "thinking",
+        "effortParam": "reasoning_effort",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "Tencent Token Plan Enterprise Lite (Intl)",
+    "baseUrl": "https://tokenhub-intl.tencentcloudmaas.com/plan/v3",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": true,
+        "supportsEffort": true,
+        "thinkingParam": "thinking",
+        "effortParam": "reasoning_effort",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "ModelScope",
+    "baseUrl": "https://api-inference.modelscope.cn/v1",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": true,
+        "supportsEffort": false,
+        "thinkingParam": "enable_thinking",
+        "effortParam": "none",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "Novita AI",
+    "baseUrl": "https://api.novita.ai/openai/v1",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": false,
+        "supportsEffort": false,
+        "thinkingParam": "none",
+        "effortParam": "none",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "Nvidia",
+    "baseUrl": "https://integrate.api.nvidia.com/v1",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": false,
+        "supportsEffort": true,
+        "thinkingParam": "none",
+        "effortParam": "reasoning_effort",
+        "effortValueMode": "passthrough",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  },
+  {
+    "name": "OpenCode Go",
+    "baseUrl": "https://opencode.ai/zen/go/v1",
+    "protocol": "openai-chat",
+    "meta": {
+      "codexChatReasoning": {
+        "supportsThinking": true,
+        "supportsEffort": true,
+        "thinkingParam": "none",
+        "effortParam": "reasoning_effort",
+        "effortValueMode": "zen",
+        "outputFormat": "reasoning_content"
+      }
+    }
+  }
+]

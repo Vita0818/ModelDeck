@@ -1,0 +1,600 @@
+{
+  "client": "codex",
+  "displayName": "Codex CLI",
+  "mode": "native-interactive-terminal",
+  "gateway": "production ModelDeck apply and gateway",
+  "upstreamProtocol": "openai-responses",
+  "requestedModel": "coding-router-preview",
+  "passed": true,
+  "resultFileValue": "89",
+  "finalMarker": "MD_TEST_OK",
+  "nativeSessionId": "01a11991-9eba-7020-8c28-a13cc5280585",
+  "nativeEvidence": "native/codex-01a11991-9eba-7020-8c28-a13cc5280585.json",
+  "gatewayRequests": [
+    {
+      "path": "/deck-clients/codex/v1/responses",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+      "tools": 15,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "children": null
+        },
+        {
+          "type": "custom",
+          "name": "apply_patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "children": null
+        },
+        {
+          "type": "namespace",
+          "name": "multi_agent_v1",
+          "children": [
+            "close_agent",
+            "resume_agent",
+            "send_input",
+            "spawn_agent",
+            "wait_agent"
+          ]
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__cua_repl",
+          "children": [
+            "js",
+            "js_reset"
+          ]
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__zju_tronclass",
+          "children": [
+            "zju_auth_forget",
+            "zju_auth_start",
+            "zju_auth_status",
+            "zju_download_file",
+            "zju_download_submission_file",
+            "zju_get_activity",
+            "zju_get_assignment",
+            "zju_get_course",
+            "zju_get_submissions",
+            "zju_list_activities",
+            "zju_list_all_assignments",
+            "zju_list_assignments",
+            "zju_list_courses",
+            "zju_list_materials",
+            "zju_list_semesters",
+            "zju_list_todos",
+            "zju_prepare_draft",
+            "zju_prepare_retraction",
+            "zju_prepare_submission",
+            "zju_retract_assignment",
+            "zju_save_draft",
+            "zju_search_course_content",
+            "zju_submit_assignment",
+            "zju_sync_course_materials"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "get_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "create_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "update_goal",
+          "children": null
+        },
+        {
+          "type": "namespace",
+          "name": "image_gen",
+          "children": [
+            "imagegen"
+          ]
+        }
+      ],
+      "status": 502,
+      "latencyMs": 3052,
+      "error": {
+        "error": {
+          "message": "Upstream returned HTTP 502",
+          "type": "model_client_error"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/codex/v1/responses",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 200,
+      "latencyMs": 11071
+    },
+    {
+      "path": "/deck-clients/codex/v1/responses",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+      "tools": 15,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "children": null
+        },
+        {
+          "type": "custom",
+          "name": "apply_patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "children": null
+        },
+        {
+          "type": "namespace",
+          "name": "multi_agent_v1",
+          "children": [
+            "close_agent",
+            "resume_agent",
+            "send_input",
+            "spawn_agent",
+            "wait_agent"
+          ]
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__cua_repl",
+          "children": [
+            "js",
+            "js_reset"
+          ]
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__zju_tronclass",
+          "children": [
+            "zju_auth_forget",
+            "zju_auth_start",
+            "zju_auth_status",
+            "zju_download_file",
+            "zju_download_submission_file",
+            "zju_get_activity",
+            "zju_get_assignment",
+            "zju_get_course",
+            "zju_get_submissions",
+            "zju_list_activities",
+            "zju_list_all_assignments",
+            "zju_list_assignments",
+            "zju_list_courses",
+            "zju_list_materials",
+            "zju_list_semesters",
+            "zju_list_todos",
+            "zju_prepare_draft",
+            "zju_prepare_retraction",
+            "zju_prepare_submission",
+            "zju_retract_assignment",
+            "zju_save_draft",
+            "zju_search_course_content",
+            "zju_submit_assignment",
+            "zju_sync_course_materials"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "get_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "create_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "update_goal",
+          "children": null
+        },
+        {
+          "type": "namespace",
+          "name": "image_gen",
+          "children": [
+            "imagegen"
+          ]
+        }
+      ],
+      "status": 200,
+      "latencyMs": 13738
+    },
+    {
+      "path": "/deck-clients/codex/v1/responses",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+      "tools": 17,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "children": null
+        },
+        {
+          "type": "custom",
+          "name": "apply_patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "children": null
+        },
+        {
+          "type": "namespace",
+          "name": "multi_agent_v1",
+          "children": [
+            "close_agent",
+            "resume_agent",
+            "send_input",
+            "spawn_agent",
+            "wait_agent"
+          ]
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__codex_security",
+          "children": [
+            "cancel_codex_security_scan",
+            "complete_codex_security_scan",
+            "fail_codex_security_scan",
+            "get_codex_security_completed_scan",
+            "get_codex_security_daybreak_access",
+            "get_codex_security_scan_context",
+            "list_codex_security_candidates",
+            "list_codex_security_review_items",
+            "prepare_codex_security_review_items",
+            "read_codex_security_artifact",
+            "record_candidate_attack_paths",
+            "record_codex_security_candidate_validations",
+            "record_codex_security_discovery_candidates",
+            "record_codex_security_scan_draft",
+            "request_codex_security_user_input",
+            "save_codex_security_artifact",
+            "set_codex_security_finding_remediation",
+            "start_codex_security_deep_scan",
+            "start_codex_security_prompt_only_scan",
+            "start_codex_security_standard_scan",
+            "update_codex_security_scan_context",
+            "update_codex_security_scan_progress"
+          ]
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__cua_repl",
+          "children": [
+            "js",
+            "js_reset"
+          ]
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__openai_api_key_local_confirmation",
+          "children": [
+            "confirm_openai_api_key_local_destination"
+          ]
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__zju_tronclass",
+          "children": [
+            "zju_auth_forget",
+            "zju_auth_start",
+            "zju_auth_status",
+            "zju_download_file",
+            "zju_download_submission_file",
+            "zju_get_activity",
+            "zju_get_assignment",
+            "zju_get_course",
+            "zju_get_submissions",
+            "zju_list_activities",
+            "zju_list_all_assignments",
+            "zju_list_assignments",
+            "zju_list_courses",
+            "zju_list_materials",
+            "zju_list_semesters",
+            "zju_list_todos",
+            "zju_prepare_draft",
+            "zju_prepare_retraction",
+            "zju_prepare_submission",
+            "zju_retract_assignment",
+            "zju_save_draft",
+            "zju_search_course_content",
+            "zju_submit_assignment",
+            "zju_sync_course_materials"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "get_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "create_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "update_goal",
+          "children": null
+        },
+        {
+          "type": "namespace",
+          "name": "image_gen",
+          "children": [
+            "imagegen"
+          ]
+        }
+      ],
+      "status": 200,
+      "latencyMs": 9028
+    },
+    {
+      "path": "/deck-clients/codex/v1/responses",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+      "tools": 17,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "children": null
+        },
+        {
+          "type": "custom",
+          "name": "apply_patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "children": null
+        },
+        {
+          "type": "namespace",
+          "name": "multi_agent_v1",
+          "children": [
+            "close_agent",
+            "resume_agent",
+            "send_input",
+            "spawn_agent",
+            "wait_agent"
+          ]
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__codex_security",
+          "children": [
+            "cancel_codex_security_scan",
+            "complete_codex_security_scan",
+            "fail_codex_security_scan",
+            "get_codex_security_completed_scan",
+            "get_codex_security_daybreak_access",
+            "get_codex_security_scan_context",
+            "list_codex_security_candidates",
+            "list_codex_security_review_items",
+            "prepare_codex_security_review_items",
+            "read_codex_security_artifact",
+            "record_candidate_attack_paths",
+            "record_codex_security_candidate_validations",
+            "record_codex_security_discovery_candidates",
+            "record_codex_security_scan_draft",
+            "request_codex_security_user_input",
+            "save_codex_security_artifact",
+            "set_codex_security_finding_remediation",
+            "start_codex_security_deep_scan",
+            "start_codex_security_prompt_only_scan",
+            "start_codex_security_standard_scan",
+            "update_codex_security_scan_context",
+            "update_codex_security_scan_progress"
+          ]
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__cua_repl",
+          "children": [
+            "js",
+            "js_reset"
+          ]
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__openai_api_key_local_confirmation",
+          "children": [
+            "confirm_openai_api_key_local_destination"
+          ]
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__zju_tronclass",
+          "children": [
+            "zju_auth_forget",
+            "zju_auth_start",
+            "zju_auth_status",
+            "zju_download_file",
+            "zju_download_submission_file",
+            "zju_get_activity",
+            "zju_get_assignment",
+            "zju_get_course",
+            "zju_get_submissions",
+            "zju_list_activities",
+            "zju_list_all_assignments",
+            "zju_list_assignments",
+            "zju_list_courses",
+            "zju_list_materials",
+            "zju_list_semesters",
+            "zju_list_todos",
+            "zju_prepare_draft",
+            "zju_prepare_retraction",
+            "zju_prepare_submission",
+            "zju_retract_assignment",
+            "zju_save_draft",
+            "zju_search_course_content",
+            "zju_submit_assignment",
+            "zju_sync_course_materials"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "get_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "create_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "update_goal",
+          "children": null
+        },
+        {
+          "type": "namespace",
+          "name": "image_gen",
+          "children": [
+            "imagegen"
+          ]
+        }
+      ],
+      "status": 200,
+      "latencyMs": 9268
+    }
+  ],
+  "headless": false,
+  "credentialOnlyInGateway": true,
+  "generatedHostedToolSearchCapability": false,
+  "generatedWebSearchMode": "disabled",
+  "testOnlyCapabilityOverrides": false,
+  "recoveredTransient502": true
+}

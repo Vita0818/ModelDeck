@@ -1,0 +1,24 @@
+[2m2026-10-07T07:50:13.976507Z[0m [33m WARN[0m Failed to fetch models: Auth("No auth credentials for cli-chat-proxy")
+[2m2026-10-07T07:50:13.977128Z[0m [33m WARN[0m model refresh failed, leaving existing models unchanged
+[2m2026-10-07T07:50:13.978598Z[0m [33m WARN[0m Failed to fetch models: Auth("No auth credentials for cli-chat-proxy")
+[2m2026-10-07T07:50:13.978734Z[0m [33m WARN[0m model refresh failed, leaving existing models unchanged
+[2m2026-10-07T07:50:14.116089Z[0m [33m WARN[0m no credentials for auxiliary model; falling back to active model [3maux_model[0m[2m=[0mgrok-4.5
+[2m2026-10-07T07:50:14.205411Z[0m [33m WARN[0m web_search disabled: resolved config has no API key
+{"type":"available_commands","tools":["run_terminal_command","read_file","search_replace","list_dir","grep","kill_command_or_subagent","todo_write","get_command_or_subagent_output","scheduler_create","scheduler_delete","scheduler_list","monitor","search_tool","use_tool","workflow","enter_plan_mode","exit_plan_mode","ask_user_question","image_gen","image_edit","image_to_video","reference_to_video","write"],"commands":["compact","always-approve","context","session-info","feedback","deep-research","workflow","goal","loop","bailian-cli","reference","bailian-docs-llm-wiki","application-user-guide","user:guides","bailian-finetune","bailian-gen","bailian-managed-agent","bailian-model-recommend","bailian-protocol","bailian-sandbox","bailian-train-deploy","bailian-web-search"]}
+{"type":"available_commands","tools":["run_terminal_command","read_file","search_replace","list_dir","grep","kill_command_or_subagent","todo_write","get_command_or_subagent_output","scheduler_create","scheduler_delete","scheduler_list","monitor","search_tool","use_tool","workflow","enter_plan_mode","exit_plan_mode","ask_user_question","image_gen","image_edit","image_to_video","reference_to_video","write"],"commands":["compact","always-approve","context","session-info","feedback","deep-research","workflow","goal","loop","bailian-cli","reference","bailian-docs-llm-wiki","application-user-guide","user:guides","bailian-finetune","bailian-gen","bailian-managed-agent","bailian-model-recommend","bailian-protocol","bailian-sandbox","bailian-train-deploy","bailian-web-search"]}
+[2m2026-10-07T07:50:14.565919Z[0m [31mERROR[0m responses API error [3mstatus[0m[2m=[0m400 Bad Request [3merror_message[0m[2m=[0mmodeldeck_error: The requested model is unavailable on this endpoint and protocol [3mbody_preview[0m[2m=[0m{"error":{"type":"modeldeck_error","message":"The requested model is unavailable on this endpoint and protocol"}} [3mmodel_id[0m[2m=[0mgrok-4.5
+[2m2026-10-07T07:50:14.565949Z[0m [33m WARN[0m session title generation failed, falling back to truncated user text [3mmodel[0m[2m=[0mgrok-4.5 [3merror[0m[2m=[0mAPI error (status 400 Bad Request): modeldeck_error: The requested model is unavailable on this endpoint and protocol
+[2m2026-10-07T07:50:16.569970Z[0m [31mERROR[0m responses API error [3mstatus[0m[2m=[0m403 Forbidden [3merror_message[0m[2m=[0mmodel_client_error: Upstream returned HTTP 403 [3mbody_preview[0m[2m=[0m{"error":{"message":"Upstream returned HTTP 403","type":"model_client_error"}} [3mmodel_id[0m[2m=[0mmd-inkling
+[2m2026-10-07T07:50:16.572960Z[0m [31mERROR[0m [3merror[0m[2m=[0mInternal error: {
+  "message": "API error (status 403 Forbidden): model_client_error: Upstream returned HTTP 403",
+  "http_status": 403
+}
+[2m2026-10-07T07:50:16.572978Z[0m [31mERROR[0m [3merror[0m[2m=[0mInternal error: {
+  "message": "API error (status 403 Forbidden): model_client_error: Upstream returned HTTP 403",
+  "http_status": 403
+}
+{"type":"error","message":"Internal error: {\n  \"message\": \"API error (status 403 Forbidden): model_client_error: Upstream returned HTTP 403\",\n  \"http_status\": 403\n}"}
+Error: Internal error: {
+  "message": "API error (status 403 Forbidden): model_client_error: Upstream returned HTTP 403",
+  "http_status": 403
+}

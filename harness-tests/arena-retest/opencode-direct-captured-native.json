@@ -1,0 +1,255 @@
+{
+  "sessionId": "ses_ee905370bffeXxaypxb5T2yVc7",
+  "messages": [
+    {
+      "role": "user",
+      "time": {
+        "created": 1791386896675
+      },
+      "agent": "build",
+      "model": {
+        "providerID": "arena",
+        "modelID": "coding-router-preview"
+      },
+      "summary": {
+        "diffs": [
+          {
+            "file": "result.txt",
+            "patch": "Index: result.txt\n===================================================================\n--- result.txt\t\n+++ result.txt\t\n@@ -0,0 +1,1 @@\n+89\n\\ No newline at end of file\n",
+            "additions": 1,
+            "deletions": 0,
+            "status": "modified"
+          }
+        ]
+      }
+    },
+    {
+      "parentID": "msg_116fac8f9001Z014gr0dsRsq5m",
+      "role": "assistant",
+      "mode": "build",
+      "agent": "build",
+      "path": {
+        "cwd": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena-direct",
+        "root": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena-direct"
+      },
+      "cost": 0,
+      "tokens": {
+        "total": 101,
+        "input": 4,
+        "output": 97,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 0
+        }
+      },
+      "modelID": "coding-router-preview",
+      "providerID": "arena",
+      "time": {
+        "created": 1791386896685,
+        "completed": 1791386900757
+      },
+      "finish": "tool-calls"
+    },
+    {
+      "parentID": "msg_116fac8f9001Z014gr0dsRsq5m",
+      "role": "assistant",
+      "mode": "build",
+      "agent": "build",
+      "path": {
+        "cwd": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena-direct",
+        "root": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena-direct"
+      },
+      "cost": 0,
+      "tokens": {
+        "total": 127,
+        "input": 2,
+        "output": 125,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 0
+        }
+      },
+      "modelID": "coding-router-preview",
+      "providerID": "arena",
+      "time": {
+        "created": 1791386900758,
+        "completed": 1791386904083
+      },
+      "finish": "tool-calls"
+    },
+    {
+      "parentID": "msg_116fac8f9001Z014gr0dsRsq5m",
+      "role": "assistant",
+      "mode": "build",
+      "agent": "build",
+      "path": {
+        "cwd": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena-direct",
+        "root": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena-direct"
+      },
+      "cost": 0,
+      "tokens": {
+        "total": 13,
+        "input": 2,
+        "output": 11,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 0
+        }
+      },
+      "modelID": "coding-router-preview",
+      "providerID": "arena",
+      "time": {
+        "created": 1791386904084,
+        "completed": 1791386907650
+      },
+      "finish": "stop"
+    }
+  ],
+  "parts": [
+    {
+      "type": "text",
+      "text": "Use tools to read fixture.json in this workspace. Sum its numbers and write only the integer to result.txt. Finish with MD_TEST_OK. Do not create subagents or read files outside this workspace."
+    },
+    {
+      "snapshot": "0c72547b022287f4595b952549792de50eb9cb04",
+      "type": "step-start"
+    },
+    {
+      "type": "tool",
+      "tool": "read",
+      "callID": "toolu_vrtx_015RPZyd7CjSieURibs1iEeR",
+      "state": {
+        "status": "completed",
+        "input": {
+          "filePath": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena-direct/fixture.json"
+        },
+        "output": "<path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena-direct/fixture.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"numbers\": [\n3:     17,\n4:     29,\n5:     43\n6:   ],\n7:   \"case\": \"opencode/arena-interactive\"\n8: }\n\n(End of file - total 8 lines)\n</content>",
+        "metadata": {
+          "preview": "{\n  \"numbers\": [\n    17,\n    29,\n    43\n  ],\n  \"case\": \"opencode/arena-interactive\"\n}",
+          "truncated": false,
+          "loaded": [],
+          "display": {
+            "type": "file",
+            "path": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena-direct/fixture.json",
+            "text": "{\n  \"numbers\": [\n    17,\n    29,\n    43\n  ],\n  \"case\": \"opencode/arena-interactive\"\n}",
+            "lineStart": 1,
+            "lineEnd": 8,
+            "totalLines": 8,
+            "truncated": false
+          }
+        },
+        "title": "fixture.json",
+        "time": {
+          "start": 1791386900702,
+          "end": 1791386900710
+        }
+      }
+    },
+    {
+      "reason": "tool-calls",
+      "snapshot": "0c72547b022287f4595b952549792de50eb9cb04",
+      "type": "step-finish",
+      "tokens": {
+        "total": 101,
+        "input": 4,
+        "output": 97,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 0
+        }
+      },
+      "cost": 0
+    },
+    {
+      "snapshot": "0c72547b022287f4595b952549792de50eb9cb04",
+      "type": "step-start"
+    },
+    {
+      "type": "text",
+      "text": "17+29+43=89",
+      "time": {
+        "start": 1791386903686,
+        "end": 1791386904025
+      }
+    },
+    {
+      "type": "tool",
+      "tool": "write",
+      "callID": "toolu_vrtx_01Uw9TomtGncNXiAhYqxtrrR",
+      "state": {
+        "status": "completed",
+        "input": {
+          "filePath": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena-direct/result.txt",
+          "content": "89"
+        },
+        "output": "Wrote file successfully.",
+        "metadata": {
+          "diagnostics": {},
+          "filepath": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena-direct/result.txt",
+          "exists": true,
+          "truncated": false
+        },
+        "title": "result.txt",
+        "time": {
+          "start": 1791386903998,
+          "end": 1791386904003
+        }
+      }
+    },
+    {
+      "reason": "tool-calls",
+      "snapshot": "aa47aa4d01fe4f052f4f588be76e0f9e5b0fc14c",
+      "type": "step-finish",
+      "tokens": {
+        "total": 127,
+        "input": 2,
+        "output": 125,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 0
+        }
+      },
+      "cost": 0
+    },
+    {
+      "type": "patch",
+      "hash": "0c72547b022287f4595b952549792de50eb9cb04",
+      "files": [
+        "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena-direct/result.txt"
+      ]
+    },
+    {
+      "snapshot": "aa47aa4d01fe4f052f4f588be76e0f9e5b0fc14c",
+      "type": "step-start"
+    },
+    {
+      "type": "text",
+      "text": "MD_TEST_OK",
+      "time": {
+        "start": 1791386907092,
+        "end": 1791386907591
+      }
+    },
+    {
+      "reason": "stop",
+      "snapshot": "aa47aa4d01fe4f052f4f588be76e0f9e5b0fc14c",
+      "type": "step-finish",
+      "tokens": {
+        "total": 13,
+        "input": 2,
+        "output": 11,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 0
+        }
+      },
+      "cost": 0
+    }
+  ]
+}

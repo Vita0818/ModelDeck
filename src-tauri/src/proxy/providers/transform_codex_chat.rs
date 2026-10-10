@@ -350,7 +350,7 @@ pub fn responses_to_chat_completions_with_reasoning(
     Ok(result)
 }
 
-fn apply_reasoning_options(
+pub(crate) fn apply_reasoning_options(
     result: &mut Value,
     body: &Value,
     model: &str,
@@ -4495,7 +4495,7 @@ mod tests {
             .get("image_url")
             .and_then(|value| value.get("url"))
             .and_then(Value::as_str)
-            .is_some_and(|url| url == &data_url)));
+            .is_some_and(|url| url == data_url)));
         assert_eq!(messages[3]["content"], "Viewing the image now.");
         assert_eq!(messages[3]["tool_calls"][0]["id"], "call_next");
         assert_eq!(messages[4]["tool_call_id"], "call_next");

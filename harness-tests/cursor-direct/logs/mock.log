@@ -1,0 +1,4 @@
+{"type":"system","subtype":"init","apiKeySource":"login","cwd":"/Users/vita/Others/ModelDeck/harness-tests/workspaces/cursor-agent-local/mock","session_id":"9cecdcdf-800c-4345-907e-52aae5e49782","model":"md-nemotron","permissionMode":"default"}
+{"type":"user","message":{"role":"user","content":[{"type":"text","text":"For a local API transport test, reply exactly MD_LOCAL_OK."}]},"session_id":"9cecdcdf-800c-4345-907e-52aae5e49782"}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"MD_LOCAL_OK"}]},"session_id":"9cecdcdf-800c-4345-907e-52aae5e49782"}
+{"type":"result","subtype":"success","duration_ms":3650,"duration_api_ms":3650,"is_error":false,"result":"MD_LOCAL_OK","session_id":"9cecdcdf-800c-4345-907e-52aae5e49782","request_id":"661696d0-600b-4814-b5af-3f337051be06","usage":{"inputTokens":100,"outputTokens":10,"cacheReadTokens":0,"cacheWriteTokens":0}}

@@ -48,6 +48,53 @@ fn authenticated(headers: &HeaderMap, query: Option<&str>, token: &str) -> bool 
             == 0
 }
 
+fn upstream_context_headers(headers: &HeaderMap, client: Option<&str>) -> HeaderMap {
+    let mut context = HeaderMap::new();
+    // Keep the real harness identity for upstream attribution and harness-only
+    // models. Credentials, cookies and client routing headers stay local.
+    for name in [
+        "user-agent",
+        "http-referer",
+        "x-title",
+        "x-openrouter-title",
+        "x-openrouter-categories",
+        "x-openrouter-app-visibility",
+        "x-opencode-session-id",
+        "x-session-affinity",
+        "x-session-id",
+        "x-claude-code-session-id",
+        "x-app",
+        "session-id",
+        "session_id",
+        "thread-id",
+        "x-client-request-id",
+        "originator",
+    ] {
+        if let Some(value) = headers.get(name) {
+            context.insert(name, value.clone());
+        }
+    }
+    if client == Some("cursor-agent")
+        && headers
+            .get("user-agent")
+            .and_then(|v| v.to_str().ok())
+            .is_some_and(|ua| ua.starts_with("Cursor-CLI/"))
+    {
+        // The official local CLI supplies its own UA but omits app attribution.
+        // Identify this actual harness without changing its UA or account state.
+        for (name, value) in [
+            ("http-referer", "https://cursor.com"),
+            ("x-openrouter-title", "ModelDeck / Cursor CLI Local"),
+            ("x-openrouter-categories", "cli-agent"),
+        ] {
+            context
+                .entry(name)
+                .or_insert(axum::http::HeaderValue::from_static(value));
+        }
+    }
+    context
+}
+
 pub async fn handle(Path((endpoint, path)): Path<(String, String)>, request: Request) -> Response {
     let store = match read_store() {
         Ok(s) => s,
@@ -149,7 +196,20 @@ fn catalog(
     } else if client == Some("muse") {
         json!({"data":aliases.iter().enumerate().map(|(i,alias)|{let model=&store.models[&endpoint.routes[alias].model_id];json!({"id":alias,"model_id":alias,"provider_id":"meta","profile_id":alias,"display_label":alias,"visibility":"visible","release_date":"","display_order":i,"is_default":store.active_bindings.get("muse").is_some_and(|binding|binding.model==*alias),"context_limit":model.context,"output_limit":model.output})}).collect::<Vec<_>>()})
     } else {
-        json!({"object":"list","data":aliases.iter().map(|alias|{let model=&store.models[&endpoint.routes[alias].model_id];json!({"id":alias,"object":"model","type":"model","owned_by":"modeldeck","name":alias,"display_name":alias,"created_at":"2026-01-01T00:00:00Z","context_length":model.context})}).collect::<Vec<_>>(),"has_more":false})
+        json!({"object":"list","data":aliases.iter().map(|alias|{
+            let model=&store.models[&endpoint.routes[alias].model_id];
+            let provider=&store.providers[&model.provider_id];
+            let api_types = endpoint.protocols.iter()
+                .filter(|input| protocols_compatible(**input, provider.protocol)
+                    && client.map(|c| client_protocols(c).contains(input)).unwrap_or(true))
+                .map(|input| match input {
+                    Protocol::OpenaiChat => "chat_completions",
+                    Protocol::OpenaiResponses => "responses",
+                    Protocol::Anthropic => "anthropic_messages",
+                    Protocol::Gemini => "gemini_generate_content",
+                }).collect::<Vec<_>>();
+            json!({"id":alias,"object":"model","type":"model","owned_by":"modeldeck","name":alias,"display_name":alias,"created_at":"2026-01-01T00:00:00Z","context_length":model.context,"api_types":api_types,"reasoning":{"supported_efforts":model.reasoning,"default_effort":endpoint.routes[alias].effort},"capabilities":{"output_modalities":["text"],"supports_tool_use":model.tools,"supports_streaming":true,"supports_reasoning":model.reasoning_supported.unwrap_or(!model.reasoning.is_empty()),"supports_vision":model.images,"context_length":model.context,"max_output_tokens":model.output}})
+        }).collect::<Vec<_>>(),"has_more":false})
     }
 }
 
@@ -337,59 +397,13 @@ async fn serve(
             body[field] = json!(n.min(model.output));
         }
     }
-    // Tier choice belongs to the resource route. An empty choice means the
-    // upstream default, rather than a harness's independently stored effort.
-    if let Some(object) = body.as_object_mut() {
-        object.remove("reasoning_effort");
-        object.remove("thinking");
-    }
-    if let Some(reasoning) = body.get_mut("reasoning").and_then(Value::as_object_mut) {
-        reasoning.remove("effort");
-    }
-    if let Some(config) = body.get_mut("output_config").and_then(Value::as_object_mut) {
-        config.remove("effort");
-    }
-    if let Some(config) = body
-        .get_mut("generationConfig")
-        .and_then(Value::as_object_mut)
-    {
-        config.remove("thinkingConfig");
-    }
-    if model.reasoning_supported == Some(false) {
-        if let Some(o) = body.as_object_mut() {
-            o.remove("reasoning");
-            o.remove("reasoning_effort");
-            o.remove("thinking");
-        }
-    } else if !route.effort.is_empty() {
-        match input {
-            Protocol::OpenaiChat => body["reasoning_effort"] = json!(route.effort),
-            Protocol::OpenaiResponses => {
-                if !body["reasoning"].is_object() {
-                    body["reasoning"] = json!({});
-                }
-                body["reasoning"]["effort"] = json!(route.effort);
-            }
-            Protocol::Anthropic => {
-                let budget =
-                    crate::proxy::providers::transform_codex_anthropic::effort_to_thinking_budget(
-                        &route.effort,
-                    )
-                    .unwrap_or(0)
-                    .min(model.output.saturating_sub(1));
-                if budget >= 1024 {
-                    body["thinking"] = json!({"type":"enabled","budget_tokens":budget});
-                } else {
-                    body.as_object_mut().unwrap().remove("thinking");
-                }
-            }
-            Protocol::Gemini => {}
-        }
-    }
+    // Native controls pass through unchanged. Only fill a missing route default.
+    let effort = reasoning::prepare(input, &mut body, model, &route.effort);
     let profile = ClientProfile {
-        connection_name: String::new(),
+        connection_name: provider.name.clone(),
         endpoint: provider.base_url.clone(),
         protocol: provider.protocol.as_str().into(),
+        provider_meta: provider.provider_meta.clone(),
         api_key: String::new(),
         key_env: String::new(),
         models: vec![ClientModel {
@@ -398,16 +412,18 @@ async fn serve(
             context: model.context,
             output: model.output,
             reasoning: model.reasoning.clone(),
+            default_effort: route.effort.clone(),
             reasoning_supported: model.reasoning_supported,
         }],
         default_model: model.upstream_id.clone(),
         utility_model: String::new(),
-        effort: route.effort.clone(),
+        effort,
         executable: String::new(),
         enabled: true,
         local_token: String::new(),
     };
     let http = match reqwest::Client::builder()
+        .default_headers(upstream_context_headers(&headers, client))
         .redirect(reqwest::redirect::Policy::none())
         .connect_timeout(std::time::Duration::from_secs(15))
         .timeout(std::time::Duration::from_secs(1800))
@@ -447,7 +463,7 @@ async fn forward_standard(
     mut body: Value,
 ) -> Response {
     let stream = body.get("stream").and_then(Value::as_bool).unwrap_or(false);
-    let base = p.endpoint.trim_end_matches('/');
+    let provider = crate::model_clients::provider_adapter::project(p, key);
     let upstream = match p.protocol.as_str() {
         "anthropic" => Protocol::Anthropic,
         "openai-chat" => Protocol::OpenaiChat,
@@ -457,9 +473,20 @@ async fn forward_standard(
     };
     let limit = p.models[0].output;
     let hints = transform_gemini::extract_anthropic_tool_schema_hints(&body);
+    crate::proxy::providers::normalize_anthropic_messages_for_provider(
+        &mut body,
+        &provider,
+        crate::proxy::providers::get_claude_api_format(&provider),
+    );
     let url = match (input, upstream) {
         (Protocol::Anthropic, Protocol::OpenaiChat) => {
-            body = match transform::anthropic_to_openai(body) {
+            body = match crate::proxy::providers::transform_claude_request_for_api_format(
+                body,
+                &provider,
+                "openai_chat",
+                None,
+                None,
+            ) {
                 Ok(b) => b,
                 Err(_) => {
                     return error(
@@ -471,10 +498,17 @@ async fn forward_standard(
             if !p.effort.is_empty() {
                 body["reasoning_effort"] = json!(p.effort);
             }
-            format!("{base}/chat/completions")
+            crate::model_clients::provider_adapter::adapt_chat(&mut body, &provider);
+            crate::model_clients::provider_adapter::url(p, "chat/completions")
         }
         (Protocol::Anthropic, Protocol::OpenaiResponses) => {
-            body = match transform_responses::anthropic_to_responses(body, None, false, false) {
+            body = match crate::proxy::providers::transform_claude_request_for_api_format(
+                body,
+                &provider,
+                "openai_responses",
+                None,
+                None,
+            ) {
                 Ok(b) => b,
                 Err(_) => {
                     return error(
@@ -490,10 +524,16 @@ async fn forward_standard(
                 body["reasoning"]["effort"] = json!(p.effort);
             }
             body["store"] = json!(false);
-            format!("{base}/responses")
+            crate::model_clients::provider_adapter::url(p, "responses")
         }
         (Protocol::Anthropic, Protocol::Gemini) => {
-            body = match transform_gemini::anthropic_to_gemini(body) {
+            body = match crate::proxy::providers::transform_claude_request_for_api_format(
+                body,
+                &provider,
+                "gemini_native",
+                None,
+                None,
+            ) {
                 Ok(b) => b,
                 Err(_) => {
                     return error(
@@ -509,15 +549,18 @@ async fn forward_standard(
                 body["generationConfig"]["thinkingConfig"] =
                     json!({"thinkingLevel":p.effort.to_uppercase()});
             }
-            format!(
-                "{base}/models/{}:{}{}",
-                p.default_model,
-                if stream {
-                    "streamGenerateContent"
-                } else {
-                    "generateContent"
-                },
-                if stream { "?alt=sse" } else { "" }
+            crate::model_clients::provider_adapter::url(
+                p,
+                &format!(
+                    "models/{}:{}{}",
+                    p.default_model,
+                    if stream {
+                        "streamGenerateContent"
+                    } else {
+                        "generateContent"
+                    },
+                    if stream { "?alt=sse" } else { "" }
+                ),
             )
         }
         (_, Protocol::Anthropic) => {
@@ -526,28 +569,26 @@ async fn forward_standard(
                 .and_then(Value::as_u64)
                 .unwrap_or(limit)
                 .min(limit));
-            format!(
-                "{base}/{}",
-                if base.ends_with("/v1") {
-                    "messages"
-                } else {
-                    "v1/messages"
-                }
-            )
+            crate::model_clients::provider_adapter::url(p, "/v1/messages")
         }
-        (_, Protocol::OpenaiChat) => format!("{base}/chat/completions"),
+        (_, Protocol::OpenaiChat) => {
+            crate::model_clients::provider_adapter::adapt_chat(&mut body, &provider);
+            crate::model_clients::provider_adapter::url(p, "chat/completions")
+        }
         _ => return error(StatusCode::BAD_REQUEST, "Unsupported protocol combination"),
     };
-    let mut req = http
+    let req = http
         .post(url)
         .header("accept-encoding", "identity")
         .json(&body);
-    req = match upstream {
-        Protocol::Anthropic => req
-            .header("anthropic-version", "2023-06-01")
-            .header("x-api-key", key),
-        Protocol::Gemini => req.header("x-goog-api-key", key),
-        _ => req.bearer_auth(key),
+    let req = match crate::model_clients::provider_adapter::authenticate(req, p, key) {
+        Ok(request) => request,
+        Err(_) => {
+            return error(
+                StatusCode::BAD_REQUEST,
+                "Invalid upstream authentication configuration",
+            )
+        }
     };
     let upstream_response = match req.send().await {
         Ok(r) => r,

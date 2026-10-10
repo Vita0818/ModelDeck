@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-08",
+  "timezone": "Australia/Perth",
+  "status": "passed",
+  "nativeCredentialRegressions": 5,
+  "legacyMigrationRegressions": 2,
+  "rustRegression": {
+    "passed": 2710,
+    "failed": 0,
+    "ignored": 15
+  },
+  "existingCredentialAudit": {
+    "passed": true,
+    "providersVerified": [
+      "OpenRouter",
+      "Arena",
+      "LM Studio"
+    ],
+    "sourcesVerified": [
+      "environment reference",
+      "file reference",
+      "empty local key"
+    ],
+    "rawCredentialCopiesPersisted": false,
+    "protectedFilesUnchanged": true,
+    "inferenceRequests": 0,
+    "personalResourceGraphCreated": false,
+    "nativeConfigurationApplied": false
+  },
+  "logs": {
+    "regression": "../../.build/arena-retest/rust-lib-migration-final.log",
+    "audit": "../../.build/arena-retest/credential-migration-audit.log"
+  }
+}

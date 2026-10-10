@@ -1,0 +1,377 @@
+{
+  "client": "codex",
+  "requested": "thinkingmachines/inkling:free",
+  "case": "inkling",
+  "session_id": "8480058c-ac43-40f9-8184-2e5ae03bb0c0",
+  "apply_status": 200,
+  "model_used": "thinkingmachines/inkling:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/codex/v1/responses",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) dumb (codex_exec; 0.159.2)",
+      "tools": 15,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "request_plugin_install",
+          "children": null
+        },
+        {
+          "type": "custom",
+          "name": "apply_patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "get_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "create_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "update_goal",
+          "children": null
+        },
+        {
+          "type": "namespace",
+          "name": "image_gen",
+          "children": [
+            "imagegen"
+          ]
+        },
+        {
+          "type": "tool_search",
+          "name": null,
+          "children": null
+        },
+        {
+          "type": "web_search",
+          "name": null,
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3786
+    },
+    {
+      "path": "/deck-clients/codex/v1/responses",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) dumb (codex_exec; 0.159.2)",
+      "tools": 15,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "request_plugin_install",
+          "children": null
+        },
+        {
+          "type": "custom",
+          "name": "apply_patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "get_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "create_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "update_goal",
+          "children": null
+        },
+        {
+          "type": "namespace",
+          "name": "image_gen",
+          "children": [
+            "imagegen"
+          ]
+        },
+        {
+          "type": "tool_search",
+          "name": null,
+          "children": null
+        },
+        {
+          "type": "web_search",
+          "name": null,
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 2671
+    },
+    {
+      "path": "/deck-clients/codex/v1/responses",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) dumb (codex_exec; 0.159.2)",
+      "tools": 15,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "request_plugin_install",
+          "children": null
+        },
+        {
+          "type": "custom",
+          "name": "apply_patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "get_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "create_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "update_goal",
+          "children": null
+        },
+        {
+          "type": "namespace",
+          "name": "image_gen",
+          "children": [
+            "imagegen"
+          ]
+        },
+        {
+          "type": "tool_search",
+          "name": null,
+          "children": null
+        },
+        {
+          "type": "web_search",
+          "name": null,
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 4228
+    },
+    {
+      "path": "/deck-clients/codex/v1/responses",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) dumb (codex_exec; 0.159.2)",
+      "tools": 15,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "request_plugin_install",
+          "children": null
+        },
+        {
+          "type": "custom",
+          "name": "apply_patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "get_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "create_goal",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "update_goal",
+          "children": null
+        },
+        {
+          "type": "namespace",
+          "name": "image_gen",
+          "children": [
+            "imagegen"
+          ]
+        },
+        {
+          "type": "tool_search",
+          "name": null,
+          "children": null
+        },
+        {
+          "type": "web_search",
+          "name": null,
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 2872
+    }
+  ],
+  "passed": true,
+  "pid": 65359,
+  "exit_code": 0,
+  "seconds": 29.71,
+  "runtime_session_ids": [
+    "01a1154f-79b2-7283-81a3-a7840f0d23a9"
+  ],
+  "output_log": "logs/codex/inkling.log",
+  "result_file_value": "89",
+  "free_rate_limit_429": false
+}

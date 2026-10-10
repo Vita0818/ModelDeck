@@ -1,0 +1,88 @@
+{
+  "case": "managed-nemotron",
+  "model": "md-nemotron",
+  "seconds": 29.88,
+  "exitCode": 1,
+  "finalTextSeen": false,
+  "sessionIds": [
+    "d9f7a119-18b6-4ccb-9f59-02f979234601"
+  ],
+  "resultFileValue": "",
+  "cursorAccountCredentialsProvided": false,
+  "nativeVendorBinaryUnmodified": true,
+  "network": [
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck-clients/cursor-agent/models",
+      "blocked": false
+    },
+    {
+      "surface": "node:https.request",
+      "host": "registry.npmjs.org",
+      "path": "/typescript-language-server",
+      "blocked": true
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "node:https.request",
+      "host": "registry.npmjs.org",
+      "path": "/typescript-language-server",
+      "blocked": true
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "blocked": false
+    }
+  ],
+  "managedLauncher": "/Users/vita/Others/ModelDeck/.build/cursor-direct/.runtime/gateway/home/.cc-switch/bin/cursor-agent",
+  "modelCatalogProbe": false,
+  "passed": false,
+  "toolTrace": [],
+  "upstreamStreamErrors": [
+    {
+      "provider": "Nvidia",
+      "error": {
+        "code": 503,
+        "message": "Upstream error from Nvidia: Service temporarily overloaded",
+        "metadata": {
+          "error_type": "provider_overloaded"
+        }
+      }
+    },
+    {
+      "provider": "Nvidia",
+      "error": {
+        "code": 503,
+        "message": "Upstream error from Nvidia: Service temporarily overloaded",
+        "metadata": {
+          "error_type": "provider_overloaded"
+        }
+      }
+    },
+    {
+      "provider": "Nvidia",
+      "error": {
+        "code": 503,
+        "message": "Upstream error from Nvidia: Service temporarily overloaded",
+        "metadata": {
+          "error_type": "provider_overloaded"
+        }
+      }
+    }
+  ],
+  "outputLog": "logs/managed-nemotron.log"
+}

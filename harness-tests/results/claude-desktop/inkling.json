@@ -1,0 +1,3918 @@
+{
+  "client": "claude-desktop",
+  "case": "inkling",
+  "workspace": "/Users/vita/Others/ModelDeck/harness-tests/workspaces/claude-desktop/nemotron",
+  "uiMode": "Code",
+  "uiModel": "claude-fable-5-1",
+  "recordIndex": 171,
+  "started": 1791365478.674098,
+  "apply_status": 200,
+  "passed": true,
+  "real_client": true,
+  "workspaceReusedForSecondSession": true,
+  "requested": "thinkingmachines/inkling:free",
+  "model_used": "thinkingmachines/inkling:free",
+  "runtime_session_ids": [
+    "local_ec338788-47cf-4236-8cee-9d6d7a6fe155"
+  ],
+  "seconds": 4611.92,
+  "result_file_value": "89",
+  "ui_final_text": "MD_TEST_OK",
+  "ui_tools": "Ran 3 commands, read fixture.json",
+  "gateway_requests": [
+    {
+      "path": "/claude-desktop/api/hello",
+      "method": "HEAD",
+      "model": null,
+      "stream": null,
+      "userAgent": "Bun/1.4.3",
+      "tools": null,
+      "toolNames": null,
+      "status": 401,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Invalid ModelDeck endpoint credential"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages",
+      "method": "POST",
+      "model": "claude-haiku-4-5",
+      "stream": null,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/2.16120.0 Chrome/152.0.7977.130 Electron/44.4.3 Safari/537.36",
+      "tools": null,
+      "toolNames": null,
+      "status": 403,
+      "latencyMs": 1987,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Upstream returned HTTP 403"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/api/hello",
+      "method": "HEAD",
+      "model": null,
+      "stream": null,
+      "userAgent": "Bun/1.4.3",
+      "tools": null,
+      "toolNames": null,
+      "status": 401,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Invalid ModelDeck endpoint credential"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages",
+      "method": "POST",
+      "model": "claude-haiku-4-5",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 200,
+      "latencyMs": 2283
+    },
+    {
+      "path": "/claude-desktop/v1/messages",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 97,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Agent",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "AskUserQuestion",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Bash",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronCreate",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronDelete",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronList",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "DesignSync",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ListAgents",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "NotebookEdit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ReportFindings",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ScheduleWakeup",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendMessage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendUserFile",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Skill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "TaskStop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebFetch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebSearch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Workflow",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__change_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__request_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__bind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__get_status",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_auto_merge",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_monitor",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__unbind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__dismiss_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__mark_chapter",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__read_widget_context",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__spawn_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__archive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__clear_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__delete_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__detach_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__export_transcript",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_usage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_events",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__search_session_transcripts",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__send_message",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_remote_control",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_effort",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_fast_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_model",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_output_style",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_permission_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_title",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__stop_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__unarchive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__create_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__delete_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__list_groups",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__mark_completed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__move_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__rename_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_pinned",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_unread",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__close_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__get_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__set_transcript_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__show_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__close_split",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__get_window_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__open_session_in",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__set_sidebar_collapsed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_click",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_console_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_eval",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_fill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_inspect",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_list",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_network",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_resize",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_screenshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_snapshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_start",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_stop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__create_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__delete_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_scheduled_tasks",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_task_runs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__run_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__update_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__list_terminal_tabs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__open_terminal_tab",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__read_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__run_in_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__stop_terminal_tab",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 4648
+    },
+    {
+      "path": "/claude-desktop/v1/messages",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 97,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Agent",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "AskUserQuestion",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Bash",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronCreate",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronDelete",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronList",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "DesignSync",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ListAgents",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "NotebookEdit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ReportFindings",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ScheduleWakeup",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendMessage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendUserFile",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Skill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "TaskStop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebFetch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebSearch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Workflow",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__change_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__request_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__bind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__get_status",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_auto_merge",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_monitor",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__unbind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__dismiss_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__mark_chapter",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__read_widget_context",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__spawn_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__archive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__clear_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__delete_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__detach_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__export_transcript",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_usage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_events",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__search_session_transcripts",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__send_message",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_remote_control",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_effort",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_fast_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_model",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_output_style",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_permission_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_title",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__stop_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__unarchive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__create_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__delete_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__list_groups",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__mark_completed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__move_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__rename_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_pinned",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_unread",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__close_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__get_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__set_transcript_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__show_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__close_split",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__get_window_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__open_session_in",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__set_sidebar_collapsed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_click",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_console_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_eval",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_fill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_inspect",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_list",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_network",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_resize",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_screenshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_snapshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_start",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_stop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__create_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__delete_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_scheduled_tasks",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_task_runs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__run_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__update_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__list_terminal_tabs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__open_terminal_tab",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__read_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__run_in_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__stop_terminal_tab",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3608
+    },
+    {
+      "path": "/claude-desktop/v1/messages",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 97,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Agent",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "AskUserQuestion",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Bash",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronCreate",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronDelete",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronList",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "DesignSync",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ListAgents",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "NotebookEdit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ReportFindings",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ScheduleWakeup",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendMessage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendUserFile",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Skill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "TaskStop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebFetch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebSearch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Workflow",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__change_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__request_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__bind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__get_status",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_auto_merge",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_monitor",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__unbind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__dismiss_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__mark_chapter",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__read_widget_context",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__spawn_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__archive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__clear_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__delete_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__detach_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__export_transcript",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_usage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_events",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__search_session_transcripts",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__send_message",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_remote_control",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_effort",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_fast_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_model",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_output_style",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_permission_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_title",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__stop_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__unarchive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__create_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__delete_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__list_groups",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__mark_completed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__move_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__rename_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_pinned",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_unread",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__close_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__get_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__set_transcript_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__show_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__close_split",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__get_window_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__open_session_in",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__set_sidebar_collapsed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_click",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_console_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_eval",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_fill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_inspect",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_list",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_network",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_resize",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_screenshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_snapshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_start",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_stop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__create_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__delete_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_scheduled_tasks",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_task_runs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__run_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__update_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__list_terminal_tabs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__open_terminal_tab",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__read_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__run_in_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__stop_terminal_tab",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3430
+    },
+    {
+      "path": "/claude-desktop/v1/messages",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 97,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Agent",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "AskUserQuestion",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Bash",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronCreate",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronDelete",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronList",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "DesignSync",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ListAgents",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "NotebookEdit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ReportFindings",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ScheduleWakeup",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendMessage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendUserFile",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Skill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "TaskStop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebFetch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebSearch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Workflow",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__change_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__request_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__bind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__get_status",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_auto_merge",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_monitor",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__unbind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__dismiss_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__mark_chapter",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__read_widget_context",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__spawn_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__archive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__clear_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__delete_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__detach_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__export_transcript",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_usage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_events",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__search_session_transcripts",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__send_message",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_remote_control",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_effort",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_fast_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_model",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_output_style",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_permission_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_title",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__stop_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__unarchive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__create_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__delete_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__list_groups",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__mark_completed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__move_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__rename_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_pinned",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_unread",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__close_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__get_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__set_transcript_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__show_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__close_split",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__get_window_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__open_session_in",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__set_sidebar_collapsed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_click",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_console_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_eval",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_fill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_inspect",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_list",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_network",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_resize",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_screenshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_snapshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_start",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_stop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__create_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__delete_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_scheduled_tasks",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_task_runs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__run_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__update_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__list_terminal_tabs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__open_terminal_tab",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__read_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__run_in_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__stop_terminal_tab",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3170
+    },
+    {
+      "path": "/claude-desktop/v1/messages",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 97,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Agent",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "AskUserQuestion",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Bash",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronCreate",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronDelete",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronList",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "DesignSync",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ListAgents",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "NotebookEdit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ReportFindings",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ScheduleWakeup",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendMessage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendUserFile",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Skill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "TaskStop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebFetch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebSearch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Workflow",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__change_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__request_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__bind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__get_status",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_auto_merge",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_monitor",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__unbind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__dismiss_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__mark_chapter",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__read_widget_context",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__spawn_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__archive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__clear_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__delete_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__detach_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__export_transcript",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_usage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_events",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__search_session_transcripts",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__send_message",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_remote_control",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_effort",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_fast_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_model",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_output_style",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_permission_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_title",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__stop_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__unarchive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__create_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__delete_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__list_groups",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__mark_completed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__move_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__rename_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_pinned",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_unread",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__close_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__get_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__set_transcript_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__show_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__close_split",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__get_window_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__open_session_in",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__set_sidebar_collapsed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_click",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_console_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_eval",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_fill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_inspect",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_list",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_network",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_resize",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_screenshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_snapshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_start",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_stop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__create_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__delete_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_scheduled_tasks",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_task_runs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__run_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__update_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__list_terminal_tabs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__open_terminal_tab",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__read_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__run_in_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__stop_terminal_tab",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3414
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 1,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 1,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 1,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 1,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 1,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 1,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 1,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 72,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__change_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__request_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__bind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__get_status",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_auto_merge",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_monitor",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__unbind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__dismiss_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__mark_chapter",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__read_widget_context",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__spawn_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__archive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__clear_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__delete_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__detach_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__export_transcript",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_usage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_events",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__search_session_transcripts",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__send_message",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_remote_control",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_effort",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_fast_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_model",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_output_style",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_permission_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_title",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__stop_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__unarchive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__create_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__delete_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__list_groups",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__mark_completed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__move_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__rename_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_pinned",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_unread",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__close_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__get_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__set_transcript_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__show_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__close_split",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__get_window_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__open_session_in",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__set_sidebar_collapsed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_click",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_console_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_eval",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_fill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_inspect",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_list",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_network",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_resize",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_screenshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_snapshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_start",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_stop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__create_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__delete_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_scheduled_tasks",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_task_runs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__run_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__update_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__list_terminal_tabs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__open_terminal_tab",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__read_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__run_in_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__stop_terminal_tab",
+          "children": null
+        }
+      ],
+      "status": 404,
+      "latencyMs": 1,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 1,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Skill",
+          "children": null
+        }
+      ],
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 12,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Agent",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "AskUserQuestion",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Bash",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ListAgents",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ReportFindings",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ScheduleWakeup",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendUserFile",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Skill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Workflow",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Write",
+          "children": null
+        }
+      ],
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 13,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "CronCreate",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronDelete",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronList",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "DesignSync",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "NotebookEdit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendMessage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "TaskStop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebFetch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebSearch",
+          "children": null
+        }
+      ],
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages/count_tokens",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": null,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 1,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Skill",
+          "children": null
+        }
+      ],
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/claude-desktop/v1/messages",
+      "method": "POST",
+      "model": "claude-fable-5-1",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.284 (external, claude-desktop-3p, agent-sdk/0.3.284)",
+      "tools": 97,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Agent",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "AskUserQuestion",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Bash",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronCreate",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronDelete",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "CronList",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "DesignSync",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "EnterWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitPlanMode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ExitWorktree",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ListAgents",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "NotebookEdit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ReportFindings",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "ScheduleWakeup",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendMessage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "SendUserFile",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Skill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "TaskStop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebFetch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "WebSearch",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Workflow",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__change_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_directory__request_directory",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__bind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__get_status",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_auto_merge",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__set_monitor",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_pr__unbind_pr",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__dismiss_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__mark_chapter",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__read_widget_context",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session__spawn_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__archive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__clear_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__delete_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__detach_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__export_transcript",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__get_usage",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_events",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__list_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__search_session_transcripts",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__send_message",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_remote_control",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_effort",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_fast_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_model",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_output_style",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_permission_mode",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__set_session_title",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__stop_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_session_mgmt__unarchive_session",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__create_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__delete_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__list_groups",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__mark_completed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__move_sessions",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__rename_group",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_pinned",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_unread",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_sidebar__set_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__close_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__get_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__set_transcript_view",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_view__show_pane",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__close_split",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__get_window_layout",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__open_session_in",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__ccd_window__set_sidebar_collapsed",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_click",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_console_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_eval",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_fill",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_inspect",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_list",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_logs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_network",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_resize",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_screenshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_snapshot",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_start",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__Claude_Browser__preview_stop",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__create_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__delete_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_scheduled_tasks",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__list_task_runs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__run_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__scheduled-tasks__update_scheduled_task",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__list_terminal_tabs",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__open_terminal_tab",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__read_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__run_in_terminal",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "mcp__terminal__stop_terminal_tab",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3456
+    }
+  ],
+  "output_log": "logs/claude-desktop/inkling.log",
+  "free_rate_limit_429": false,
+  "exit_code": null,
+  "ui_verified": true,
+  "routeProof": {
+    "resourceId": "claude_desktop_inkling",
+    "upstreamId": "thinkingmachines/inkling:free",
+    "providerId": "or_claude_desktop",
+    "allAliasesMappedToSameResource": true
+  }
+}

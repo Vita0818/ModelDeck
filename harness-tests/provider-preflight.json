@@ -1,0 +1,12 @@
+[
+  {
+    "provider": "openrouter",
+    "status": 200,
+    "model_count": 465,
+    "error": null
+  },
+  {
+    "provider": "arena",
+    "error": "Expecting value: line 1 column 1 (char 0)"
+  }
+]

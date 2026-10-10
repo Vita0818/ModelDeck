@@ -5,54 +5,7 @@ use super::provider::parse_and_merge_config;
 use super::utils::{infer_homepage_from_endpoint, validate_url};
 use super::DeepLinkImportRequest;
 use crate::AppType;
-use crate::{store::AppState, Database};
 use base64::prelude::*;
-use std::{env, ffi::OsString, sync::Arc};
-
-struct TestHomeGuard {
-    _dir: tempfile::TempDir,
-    original_home: Option<OsString>,
-    original_userprofile: Option<OsString>,
-    original_test_home: Option<OsString>,
-}
-
-impl TestHomeGuard {
-    fn new() -> Self {
-        let dir = tempfile::tempdir().expect("create isolated test home");
-        let original_home = env::var_os("HOME");
-        let original_userprofile = env::var_os("USERPROFILE");
-        let original_test_home = env::var_os("CC_SWITCH_TEST_HOME");
-
-        env::set_var("HOME", dir.path());
-        env::set_var("USERPROFILE", dir.path());
-        env::set_var("CC_SWITCH_TEST_HOME", dir.path());
-
-        Self {
-            _dir: dir,
-            original_home,
-            original_userprofile,
-            original_test_home,
-        }
-    }
-}
-
-impl Drop for TestHomeGuard {
-    fn drop(&mut self) {
-        match &self.original_test_home {
-            Some(value) => env::set_var("CC_SWITCH_TEST_HOME", value),
-            None => env::remove_var("CC_SWITCH_TEST_HOME"),
-        }
-        match &self.original_userprofile {
-            Some(value) => env::set_var("USERPROFILE", value),
-            None => env::remove_var("USERPROFILE"),
-        }
-        match &self.original_home {
-            Some(value) => env::set_var("HOME", value),
-            None => env::remove_var("HOME"),
-        }
-    }
-}
-
 // =============================================================================
 // Parser Tests
 // =============================================================================

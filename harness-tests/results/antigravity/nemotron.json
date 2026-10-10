@@ -1,0 +1,94 @@
+{
+  "client": "antigravity",
+  "requested": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "case": "nemotron",
+  "session_id": "96e14b75-b5bc-4d72-8944-55a62f78a192",
+  "apply_status": 200,
+  "model_used": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/gemini-3.1-flash-lite-preview:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "userAgent": "google-genai-sdk/1.72.0 gl-go/go1.28-20260921-RC02 cl/985595000 +644cd61a4a X:fieldtrack,boringcrypto,simd",
+      "tools": null,
+      "toolNames": null,
+      "status": 200,
+      "latencyMs": 3985
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/md-nemotron:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "userAgent": "google-genai-sdk/1.72.0 gl-go/go1.28-20260921-RC02 cl/985595000 +644cd61a4a X:fieldtrack,boringcrypto,simd",
+      "tools": 1,
+      "toolNames": [
+        {
+          "type": null,
+          "name": null,
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 4052
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/gemini-3.1-flash-lite-preview:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "userAgent": "google-genai-sdk/1.72.0 gl-go/go1.28-20260921-RC02 cl/985595000 +644cd61a4a X:fieldtrack,boringcrypto,simd",
+      "tools": null,
+      "toolNames": null,
+      "status": 200,
+      "latencyMs": 2915
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/md-nemotron:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "userAgent": "google-genai-sdk/1.72.0 gl-go/go1.28-20260921-RC02 cl/985595000 +644cd61a4a X:fieldtrack,boringcrypto,simd",
+      "tools": 1,
+      "toolNames": [
+        {
+          "type": null,
+          "name": null,
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 4802
+    },
+    {
+      "path": "/deck-clients/antigravity/v1beta/models/md-nemotron:streamGenerateContent",
+      "method": "POST",
+      "model": null,
+      "stream": null,
+      "userAgent": "google-genai-sdk/1.72.0 gl-go/go1.28-20260921-RC02 cl/985595000 +644cd61a4a X:fieldtrack,boringcrypto,simd",
+      "tools": 1,
+      "toolNames": [
+        {
+          "type": null,
+          "name": null,
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 4915
+    }
+  ],
+  "passed": true,
+  "pid": 67866,
+  "exit_code": 0,
+  "seconds": 34.22,
+  "runtime_session_ids": [
+    "fa6b771e-ca06-4ee7-ae21-603fa1cb9ae1"
+  ],
+  "output_log": "logs/antigravity/nemotron.log",
+  "result_file_value": "89",
+  "free_rate_limit_429": false
+}

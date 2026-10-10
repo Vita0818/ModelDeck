@@ -79,8 +79,6 @@ pub struct DeepLinkImportRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
 
-
-
     // ============ Config file fields (v3.8+) ============
     /// Base64 encoded config content
     #[serde(skip_serializing_if = "Option::is_none")]

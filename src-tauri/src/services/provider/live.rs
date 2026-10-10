@@ -1714,7 +1714,6 @@ pub fn sync_current_to_live(state: &AppState) -> Result<(), AppError> {
         }
     }
 
-
     if failures.is_empty() {
         Ok(())
     } else {
@@ -2208,6 +2207,7 @@ pub fn import_opencode_providers_from_live(state: &AppState) -> Result<usize, Ap
 /// This imports existing providers from ~/.openclaw/openclaw.json
 /// into the CC Switch database. Each provider found will be added to the
 /// database with is_current set to false.
+#[cfg(test)]
 pub fn import_openclaw_providers_from_live(state: &AppState) -> Result<usize, AppError> {
     use crate::openclaw_config;
 

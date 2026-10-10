@@ -1,0 +1,26 @@
+{
+  "client": "cursor",
+  "case": "nemotron",
+  "requested": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "configured_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "model_used": null,
+  "real_client": true,
+  "session_started": false,
+  "passed": false,
+  "ui_verified": false,
+  "private_profile_launched": true,
+  "gateway_requests": [],
+  "runtime_session_ids": [],
+  "free_rate_limit_429": false,
+  "status": "blocked_missing_login",
+  "failure": "Private Cursor GUI profile has no account access/refresh token. Native model catalog is present, but account login is required. No GUI account credentials were copied to the short test profile. Existing Cursor windows were left open.",
+  "evidence": {
+    "access_token_present": false,
+    "refresh_token_present": false,
+    "private_renderer_logs_report_unauthorized": true,
+    "private_indexing_logs_report_login_required": true,
+    "launch_pid": 74672,
+    "window_binding_limit": "Native UI automation selected the existing Cursor window; no actions were taken in that window."
+  },
+  "output_log": "logs/cursor/nemotron.log"
+}

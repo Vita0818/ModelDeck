@@ -1,0 +1,99 @@
+{
+  "client": "muse",
+  "requested": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "case": "nemotron",
+  "session_id": "8ba71405-413e-41d9-aa36-4ece8f442960",
+  "apply_status": 200,
+  "model_used": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/muse/responses",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "muse-build/0.1.0 (non-interactive; macos-aarch64; build 427a430436e233fa027717166326a4cfd392facb)",
+      "tools": 1,
+      "toolNames": [
+        {
+          "type": "namespace",
+          "name": "muse",
+          "children": [
+            "submit_reminder_decision"
+          ]
+        }
+      ],
+      "status": 200,
+      "latencyMs": 2887
+    },
+    {
+      "path": "/deck-clients/muse/responses",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "muse-build/0.1.0 (non-interactive; macos-aarch64; build 427a430436e233fa027717166326a4cfd392facb)",
+      "tools": 1,
+      "toolNames": [
+        {
+          "type": "namespace",
+          "name": "muse",
+          "children": [
+            "read_file",
+            "search",
+            "write_file",
+            "edit_file",
+            "read_memory",
+            "add_memory",
+            "edit_memory",
+            "bash",
+            "bash_input",
+            "read_skill",
+            "snooze_reminder",
+            "write_todos"
+          ]
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3293
+    },
+    {
+      "path": "/deck-clients/muse/responses",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "muse-build/0.1.0 (non-interactive; macos-aarch64; build 427a430436e233fa027717166326a4cfd392facb)",
+      "tools": 1,
+      "toolNames": [
+        {
+          "type": "namespace",
+          "name": "muse",
+          "children": [
+            "read_file",
+            "search",
+            "write_file",
+            "edit_file",
+            "read_memory",
+            "add_memory",
+            "edit_memory",
+            "bash",
+            "bash_input",
+            "read_skill",
+            "snooze_reminder",
+            "write_todos"
+          ]
+        }
+      ],
+      "status": 200,
+      "latencyMs": 2837
+    }
+  ],
+  "passed": false,
+  "pid": 67194,
+  "exit_code": 1,
+  "seconds": 11.65,
+  "runtime_session_ids": [],
+  "output_log": "logs/muse/nemotron.log",
+  "result_file_value": "",
+  "failure": "00-7000-8000-000000002714\",\"reason\":\"server_error: Upstream error from Nvidia: Service temporarily overloaded\"}}}\n{\"schema_version\":1,\"id\":\"018f0000-0000-7000-8000-00000000c39b\",\"stream\":{\"kind\":\"session\",\"id\":\"2ecdf056-90c6-43f6-9c57-a134cc6fa43c\"},\"sequence\":40,\"recorded_at\":1780531400000075,\"record_type\":\"event\",\"durability\":\"durable\",\"causation_id\":\"41c15bdd-f3a5-46f2-9636-bf8824a0e0bb\",\"payload_type\":\"task.lifecycle.completed\",\"payload_schema_version\":1,\"payload\":{\"kind\":\"task_lifecycle\",\"command_id\":\"41c15bdd-f3a5-46f2-9636-bf8824a0e0bb\",\"run_stream\":{\"kind\":\"run\",\"id\":\"41c15bdd-f3a5-46f2-9636-bf8824a0e0bb\"},\"task_stream\":{\"kind\":\"task\",\"id\":\"018f0000-0000-7000-8000-000000002710\"},\"task_id\":\"018f0000-0000-7000-8000-000000002710\",\"event\":{\"kind\":\"completed\",\"task_id\":\"018f0000-0000-7000-8000-000000002710\"}}}\n{\"schema_version\":1,\"id\":\"018f0000-0000-7000-8000-00000000c39d\",\"stream\":{\"kind\":\"session\",\"id\":\"2ecdf056-90c6-43f6-9c57-a134cc6fa43c\"},\"sequence\":41,\"recorded_at\":1780531400000077,\"record_type\":\"event\",\"durability\":\"durable\",\"causation_id\":\"41c15bdd-f3a5-46f2-9636-bf8824a0e0bb\",\"payload_type\":\"run.terminal.failed\",\"payload_schema_version\":1,\"payload\":{\"kind\":\"run_terminal\",\"command_id\":\"41c15bdd-f3a5-46f2-9636-bf8824a0e0bb\",\"run_stream\":{\"kind\":\"run\",\"id\":\"41c15bdd-f3a5-46f2-9636-bf8824a0e0bb\"},\"terminal\":\"failed\",\"text\":\"\",\"reason\":\"server_error: Upstream error from Nvidia: Service temporarily overloaded (response: resp_ccswitch)\"}}\n{\"schema_version\":1,\"id\":\"018f0000-0000-7000-8000-00000000c39e\",\"stream\":{\"kind\":\"session\",\"id\":\"2ecdf056-90c6-43f6-9c57-a134cc6fa43c\"},\"sequence\":42,\"recorded_at\":1780531400000078,\"record_type\":\"event\",\"durability\":\"durable\",\"causation_id\":\"41c15bdd-f3a5-46f2-9636-bf8824a0e0bb\",\"payload_type\":\"session.workspace_branch.observed\",\"payload_schema_version\":1,\"payload\":{\"kind\":\"workspace_branch_observed\",\"command_id\":\"41c15bdd-f3a5-46f2-9636-bf8824a0e0bb\",\"record\":{\"command_id\":\"41c15bdd-f3a5-46f2-9636-bf8824a0e0bb\",\"workspace_root\":\"/Users/vita/Others/ModelDeck/harness-tests/.runtime/workspaces/muse/nemotron\",\"reference\":{\"kind\":\"branch\",\"name\":\"main\"},\"vcs\":\"git\",\"commit\":\"18ce5894060a\",\"dirty\":true}}}\nrun ended with Failed\n",
+  "free_rate_limit_429": false
+}

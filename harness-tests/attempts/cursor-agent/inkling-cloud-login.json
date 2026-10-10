@@ -1,0 +1,19 @@
+{
+  "client": "cursor-agent",
+  "requested": "thinkingmachines/inkling:free",
+  "case": "inkling",
+  "session_id": "dbed946a-ba97-427c-b316-6f2bf21cd6b9",
+  "apply_status": 200,
+  "model_used": "thinkingmachines/inkling:free",
+  "real_client": true,
+  "gateway_requests": [],
+  "passed": false,
+  "pid": 68217,
+  "exit_code": 1,
+  "seconds": 2.31,
+  "runtime_session_ids": [],
+  "output_log": "logs/cursor-agent/inkling.log",
+  "result_file_value": "",
+  "failure": "Error: Authentication required. Please run 'agent login' first, or set CURSOR_API_KEY environment variable.\n",
+  "free_rate_limit_429": false
+}

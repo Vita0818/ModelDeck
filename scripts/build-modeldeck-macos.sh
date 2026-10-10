@@ -13,31 +13,8 @@ if [[ ! -d node_modules ]]; then
   exit 1
 fi
 
-if [[ -d "$MODELDECK_ROOT/.build/cargo-home/registry" ]]; then
-  export CARGO_HOME="$MODELDECK_ROOT/.build/cargo-home"
-fi
-if command -v brew >/dev/null 2>&1; then
-  MODELDECK_Z3_PREFIX="$(brew --prefix z3 2>/dev/null || true)"
-  MODELDECK_Z3_CELLAR="$(brew --cellar z3 2>/dev/null || true)"
-  MODELDECK_Z3_CANDIDATES=()
-  [[ -n "$MODELDECK_Z3_PREFIX" ]] && MODELDECK_Z3_CANDIDATES+=("$MODELDECK_Z3_PREFIX/lib")
-  [[ -d "$MODELDECK_Z3_CELLAR" ]] && MODELDECK_Z3_CANDIDATES+=("$MODELDECK_Z3_CELLAR"/*/lib)
-  for MODELDECK_Z3_LIB in "${MODELDECK_Z3_CANDIDATES[@]}"; do
-    [[ -d "$MODELDECK_Z3_LIB" ]] || continue
-    MODELDECK_LIBRARY_PATH="$MODELDECK_Z3_LIB${DYLD_FALLBACK_LIBRARY_PATH:+:$DYLD_FALLBACK_LIBRARY_PATH}"
-    if env DYLD_FALLBACK_LIBRARY_PATH="$MODELDECK_LIBRARY_PATH" rustc --version >/dev/null 2>&1; then
-      export DYLD_FALLBACK_LIBRARY_PATH="$MODELDECK_LIBRARY_PATH"
-      break
-    fi
-  done
-fi
-
-# Retain proc-macro metadata for the installed Homebrew Rust toolchain.
-export CARGO_PROFILE_RELEASE_STRIP=none
 node node_modules/typescript/bin/tsc --noEmit
-node node_modules/vite/bin/vite.js build
-node node_modules/@tauri-apps/cli/tauri.js build --bundles app \
-  --config '{"build":{"beforeBuildCommand":""}}'
+node scripts/tauri.mjs build --bundles app
 
 MODELDECK_BUNDLE="$MODELDECK_ROOT/src-tauri/target/release/bundle/macos/ModelDeck.app"
 MODELDECK_VERSION="$(node -p "require('./package.json').version")"

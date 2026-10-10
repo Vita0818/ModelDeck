@@ -1,0 +1,6 @@
+{
+  "repository": "https://github.com/NousResearch/hermes-agent.git",
+  "commit": "05eecbcd972c8737ebc7722ea08aab47fb538043",
+  "python": "3.14.6",
+  "scope": "core CLI dependencies; runtime removed after test"
+}

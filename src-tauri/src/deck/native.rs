@@ -37,9 +37,7 @@ fn paths(client: &str) -> Result<Vec<PathBuf>, String> {
         "claude" => vec![crate::config::get_claude_settings_path()],
         "codex" => vec![
             crate::codex_config::get_codex_config_path(),
-            crate::codex_config::get_codex_auth_path(),
             crate::codex_config::get_codex_model_catalog_path(),
-            crate::codex_config::get_codex_managed_oauth_live_auth_marker_path(),
         ],
         "grokbuild" => vec![crate::grok_config::get_grok_config_path()],
         "opencode" => vec![crate::opencode_config::get_opencode_config_path()],
@@ -64,7 +62,7 @@ fn paths(client: &str) -> Result<Vec<PathBuf>, String> {
         }
         _ => return Err("Unknown harness".into()),
     };
-    if matches!(client, "antigravity" | "muse" | "cursor-agent") {
+    if matches!(client, "claude" | "antigravity" | "muse" | "cursor-agent") {
         paths.push(get_app_config_dir().join("bin").join(client));
     }
     Ok(paths)
@@ -120,11 +118,25 @@ fn restore_files(snapshots: &[Snapshot]) -> Result<(), String> {
     Ok(())
 }
 
-fn read_backup(path: &Path) -> Result<Option<Backup>, String> {
+fn read_backup(client: &str, path: &Path) -> Result<Option<Backup>, String> {
     match fs::read(path) {
-        Ok(bytes) => serde_json::from_slice(&bytes)
-            .map(Some)
-            .map_err(|_| "Invalid native configuration backup".into()),
+        Ok(bytes) => {
+            let mut backup: Backup = serde_json::from_slice(&bytes)
+                .map_err(|_| "Invalid native configuration backup".to_string())?;
+            if client == "codex" {
+                // Earlier snapshots included official login files. They are
+                // exempt even when reading an old backup or reapplying a route.
+                let auth = crate::codex_config::get_codex_auth_path();
+                let marker = crate::codex_config::get_codex_managed_oauth_live_auth_marker_path();
+                let owned = |snapshot: &Snapshot| {
+                    snapshot.path.file_name() != auth.file_name()
+                        && snapshot.path.file_name() != marker.file_name()
+                };
+                backup.original.retain(owned);
+                backup.applied.retain(owned);
+            }
+            Ok(Some(backup))
+        }
         Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
         Err(e) => Err(e.to_string()),
     }
@@ -161,13 +173,45 @@ pub(super) fn generated_provider(client: &str, p: &ClientProfile) -> Result<Prov
                 "ANTHROPIC_DEFAULT_SONNET_MODEL",
                 "ANTHROPIC_DEFAULT_OPUS_MODEL",
                 "ANTHROPIC_DEFAULT_HAIKU_MODEL",
+                "ANTHROPIC_DEFAULT_FABLE_MODEL",
             ] {
+                let role = field
+                    .strip_prefix("ANTHROPIC_DEFAULT_")
+                    .and_then(|s| s.strip_suffix("_MODEL"))
+                    .map(str::to_ascii_lowercase);
                 value["env"][field] = json!(if field == "ANTHROPIC_DEFAULT_HAIKU_MODEL"
                     && !p.utility_model.is_empty()
                 {
                     &p.utility_model
                 } else {
-                    &p.default_model
+                    role.as_deref()
+                        .and_then(|role| {
+                            p.models
+                                .iter()
+                                .filter(|m| {
+                                    m.id.contains(&format!("-{role}-")) && !m.id.contains(':')
+                                })
+                                .max_by_key(|m| {
+                                    m.id.split(['-', '.', '/'])
+                                        .filter_map(|s| s.parse::<u64>().ok())
+                                        .collect::<Vec<_>>()
+                                })
+                                .map(|m| &m.id)
+                        })
+                        .unwrap_or(&p.default_model)
+                });
+            }
+            if client == "claude" {
+                value["model"] = json!(p.default_model);
+                value["modelPicker"] = json!({
+                    "replaceBuiltInOptions": true,
+                    "options": p.models.iter().map(|m| {
+                        let mut row = json!({"model":m.id,"label":m.name});
+                        if let Some(id) = m.id.strip_prefix("anthropic/claude-") {
+                            row["behavesAs"] = json!(format!("claude-{}", id.split(':').next().unwrap_or(id).replace('.', "-")));
+                        }
+                        row
+                    }).collect::<Vec<_>>()
                 });
             }
             value
@@ -188,10 +232,17 @@ pub(super) fn generated_provider(client: &str, p: &ClientProfile) -> Result<Prov
                 toml::Value::String("modeldeck".into()),
             );
             table.insert("model".into(), toml::Value::String(p.default_model.clone()));
-            table.insert(
-                "model_reasoning_effort".into(),
-                toml::Value::String("none".into()),
-            );
+            // Each generated catalog row carries its own context window. A
+            // previous global override would incorrectly apply it to all rows.
+            table.remove("model_context_window");
+            if p.effort.is_empty() {
+                table.remove("model_reasoning_effort");
+            } else {
+                table.insert(
+                    "model_reasoning_effort".into(),
+                    toml::Value::String(p.effort.clone()),
+                );
+            }
             let providers = table
                 .entry("model_providers")
                 .or_insert_with(|| toml::Value::Table(toml::map::Map::new()));
@@ -199,7 +250,7 @@ pub(super) fn generated_provider(client: &str, p: &ClientProfile) -> Result<Prov
                 toml::Value::try_from(json!({"name":"ModelDeck","base_url":base,"wire_api":"responses","requires_openai_auth":true})).map_err(|e| e.to_string())?);
             let text = toml::to_string_pretty(&root).map_err(|e| e.to_string())?;
             json!({"auth":{"OPENAI_API_KEY":p.local_token},"config":text,
-                "modelCatalog":{"models":p.models.iter().map(|m|json!({"model":m.id,"displayName":m.name,"contextWindow":m.context,"reasoningLevels":["none"],"defaultReasoningLevel":"none"})).collect::<Vec<_>>()}})
+                "modelCatalog":{"models":p.models.iter().map(|m|json!({"model":m.id,"displayName":m.name,"contextWindow":m.context,"reasoningLevels":if m.reasoning.is_empty(){vec!["none".to_string()]}else{m.reasoning.clone()},"defaultReasoningLevel":if m.reasoning.is_empty(){"none"}else if m.default_effort.is_empty(){reasoning::preferred(&m.reasoning)}else{&m.default_effort},"supportsSearchTool":false})).collect::<Vec<_>>()}})
         }
         "grokbuild" => {
             let mut root = fs::read_to_string(crate::grok_config::get_grok_config_path())
@@ -267,13 +318,64 @@ pub(super) fn generated_provider(client: &str, p: &ClientProfile) -> Result<Prov
 }
 
 pub fn command(client: &str) -> Option<String> {
-    matches!(client, "antigravity" | "muse" | "cursor-agent").then(|| {
+    (matches!(client, "antigravity" | "muse" | "cursor-agent")
+        || client == "claude" && get_app_config_dir().join("bin/claude").exists())
+    .then(|| {
         get_app_config_dir()
             .join("bin")
             .join(client)
             .to_string_lossy()
             .to_string()
     })
+}
+
+fn claude_executable(p: &ClientProfile) -> Result<Option<PathBuf>, String> {
+    let managed = get_app_config_dir().join("bin/claude");
+    let usable = |path: &PathBuf| {
+        if path == &managed || !path.is_file() {
+            return false;
+        }
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            fs::metadata(path).is_ok_and(|m| m.permissions().mode() & 0o111 != 0)
+        }
+        #[cfg(not(unix))]
+        {
+            true
+        }
+    };
+    if !p.executable.is_empty() {
+        let path = PathBuf::from(&p.executable);
+        return if usable(&path) {
+            Ok(Some(path))
+        } else {
+            Err("Select the original Claude Code executable; managed launchers cannot launch themselves".into())
+        };
+    }
+    let mut candidates = Vec::new();
+    if let Some(path) = std::env::var_os("PATH") {
+        candidates.extend(std::env::split_paths(&path).map(|dir| dir.join("claude")));
+    }
+    candidates.extend([
+        get_home_dir().join(".local/bin/claude"),
+        PathBuf::from("/usr/local/bin/claude"),
+    ]);
+    Ok(candidates.into_iter().find(usable))
+}
+
+fn claude_launcher(p: &ClientProfile, executable: &Path) -> String {
+    let quote = |s: &str| format!("'{}'", s.replace('\'', "'\"'\"'"));
+    let mut script = format!("#!/bin/sh\n# Managed by ModelDeck: model connection only.\nset -eu\nmodel={}\neffort={}\nhas_effort=0\nnext_model=0\nfor arg do\n  if [ \"$next_model\" = 1 ]; then model=$arg; next_model=0; continue; fi\n  case \"$arg\" in\n    --) break;;\n    --model) next_model=1;;\n    --model=*) model=${{arg#--model=}};;\n    --effort|--effort=*) has_effort=1;;\n  esac\ndone\ncase \"$model\" in\n", quote(&p.default_model), quote(&p.effort));
+    for model in &p.models {
+        script.push_str(&format!(
+            "  {}) effort={};;\n",
+            quote(&model.id),
+            quote(&model.default_effort)
+        ));
+    }
+    script.push_str(&format!("esac\nif [ \"$has_effort\" = 0 ] && [ -n \"$effort\" ]; then set -- --effort \"$effort\" \"$@\"; fi\nexec {} \"$@\"\n", quote(&executable.to_string_lossy())));
+    script
 }
 
 pub fn apply(
@@ -283,6 +385,11 @@ pub fn apply(
     state: &AppState,
     commit: impl FnOnce() -> Result<(), String>,
 ) -> Result<(), String> {
+    let claude_executable = if client == "claude" {
+        claude_executable(p)?
+    } else {
+        None
+    };
     let adapter = ModelClient::try_from_id(client);
     if let Some(adapter) = adapter {
         adapters::preflight(adapter, p)?;
@@ -290,23 +397,57 @@ pub fn apply(
     let paths = paths(client)?;
     let before = capture(&paths)?;
     let path = backup_path(client)?;
-    let existing = read_backup(&path)?;
-    let original = existing
+    let existing = read_backup(client, &path)?;
+    let mut original = existing
         .as_ref()
         .map(|b| b.original.clone())
         .unwrap_or_else(|| before.clone());
+    // A newer adapter may own an additional file (for example Claude's max
+    // launcher). Include its pre-apply state even when an older backup exists.
+    for snapshot in &before {
+        if !original.iter().any(|old| old.path == snapshot.path) {
+            original.push(snapshot.clone());
+        }
+    }
     let result = (|| {
         if let Some(adapter) = adapter {
             // Native adapters consume an ephemeral catalog; the global graph
             // remains the only model source and is read on every gateway call.
-            adapters::apply(adapter, p, &origin(), previous, || Ok(()))?;
+            adapters::apply_deck(adapter, p, previous, || Ok(()))?;
         } else {
             let provider = generated_provider(client, p)?;
             let app = client.parse::<AppType>().map_err(|e| e.to_string())?;
-            crate::services::provider::write_live_with_common_config_for_state(
-                state, &app, &provider,
-            )
-            .map_err(|e| e.to_string())?;
+            if client == "codex" {
+                let settings =
+                    crate::services::provider::build_effective_settings_with_common_config(
+                        state.db.as_ref(),
+                        &app,
+                        &provider,
+                    )
+                    .map_err(|e| e.to_string())?;
+                let profile =
+                    crate::proxy::providers::resolve_codex_catalog_tool_profile(&provider);
+                crate::codex_config::write_codex_deck_live_with_catalog(&settings, profile)
+                    .map_err(|e| e.to_string())?;
+            } else {
+                crate::services::provider::write_live_with_common_config_for_state(
+                    state, &app, &provider,
+                )
+                .map_err(|e| e.to_string())?;
+            }
+            if client == "claude" {
+                if let Some(executable) = claude_executable {
+                    let path = get_app_config_dir().join("bin/claude");
+                    atomic_write_private(&path, claude_launcher(p, &executable).as_bytes())
+                        .map_err(|e| e.to_string())?;
+                    #[cfg(unix)]
+                    {
+                        use std::os::unix::fs::PermissionsExt;
+                        fs::set_permissions(&path, fs::Permissions::from_mode(0o700))
+                            .map_err(|e| e.to_string())?;
+                    }
+                }
+            }
             if client == "opencode" {
                 let mut config =
                     crate::opencode_config::read_opencode_config().map_err(|e| e.to_string())?;
@@ -369,7 +510,7 @@ pub fn restore(client: &str, commit: impl FnOnce() -> Result<(), String>) -> Res
     }
     let path = backup_path(client)?;
     let backup =
-        read_backup(&path)?.ok_or("Original native configuration backup is unavailable")?;
+        read_backup(client, &path)?.ok_or("Original native configuration backup is unavailable")?;
     let before = capture(
         &backup
             .applied
@@ -394,3 +535,6 @@ pub fn restore(client: &str, commit: impl FnOnce() -> Result<(), String>) -> Res
     fs::remove_file(path).map_err(|e| e.to_string())?;
     Ok(())
 }
+
+#[cfg(test)]
+mod tests;

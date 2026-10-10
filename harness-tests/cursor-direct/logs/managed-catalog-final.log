@@ -1,0 +1,6 @@
+Available models
+
+md-inkling - md-inkling
+md-nemotron - md-nemotron (default)
+
+Tip: use --model <id> (or /model <id> in interactive mode) to switch.

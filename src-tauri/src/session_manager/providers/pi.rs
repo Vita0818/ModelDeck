@@ -1,17 +1,24 @@
+#[cfg(test)]
 use std::collections::{HashMap, HashSet};
-use std::fs::{self, File};
+use std::fs;
+#[cfg(test)]
+use std::fs::File;
+#[cfg(test)]
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
 
-use serde::Serialize;
+#[cfg(test)]
 use serde_json::Value;
 
+#[cfg(test)]
 use crate::session_manager::{SessionMessage, SessionMeta};
 
+#[cfg(test)]
 use super::utils::{
     extract_text, parse_timestamp_to_ms, path_basename, truncate_summary, TITLE_MAX_CHARS,
 };
 
+#[cfg(test)]
 const PROVIDER_ID: &str = "pi";
 pub(crate) const MAX_TREE_ENTRIES: usize = 500_000;
 const MAX_TREE_ID_BYTES: usize = 256;
@@ -37,20 +44,8 @@ enum SessionRootResolution {
     },
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
-#[serde(tag = "status", rename_all = "snake_case")]
-pub enum PiSessionDiscovery {
-    Available,
-    RequiresProjectContext {
-        #[serde(rename = "configuredPath")]
-        configured_path: String,
-    },
-    Unavailable {
-        reason: String,
-    },
-}
-
 #[derive(Debug)]
+#[cfg(test)]
 struct SessionHeader {
     id: String,
     cwd: String,
@@ -59,6 +54,7 @@ struct SessionHeader {
 }
 
 #[derive(Debug)]
+#[cfg(test)]
 struct SessionTree {
     header: SessionHeader,
     active_entry_indexes: HashSet<usize>,
@@ -66,23 +62,12 @@ struct SessionTree {
 }
 
 #[derive(Debug, Default)]
+#[cfg(test)]
 struct SessionSummary {
     first_user_message: Option<String>,
     last_message: Option<String>,
     explicit_name: Option<Option<String>>,
     last_active_at: Option<i64>,
-}
-
-/// Pi keeps a relative `sessionDir` relative through SessionManager creation;
-/// its file operations therefore depend on the launching process cwd. A global
-/// session browser has no authoritative launch cwd, so relative values are
-/// deliberately non-enumerable and never fall back to another root.
-pub fn session_roots() -> Vec<PathBuf> {
-    match resolve_session_root() {
-        SessionRootResolution::Available { root, .. } => vec![root],
-        SessionRootResolution::RequiresProjectContext { .. }
-        | SessionRootResolution::Unavailable { .. } => Vec::new(),
-    }
 }
 
 /// Return candidate JSONL files using Pi's active root and layout rules.
@@ -106,16 +91,6 @@ fn session_files_from_resolution(
             "Pi sessionDir '{configured_path}' requires a project cwd and cannot be globally enumerated"
         )),
         SessionRootResolution::Unavailable { reason } => Err(reason),
-    }
-}
-
-pub fn session_discovery() -> PiSessionDiscovery {
-    match resolve_session_root() {
-        SessionRootResolution::Available { .. } => PiSessionDiscovery::Available,
-        SessionRootResolution::RequiresProjectContext { configured_path } => {
-            PiSessionDiscovery::RequiresProjectContext { configured_path }
-        }
-        SessionRootResolution::Unavailable { reason } => PiSessionDiscovery::Unavailable { reason },
     }
 }
 
@@ -207,26 +182,7 @@ fn resolve_global_session_dir(value: &str, home: &Path) -> Option<PathBuf> {
     path.is_absolute().then_some(path)
 }
 
-pub fn scan_sessions() -> Vec<SessionMeta> {
-    match resolve_session_root() {
-        SessionRootResolution::Available { root, layout, .. } => {
-            scan_sessions_in_root(&root, layout)
-        }
-        SessionRootResolution::RequiresProjectContext {
-            configured_path, ..
-        } => {
-            log::warn!(
-                "Pi sessionDir '{configured_path}' requires a project cwd and cannot be globally enumerated"
-            );
-            Vec::new()
-        }
-        SessionRootResolution::Unavailable { reason } => {
-            log::warn!("Pi session discovery unavailable: {reason}");
-            Vec::new()
-        }
-    }
-}
-
+#[cfg(test)]
 fn scan_sessions_in_root(root: &Path, layout: SessionLayout) -> Vec<SessionMeta> {
     let mut files = Vec::new();
     collect_jsonl_files(root, layout, &mut files, true);
@@ -242,18 +198,7 @@ fn scan_sessions_in_root(root: &Path, layout: SessionLayout) -> Vec<SessionMeta>
         .collect()
 }
 
-pub fn load_messages(path: &Path) -> Result<Vec<SessionMessage>, String> {
-    match resolve_session_root() {
-        SessionRootResolution::Available { root, layout, .. } => {
-            load_messages_with_layout(&root, path, layout)
-        }
-        SessionRootResolution::RequiresProjectContext { .. } => {
-            Err("Relative Pi sessionDir cannot be globally resolved".to_string())
-        }
-        SessionRootResolution::Unavailable { reason } => Err(reason),
-    }
-}
-
+#[cfg(test)]
 fn load_messages_with_layout(
     root: &Path,
     path: &Path,
@@ -264,11 +209,7 @@ fn load_messages_with_layout(
     read_active_messages(&source, &tree)
 }
 
-pub fn delete_session(root: &Path, path: &Path, session_id: &str) -> Result<bool, String> {
-    let layout = layout_for_current_root(root)?;
-    delete_session_with_layout(root, path, session_id, layout)
-}
-
+#[cfg(test)]
 fn delete_session_with_layout(
     root: &Path,
     path: &Path,
@@ -291,32 +232,7 @@ fn delete_session_with_layout(
     Ok(true)
 }
 
-fn layout_for_current_root(root: &Path) -> Result<SessionLayout, String> {
-    let (configured_root, layout) = match resolve_session_root() {
-        SessionRootResolution::Available { root, layout, .. } => (root, layout),
-        SessionRootResolution::RequiresProjectContext { .. } => {
-            return Err("Relative Pi sessionDir cannot be globally resolved".to_string());
-        }
-        SessionRootResolution::Unavailable { reason } => return Err(reason),
-    };
-    let configured_root = configured_root.canonicalize().map_err(|error| {
-        format!(
-            "Failed to resolve Pi session root {}: {error}",
-            configured_root.display()
-        )
-    })?;
-    let requested_root = root.canonicalize().map_err(|error| {
-        format!(
-            "Failed to resolve Pi session root {}: {error}",
-            root.display()
-        )
-    })?;
-    if configured_root != requested_root {
-        return Err("Pi session root changed before deletion".to_string());
-    }
-    Ok(layout)
-}
-
+#[cfg(test)]
 fn parse_session(path: &Path) -> Result<SessionMeta, String> {
     let source = path
         .canonicalize()
@@ -357,6 +273,7 @@ fn parse_session(path: &Path) -> Result<SessionMeta, String> {
     })
 }
 
+#[cfg(test)]
 fn read_tree(path: &Path) -> Result<SessionTree, String> {
     validate_file_size(path)?;
     let reader = BufReader::new(
@@ -427,6 +344,7 @@ fn read_tree(path: &Path) -> Result<SessionTree, String> {
     })
 }
 
+#[cfg(test)]
 fn update_session_summary(summary: &mut SessionSummary, value: &Value) {
     if value.get("type").and_then(Value::as_str) == Some("session_info") {
         summary.explicit_name = Some(
@@ -467,6 +385,7 @@ fn update_session_summary(summary: &mut SessionSummary, value: &Value) {
     summary.last_message = Some(content);
 }
 
+#[cfg(test)]
 fn read_active_messages(path: &Path, tree: &SessionTree) -> Result<Vec<SessionMessage>, String> {
     validate_file_size(path)?;
     let reader = BufReader::new(
@@ -551,6 +470,7 @@ fn read_active_messages(path: &Path, tree: &SessionTree) -> Result<Vec<SessionMe
     Ok(messages)
 }
 
+#[cfg(test)]
 fn push_system(messages: &mut Vec<SessionMessage>, content: &str, ts: Option<i64>) {
     if !content.trim().is_empty() {
         messages.push(SessionMessage {
@@ -561,6 +481,7 @@ fn push_system(messages: &mut Vec<SessionMessage>, content: &str, ts: Option<i64
     }
 }
 
+#[cfg(test)]
 fn parse_header(value: &Value) -> Result<SessionHeader, String> {
     if value.get("type").and_then(Value::as_str) != Some("session") {
         return Err("Pi session header must be the first valid JSON entry".to_string());
@@ -587,6 +508,7 @@ fn parse_header(value: &Value) -> Result<SessionHeader, String> {
     })
 }
 
+#[cfg(test)]
 fn entry_identity(
     value: &Value,
     version: u64,
@@ -612,6 +534,7 @@ fn entry_identity(
     Some((id, parent_id))
 }
 
+#[cfg(test)]
 fn parse_message(message: &Value) -> Option<(String, String)> {
     let role = message.get("role").and_then(Value::as_str)?;
     let (display_role, content) = match role {
@@ -650,6 +573,7 @@ fn parse_message(message: &Value) -> Option<(String, String)> {
     (!content.trim().is_empty()).then_some((display_role, content))
 }
 
+#[cfg(test)]
 fn validate_source_under_root(
     root: &Path,
     path: &Path,
@@ -687,6 +611,7 @@ fn validate_source_under_root(
     Ok((root, source))
 }
 
+#[cfg(test)]
 fn matches_session_layout(root: &Path, source: &Path, layout: SessionLayout) -> bool {
     let Ok(relative) = source.strip_prefix(root) else {
         return false;
@@ -698,6 +623,7 @@ fn matches_session_layout(root: &Path, source: &Path, layout: SessionLayout) -> 
     }
 }
 
+#[cfg(test)]
 fn validate_file_size(path: &Path) -> Result<(), String> {
     let metadata =
         fs::metadata(path).map_err(|error| format!("Failed to inspect Pi session: {error}"))?;

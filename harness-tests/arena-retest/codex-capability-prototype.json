@@ -1,0 +1,14 @@
+{
+  "client": "codex",
+  "mode": "interactive",
+  "work": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena-gateway",
+  "requestedSessionId": "6e1dd5c9-06b2-4763-802a-1faf3c3554c8",
+  "gatewayRecordStart": 90,
+  "configurationOnlyContainsGatewayToken": true,
+  "phase": "hosted-tool-capability-prototype",
+  "resultFileValue": "89",
+  "nativeSessionId": "01a1198c-8504-73c3-a053-c930220080d6",
+  "passed": true,
+  "nativeFinalText": "MD_TEST_OK",
+  "hostedServerToolsDisabled": true
+}

@@ -273,7 +273,9 @@ export default function ProvidersPage() {
     );
   }
 
-  const usesEnv = Boolean(provider.keyEnv);
+  const usesEnv = provider.keySource
+    ? provider.keySource === "env"
+    : Boolean(provider.keyEnv);
 
   return (
     <Page
@@ -348,7 +350,7 @@ export default function ProvidersPage() {
                 patchProvider({ protocol: value as Protocol })
               }
             >
-              <SelectTrigger>
+              <SelectTrigger aria-label={t("deck.upstreamProtocol")}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -381,10 +383,14 @@ export default function ProvidersPage() {
             <Select
               value={usesEnv ? "env" : "stored"}
               onValueChange={(value) =>
-                patchProvider(value === "env" ? { apiKey: "" } : { keyEnv: "" })
+                patchProvider(
+                  value === "env"
+                    ? { keySource: "env", apiKey: "" }
+                    : { keySource: "stored", keyEnv: "" },
+                )
               }
             >
-              <SelectTrigger>
+              <SelectTrigger aria-label={t("deck.credentialSource")}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

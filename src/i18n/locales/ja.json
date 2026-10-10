@@ -1824,47 +1824,6 @@
     "officialDescription": "公式ログイン。API Key 不要",
     "presetDescription": "プリセットを使用。API Key だけ入力すれば OK"
   },
-  "workspace": {
-    "title": "ワークスペースファイル",
-    "manage": "ワークスペース",
-    "files": {
-      "agents": "エージェントの操作指示とルール",
-      "soul": "エージェントの人格とコミュニケーションスタイル",
-      "user": "ユーザープロファイルと設定",
-      "identity": "エージェントの名前とアバター",
-      "tools": "ローカルツールドキュメント",
-      "memory": "長期記憶と意思決定記録",
-      "heartbeat": "ハートビート実行チェックリスト",
-      "bootstrap": "初回実行ブートストラップ",
-      "boot": "ゲートウェイ再起動チェックリスト"
-    },
-    "editing": "{{filename}} を編集",
-    "saveSuccess": "保存しました",
-    "saveFailed": "保存に失敗しました",
-    "loadFailed": "読み込みに失敗しました",
-    "openDirectory": "ファイルマネージャーで開く",
-    "dailyMemory": {
-      "title": "デイリーメモリー",
-      "sectionTitle": "デイリーメモリー",
-      "cardTitle": "デイリーメモリーファイル",
-      "cardDescription": "デイリーメモリーの閲覧・管理",
-      "createToday": "メモリーを追加",
-      "empty": "デイリーメモリーファイルはまだありません",
-      "loadFailed": "デイリーメモリーファイルの読み込みに失敗しました",
-      "createFailed": "デイリーメモリーファイルの作成に失敗しました",
-      "deleteSuccess": "デイリーメモリーファイルを削除しました",
-      "deleteFailed": "デイリーメモリーファイルの削除に失敗しました",
-      "confirmDeleteTitle": "デイリーメモリーを削除",
-      "confirmDeleteMessage": "{{date}} のデイリーメモリーを削除しますか？この操作は取り消せません。",
-      "searchPlaceholder": "全文検索...",
-      "searchScopeHint": "すべてのデイリーメモリーを全文検索 ⌘F",
-      "searchCloseHint": "Escで閉じる",
-      "noSearchResults": "検索に一致するデイリーメモリーはありません。",
-      "searching": "検索中...",
-      "searchFailed": "検索に失敗しました",
-      "matchCount": "{{count}}件一致"
-    }
-  },
   "openclaw": {
     "backupCreated": "バックアップを作成しました: {{path}}",
     "providerKey": "プロバイダーキー",
@@ -1995,32 +1954,6 @@
       "modelsHint": "現在のプロバイダーとして有効にすると、最初のモデルが Hermes のデフォルトモデルになります。",
       "rateLimitDelay": "リクエスト間隔（秒）",
       "rateLimitDelayHint": "連続したリクエスト間の最小待機秒数（任意）。空欄の場合は制限なし。"
-    },
-    "webui": {
-      "open": "Hermes Web UI を開く",
-      "offline": "Hermes Web UI が起動していません。まず `hermes dashboard` を実行してください。",
-      "openFailed": "Hermes Web UI を開けませんでした",
-      "launchConfirmTitle": "Hermes Dashboard が起動していません",
-      "launchConfirmMessage": "ターミナルを開いて `hermes dashboard` を実行しますか？\n\n起動完了後、ブラウザが自動的に開きます。\n\nターミナルに `hermes` が見つからない、または web 依存が不足するというエラーが表示される場合は、まず次を実行してください：\npip install hermes-agent[web]",
-      "launchConfirmAction": "ターミナルを開いて起動",
-      "launching": "ターミナルで hermes dashboard を起動しました。",
-      "launchFailed": "ターミナルを開けませんでした"
-    },
-    "memory": {
-      "title": "メモリ",
-      "agentTab": "エージェント記憶 (MEMORY.md)",
-      "userTab": "ユーザープロファイル (USER.md)",
-      "usage": "{{current}} / {{limit}} 文字",
-      "overLimit": "上限を超えました。Hermes は次回読み込み時に切り詰めます",
-      "enableOn": "有効",
-      "enableOff": "無効",
-      "disabledHint": "再度有効化するまで Hermes はこの記憶をスキップします",
-      "toggleFailed": "メモリの切り替えに失敗しました",
-      "saveSuccess": "記憶を保存しました",
-      "saveFailed": "記憶の保存に失敗しました",
-      "loadFailed": "記憶ファイルの読み込みに失敗しました",
-      "openConfig": "Hermes Web UI で上限を調整",
-      "runtimeNote": "変更は Hermes の再起動または新規セッション時に反映されます。"
     }
   },
   "env": {
@@ -2633,7 +2566,7 @@
     "capability": {
       "antigravity": "API キーによるカスタムモデル接続には Antigravity CLI 1.2.16 以降が必要です。Gemini は直接転送し、OpenAI Chat は内蔵ブリッジでテキスト・画像・ツール呼び出しを処理します。上流の推論レベルはここで設定します。",
       "cursor": "Cursor IDE の標準 OpenAI BYOK 設定を使います。公開 HTTPS エンドポイントが必要です。適用前に Cursor を終了してください。コンテキストと推論の設定は Cursor とモデルの対応範囲に従います。",
-      "cursor-agent": "Cursor のサービスを通じて BYOK で選択したプロバイダーに接続します。公開 HTTPS エンドポイントと Cursor へのログインが必要です。起動コマンドは CLI のバージョンを確認してからモデルアダプターを読み込みます。",
+      "cursor-agent": "検証済みの cursor-agent-local を選択すると、Cursor へのログインや公開エンドポイントなしでネイティブのローカル API を利用できます。通常の cursor-agent はクラウド BYOK を使用し、Cursor ログインと公開 HTTPS が必要です。",
       "muse": "内蔵ブリッジは Responses、OpenAI Chat、Anthropic Messages に対応し、Muse のモデル一覧・ツール名前空間・連続 SSE 番号を提供します。max 非対応版では xhigh を使います。"
     },
     "loading": "モデル接続を読み込み中",
@@ -2832,13 +2765,14 @@
     "removeRoute": "ルートを削除",
     "routesHint": "エイリアスはクライアントに見えるモデル名です。ティアを空にするとプロバイダー既定値を使います。",
     "compatibleModels": "互換モデル",
-    "retainedHint": "移行時に保持されたネイティブログインとクライアント固有ファイル。"
+    "retainedHint": "移行時に保持されたネイティブログインとクライアント固有ファイル。",
+    "effort": "デフォルトの推論レベル",
+    "modelSettingsHint": "コンテキストと出力上限は「プロバイダーとモデル」、既定の推論レベルは「エンドポイント」で設定します。クライアントで明示したレベルが優先されます。Claude Code を max で開始するには管理コマンドを使います。"
   },
   "nav": {
     "primary": "メインナビゲーション",
     "resources": "リソース",
     "clients": "クライアント",
-    "tools": "ツール",
     "usage": "使用量",
     "applied": "適用済み",
     "resource": {

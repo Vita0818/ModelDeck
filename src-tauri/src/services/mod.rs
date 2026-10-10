@@ -7,7 +7,8 @@ pub mod env_manager;
 pub mod model_fetch;
 pub mod model_pricing;
 pub mod omo;
-pub(crate) mod pi_state;
+#[cfg(test)]
+mod pi_state;
 pub mod provider;
 pub mod proxy;
 pub mod s3;

@@ -1,9 +1,12 @@
 import path from "node:path";
-import { defineConfig } from "vitest/config";
+import { defineConfig, type Plugin } from "vitest/config";
 import react from "@vitejs/plugin-react";
 
+// The React plugin supports Vite 5 and 7; Vitest 2 carries separate Vite 5 types.
+const reactPlugins = react() as unknown as Plugin[];
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: reactPlugins,
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

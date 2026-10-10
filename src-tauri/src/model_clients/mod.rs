@@ -2,6 +2,7 @@
 //! the skill, prompt, MCP, OAuth, or subscription management code paths.
 pub(crate) mod gateway;
 pub(crate) mod native;
+pub(crate) mod provider_adapter;
 
 use crate::config::{atomic_write_private, get_app_config_dir};
 use serde::{Deserialize, Serialize};
@@ -51,6 +52,9 @@ pub struct ClientModel {
     pub output: u64,
     #[serde(default)]
     pub reasoning: Vec<String>,
+    /// Default from the selected resource route, used only in native projections.
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub default_effort: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub reasoning_supported: Option<bool>,
 }
@@ -63,6 +67,9 @@ pub struct ClientProfile {
     pub endpoint: String,
     /// Supported wire API, not the branding of the provider.
     pub protocol: String,
+    /// Upstream adapter metadata, independent of native harness settings.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub provider_meta: Option<serde_json::Value>,
     #[serde(default)]
     pub api_key: String,
     #[serde(default)]
@@ -164,7 +171,9 @@ pub(crate) fn validate(client: ModelClient, p: &ClientProfile) -> Result<(), Str
     if !protocol_supported {
         return Err("Unsupported API protocol for this client".into());
     }
-    if matches!(client, ModelClient::Cursor | ModelClient::CursorAgent) {
+    if client == ModelClient::Cursor
+        || (client == ModelClient::CursorAgent && !native::cursor_agent_is_local(&p.executable))
+    {
         let host = url.host_str().unwrap_or_default().trim_end_matches('.');
         if url.scheme() != "https"
             || host == "localhost"
@@ -444,6 +453,7 @@ pub fn import_model_client_catalog(
                     context,
                     output,
                     reasoning,
+                    default_effort: String::new(),
                     reasoning_supported: m.get("reasoning").and_then(serde_json::Value::as_bool),
                 });
             }

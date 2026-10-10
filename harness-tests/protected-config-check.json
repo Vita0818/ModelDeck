@@ -1,0 +1,78 @@
+{
+  "allUnchanged": true,
+  "checks": [
+    {
+      "path": "/Users/vita/.codex/config.toml",
+      "unchanged": true,
+      "originallyPresent": true
+    },
+    {
+      "path": "/Users/vita/.codex/auth.json",
+      "unchanged": true,
+      "originallyPresent": true
+    },
+    {
+      "path": "/Users/vita/.config/codex-cli/config.toml",
+      "unchanged": true,
+      "originallyPresent": true
+    },
+    {
+      "path": "/Users/vita/.claude/settings.json",
+      "unchanged": true,
+      "originallyPresent": true
+    },
+    {
+      "path": "/Users/vita/.config/opencode/opencode.json",
+      "unchanged": true,
+      "originallyPresent": true
+    },
+    {
+      "path": "/Users/vita/.local/share/opencode/auth.json",
+      "unchanged": true,
+      "originallyPresent": true
+    },
+    {
+      "path": "/Users/vita/.cc-switch/model-clients.json",
+      "unchanged": true,
+      "originallyPresent": true
+    },
+    {
+      "path": "/Users/vita/.grok/config.toml",
+      "unchanged": true,
+      "originallyPresent": true
+    },
+    {
+      "path": "/Users/vita/.config/muse/settings.json",
+      "unchanged": true,
+      "originallyPresent": true
+    },
+    {
+      "path": "/Users/vita/.gemini/antigravity-cli/settings.json",
+      "unchanged": true,
+      "originallyPresent": true
+    }
+  ],
+  "chatgptOfficialOAuthUnchanged": true,
+  "afterRustSuiteAllUnchanged": true,
+  "cursorLocalFollowup": {
+    "allUnchanged": true,
+    "checks": [
+      {
+        "path": "/Users/vita/.codex/auth.json",
+        "unchanged": true
+      },
+      {
+        "path": "/Users/vita/.codex/config.toml",
+        "unchanged": true
+      },
+      {
+        "path": "/Users/vita/.cursor/cli-config.json",
+        "unchanged": true
+      },
+      {
+        "path": "/Users/vita/.config/opencode/opencode.json",
+        "unchanged": true
+      }
+    ]
+  }
+}

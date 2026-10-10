@@ -23,15 +23,13 @@ use crate::store::AppState;
 
 // Re-export sub-module functions for external access
 pub use live::{
-    import_default_config, import_hermes_providers_from_live, import_openclaw_providers_from_live,
-    import_opencode_providers_from_live, read_live_settings,
-    should_import_default_config_on_startup, sync_current_to_live,
+    import_default_config, import_hermes_providers_from_live, import_opencode_providers_from_live,
+    read_live_settings, should_import_default_config_on_startup, sync_current_to_live,
     update_toml_common_config_snippet,
 };
 
-pub fn import_pi_providers_from_live(state: &AppState) -> Result<usize, AppError> {
-    pi::import_from_live(state)
-}
+#[cfg(test)]
+use live::import_openclaw_providers_from_live;
 
 // Internal re-exports (pub(crate))
 pub(crate) use live::sanitize_claude_settings_for_live;
@@ -2022,6 +2020,12 @@ requires_openai_auth = true
 
         let db = Arc::new(Database::memory().expect("init db"));
         let state = AppState::new(db.clone());
+        db.update_proxy_config(crate::proxy::ProxyConfig {
+            listen_port: 0,
+            ..Default::default()
+        })
+        .await
+        .expect("use an isolated proxy port instead of the running desktop app's port");
 
         let mut original = Provider::with_id(
             "p1".into(),
@@ -2070,7 +2074,7 @@ requires_openai_auth = true
                 .expect("update app proxy config");
         }
 
-        state
+        let proxy_info = state
             .proxy_service
             .start()
             .await
@@ -2118,7 +2122,10 @@ requires_openai_auth = true
         let profile: Value = read_json_file(&profile_path).expect("read desktop profile");
         assert_eq!(
             profile["inferenceGatewayBaseUrl"],
-            json!("http://127.0.0.1:15721/claude-desktop"),
+            json!(format!(
+                "http://{}:{}/claude-desktop",
+                proxy_info.address, proxy_info.port
+            )),
             "desktop profile should stay pointed at the local gateway during takeover"
         );
         assert_eq!(profile["inferenceGatewayAuthScheme"], json!("bearer"));
@@ -5521,14 +5528,6 @@ impl ProviderService {
         }
 
         Ok(true)
-    }
-
-    pub(crate) fn update_pi_usage_script(
-        state: &AppState,
-        id: &str,
-        script: crate::provider::UsageScript,
-    ) -> Result<bool, AppError> {
-        pi::update_usage_script(state, id, script)
     }
 
     /// Delete a provider

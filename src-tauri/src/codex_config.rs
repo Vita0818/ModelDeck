@@ -1650,6 +1650,9 @@ fn codex_catalog_model_entry(
         // ProxyChat contract so Codex keeps to auto/high.
         entry_obj.insert("supports_image_detail_original".to_string(), json!(false));
     }
+    if let Some(search) = spec.supports_search_tool {
+        entry_obj.insert("supports_search_tool".to_string(), json!(search));
+    }
 
     // Per-model reasoning levels override the template's conservative
     // none/high default (e.g. a LiteLLM gateway serving a model that accepts
@@ -1675,6 +1678,8 @@ struct CodexCatalogModelSpec {
     /// Per-row override for the native template's `supports_parallel_tool_calls`
     /// (e.g. MiniMax=true, MiMo=false). Only consulted for `NativeResponses`.
     supports_parallel_tool_calls: Option<bool>,
+    /// Explicit hosted tool-search capability; omitted values keep the template.
+    supports_search_tool: Option<bool>,
     /// Hidden per-row capability declaration from built-in provider metadata.
     /// When omitted, all catalog profiles consult the shared text-only model
     /// registry and otherwise default to `["text", "image"]`.
@@ -1741,6 +1746,10 @@ fn codex_catalog_model_specs(settings: &Value) -> Vec<CodexCatalogModelSpec> {
             .get("supportsParallelToolCalls")
             .or_else(|| model_config.get("supports_parallel_tool_calls"))
             .and_then(|value| value.as_bool());
+        let supports_search_tool = model_config
+            .get("supportsSearchTool")
+            .or_else(|| model_config.get("supports_search_tool"))
+            .and_then(Value::as_bool);
         let input_modalities = model_config
             .get("inputModalities")
             .or_else(|| model_config.get("input_modalities"))
@@ -1789,6 +1798,7 @@ fn codex_catalog_model_specs(settings: &Value) -> Vec<CodexCatalogModelSpec> {
             display_name,
             context_window,
             supports_parallel_tool_calls,
+            supports_search_tool,
             input_modalities,
             base_instructions,
             reasoning_levels,
@@ -2172,6 +2182,9 @@ fn codex_vendor_catalog_model_entry(
     }
     if let Some(parallel) = spec.supports_parallel_tool_calls {
         entry_obj.insert("supports_parallel_tool_calls".to_string(), json!(parallel));
+    }
+    if let Some(search) = spec.supports_search_tool {
+        entry_obj.insert("supports_search_tool".to_string(), json!(search));
     }
     if let Some(modalities) = spec.input_modalities.as_deref() {
         entry_obj.insert("input_modalities".to_string(), json!(modalities));
@@ -2722,6 +2735,27 @@ pub fn write_codex_provider_live_with_catalog(
         .transpose()?;
 
     write_codex_live_for_provider(category, auth, prepared_config.as_deref())
+}
+
+/// ModelDeck routes CLI requests without owning the official desktop login.
+/// The legacy direct-switch preference cannot opt this path into auth cleanup.
+pub(crate) fn write_codex_deck_live_with_catalog(
+    settings: &Value,
+    profile: CodexCatalogToolProfile,
+) -> Result<(), AppError> {
+    let auth = settings
+        .get("auth")
+        .ok_or_else(|| AppError::Config("Codex provider has no auth settings".into()))?;
+    let config = settings
+        .get("config")
+        .and_then(Value::as_str)
+        .ok_or_else(|| AppError::Config("Codex provider has no config settings".into()))?;
+    let config = prepare_codex_config_text_with_model_catalog(settings, config, profile)?;
+    // ModelDeck's graph declares client function tools, not hosted search
+    // services. Do not inherit a GPT template's server-tool grant for a router.
+    let config = set_codex_native_web_search_field(&config, true)?;
+    let plan = plan_codex_live_write(None, auth, Some(&config), true)?;
+    write_codex_live_config_atomic(plan.config_text.as_deref())
 }
 
 /// Extract a provider-scoped `experimental_bearer_token` from Codex `config.toml`.
@@ -6754,6 +6788,7 @@ base_url = "https://production.api/v1"
             display_name: Some("Kimi K3".to_string()),
             context_window: Some(262_144),
             supports_parallel_tool_calls: None,
+            supports_search_tool: None,
             input_modalities: None,
             base_instructions: None,
             reasoning_levels: None,
@@ -7218,6 +7253,7 @@ base_url = "https://production.api/v1"
                 display_name: Some("GPT 5.4".to_string()),
                 context_window: Some(128_000),
                 supports_parallel_tool_calls: None,
+                supports_search_tool: None,
                 input_modalities: None,
                 base_instructions: None,
                 reasoning_levels: None,
@@ -7228,6 +7264,7 @@ base_url = "https://production.api/v1"
                 display_name: Some("Qwen3 Coder Plus".to_string()),
                 context_window: Some(128_000),
                 supports_parallel_tool_calls: None,
+                supports_search_tool: None,
                 input_modalities: None,
                 base_instructions: None,
                 reasoning_levels: None,
@@ -7238,6 +7275,7 @@ base_url = "https://production.api/v1"
                 display_name: Some("GLM 5.2V".to_string()),
                 context_window: Some(128_000),
                 supports_parallel_tool_calls: None,
+                supports_search_tool: None,
                 input_modalities: None,
                 base_instructions: None,
                 reasoning_levels: None,
@@ -7248,6 +7286,7 @@ base_url = "https://production.api/v1"
                 display_name: Some("Explicit Visual Override".to_string()),
                 context_window: Some(128_000),
                 supports_parallel_tool_calls: None,
+                supports_search_tool: None,
                 input_modalities: Some(vec!["text".to_string(), "image".to_string()]),
                 base_instructions: None,
                 reasoning_levels: None,
@@ -7258,6 +7297,7 @@ base_url = "https://production.api/v1"
                 display_name: Some("Explicit Text Override".to_string()),
                 context_window: Some(128_000),
                 supports_parallel_tool_calls: None,
+                supports_search_tool: None,
                 input_modalities: Some(vec!["text".to_string()]),
                 base_instructions: None,
                 reasoning_levels: None,
@@ -7569,6 +7609,7 @@ wire_api = "responses"
             display_name: Some("x".to_string()),
             context_window: Some(128_000),
             supports_parallel_tool_calls: None,
+            supports_search_tool: None,
             input_modalities: None,
             base_instructions: None,
             reasoning_levels: None,

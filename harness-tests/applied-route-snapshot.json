@@ -1,0 +1,738 @@
+{
+  "providers": {
+    "arena": {
+      "id": "arena",
+      "baseUrl": "https://api.preview.arena.ai/v1",
+      "protocol": "openai-chat",
+      "keyEnv": "MD_TEST_ARENA_KEY"
+    },
+    "or_antigravity": {
+      "id": "or_antigravity",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "protocol": "openai-chat",
+      "keyEnv": "OC_OR_KEY"
+    },
+    "or_claude": {
+      "id": "or_claude",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "protocol": "openai-chat",
+      "keyEnv": "CC_OR_KEY"
+    },
+    "or_claude_desktop": {
+      "id": "or_claude_desktop",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "protocol": "openai-chat",
+      "keyEnv": "MD_TEST_DESKTOP_OR_KEY"
+    },
+    "or_codex": {
+      "id": "or_codex",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "protocol": "openai-chat",
+      "keyEnv": "CX_OR_KEY"
+    },
+    "or_cursor": {
+      "id": "or_cursor",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "protocol": "openai-chat",
+      "keyEnv": "OC_OR_KEY"
+    },
+    "or_cursor_agent": {
+      "id": "or_cursor_agent",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "protocol": "openai-chat",
+      "keyEnv": "OC_OR_KEY"
+    },
+    "or_grokbuild": {
+      "id": "or_grokbuild",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "protocol": "openai-chat",
+      "keyEnv": "OC_OR_KEY"
+    },
+    "or_hermes": {
+      "id": "or_hermes",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "protocol": "openai-chat",
+      "keyEnv": "OC_OR_KEY"
+    },
+    "or_muse": {
+      "id": "or_muse",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "protocol": "openai-chat",
+      "keyEnv": "OC_OR_KEY"
+    },
+    "or_opencode": {
+      "id": "or_opencode",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "protocol": "openai-chat",
+      "keyEnv": "OC_OR_KEY"
+    }
+  },
+  "models": {
+    "antigravity_arena": {
+      "id": "antigravity_arena",
+      "providerId": "arena",
+      "upstreamId": "coding-router-preview",
+      "name": "arena",
+      "context": 131072,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "antigravity_inkling": {
+      "id": "antigravity_inkling",
+      "providerId": "or_antigravity",
+      "upstreamId": "thinkingmachines/inkling:free",
+      "name": "Thinking Machines: Inkling (free)",
+      "context": 1048576,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "antigravity_nemotron": {
+      "id": "antigravity_nemotron",
+      "providerId": "or_antigravity",
+      "upstreamId": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "context": 1000000,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "claude_arena": {
+      "id": "claude_arena",
+      "providerId": "arena",
+      "upstreamId": "coding-router-preview",
+      "name": "arena",
+      "context": 131072,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "claude_desktop_arena": {
+      "id": "claude_desktop_arena",
+      "providerId": "arena",
+      "upstreamId": "coding-router-preview",
+      "name": "arena",
+      "context": 131072,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "claude_desktop_inkling": {
+      "id": "claude_desktop_inkling",
+      "providerId": "or_claude_desktop",
+      "upstreamId": "thinkingmachines/inkling:free",
+      "name": "Thinking Machines: Inkling (free)",
+      "context": 1048576,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "claude_desktop_nemotron": {
+      "id": "claude_desktop_nemotron",
+      "providerId": "or_claude_desktop",
+      "upstreamId": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "context": 1000000,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "claude_inkling": {
+      "id": "claude_inkling",
+      "providerId": "or_claude",
+      "upstreamId": "thinkingmachines/inkling:free",
+      "name": "Thinking Machines: Inkling (free)",
+      "context": 1048576,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "claude_nemotron": {
+      "id": "claude_nemotron",
+      "providerId": "or_claude",
+      "upstreamId": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "context": 1000000,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "codex_arena": {
+      "id": "codex_arena",
+      "providerId": "arena",
+      "upstreamId": "coding-router-preview",
+      "name": "arena",
+      "context": 131072,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "codex_inkling": {
+      "id": "codex_inkling",
+      "providerId": "or_codex",
+      "upstreamId": "thinkingmachines/inkling:free",
+      "name": "Thinking Machines: Inkling (free)",
+      "context": 1048576,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "codex_nemotron": {
+      "id": "codex_nemotron",
+      "providerId": "or_codex",
+      "upstreamId": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "context": 1000000,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "cursor_agent_arena": {
+      "id": "cursor_agent_arena",
+      "providerId": "arena",
+      "upstreamId": "coding-router-preview",
+      "name": "arena",
+      "context": 131072,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "cursor_agent_inkling": {
+      "id": "cursor_agent_inkling",
+      "providerId": "or_cursor_agent",
+      "upstreamId": "thinkingmachines/inkling:free",
+      "name": "Thinking Machines: Inkling (free)",
+      "context": 1048576,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "cursor_agent_nemotron": {
+      "id": "cursor_agent_nemotron",
+      "providerId": "or_cursor_agent",
+      "upstreamId": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "context": 1000000,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "cursor_arena": {
+      "id": "cursor_arena",
+      "providerId": "arena",
+      "upstreamId": "coding-router-preview",
+      "name": "arena",
+      "context": 131072,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "cursor_inkling": {
+      "id": "cursor_inkling",
+      "providerId": "or_cursor",
+      "upstreamId": "thinkingmachines/inkling:free",
+      "name": "Thinking Machines: Inkling (free)",
+      "context": 1048576,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "cursor_nemotron": {
+      "id": "cursor_nemotron",
+      "providerId": "or_cursor",
+      "upstreamId": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "context": 1000000,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "grokbuild_arena": {
+      "id": "grokbuild_arena",
+      "providerId": "arena",
+      "upstreamId": "coding-router-preview",
+      "name": "arena",
+      "context": 131072,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "grokbuild_inkling": {
+      "id": "grokbuild_inkling",
+      "providerId": "or_grokbuild",
+      "upstreamId": "thinkingmachines/inkling:free",
+      "name": "Thinking Machines: Inkling (free)",
+      "context": 1048576,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "grokbuild_nemotron": {
+      "id": "grokbuild_nemotron",
+      "providerId": "or_grokbuild",
+      "upstreamId": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "context": 1000000,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "hermes_arena": {
+      "id": "hermes_arena",
+      "providerId": "arena",
+      "upstreamId": "coding-router-preview",
+      "name": "arena",
+      "context": 131072,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "hermes_inkling": {
+      "id": "hermes_inkling",
+      "providerId": "or_hermes",
+      "upstreamId": "thinkingmachines/inkling:free",
+      "name": "Thinking Machines: Inkling (free)",
+      "context": 1048576,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "hermes_nemotron": {
+      "id": "hermes_nemotron",
+      "providerId": "or_hermes",
+      "upstreamId": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "context": 1000000,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "muse_arena": {
+      "id": "muse_arena",
+      "providerId": "arena",
+      "upstreamId": "coding-router-preview",
+      "name": "arena",
+      "context": 131072,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "muse_inkling": {
+      "id": "muse_inkling",
+      "providerId": "or_muse",
+      "upstreamId": "thinkingmachines/inkling:free",
+      "name": "Thinking Machines: Inkling (free)",
+      "context": 1048576,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "muse_nemotron": {
+      "id": "muse_nemotron",
+      "providerId": "or_muse",
+      "upstreamId": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "context": 1000000,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "opencode_arena": {
+      "id": "opencode_arena",
+      "providerId": "arena",
+      "upstreamId": "coding-router-preview",
+      "name": "arena",
+      "context": 131072,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "opencode_inkling": {
+      "id": "opencode_inkling",
+      "providerId": "or_opencode",
+      "upstreamId": "thinkingmachines/inkling:free",
+      "name": "Thinking Machines: Inkling (free)",
+      "context": 1048576,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    },
+    "opencode_nemotron": {
+      "id": "opencode_nemotron",
+      "providerId": "or_opencode",
+      "upstreamId": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "context": 1000000,
+      "output": 2048,
+      "reasoning": [],
+      "reasoningSupported": null,
+      "tools": true,
+      "images": false
+    }
+  },
+  "endpoints": {
+    "entry_antigravity": {
+      "id": "entry_antigravity",
+      "name": "antigravity isolated test",
+      "protocols": [
+        "openai-chat",
+        "openai-responses",
+        "anthropic",
+        "gemini"
+      ],
+      "routes": {
+        "md-arena": {
+          "modelId": "antigravity_arena",
+          "effort": ""
+        },
+        "md-inkling": {
+          "modelId": "antigravity_inkling",
+          "effort": ""
+        },
+        "md-nemotron": {
+          "modelId": "antigravity_nemotron",
+          "effort": ""
+        }
+      }
+    },
+    "entry_claude": {
+      "id": "entry_claude",
+      "name": "claude isolated test",
+      "protocols": [
+        "openai-chat",
+        "openai-responses",
+        "anthropic",
+        "gemini"
+      ],
+      "routes": {
+        "md-arena": {
+          "modelId": "claude_arena",
+          "effort": ""
+        },
+        "md-inkling": {
+          "modelId": "claude_inkling",
+          "effort": ""
+        },
+        "md-nemotron": {
+          "modelId": "claude_nemotron",
+          "effort": ""
+        }
+      }
+    },
+    "entry_claude_desktop": {
+      "id": "entry_claude_desktop",
+      "name": "claude-desktop isolated test",
+      "protocols": [
+        "openai-chat",
+        "openai-responses",
+        "anthropic",
+        "gemini"
+      ],
+      "routes": {
+        "claude-haiku-4-5": {
+          "modelId": "claude_desktop_inkling",
+          "effort": ""
+        },
+        "claude-opus-4-6": {
+          "modelId": "claude_desktop_inkling",
+          "effort": ""
+        },
+        "claude-sonnet-4-6": {
+          "modelId": "claude_desktop_inkling",
+          "effort": ""
+        }
+      }
+    },
+    "entry_codex": {
+      "id": "entry_codex",
+      "name": "codex isolated test",
+      "protocols": [
+        "openai-chat",
+        "openai-responses",
+        "anthropic",
+        "gemini"
+      ],
+      "routes": {
+        "md-arena": {
+          "modelId": "codex_arena",
+          "effort": ""
+        },
+        "md-inkling": {
+          "modelId": "codex_inkling",
+          "effort": ""
+        },
+        "md-nemotron": {
+          "modelId": "codex_nemotron",
+          "effort": ""
+        }
+      }
+    },
+    "entry_cursor": {
+      "id": "entry_cursor",
+      "name": "cursor isolated test",
+      "protocols": [
+        "openai-chat",
+        "openai-responses",
+        "anthropic",
+        "gemini"
+      ],
+      "routes": {
+        "md-arena": {
+          "modelId": "cursor_arena",
+          "effort": ""
+        },
+        "md-inkling": {
+          "modelId": "cursor_inkling",
+          "effort": ""
+        },
+        "md-nemotron": {
+          "modelId": "cursor_nemotron",
+          "effort": ""
+        }
+      }
+    },
+    "entry_cursor_agent": {
+      "id": "entry_cursor_agent",
+      "name": "cursor-agent isolated test",
+      "protocols": [
+        "openai-chat",
+        "openai-responses",
+        "anthropic",
+        "gemini"
+      ],
+      "routes": {
+        "md-arena": {
+          "modelId": "cursor_agent_arena",
+          "effort": ""
+        },
+        "md-inkling": {
+          "modelId": "cursor_agent_inkling",
+          "effort": ""
+        },
+        "md-nemotron": {
+          "modelId": "cursor_agent_nemotron",
+          "effort": ""
+        }
+      }
+    },
+    "entry_grokbuild": {
+      "id": "entry_grokbuild",
+      "name": "grokbuild isolated test",
+      "protocols": [
+        "openai-chat",
+        "openai-responses",
+        "anthropic",
+        "gemini"
+      ],
+      "routes": {
+        "md-arena": {
+          "modelId": "grokbuild_arena",
+          "effort": ""
+        },
+        "md-inkling": {
+          "modelId": "grokbuild_inkling",
+          "effort": ""
+        },
+        "md-nemotron": {
+          "modelId": "grokbuild_nemotron",
+          "effort": ""
+        }
+      }
+    },
+    "entry_hermes": {
+      "id": "entry_hermes",
+      "name": "hermes isolated test",
+      "protocols": [
+        "openai-chat",
+        "openai-responses",
+        "anthropic",
+        "gemini"
+      ],
+      "routes": {
+        "md-arena": {
+          "modelId": "hermes_arena",
+          "effort": ""
+        },
+        "md-inkling": {
+          "modelId": "hermes_inkling",
+          "effort": ""
+        },
+        "md-nemotron": {
+          "modelId": "hermes_nemotron",
+          "effort": ""
+        }
+      }
+    },
+    "entry_muse": {
+      "id": "entry_muse",
+      "name": "muse isolated test",
+      "protocols": [
+        "openai-chat",
+        "openai-responses",
+        "anthropic",
+        "gemini"
+      ],
+      "routes": {
+        "md-arena": {
+          "modelId": "muse_arena",
+          "effort": ""
+        },
+        "md-inkling": {
+          "modelId": "muse_inkling",
+          "effort": ""
+        },
+        "md-nemotron": {
+          "modelId": "muse_nemotron",
+          "effort": ""
+        }
+      }
+    },
+    "entry_opencode": {
+      "id": "entry_opencode",
+      "name": "opencode isolated test",
+      "protocols": [
+        "openai-chat",
+        "openai-responses",
+        "anthropic",
+        "gemini"
+      ],
+      "routes": {
+        "md-arena": {
+          "modelId": "opencode_arena",
+          "effort": ""
+        },
+        "md-inkling": {
+          "modelId": "opencode_inkling",
+          "effort": ""
+        },
+        "md-nemotron": {
+          "modelId": "opencode_nemotron",
+          "effort": ""
+        }
+      }
+    }
+  },
+  "activeBindings": {
+    "antigravity": {
+      "endpointId": "entry_antigravity",
+      "model": "md-nemotron",
+      "utilityModel": "md-nemotron",
+      "executable": "/Users/vita/.local/bin/agy"
+    },
+    "claude": {
+      "endpointId": "entry_claude",
+      "model": "md-inkling",
+      "utilityModel": "md-inkling",
+      "executable": ""
+    },
+    "claude-desktop": {
+      "endpointId": "entry_claude_desktop",
+      "model": "claude-opus-4-6",
+      "utilityModel": "claude-opus-4-6",
+      "executable": ""
+    },
+    "codex": {
+      "endpointId": "entry_codex",
+      "model": "md-inkling",
+      "utilityModel": "md-inkling",
+      "executable": ""
+    },
+    "cursor": {
+      "endpointId": "entry_cursor",
+      "model": "md-nemotron",
+      "utilityModel": "md-nemotron",
+      "executable": ""
+    },
+    "cursor-agent": {
+      "endpointId": "entry_cursor_agent",
+      "model": "md-inkling",
+      "utilityModel": "md-inkling",
+      "executable": "/Users/vita/.local/bin/cursor-agent"
+    },
+    "grokbuild": {
+      "endpointId": "entry_grokbuild",
+      "model": "md-nemotron",
+      "utilityModel": "md-nemotron",
+      "executable": ""
+    },
+    "hermes": {
+      "endpointId": "entry_hermes",
+      "model": "md-inkling",
+      "utilityModel": "md-inkling",
+      "executable": "",
+      "inputProtocol": "openai-chat"
+    },
+    "muse": {
+      "endpointId": "entry_muse",
+      "model": "md-nemotron",
+      "utilityModel": "md-nemotron",
+      "executable": "/Users/vita/.local/bin/muse-bin-0.1.0-R708.1"
+    },
+    "opencode": {
+      "endpointId": "entry_opencode",
+      "model": "md-inkling",
+      "utilityModel": "md-inkling",
+      "executable": ""
+    }
+  },
+  "upstreamSecretsPersistedInSnapshot": false
+}

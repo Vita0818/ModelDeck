@@ -1,0 +1,9 @@
+.runtime/
+.cursor/
+vendor/
+__pycache__/
+# Retain the sanitized verification logs referenced by the test reports.
+!logs/**/*.log
+!attempts/**/*.log
+!cursor-direct/logs/*.log
+*.raw.log

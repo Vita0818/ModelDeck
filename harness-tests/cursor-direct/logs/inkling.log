@@ -1,0 +1,3 @@
+{"type":"system","subtype":"init","apiKeySource":"login","cwd":"/Users/vita/Others/ModelDeck/harness-tests/workspaces/cursor-agent-local/inkling","session_id":"59a085a3-a28d-422b-90c2-df972822d131","model":"md-inkling","permissionMode":"default"}
+{"type":"user","message":{"role":"user","content":[{"type":"text","text":"Use tools to read fixture.json in this workspace. Sum its numbers and write only the integer to result.txt. Finish with MD_TEST_OK. Do not create subagents or read files outside this workspace."}]},"session_id":"59a085a3-a28d-422b-90c2-df972822d131"}
+I: Upstream returned HTTP 403

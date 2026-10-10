@@ -1,7 +1,4 @@
-use crate::deeplink::{
-    import_provider_from_deeplink,
-    parse_deeplink_url, DeepLinkImportRequest,
-};
+use crate::deeplink::{import_provider_from_deeplink, parse_deeplink_url, DeepLinkImportRequest};
 use crate::store::AppState;
 use tauri::State;
 

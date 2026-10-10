@@ -1,0 +1,5372 @@
+[
+  {
+    "path": "/deck-clients/opencode/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/browser",
+    "tools": null,
+    "toolNames": null,
+    "status": 403,
+    "latencyMs": 2774,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Upstream returned HTTP 403"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/opencode/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/browser",
+    "tools": 3,
+    "toolNames": [
+      {
+        "type": null,
+        "name": "edit",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "read",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "write",
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 2248,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Upstream returned HTTP 403"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/claude/api/hello",
+    "method": "HEAD",
+    "model": null,
+    "stream": null,
+    "userAgent": "Bun/1.4.3",
+    "tools": null,
+    "toolNames": null,
+    "status": 401,
+    "latencyMs": 0,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Invalid ModelDeck endpoint credential"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 3620,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 2190,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 2262,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 2297,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 2630,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 3973,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 2455,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 2087,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 2033,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 5064,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 2490,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 2689,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/opencode/v1/chat/completions",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+    "tools": null,
+    "toolNames": null,
+    "status": 403,
+    "latencyMs": 1607,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Upstream returned HTTP 403"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/opencode/v1/chat/completions",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+    "tools": 3,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "edit",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write",
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 1841,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Upstream returned HTTP 403"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/claude/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "claude-cli/2.1.280 (external, cli)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 3967,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Upstream returned HTTP 403"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/claude/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "claude-cli/2.1.280 (external, cli)",
+    "tools": 2,
+    "toolNames": [
+      {
+        "type": null,
+        "name": "Edit",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "Read",
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 4484,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Upstream returned HTTP 403"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/opencode/v1/chat/completions",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+    "tools": null,
+    "toolNames": null,
+    "status": 403,
+    "latencyMs": 2113,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Upstream returned HTTP 403"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/opencode/v1/chat/completions",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+    "tools": 3,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "edit",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write",
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 2055,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Upstream returned HTTP 403"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/opencode/v1/chat/completions",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+    "tools": null,
+    "toolNames": null,
+    "status": 200,
+    "latencyMs": 3542
+  },
+  {
+    "path": "/deck-clients/opencode/v1/chat/completions",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+    "tools": 3,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "edit",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write",
+        "children": null
+      }
+    ],
+    "status": 200,
+    "latencyMs": 2803
+  },
+  {
+    "path": "/deck-clients/opencode/v1/chat/completions",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+    "tools": 3,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "edit",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write",
+        "children": null
+      }
+    ],
+    "status": 200,
+    "latencyMs": 2292
+  },
+  {
+    "path": "/deck-clients/opencode/v1/chat/completions",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+    "tools": 3,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "edit",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write",
+        "children": null
+      }
+    ],
+    "status": 200,
+    "latencyMs": 2493
+  },
+  {
+    "path": "/deck-clients/claude/api/hello",
+    "method": "HEAD",
+    "model": null,
+    "stream": null,
+    "userAgent": "Bun/1.4.3",
+    "tools": null,
+    "toolNames": null,
+    "status": 401,
+    "latencyMs": 0,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Invalid ModelDeck endpoint credential"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/claude/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "claude-cli/2.1.280 (external, cli)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 1259,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Upstream returned HTTP 403"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/claude/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "claude-cli/2.1.280 (external, cli)",
+    "tools": 2,
+    "toolNames": [
+      {
+        "type": null,
+        "name": "Edit",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "Read",
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 1354,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Upstream returned HTTP 403"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 14,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 2371,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 2195,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 14,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 2979,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 2758,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 14,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 3261,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 2569,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 14,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 3064,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 2280,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 3867,
+    "error": {
+      "error": {
+        "message": "Upstream connection failed",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 14,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 5264,
+    "error": {
+      "error": {
+        "message": "Upstream connection failed",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 14,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 3536,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 3767,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 14,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 2812,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 2704,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/claude/api/hello",
+    "method": "HEAD",
+    "model": null,
+    "stream": null,
+    "userAgent": "Bun/1.4.3",
+    "tools": null,
+    "toolNames": null,
+    "status": 401,
+    "latencyMs": 0,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Invalid ModelDeck endpoint credential"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/claude/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "claude-cli/2.1.280 (external, cli)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 3186,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Upstream returned HTTP 403"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/claude/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "claude-cli/2.1.280 (external, cli)",
+    "tools": 2,
+    "toolNames": [
+      {
+        "type": null,
+        "name": "Edit",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "Read",
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 3163,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Upstream returned HTTP 403"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 4671,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 4374,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 2215,
+    "error": {
+      "error": {
+        "message": "Upstream connection failed",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 4859,
+    "error": {
+      "error": {
+        "message": "Upstream connection failed",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 358,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 410,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 327,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 466,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 465,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 679,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 556,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 510,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 451,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 754,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 557,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 415,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 430,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 389,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 474,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 432,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 1122,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 1042,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 2844,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 3077,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 1172,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 1013,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 1054,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 1015,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 502,
+    "latencyMs": 1249,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 1705,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 502,
+    "latencyMs": 1162,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 5069,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 6449,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 6811,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 403,
+    "latencyMs": 3931,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 403,
+    "latencyMs": 4068,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 403",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/claude/api/hello",
+    "method": "HEAD",
+    "model": null,
+    "stream": null,
+    "userAgent": "Bun/1.4.3",
+    "tools": null,
+    "toolNames": null,
+    "status": 401,
+    "latencyMs": 0,
+    "error": {
+      "error": {
+        "type": "modeldeck_error",
+        "message": "Invalid ModelDeck endpoint credential"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/claude/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "claude-cli/2.1.280 (external, cli)",
+    "tools": 2,
+    "toolNames": [
+      {
+        "type": null,
+        "name": "Edit",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "Read",
+        "children": null
+      }
+    ],
+    "status": 200,
+    "latencyMs": 6381
+  },
+  {
+    "path": "/deck-clients/claude/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "claude-cli/2.1.280 (external, cli)",
+    "tools": 2,
+    "toolNames": [
+      {
+        "type": null,
+        "name": "Edit",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "Read",
+        "children": null
+      }
+    ],
+    "status": 200,
+    "latencyMs": 3420
+  },
+  {
+    "path": "/deck-clients/claude/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "claude-cli/2.1.280 (external, cli)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 200,
+    "latencyMs": 14351
+  },
+  {
+    "path": "/deck-clients/claude/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "claude-cli/2.1.280 (external, cli)",
+    "tools": 2,
+    "toolNames": [
+      {
+        "type": null,
+        "name": "Edit",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "Read",
+        "children": null
+      }
+    ],
+    "status": 200,
+    "latencyMs": 8529
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 400,
+    "latencyMs": 6967,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 400",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 200,
+    "latencyMs": 8845
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      },
+      {
+        "type": "tool_search",
+        "name": null,
+        "children": null
+      },
+      {
+        "type": "web_search",
+        "name": null,
+        "children": null
+      }
+    ],
+    "status": 400,
+    "latencyMs": 3905,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 400",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 200,
+    "latencyMs": 25909
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "multi_agent_v1",
+        "children": [
+          "close_agent",
+          "resume_agent",
+          "send_input",
+          "spawn_agent",
+          "wait_agent"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__zju_tronclass",
+        "children": [
+          "zju_auth_forget",
+          "zju_auth_start",
+          "zju_auth_status",
+          "zju_download_file",
+          "zju_download_submission_file",
+          "zju_get_activity",
+          "zju_get_assignment",
+          "zju_get_course",
+          "zju_get_submissions",
+          "zju_list_activities",
+          "zju_list_all_assignments",
+          "zju_list_assignments",
+          "zju_list_courses",
+          "zju_list_materials",
+          "zju_list_semesters",
+          "zju_list_todos",
+          "zju_prepare_draft",
+          "zju_prepare_retraction",
+          "zju_prepare_submission",
+          "zju_retract_assignment",
+          "zju_save_draft",
+          "zju_search_course_content",
+          "zju_submit_assignment",
+          "zju_sync_course_materials"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      }
+    ],
+    "status": 200,
+    "latencyMs": 8230
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 200,
+    "latencyMs": 4620
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 17,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "multi_agent_v1",
+        "children": [
+          "close_agent",
+          "resume_agent",
+          "send_input",
+          "spawn_agent",
+          "wait_agent"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__codex_security",
+        "children": [
+          "cancel_codex_security_scan",
+          "complete_codex_security_scan",
+          "fail_codex_security_scan",
+          "get_codex_security_completed_scan",
+          "get_codex_security_daybreak_access",
+          "get_codex_security_scan_context",
+          "list_codex_security_candidates",
+          "list_codex_security_review_items",
+          "prepare_codex_security_review_items",
+          "read_codex_security_artifact",
+          "record_candidate_attack_paths",
+          "record_codex_security_candidate_validations",
+          "record_codex_security_discovery_candidates",
+          "record_codex_security_scan_draft",
+          "request_codex_security_user_input",
+          "save_codex_security_artifact",
+          "set_codex_security_finding_remediation",
+          "start_codex_security_deep_scan",
+          "start_codex_security_prompt_only_scan",
+          "start_codex_security_standard_scan",
+          "update_codex_security_scan_context",
+          "update_codex_security_scan_progress"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__openai_api_key_local_confirmation",
+        "children": [
+          "confirm_openai_api_key_local_destination"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__zju_tronclass",
+        "children": [
+          "zju_auth_forget",
+          "zju_auth_start",
+          "zju_auth_status",
+          "zju_download_file",
+          "zju_download_submission_file",
+          "zju_get_activity",
+          "zju_get_assignment",
+          "zju_get_course",
+          "zju_get_submissions",
+          "zju_list_activities",
+          "zju_list_all_assignments",
+          "zju_list_assignments",
+          "zju_list_courses",
+          "zju_list_materials",
+          "zju_list_semesters",
+          "zju_list_todos",
+          "zju_prepare_draft",
+          "zju_prepare_retraction",
+          "zju_prepare_submission",
+          "zju_retract_assignment",
+          "zju_save_draft",
+          "zju_search_course_content",
+          "zju_submit_assignment",
+          "zju_sync_course_materials"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      }
+    ],
+    "status": 200,
+    "latencyMs": 6506
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 17,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "multi_agent_v1",
+        "children": [
+          "close_agent",
+          "resume_agent",
+          "send_input",
+          "spawn_agent",
+          "wait_agent"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__codex_security",
+        "children": [
+          "cancel_codex_security_scan",
+          "complete_codex_security_scan",
+          "fail_codex_security_scan",
+          "get_codex_security_completed_scan",
+          "get_codex_security_daybreak_access",
+          "get_codex_security_scan_context",
+          "list_codex_security_candidates",
+          "list_codex_security_review_items",
+          "prepare_codex_security_review_items",
+          "read_codex_security_artifact",
+          "record_candidate_attack_paths",
+          "record_codex_security_candidate_validations",
+          "record_codex_security_discovery_candidates",
+          "record_codex_security_scan_draft",
+          "request_codex_security_user_input",
+          "save_codex_security_artifact",
+          "set_codex_security_finding_remediation",
+          "start_codex_security_deep_scan",
+          "start_codex_security_prompt_only_scan",
+          "start_codex_security_standard_scan",
+          "update_codex_security_scan_context",
+          "update_codex_security_scan_progress"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__openai_api_key_local_confirmation",
+        "children": [
+          "confirm_openai_api_key_local_destination"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__zju_tronclass",
+        "children": [
+          "zju_auth_forget",
+          "zju_auth_start",
+          "zju_auth_status",
+          "zju_download_file",
+          "zju_download_submission_file",
+          "zju_get_activity",
+          "zju_get_assignment",
+          "zju_get_course",
+          "zju_get_submissions",
+          "zju_list_activities",
+          "zju_list_all_assignments",
+          "zju_list_assignments",
+          "zju_list_courses",
+          "zju_list_materials",
+          "zju_list_semesters",
+          "zju_list_todos",
+          "zju_prepare_draft",
+          "zju_prepare_retraction",
+          "zju_prepare_submission",
+          "zju_retract_assignment",
+          "zju_save_draft",
+          "zju_search_course_content",
+          "zju_submit_assignment",
+          "zju_sync_course_materials"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      }
+    ],
+    "status": 200,
+    "latencyMs": 7841
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "multi_agent_v1",
+        "children": [
+          "close_agent",
+          "resume_agent",
+          "send_input",
+          "spawn_agent",
+          "wait_agent"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__zju_tronclass",
+        "children": [
+          "zju_auth_forget",
+          "zju_auth_start",
+          "zju_auth_status",
+          "zju_download_file",
+          "zju_download_submission_file",
+          "zju_get_activity",
+          "zju_get_assignment",
+          "zju_get_course",
+          "zju_get_submissions",
+          "zju_list_activities",
+          "zju_list_all_assignments",
+          "zju_list_assignments",
+          "zju_list_courses",
+          "zju_list_materials",
+          "zju_list_semesters",
+          "zju_list_todos",
+          "zju_prepare_draft",
+          "zju_prepare_retraction",
+          "zju_prepare_submission",
+          "zju_retract_assignment",
+          "zju_save_draft",
+          "zju_search_course_content",
+          "zju_submit_assignment",
+          "zju_sync_course_materials"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      }
+    ],
+    "status": 502,
+    "latencyMs": 3052,
+    "error": {
+      "error": {
+        "message": "Upstream returned HTTP 502",
+        "type": "model_client_error"
+      }
+    }
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 0,
+    "toolNames": [],
+    "status": 200,
+    "latencyMs": 11071
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 15,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "multi_agent_v1",
+        "children": [
+          "close_agent",
+          "resume_agent",
+          "send_input",
+          "spawn_agent",
+          "wait_agent"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__zju_tronclass",
+        "children": [
+          "zju_auth_forget",
+          "zju_auth_start",
+          "zju_auth_status",
+          "zju_download_file",
+          "zju_download_submission_file",
+          "zju_get_activity",
+          "zju_get_assignment",
+          "zju_get_course",
+          "zju_get_submissions",
+          "zju_list_activities",
+          "zju_list_all_assignments",
+          "zju_list_assignments",
+          "zju_list_courses",
+          "zju_list_materials",
+          "zju_list_semesters",
+          "zju_list_todos",
+          "zju_prepare_draft",
+          "zju_prepare_retraction",
+          "zju_prepare_submission",
+          "zju_retract_assignment",
+          "zju_save_draft",
+          "zju_search_course_content",
+          "zju_submit_assignment",
+          "zju_sync_course_materials"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      }
+    ],
+    "status": 200,
+    "latencyMs": 13738
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 17,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "multi_agent_v1",
+        "children": [
+          "close_agent",
+          "resume_agent",
+          "send_input",
+          "spawn_agent",
+          "wait_agent"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__codex_security",
+        "children": [
+          "cancel_codex_security_scan",
+          "complete_codex_security_scan",
+          "fail_codex_security_scan",
+          "get_codex_security_completed_scan",
+          "get_codex_security_daybreak_access",
+          "get_codex_security_scan_context",
+          "list_codex_security_candidates",
+          "list_codex_security_review_items",
+          "prepare_codex_security_review_items",
+          "read_codex_security_artifact",
+          "record_candidate_attack_paths",
+          "record_codex_security_candidate_validations",
+          "record_codex_security_discovery_candidates",
+          "record_codex_security_scan_draft",
+          "request_codex_security_user_input",
+          "save_codex_security_artifact",
+          "set_codex_security_finding_remediation",
+          "start_codex_security_deep_scan",
+          "start_codex_security_prompt_only_scan",
+          "start_codex_security_standard_scan",
+          "update_codex_security_scan_context",
+          "update_codex_security_scan_progress"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__openai_api_key_local_confirmation",
+        "children": [
+          "confirm_openai_api_key_local_destination"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__zju_tronclass",
+        "children": [
+          "zju_auth_forget",
+          "zju_auth_start",
+          "zju_auth_status",
+          "zju_download_file",
+          "zju_download_submission_file",
+          "zju_get_activity",
+          "zju_get_assignment",
+          "zju_get_course",
+          "zju_get_submissions",
+          "zju_list_activities",
+          "zju_list_all_assignments",
+          "zju_list_assignments",
+          "zju_list_courses",
+          "zju_list_materials",
+          "zju_list_semesters",
+          "zju_list_todos",
+          "zju_prepare_draft",
+          "zju_prepare_retraction",
+          "zju_prepare_submission",
+          "zju_retract_assignment",
+          "zju_save_draft",
+          "zju_search_course_content",
+          "zju_submit_assignment",
+          "zju_sync_course_materials"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      }
+    ],
+    "status": 200,
+    "latencyMs": 9028
+  },
+  {
+    "path": "/deck-clients/codex/v1/responses",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+    "tools": 17,
+    "toolNames": [
+      {
+        "type": "function",
+        "name": "exec_command",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "write_stdin",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resources",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "list_mcp_resource_templates",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "read_mcp_resource",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "request_user_input",
+        "children": null
+      },
+      {
+        "type": "custom",
+        "name": "apply_patch",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "view_image",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "multi_agent_v1",
+        "children": [
+          "close_agent",
+          "resume_agent",
+          "send_input",
+          "spawn_agent",
+          "wait_agent"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__codex_security",
+        "children": [
+          "cancel_codex_security_scan",
+          "complete_codex_security_scan",
+          "fail_codex_security_scan",
+          "get_codex_security_completed_scan",
+          "get_codex_security_daybreak_access",
+          "get_codex_security_scan_context",
+          "list_codex_security_candidates",
+          "list_codex_security_review_items",
+          "prepare_codex_security_review_items",
+          "read_codex_security_artifact",
+          "record_candidate_attack_paths",
+          "record_codex_security_candidate_validations",
+          "record_codex_security_discovery_candidates",
+          "record_codex_security_scan_draft",
+          "request_codex_security_user_input",
+          "save_codex_security_artifact",
+          "set_codex_security_finding_remediation",
+          "start_codex_security_deep_scan",
+          "start_codex_security_prompt_only_scan",
+          "start_codex_security_standard_scan",
+          "update_codex_security_scan_context",
+          "update_codex_security_scan_progress"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__cua_repl",
+        "children": [
+          "js",
+          "js_reset"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__openai_api_key_local_confirmation",
+        "children": [
+          "confirm_openai_api_key_local_destination"
+        ]
+      },
+      {
+        "type": "namespace",
+        "name": "mcp__zju_tronclass",
+        "children": [
+          "zju_auth_forget",
+          "zju_auth_start",
+          "zju_auth_status",
+          "zju_download_file",
+          "zju_download_submission_file",
+          "zju_get_activity",
+          "zju_get_assignment",
+          "zju_get_course",
+          "zju_get_submissions",
+          "zju_list_activities",
+          "zju_list_all_assignments",
+          "zju_list_assignments",
+          "zju_list_courses",
+          "zju_list_materials",
+          "zju_list_semesters",
+          "zju_list_todos",
+          "zju_prepare_draft",
+          "zju_prepare_retraction",
+          "zju_prepare_submission",
+          "zju_retract_assignment",
+          "zju_save_draft",
+          "zju_search_course_content",
+          "zju_submit_assignment",
+          "zju_sync_course_materials"
+        ]
+      },
+      {
+        "type": "function",
+        "name": "get_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "create_goal",
+        "children": null
+      },
+      {
+        "type": "function",
+        "name": "update_goal",
+        "children": null
+      },
+      {
+        "type": "namespace",
+        "name": "image_gen",
+        "children": [
+          "imagegen"
+        ]
+      }
+    ],
+    "status": 200,
+    "latencyMs": 9268
+  },
+  {
+    "path": "/deck-clients/opencode/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/browser",
+    "tools": null,
+    "toolNames": null,
+    "status": 200,
+    "latencyMs": 2566
+  },
+  {
+    "path": "/deck-clients/opencode/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/browser",
+    "tools": 3,
+    "toolNames": [
+      {
+        "type": null,
+        "name": "edit",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "read",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "write",
+        "children": null
+      }
+    ],
+    "status": 200,
+    "latencyMs": 5166
+  },
+  {
+    "path": "/deck-clients/opencode/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/browser",
+    "tools": 3,
+    "toolNames": [
+      {
+        "type": null,
+        "name": "edit",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "read",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "write",
+        "children": null
+      }
+    ],
+    "status": 200,
+    "latencyMs": 4103
+  },
+  {
+    "path": "/deck-clients/opencode/v1/messages",
+    "method": "POST",
+    "model": "md-arena",
+    "stream": true,
+    "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/browser",
+    "tools": 3,
+    "toolNames": [
+      {
+        "type": null,
+        "name": "edit",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "read",
+        "children": null
+      },
+      {
+        "type": null,
+        "name": "write",
+        "children": null
+      }
+    ],
+    "status": 200,
+    "latencyMs": 4953
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "version": "3.9.16",
+  "nativeLocalAgentEnginePresent": true,
+  "rendererBuildFlag": "localMode:!1",
+  "flagSource": "out-build/vs/platform/environment/common/buildFlags.js",
+  "localEntryPoint": "AgentClientService.runLocalAgentInExtensionHost",
+  "guiLocalSessionExecuted": false,
+  "installedGuiModified": false,
+  "accountOrSubscriptionStateChanged": false
+}

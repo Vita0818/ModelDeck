@@ -1,6 +1,44 @@
 use super::*;
 use serde_json::json;
 
+#[test]
+#[ignore = "Requires a private prepared resource graph; validation only"]
+fn private_prepared_resource_graph_is_valid() {
+    let path = std::env::var("MODELDECK_PREPARED_GRAPH").expect("private graph path");
+    let store: DeckStore = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+    validate(&store).expect("prepared resource graph is invalid");
+    eprintln!(
+        "Prepared graph validated: {} providers, {} models, {} endpoints, {} selections",
+        store.providers.len(),
+        store.models.len(),
+        store.endpoints.len(),
+        store.bindings.len()
+    );
+    for client in ["codex", "claude", "claude-desktop", "antigravity", "muse"] {
+        if let Some(binding) = store.bindings.get(client) {
+            let profile =
+                project_profile(&store, client, binding, "http://127.0.0.1:15721").unwrap();
+            let endpoint = &store.endpoints[&binding.endpoint_id];
+            assert_eq!(profile.effort, endpoint.routes[&binding.model].effort);
+            for model in &profile.models {
+                let route = &endpoint.routes[&model.id];
+                let resource = &store.models[&route.model_id];
+                assert_eq!(
+                    (model.context, model.output),
+                    (resource.context, resource.output)
+                );
+                assert_eq!(model.reasoning, resource.reasoning);
+                assert_eq!(model.default_effort, route.effort);
+            }
+            eprintln!(
+                "{client}: {} native models, default tier {}",
+                profile.models.len(),
+                profile.effort
+            );
+        }
+    }
+}
+
 pub(super) fn fixture() -> DeckStore {
     serde_json::from_value(json!({"schemaVersion":1,"revision":0,
         "providers":{"upstream":{"id":"upstream","name":"Provider","baseUrl":"https://example.test/v1","protocol":"openai-chat","apiKey":"upstream-only"}},
@@ -116,6 +154,11 @@ fn compatibility_excludes_unimplemented_conversions_and_native_constraints() {
     };
     assert!(validate_binding(&store, "cursor", &binding, false).is_ok());
     assert!(validate_binding(&store, "cursor", &binding, true).is_err());
+    let unverified_local = HarnessBinding {
+        executable: "/does-not-exist/cursor-agent-local".into(),
+        ..binding.clone()
+    };
+    assert!(validate_binding(&store, "cursor-agent", &unverified_local, true).is_err());
     store.endpoints.get_mut("entry").unwrap().public_url =
         "https://[::ffff:127.0.0.1]/deck/entry".into();
     assert!(validate_binding(&store, "cursor", &binding, true).is_err());
@@ -145,4 +188,38 @@ fn endpoint_cannot_advertise_only_incompatible_protocols() {
     store.providers.get_mut("upstream").unwrap().protocol = Protocol::Gemini;
     store.endpoints.get_mut("entry").unwrap().protocols = vec![Protocol::OpenaiChat];
     assert!(validate(&store).is_err());
+}
+
+#[test]
+fn free_tier_model_names_are_valid_without_allowing_url_delimiters() {
+    let mut store = fixture();
+    let route = store
+        .endpoints
+        .get_mut("entry")
+        .unwrap()
+        .routes
+        .remove("coding")
+        .unwrap();
+    store
+        .endpoints
+        .get_mut("entry")
+        .unwrap()
+        .routes
+        .insert("thinkingmachines/inkling:free".into(), route.clone());
+    validate(&store).expect("provider-qualified free-tier names must remain usable");
+    for invalid in [
+        "model?query",
+        "model#fragment",
+        "model\nheader",
+        "model[tier]",
+    ] {
+        let mut invalid_store = store.clone();
+        invalid_store
+            .endpoints
+            .get_mut("entry")
+            .unwrap()
+            .routes
+            .insert(invalid.into(), route.clone());
+        assert!(validate(&invalid_store).is_err());
+    }
 }

@@ -53,9 +53,8 @@ pub use error::AppError;
 pub use grok_config::get_grok_config_path;
 pub use provider::{Provider, ProviderMeta};
 pub use services::{
-    provider::reapply_current_codex_official_live,
-    ConfigService, EndpointLatency, ProviderService, ProxyService,
-    SpeedtestService,
+    provider::reapply_current_codex_official_live, ConfigService, EndpointLatency, ProviderService,
+    ProxyService, SpeedtestService,
 };
 pub use settings::{update_settings, AppSettings};
 pub use store::AppState;
@@ -1427,12 +1426,6 @@ pub fn run() {
             commands::get_hermes_live_provider_ids,
             commands::get_hermes_live_provider,
             commands::get_hermes_model_config,
-            commands::open_hermes_web_ui,
-            commands::launch_hermes_dashboard,
-            commands::get_hermes_memory,
-            commands::set_hermes_memory,
-            commands::get_hermes_memory_limits,
-            commands::set_hermes_memory_enabled,
             // Global upstream proxy
             commands::get_global_proxy_url,
             commands::set_global_proxy_url,
@@ -1473,16 +1466,6 @@ pub fn run() {
             commands::read_omo_slim_local_file,
             commands::get_current_omo_slim_provider_id,
             commands::disable_current_omo_slim,
-            // Workspace files (OpenClaw)
-            commands::read_workspace_file,
-            commands::write_workspace_file,
-            // Daily memory files (OpenClaw workspace)
-            commands::list_daily_memory_files,
-            commands::read_daily_memory_file,
-            commands::write_daily_memory_file,
-            commands::delete_daily_memory_file,
-            commands::search_daily_memory_files,
-            commands::open_workspace_directory,
             // lightweight mode (for testing or low-resource environments)
             commands::enter_lightweight_mode,
             commands::exit_lightweight_mode,

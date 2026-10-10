@@ -3,13 +3,12 @@ use std::path::{Path, PathBuf};
 
 use cc_switch_lib::{
     get_codex_auth_path, get_codex_config_path, import_default_config_test_hook, read_json_file,
-    switch_provider_test_hook, write_codex_live_atomic, AppError, AppType, McpApps, McpServer,
-    MultiAppConfig, Provider, ProviderService,
+    switch_provider_test_hook, write_codex_live_atomic, AppError, AppType, MultiAppConfig,
+    Provider, ProviderService,
 };
 
 #[path = "support.rs"]
 mod support;
-use std::collections::HashMap;
 use support::{
     create_test_state, create_test_state_with_config, enable_codex_official_auth_preservation,
     ensure_test_home, reset_test_fs, test_mutex,
@@ -360,33 +359,6 @@ command = "say"
         );
     }
 
-    // v3.7.0+: 使用统一的 MCP 结构
-    config.mcp.servers = Some(HashMap::new());
-    config.mcp.servers.as_mut().unwrap().insert(
-        "echo-server".into(),
-        McpServer {
-            id: "echo-server".to_string(),
-            name: "Echo Server".to_string(),
-            server: json!({
-                "type": "stdio",
-                "command": "echo"
-            }),
-            apps: McpApps {
-                claude: false,
-                codex: true, // 启用 Codex
-                gemini: false,
-                grokbuild: false,
-                opencode: false,
-                hermes: false,
-                mcode: false,
-            },
-            description: None,
-            homepage: None,
-            docs: None,
-            tags: Vec::new(),
-        },
-    );
-
     let app_state = create_test_state_with_config(&config).expect("create test state");
 
     switch_provider_test_hook(&app_state, AppType::Codex, "new-provider")
@@ -405,8 +377,8 @@ command = "say"
 
     let config_text = std::fs::read_to_string(get_codex_config_path()).expect("read config.toml");
     assert!(
-        config_text.contains("mcp_servers.echo-server"),
-        "config.toml should contain synced MCP servers"
+        config_text.contains("mcp_servers.latest"),
+        "config.toml should retain provider-supplied native MCP settings"
     );
     assert!(
         config_text.contains("experimental_bearer_token"),
@@ -435,7 +407,6 @@ command = "say"
         .and_then(|v| v.as_str())
         .unwrap_or_default();
     // 供应商配置应该包含在 live 文件中
-    // 注意：live 文件还会包含 MCP 同步后的内容
     assert!(
         config_text.contains("mcp_servers.latest"),
         "live file should contain provider's original config"

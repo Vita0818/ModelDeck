@@ -76,7 +76,6 @@ pub(crate) fn localized(
     AppError::localized(key, zh, en)
 }
 
-
 // ─── Types ───────────────────────────────────────────────────
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

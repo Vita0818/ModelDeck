@@ -1,0 +1,8 @@
+Native Claude Desktop Code UI
+Session: local_ec338788-47cf-4236-8cee-9d6d7a6fe155
+Workspace: /Users/vita/Others/ModelDeck/harness-tests/workspaces/claude-desktop/nemotron
+UI: Claude finished the response
+Tools: Ran 3 commands, read fixture.json
+Final: MD_TEST_OK
+Result file: 89
+Upstream: thinkingmachines/inkling:free

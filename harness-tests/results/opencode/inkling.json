@@ -1,0 +1,102 @@
+{
+  "client": "opencode",
+  "requested": "thinkingmachines/inkling:free",
+  "case": "inkling",
+  "session_id": "1a851b9d-1672-466d-90a6-7620c8c3aec3",
+  "apply_status": 200,
+  "model_used": "thinkingmachines/inkling:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/opencode/v1/messages",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/bun/1.3.14",
+      "tools": 3,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "read",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "write",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3717
+    },
+    {
+      "path": "/deck-clients/opencode/v1/messages",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/bun/1.3.14",
+      "tools": 3,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "read",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "write",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 2856
+    },
+    {
+      "path": "/deck-clients/opencode/v1/messages",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/bun/1.3.14",
+      "tools": 3,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "read",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "write",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 1876
+    }
+  ],
+  "passed": true,
+  "pid": 65464,
+  "exit_code": 0,
+  "seconds": 13.29,
+  "runtime_session_ids": [
+    "ses_eeab05bfcffebrMKm0o4JWl52B"
+  ],
+  "output_log": "logs/opencode/inkling.log",
+  "result_file_value": "89",
+  "free_rate_limit_429": false
+}

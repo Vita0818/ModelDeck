@@ -33,3 +33,4 @@ mainWindow.js
 # Local ModelDeck build caches and release verification
 /.build/
 /.modeldeck/
+/.pnpm-store/

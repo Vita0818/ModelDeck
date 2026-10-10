@@ -18,6 +18,8 @@ const digest = (file) =>
 
 function validateInstallation(entry) {
   const manifest = supported[digest(entry)];
+  if (manifest?.mode === "local-api")
+    throw new Error("ModelDeck: the official local runtime requires the local API adapter.");
   if (!manifest)
     throw new Error(
       "CC Switch: this Cursor Agent build has not been validated for BYOK. Open CC Switch to update its model adapter, or run the native Cursor command without this launcher.",

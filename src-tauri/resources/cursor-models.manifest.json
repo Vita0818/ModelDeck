@@ -1,4 +1,12 @@
 {
+  "4da083d162bd59157f6484640055bd12b37f7036e8c2af440548fb65ffbe9da3": {
+    "version": "2026.06.12-19-59-36-f6aba9a",
+    "mode": "local-api",
+    "chunks": {
+      "6222.index.js": "c4876b7bb2f08b9d87add7ff5f606106f9c0d716026d3d10926180066a34837d",
+      "2746.index.js": "c6d4f31ad4293f2531522de1c0da1ec352a0c990ed7a5de278747d3c61f2915f"
+    }
+  },
   "e75e5cccfa7416f3cb668b596863578bbf500b2096027c43d75323be41ac50f9": {
     "version": "2026.06.12-19-59-36-f6aba9a",
     "chunks": {

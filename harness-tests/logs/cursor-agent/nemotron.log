@@ -1,0 +1,11 @@
+{"type":"system","subtype":"init","apiKeySource":"login","cwd":"/Users/vita/Others/ModelDeck/harness-tests/workspaces/cursor-agent-local/managed-nemotron","session_id":"d9f7a119-18b6-4ccb-9f59-02f979234601","model":"md-nemotron","permissionMode":"default"}
+{"type":"user","message":{"role":"user","content":[{"type":"text","text":"Use tools to read fixture.json in this workspace. Sum its numbers and write only the integer to result.txt. Finish with MD_TEST_OK. Do not create subagents or read files outside this workspace."}]},"session_id":"d9f7a119-18b6-4ccb-9f59-02f979234601"}
+{"type":"connection","subtype":"reconnecting","session_id":"d9f7a119-18b6-4ccb-9f59-02f979234601","timestamp_ms":1791382338795,"attempt":1}
+{"type":"retry","subtype":"starting","session_id":"d9f7a119-18b6-4ccb-9f59-02f979234601","timestamp_ms":1791382340807,"attempt":1,"is_resume":true}
+{"type":"retry","subtype":"resuming","session_id":"d9f7a119-18b6-4ccb-9f59-02f979234601","timestamp_ms":1791382340807,"checkpoint_turn_count":1,"attempt":1}
+{"type":"connection","subtype":"reconnected","session_id":"d9f7a119-18b6-4ccb-9f59-02f979234601","timestamp_ms":1791382347884}
+{"type":"connection","subtype":"reconnecting","session_id":"d9f7a119-18b6-4ccb-9f59-02f979234601","timestamp_ms":1791382347886,"attempt":2}
+{"type":"retry","subtype":"starting","session_id":"d9f7a119-18b6-4ccb-9f59-02f979234601","timestamp_ms":1791382352277,"attempt":2,"is_resume":true}
+{"type":"retry","subtype":"resuming","session_id":"d9f7a119-18b6-4ccb-9f59-02f979234601","timestamp_ms":1791382352277,"checkpoint_turn_count":1,"attempt":2}
+{"type":"connection","subtype":"reconnected","session_id":"d9f7a119-18b6-4ccb-9f59-02f979234601","timestamp_ms":1791382360355}
+I: Provider stream ended without a terminal finish reason (finishReason=unknown) — connection likely dropped mid-stream

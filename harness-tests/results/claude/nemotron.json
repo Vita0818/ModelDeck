@@ -1,0 +1,63 @@
+{
+  "client": "claude",
+  "requested": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "case": "nemotron",
+  "session_id": "bb005f81-0f6d-42ae-b2c6-e3ce6de22c9d",
+  "apply_status": 200,
+  "model_used": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/claude/api/hello",
+      "method": "HEAD",
+      "model": null,
+      "stream": null,
+      "tools": null,
+      "status": 401,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Invalid ModelDeck endpoint credential"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "tools": 2,
+      "status": 200,
+      "latencyMs": 2206
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "tools": 2,
+      "status": 200,
+      "latencyMs": 2722
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "tools": 2,
+      "status": 200,
+      "latencyMs": 1954
+    }
+  ],
+  "passed": true,
+  "pid": 63632,
+  "exit_code": 0,
+  "seconds": 26.28,
+  "runtime_session_ids": [
+    "bb005f81-0f6d-42ae-b2c6-e3ce6de22c9d"
+  ],
+  "output_log": "logs/claude/nemotron.log",
+  "result_file_value": "89",
+  "free_rate_limit_429": false
+}

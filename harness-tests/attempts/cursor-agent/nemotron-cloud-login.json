@@ -1,0 +1,19 @@
+{
+  "client": "cursor-agent",
+  "requested": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "case": "nemotron",
+  "session_id": "77c5fe50-e98f-4444-b895-58270aa45087",
+  "apply_status": 200,
+  "model_used": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "real_client": true,
+  "gateway_requests": [],
+  "passed": false,
+  "pid": 66210,
+  "exit_code": 1,
+  "seconds": 1.18,
+  "runtime_session_ids": [],
+  "output_log": "logs/cursor-agent/nemotron.log",
+  "result_file_value": "",
+  "failure": "Error: Authentication required. Please run 'agent login' first, or set CURSOR_API_KEY environment variable.\n",
+  "free_rate_limit_429": false
+}

@@ -168,4 +168,3 @@ fn parse_provider_deeplink(
         usage_auto_interval,
     })
 }
-

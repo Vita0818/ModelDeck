@@ -216,48 +216,6 @@ pub fn set_typed_provider(id: &str, config: &OpenCodeProviderConfig) -> Result<(
     set_provider(id, value)
 }
 
-pub fn get_mcp_servers() -> Result<Map<String, Value>, AppError> {
-    let config = read_opencode_config()?;
-    Ok(config
-        .get("mcp")
-        .and_then(|v| v.as_object())
-        .cloned()
-        .unwrap_or_default())
-}
-
-pub fn set_mcp_server(id: &str, config: Value) -> Result<(), AppError> {
-    let _guard = opencode_config_lock().lock()?;
-    let path = get_opencode_config_path();
-    let mut full_config = read_opencode_config_from_path(&path)?;
-
-    if !full_config.get("mcp").is_some_and(Value::is_object) {
-        if full_config.get("mcp").is_some() {
-            log::warn!("opencode.json 的 mcp 不是对象，已重置为空对象");
-        }
-        full_config["mcp"] = json!({});
-    }
-
-    if let Some(mcp) = full_config.get_mut("mcp").and_then(|v| v.as_object_mut()) {
-        mcp.insert(id.to_string(), config);
-    }
-
-    write_opencode_config_to_path_with_contents(&path, &full_config).map(|_| ())
-}
-
-pub fn remove_mcp_server(id: &str) -> Result<(), AppError> {
-    let _guard = opencode_config_lock().lock()?;
-    let path = get_opencode_config_path();
-    let mut config = read_opencode_config_from_path(&path)?;
-
-    if let Some(mcp) = config.get_mut("mcp").and_then(|v| v.as_object_mut()) {
-        mcp.remove(id);
-    } else if config.get("mcp").is_some() {
-        log::warn!("opencode.json 的 mcp 不是对象，无法删除服务器 '{id}'");
-    }
-
-    write_opencode_config_to_path_with_contents(&path, &config).map(|_| ())
-}
-
 pub fn add_plugin(path: &Path, plugin_name: &str) -> Result<(), AppError> {
     let _guard = opencode_config_lock().lock()?;
     let mut config = read_opencode_config_from_path(path)?;
@@ -402,20 +360,21 @@ mod tests {
 
     #[test]
     #[serial_test::serial]
-    fn set_mcp_server_normalizes_non_object_section() {
+    fn set_provider_preserves_client_owned_non_object_mcp_section() {
         let temp = tempfile::tempdir().expect("tempdir");
         let _guard = TestHomeGuard::set(temp.path());
 
-        // `"mcp": []` 时旧代码的 as_object_mut 返回 None → 写入静默失效
+        // Model connection updates do not normalize unrelated native MCP settings.
         write_config(temp.path(), "{\"model\": \"keep-me\", \"mcp\": []}");
 
-        set_mcp_server("echo", json!({"command": "npx"})).expect("set must succeed");
+        set_provider("example", json!({"npm": "@ai-sdk/openai"})).expect("set must succeed");
 
         let config = read_opencode_config().expect("reload");
         assert_eq!(
-            config["mcp"]["echo"]["command"], "npx",
-            "server must actually be written"
+            config["provider"]["example"]["npm"], "@ai-sdk/openai",
+            "model provider must actually be written"
         );
+        assert_eq!(config["mcp"], json!([]));
         assert_eq!(
             config["model"], "keep-me",
             "unrelated user config must be preserved"

@@ -1,7 +1,9 @@
 use super::{ProviderService, SwitchResult};
 use crate::app_config::AppType;
 use crate::error::AppError;
-use crate::provider::{Provider, ProviderMeta, UsageScript};
+#[cfg(test)]
+use crate::provider::UsageScript;
+use crate::provider::{Provider, ProviderMeta};
 use crate::store::AppState;
 use indexmap::IndexMap;
 use serde_json::Value;
@@ -21,12 +23,6 @@ pub(super) fn list(state: &AppState) -> Result<IndexMap<String, Provider>, AppEr
         }
     }
     state.db.get_all_providers(PI_APP)
-}
-
-pub(super) fn import_from_live(state: &AppState) -> Result<usize, AppError> {
-    let _guard = futures::executor::block_on(state.proxy_service.lock_switch_for_app(PI_APP));
-    let native = crate::pi_config::read_pi_native_providers()?;
-    sync_native_locked(state, &native)
 }
 
 pub(super) fn add(
@@ -79,30 +75,6 @@ pub(super) fn add(
         }
         return Err(error);
     }
-    Ok(true)
-}
-
-pub(super) fn update_usage_script(
-    state: &AppState,
-    id: &str,
-    script: UsageScript,
-) -> Result<bool, AppError> {
-    let app_type = AppType::Pi;
-    let _guard =
-        futures::executor::block_on(state.proxy_service.lock_switch_for_app(app_type.as_str()));
-    super::validate_usage_script(&script)?;
-
-    let mut provider = state
-        .db
-        .get_provider_by_id(id, app_type.as_str())?
-        .ok_or_else(|| AppError::InvalidInput(format!("Pi provider '{id}' not found")))?;
-    provider
-        .meta
-        .get_or_insert_with(ProviderMeta::default)
-        .usage_script = Some(script);
-    strip_unsupported_pi_metadata(&mut provider);
-    ProviderService::normalize_usage_script_credential_overrides(&app_type, &mut provider);
-    state.db.save_provider(app_type.as_str(), &provider)?;
     Ok(true)
 }
 
@@ -283,6 +255,31 @@ fn strip_unsupported_pi_metadata(provider: &mut Provider) {
         partner_promotion_key: meta.partner_promotion_key,
         ..ProviderMeta::default()
     });
+}
+
+#[cfg(test)]
+pub(super) fn update_usage_script(
+    state: &AppState,
+    id: &str,
+    script: UsageScript,
+) -> Result<bool, AppError> {
+    let app_type = AppType::Pi;
+    let _guard =
+        futures::executor::block_on(state.proxy_service.lock_switch_for_app(app_type.as_str()));
+    super::validate_usage_script(&script)?;
+
+    let mut provider = state
+        .db
+        .get_provider_by_id(id, app_type.as_str())?
+        .ok_or_else(|| AppError::InvalidInput(format!("Pi provider '{id}' not found")))?;
+    provider
+        .meta
+        .get_or_insert_with(ProviderMeta::default)
+        .usage_script = Some(script);
+    strip_unsupported_pi_metadata(&mut provider);
+    ProviderService::normalize_usage_script_credential_overrides(&app_type, &mut provider);
+    state.db.save_provider(app_type.as_str(), &provider)?;
+    Ok(true)
 }
 
 #[cfg(test)]

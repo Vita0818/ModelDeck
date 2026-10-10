@@ -1,0 +1,2701 @@
+{
+  "claude-gateway-capture.jsonl": [
+    {
+      "method": "HEAD",
+      "path": "/api/hello",
+      "headers": {
+        "user-agent": "Bun/1.4.3",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd"
+      },
+      "model": null,
+      "stream": null,
+      "status": 401
+    },
+    {
+      "method": "POST",
+      "path": "/v1/messages",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "031e2423-3e40-470a-be22-1c6b758d86b5",
+        "x-stainless-arch": "arm64",
+        "x-stainless-lang": "js",
+        "x-stainless-os": "MacOS",
+        "x-stainless-package-version": "0.112.1",
+        "x-stainless-retry-count": "0",
+        "x-stainless-runtime": "node",
+        "x-stainless-runtime-version": "v26.3.0",
+        "x-stainless-timeout": "600",
+        "anthropic-beta": "claude-code-20250219,interleaved-thinking-2025-05-14,redact-thinking-2026-02-12,thinking-token-count-2026-05-13,context-management-2025-06-27,prompt-caching-scope-2026-01-05,mid-conversation-system-2026-04-07,effort-2025-11-24,structured-outputs-2025-12-15",
+        "anthropic-dangerous-direct-browser-access": "true",
+        "anthropic-version": "2023-06-01",
+        "x-app": "cli",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "4204"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/v1/messages",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "031e2423-3e40-470a-be22-1c6b758d86b5",
+        "x-stainless-arch": "arm64",
+        "x-stainless-lang": "js",
+        "x-stainless-os": "MacOS",
+        "x-stainless-package-version": "0.112.1",
+        "x-stainless-retry-count": "0",
+        "x-stainless-runtime": "node",
+        "x-stainless-runtime-version": "v26.3.0",
+        "x-stainless-timeout": "600",
+        "anthropic-beta": "claude-code-20250219,interleaved-thinking-2025-05-14,redact-thinking-2026-02-12,thinking-token-count-2026-05-13,context-management-2025-06-27,prompt-caching-scope-2026-01-05,mid-conversation-system-2026-04-07,effort-2025-11-24",
+        "anthropic-dangerous-direct-browser-access": "true",
+        "anthropic-version": "2023-06-01",
+        "x-app": "cli",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "3247"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "HEAD",
+      "path": "/api/hello",
+      "headers": {
+        "user-agent": "Bun/1.4.3",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd"
+      },
+      "model": null,
+      "stream": null,
+      "status": 401
+    },
+    {
+      "method": "POST",
+      "path": "/v1/messages",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "408bbbf4-208f-495d-a375-e68be71bc986",
+        "x-stainless-arch": "arm64",
+        "x-stainless-lang": "js",
+        "x-stainless-os": "MacOS",
+        "x-stainless-package-version": "0.112.1",
+        "x-stainless-retry-count": "0",
+        "x-stainless-runtime": "node",
+        "x-stainless-runtime-version": "v26.3.0",
+        "x-stainless-timeout": "600",
+        "anthropic-beta": "claude-code-20250219,interleaved-thinking-2025-05-14,redact-thinking-2026-02-12,thinking-token-count-2026-05-13,context-management-2025-06-27,prompt-caching-scope-2026-01-05,mid-conversation-system-2026-04-07,effort-2025-11-24,structured-outputs-2025-12-15",
+        "anthropic-dangerous-direct-browser-access": "true",
+        "anthropic-version": "2023-06-01",
+        "x-app": "cli",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "4204"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/v1/messages",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "408bbbf4-208f-495d-a375-e68be71bc986",
+        "x-stainless-arch": "arm64",
+        "x-stainless-lang": "js",
+        "x-stainless-os": "MacOS",
+        "x-stainless-package-version": "0.112.1",
+        "x-stainless-retry-count": "0",
+        "x-stainless-runtime": "node",
+        "x-stainless-runtime-version": "v26.3.0",
+        "x-stainless-timeout": "600",
+        "anthropic-beta": "claude-code-20250219,interleaved-thinking-2025-05-14,redact-thinking-2026-02-12,thinking-token-count-2026-05-13,context-management-2025-06-27,prompt-caching-scope-2026-01-05,mid-conversation-system-2026-04-07,effort-2025-11-24",
+        "anthropic-dangerous-direct-browser-access": "true",
+        "anthropic-version": "2023-06-01",
+        "x-app": "cli",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "3247"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "HEAD",
+      "path": "/api/hello",
+      "headers": {
+        "user-agent": "Bun/1.4.3",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd"
+      },
+      "model": null,
+      "stream": null,
+      "status": 401
+    },
+    {
+      "method": "POST",
+      "path": "/v1/messages",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "ea2ff0fd-5586-44f9-8180-3c579edd737c",
+        "x-stainless-arch": "arm64",
+        "x-stainless-lang": "js",
+        "x-stainless-os": "MacOS",
+        "x-stainless-package-version": "0.112.1",
+        "x-stainless-retry-count": "0",
+        "x-stainless-runtime": "node",
+        "x-stainless-runtime-version": "v26.3.0",
+        "x-stainless-timeout": "600",
+        "anthropic-beta": "claude-code-20250219,interleaved-thinking-2025-05-14,redact-thinking-2026-02-12,thinking-token-count-2026-05-13,context-management-2025-06-27,prompt-caching-scope-2026-01-05,mid-conversation-system-2026-04-07,effort-2025-11-24",
+        "anthropic-dangerous-direct-browser-access": "true",
+        "anthropic-version": "2023-06-01",
+        "x-app": "cli",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "3247"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/messages",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "ea2ff0fd-5586-44f9-8180-3c579edd737c",
+        "x-stainless-arch": "arm64",
+        "x-stainless-lang": "js",
+        "x-stainless-os": "MacOS",
+        "x-stainless-package-version": "0.112.1",
+        "x-stainless-retry-count": "0",
+        "x-stainless-runtime": "node",
+        "x-stainless-runtime-version": "v26.3.0",
+        "x-stainless-timeout": "600",
+        "anthropic-beta": "claude-code-20250219,interleaved-thinking-2025-05-14,redact-thinking-2026-02-12,thinking-token-count-2026-05-13,context-management-2025-06-27,prompt-caching-scope-2026-01-05,mid-conversation-system-2026-04-07,effort-2025-11-24",
+        "anthropic-dangerous-direct-browser-access": "true",
+        "anthropic-version": "2023-06-01",
+        "x-app": "cli",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "4077"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/messages",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "ea2ff0fd-5586-44f9-8180-3c579edd737c",
+        "x-stainless-arch": "arm64",
+        "x-stainless-lang": "js",
+        "x-stainless-os": "MacOS",
+        "x-stainless-package-version": "0.112.1",
+        "x-stainless-retry-count": "0",
+        "x-stainless-runtime": "node",
+        "x-stainless-runtime-version": "v26.3.0",
+        "x-stainless-timeout": "600",
+        "anthropic-beta": "claude-code-20250219,interleaved-thinking-2025-05-14,redact-thinking-2026-02-12,thinking-token-count-2026-05-13,context-management-2025-06-27,prompt-caching-scope-2026-01-05,mid-conversation-system-2026-04-07,effort-2025-11-24,structured-outputs-2025-12-15",
+        "anthropic-dangerous-direct-browser-access": "true",
+        "anthropic-version": "2023-06-01",
+        "x-app": "cli",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "4204"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/messages",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "ea2ff0fd-5586-44f9-8180-3c579edd737c",
+        "x-stainless-arch": "arm64",
+        "x-stainless-lang": "js",
+        "x-stainless-os": "MacOS",
+        "x-stainless-package-version": "0.112.1",
+        "x-stainless-retry-count": "0",
+        "x-stainless-runtime": "node",
+        "x-stainless-runtime-version": "v26.3.0",
+        "x-stainless-timeout": "600",
+        "anthropic-beta": "claude-code-20250219,interleaved-thinking-2025-05-14,redact-thinking-2026-02-12,thinking-token-count-2026-05-13,context-management-2025-06-27,prompt-caching-scope-2026-01-05,mid-conversation-system-2026-04-07,effort-2025-11-24",
+        "anthropic-dangerous-direct-browser-access": "true",
+        "anthropic-version": "2023-06-01",
+        "x-app": "cli",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "5659"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    }
+  ],
+  "opencode-direct-capture.jsonl": [
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee905370bffeXxaypxb5T2yVc7",
+        "x-session-affinity": "ses_ee905370bffeXxaypxb5T2yVc7",
+        "x-session-id": "ses_ee905370bffeXxaypxb5T2yVc7",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "2646"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee905370bffeXxaypxb5T2yVc7",
+        "x-session-affinity": "ses_ee905370bffeXxaypxb5T2yVc7",
+        "x-session-id": "ses_ee905370bffeXxaypxb5T2yVc7",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "14273"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee905370bffeXxaypxb5T2yVc7",
+        "x-session-affinity": "ses_ee905370bffeXxaypxb5T2yVc7",
+        "x-session-id": "ses_ee905370bffeXxaypxb5T2yVc7",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "14946"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee905370bffeXxaypxb5T2yVc7",
+        "x-session-affinity": "ses_ee905370bffeXxaypxb5T2yVc7",
+        "x-session-id": "ses_ee905370bffeXxaypxb5T2yVc7",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "15357"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "content-length": "2645"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "content-length": "14252"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-affinity": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "content-length": "2645"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-affinity": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "content-length": "14252"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-affinity": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "content-length": "14927"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-affinity": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "content-length": "15339"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "content-length": "3682"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "content-length": "2721"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "53655"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "22915"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "53655"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "22915"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "53655"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "22915"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "53655"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "22915"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "53655"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "22915"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "53655"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "22915"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "408bbbf4-208f-495d-a375-e68be71bc986",
+        "x-app": "cli",
+        "content-length": "3682"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "408bbbf4-208f-495d-a375-e68be71bc986",
+        "x-app": "cli",
+        "content-length": "2721"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "originator": "Codex Desktop",
+        "content-length": "58143"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "originator": "Codex Desktop",
+        "content-length": "22915"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "originator": "Codex Desktop",
+        "content-length": "22915"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "originator": "Codex Desktop",
+        "content-length": "58143"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "originator": "Codex Desktop",
+        "content-length": "22915"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "originator": "Codex Desktop",
+        "content-length": "58143"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "originator": "Codex Desktop",
+        "content-length": "22915"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/browser",
+        "x-opencode-session-id": "ses_ee664008affetpeT4WgN3kzgby",
+        "x-session-affinity": "ses_ee664008affetpeT4WgN3kzgby",
+        "x-session-id": "ses_ee664008affetpeT4WgN3kzgby",
+        "content-length": "2627"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/browser",
+        "x-opencode-session-id": "ses_ee664008affetpeT4WgN3kzgby",
+        "x-session-affinity": "ses_ee664008affetpeT4WgN3kzgby",
+        "x-session-id": "ses_ee664008affetpeT4WgN3kzgby",
+        "content-length": "14196"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/browser",
+        "x-opencode-session-id": "ses_ee664008affetpeT4WgN3kzgby",
+        "x-session-affinity": "ses_ee664008affetpeT4WgN3kzgby",
+        "x-session-id": "ses_ee664008affetpeT4WgN3kzgby",
+        "content-length": "14857"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.46 runtime/browser",
+        "x-opencode-session-id": "ses_ee664008affetpeT4WgN3kzgby",
+        "x-session-affinity": "ses_ee664008affetpeT4WgN3kzgby",
+        "x-session-id": "ses_ee664008affetpeT4WgN3kzgby",
+        "content-length": "15261"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    }
+  ],
+  "codex-gateway-capture.jsonl": [
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "session-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "thread-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "69013"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "session-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "thread-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "session-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "thread-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "69013"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "session-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "thread-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "session-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "thread-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "69013"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "session-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "thread-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "session-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "thread-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "69013"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "session-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "thread-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "session-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "thread-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "session-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "thread-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "69013"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "session-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "thread-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "69013"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "session-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "thread-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "session-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "thread-id": "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "69013"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "session-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "thread-id": "01a11706-dc79-7660-bfbb-b9e85cf976d3",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "session-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "thread-id": "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "session-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "thread-id": "01a1197b-3070-7211-bb23-c41f0846a11a",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11980-95b9-7f70-ae81-928dce9ade36",
+        "session-id": "01a11980-95b9-7f70-ae81-928dce9ade36",
+        "thread-id": "01a11980-95b9-7f70-ae81-928dce9ade36",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 400
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11980-aa9a-7b50-8556-77260b951bbe",
+        "session-id": "01a11980-aa9a-7b50-8556-77260b951bbe",
+        "thread-id": "01a11980-aa9a-7b50-8556-77260b951bbe",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11986-fa1f-7a12-8fab-d8b1a61bd658",
+        "session-id": "01a11986-fa1f-7a12-8fab-d8b1a61bd658",
+        "thread-id": "01a11986-fa1f-7a12-8fab-d8b1a61bd658",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "60575"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 400
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11987-0408-77e1-81bc-339aff2dfee3",
+        "session-id": "01a11987-0408-77e1-81bc-339aff2dfee3",
+        "thread-id": "01a11987-0408-77e1-81bc-339aff2dfee3",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "session-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "thread-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "81068"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1198c-9a49-7310-856d-5fcc79c3878c",
+        "session-id": "01a1198c-9a49-7310-856d-5fcc79c3878c",
+        "thread-id": "01a1198c-9a49-7310-856d-5fcc79c3878c",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "session-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "thread-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "107190"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "session-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "thread-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "107790"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "session-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "thread-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "81068"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 502
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11991-b37c-7073-89a2-6319f2997521",
+        "session-id": "01a11991-b37c-7073-89a2-6319f2997521",
+        "thread-id": "01a11991-b37c-7073-89a2-6319f2997521",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "24805"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "session-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "thread-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "81068"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "session-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "thread-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "107190"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/responses",
+      "headers": {
+        "x-codex-beta-features": "remote_compaction_v2",
+        "x-client-request-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "session-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "thread-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "accept": "text/event-stream",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "originator": "Codex Desktop",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "content-length": "107809"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    }
+  ],
+  "arena-native-upstream-capture.jsonl": [
+    {
+      "method": "POST",
+      "path": "/v1/messages",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "anthropic-version": "2023-06-01",
+        "x-api-key": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "ea2ff0fd-5586-44f9-8180-3c579edd737c",
+        "x-app": "cli",
+        "content-length": "3213"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/messages",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "anthropic-version": "2023-06-01",
+        "x-api-key": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "ea2ff0fd-5586-44f9-8180-3c579edd737c",
+        "x-app": "cli",
+        "content-length": "4043"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/messages",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "anthropic-version": "2023-06-01",
+        "x-api-key": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "ea2ff0fd-5586-44f9-8180-3c579edd737c",
+        "x-app": "cli",
+        "content-length": "4200"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/messages",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "anthropic-version": "2023-06-01",
+        "x-api-key": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "claude-cli/2.1.280 (external, cli)",
+        "x-claude-code-session-id": "ea2ff0fd-5586-44f9-8180-3c579edd737c",
+        "x-app": "cli",
+        "content-length": "5625"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a11980-95b9-7f70-ae81-928dce9ade36",
+        "thread-id": "01a11980-95b9-7f70-ae81-928dce9ade36",
+        "x-client-request-id": "01a11980-95b9-7f70-ae81-928dce9ade36",
+        "originator": "Codex Desktop",
+        "content-length": "60381"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 400
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a11980-aa9a-7b50-8556-77260b951bbe",
+        "thread-id": "01a11980-aa9a-7b50-8556-77260b951bbe",
+        "x-client-request-id": "01a11980-aa9a-7b50-8556-77260b951bbe",
+        "originator": "Codex Desktop",
+        "content-length": "24802"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a11986-fa1f-7a12-8fab-d8b1a61bd658",
+        "thread-id": "01a11986-fa1f-7a12-8fab-d8b1a61bd658",
+        "x-client-request-id": "01a11986-fa1f-7a12-8fab-d8b1a61bd658",
+        "originator": "Codex Desktop",
+        "content-length": "60381"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 400,
+      "responseHeaders": {
+        "x-arena-resolved-model": "claude-opus-5-5",
+        "x-arena-trace-id": "2a878be0-60db-4574-a8e9-8baa46f825fb"
+      },
+      "error": {
+        "error": {
+          "code": "upstream_error",
+          "message": "adapter \"anthropic.direct\" cannot execute this request: openai.responses/server_tool",
+          "trace_id": "2a878be0-60db-4574-a8e9-8baa46f825fb",
+          "type": "invalid_request_error"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a11987-0408-77e1-81bc-339aff2dfee3",
+        "thread-id": "01a11987-0408-77e1-81bc-339aff2dfee3",
+        "x-client-request-id": "01a11987-0408-77e1-81bc-339aff2dfee3",
+        "originator": "Codex Desktop",
+        "content-length": "24802"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200,
+      "responseHeaders": {
+        "x-arena-resolved-model": "gpt-6-sol",
+        "x-arena-trace-id": "1a42fa6e-b6b2-4f3d-b533-9c8e1d2d65a8",
+        "x-request-id": "req_f7faf56667ea4b168266b836e83a3b93"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "thread-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "x-client-request-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "originator": "Codex Desktop",
+        "content-length": "80742"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200,
+      "responseHeaders": {
+        "x-arena-resolved-model": "claude-sonnet-5-5",
+        "x-arena-trace-id": "7a7f0c4a-4af9-48fe-8465-fe17d7e54f1e"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a1198c-9a49-7310-856d-5fcc79c3878c",
+        "thread-id": "01a1198c-9a49-7310-856d-5fcc79c3878c",
+        "x-client-request-id": "01a1198c-9a49-7310-856d-5fcc79c3878c",
+        "originator": "Codex Desktop",
+        "content-length": "24802"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200,
+      "responseHeaders": {
+        "x-arena-resolved-model": "gpt-6-sol",
+        "x-arena-trace-id": "9013a8a6-ef1c-4193-bae0-0a37f9e05265",
+        "x-request-id": "req_ba8c544bdd2246a3909733672f494628"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "thread-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "x-client-request-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "originator": "Codex Desktop",
+        "content-length": "106911"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200,
+      "responseHeaders": {
+        "x-arena-resolved-model": "claude-sonnet-5-5",
+        "x-arena-trace-id": "5f5b36e0-2955-447b-9f41-2ac17465b7a1"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "thread-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "x-client-request-id": "01a1198c-8504-73c3-a053-c930220080d6",
+        "originator": "Codex Desktop",
+        "content-length": "107511"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200,
+      "responseHeaders": {
+        "x-arena-resolved-model": "gpt-6-sol",
+        "x-arena-trace-id": "3c4f23ed-baee-41e2-b05d-c44690d90240",
+        "x-request-id": "req_4de88b47691942e595dc6711a2efeacd"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "exceptionType": "SSLEOFError"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a11991-b37c-7073-89a2-6319f2997521",
+        "thread-id": "01a11991-b37c-7073-89a2-6319f2997521",
+        "x-client-request-id": "01a11991-b37c-7073-89a2-6319f2997521",
+        "originator": "Codex Desktop",
+        "content-length": "24802"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200,
+      "responseHeaders": {
+        "x-arena-resolved-model": "claude-sonnet-5-5",
+        "x-arena-trace-id": "a5af1788-ab31-4504-a788-90caf7b0539f"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "thread-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "x-client-request-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "originator": "Codex Desktop",
+        "content-length": "80742"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200,
+      "responseHeaders": {
+        "x-arena-resolved-model": "claude-opus-5-5",
+        "x-arena-trace-id": "494bcf0d-ac57-4893-8fc4-a7143fef5e51"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "thread-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "x-client-request-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "originator": "Codex Desktop",
+        "content-length": "106911"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200,
+      "responseHeaders": {
+        "x-arena-resolved-model": "claude-opus-5-5",
+        "x-arena-trace-id": "c1ae8771-ea94-4f28-a598-31486f5aee0f"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "headers": {
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+        "authorization": "<redacted>",
+        "accept": "*/*",
+        "user-agent": "Codex Desktop/0.159.2 (Mac OS 27.0.1; arm64) xterm-256color (codex-tui; 0.159.2)",
+        "session-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "thread-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "x-client-request-id": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "originator": "Codex Desktop",
+        "content-length": "107530"
+      },
+      "model": "coding-router-preview",
+      "stream": true,
+      "status": 200,
+      "responseHeaders": {
+        "x-arena-resolved-model": "claude-opus-5-5",
+        "x-arena-trace-id": "1cbd11f5-b3c5-4be4-b776-7af0b4502de5"
+      }
+    }
+  ],
+  "opencode-gateway-capture.jsonl": [
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee9016628ffeo16QmIe3J4F6PX",
+        "x-session-affinity": "ses_ee9016628ffeo16QmIe3J4F6PX",
+        "x-session-id": "ses_ee9016628ffeo16QmIe3J4F6PX",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "2632"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee9016628ffeo16QmIe3J4F6PX",
+        "x-session-affinity": "ses_ee9016628ffeo16QmIe3J4F6PX",
+        "x-session-id": "ses_ee9016628ffeo16QmIe3J4F6PX",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "14239"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-affinity": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "2632"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-affinity": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "14239"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-affinity": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "14914"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/chat/completions",
+      "headers": {
+        "authorization": "<redacted>",
+        "content-type": "application/json",
+        "user-agent": "opencode/1.18.35 ai-sdk/provider-utils/4.0.23 runtime/browser",
+        "x-opencode-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-affinity": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "x-session-id": "ses_ee8fdb382ffepNF5G6DcjJ1t9d",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "content-length": "15326"
+      },
+      "model": "md-arena",
+      "stream": true,
+      "status": 200
+    }
+  ]
+}

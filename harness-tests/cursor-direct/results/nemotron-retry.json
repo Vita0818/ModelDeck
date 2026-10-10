@@ -1,0 +1,47 @@
+{
+  "case": "nemotron-retry",
+  "model": "md-nemotron",
+  "seconds": 18.98,
+  "exitCode": 1,
+  "finalTextSeen": false,
+  "sessionIds": [
+    "f054e750-f612-48ca-8410-b50eb9aba830"
+  ],
+  "resultFileValue": "",
+  "cursorAccountCredentialsProvided": false,
+  "nativeVendorBinaryUnmodified": true,
+  "network": [
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck/cursor-local/v1/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck/cursor-local/v1/chat/completions",
+      "blocked": false
+    }
+  ],
+  "passed": false,
+  "toolTrace": [
+    {
+      "tool": "readToolCall",
+      "succeeded": true
+    }
+  ],
+  "upstreamStreamErrors": [
+    {
+      "provider": "Nvidia",
+      "error": {
+        "code": 503,
+        "message": "Upstream error from Nvidia: Service temporarily overloaded",
+        "metadata": {
+          "error_type": "provider_overloaded"
+        }
+      }
+    }
+  ],
+  "outputLog": "logs/nemotron-retry.log"
+}

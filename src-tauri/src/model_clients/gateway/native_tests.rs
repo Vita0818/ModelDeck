@@ -9,10 +9,10 @@ use std::{
 };
 
 #[derive(Clone)]
-struct Probe {
-    requests: Arc<Mutex<Vec<Value>>>,
+pub(crate) struct Probe {
+    pub(crate) requests: Arc<Mutex<Vec<Value>>>,
 }
-async fn upstream(State(probe): State<Probe>, req: Request) -> Response {
+pub(crate) async fn upstream(State(probe): State<Probe>, req: Request) -> Response {
     let auth = req
         .headers()
         .get("authorization")
@@ -24,7 +24,7 @@ async fn upstream(State(probe): State<Probe>, req: Request) -> Response {
         .await
         .unwrap();
     let data: Value = serde_json::from_slice(&body).unwrap_or(Value::Null);
-    probe.requests.lock().unwrap().push(json!({"path":path,"authMatches":auth=="Bearer native-client-dedicated-test-key","model":data.get("model"),"tools":data.get("tools").and_then(Value::as_array).map(Vec::len)}));
+    probe.requests.lock().unwrap().push(json!({"path":path,"authMatches":auth=="Bearer native-client-dedicated-test-key","model":data.get("model"),"effort":data.pointer("/reasoning/effort").or_else(||data.get("reasoning_effort")).or_else(||data.pointer("/output_config/effort")),"tools":data.get("tools").and_then(Value::as_array).map(Vec::len)}));
     if path.ends_with("chat/completions") {
         let events = [
             json!({"id":"probe","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"role":"assistant","content":"native-probe-ready"},"finish_reason":null}]}),
@@ -57,7 +57,7 @@ async fn upstream(State(probe): State<Probe>, req: Request) -> Response {
     }
     let item = json!({"id":"msg_probe","type":"message","role":"assistant","status":"completed","content":[{"type":"output_text","text":"native-probe-ready","annotations":[]}]});
     let response = json!({"id":"resp_probe","object":"response","created_at":1791090000,"model":data["model"],"status":"completed","output":[item.clone()],"usage":{"input_tokens":10,"output_tokens":3,"total_tokens":13}});
-    let events = vec![
+    let events = [
         json!({"type":"response.created","response":{"id":"resp_probe","object":"response","created_at":1791090000,"model":data["model"],"status":"in_progress","output":[]}}),
         json!({"type":"response.output_item.added","output_index":0,"item":{"id":"msg_probe","type":"message","role":"assistant","status":"in_progress","content":[]}}),
         json!({"type":"response.content_part.added","item_id":"msg_probe","output_index":0,"content_index":0,"part":{"type":"output_text","text":"","annotations":[]}}),

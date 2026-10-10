@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 1,
+  "status": "source_and_existing_evidence_audit",
+  "generatedAtUtc": "2026-10-09T14:11:29.170073+00:00",
+  "baseline": {
+    "project": "CC Switch",
+    "release": "v3.20.4",
+    "commit": "43e1d99084ed9b2f5dc252fd35c5adaf29d6876e",
+    "localTag": "modeldeck-baseline-2026-10-04",
+    "coreProviderFilesUnchangedFromUpstream": [
+      "src-tauri/src/proxy/forwarder.rs",
+      "src-tauri/src/proxy/providers/codex.rs",
+      "src-tauri/src/proxy/providers/claude.rs"
+    ]
+  },
+  "originalFlow": [
+    {
+      "stage": "provider configuration",
+      "source": "src-tauri/src/provider.rs",
+      "fields": [
+        "apiFormat",
+        "apiKeyField",
+        "codexChatReasoning",
+        "promptCacheRouting",
+        "localProxyRequestOverrides"
+      ]
+    },
+    {
+      "stage": "explicit provider reasoning metadata before inference",
+      "source": "src-tauri/src/proxy/providers/codex.rs:519"
+    },
+    {
+      "stage": "aggregator/platform identity before model-vendor inference",
+      "source": "src-tauri/src/proxy/providers/codex.rs:613"
+    },
+    {
+      "stage": "provider-aware request transform",
+      "source": "src-tauri/src/proxy/forwarder.rs:1546"
+    },
+    {
+      "stage": "provider authentication",
+      "source": "src-tauri/src/proxy/providers/claude.rs:816"
+    }
+  ],
+  "presetAudit": {
+    "originalCodexPresetShape": {
+      "presets": 93,
+      "withConfig": 93,
+      "withSettingsConfig": 0,
+      "explicitReasoning": 15,
+      "formats": {
+        "default": 40,
+        "openai_responses": 31,
+        "openai_chat": 22
+      }
+    },
+    "explicitReasoningProfiles": [
+      {
+        "name": "PPIO",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": true,
+          "supportsEffort": false,
+          "thinkingParam": "thinking",
+          "effortParam": "none",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "SiliconFlow",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": true,
+          "supportsEffort": true,
+          "thinkingParam": "enable_thinking",
+          "effortParam": "reasoning_effort",
+          "effortValueMode": "deepseek",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "AtlasCloud",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": false,
+          "supportsEffort": false,
+          "thinkingParam": "none",
+          "effortParam": "none",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "Baidu Qianfan Coding Plan",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": true,
+          "supportsEffort": false,
+          "thinkingParam": "thinking",
+          "effortParam": "none",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "Baidu Qianfan Token Plan",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": true,
+          "supportsEffort": true,
+          "thinkingParam": "thinking",
+          "effortParam": "reasoning_effort",
+          "effortValueMode": "deepseek",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "Tencent Token Plan",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": true,
+          "supportsEffort": true,
+          "thinkingParam": "thinking",
+          "effortParam": "reasoning_effort",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "Tencent Token Plan (Intl)",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": true,
+          "supportsEffort": true,
+          "thinkingParam": "thinking",
+          "effortParam": "reasoning_effort",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "Tencent Token Plan Enterprise Pro",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": true,
+          "supportsEffort": true,
+          "thinkingParam": "thinking",
+          "effortParam": "reasoning_effort",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "Tencent Token Plan Enterprise Pro (Intl)",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": true,
+          "supportsEffort": true,
+          "thinkingParam": "thinking",
+          "effortParam": "reasoning_effort",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "Tencent Token Plan Enterprise Lite",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": true,
+          "supportsEffort": true,
+          "thinkingParam": "thinking",
+          "effortParam": "reasoning_effort",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "Tencent Token Plan Enterprise Lite (Intl)",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": true,
+          "supportsEffort": true,
+          "thinkingParam": "thinking",
+          "effortParam": "reasoning_effort",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "ModelScope",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": true,
+          "supportsEffort": false,
+          "thinkingParam": "enable_thinking",
+          "effortParam": "none",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "Novita AI",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": false,
+          "supportsEffort": false,
+          "thinkingParam": "none",
+          "effortParam": "none",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "Nvidia",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": false,
+          "supportsEffort": true,
+          "thinkingParam": "none",
+          "effortParam": "reasoning_effort",
+          "effortValueMode": "passthrough",
+          "outputFormat": "reasoning_content"
+        }
+      },
+      {
+        "name": "OpenCode Go",
+        "apiFormat": "openai_chat",
+        "reasoning": {
+          "supportsThinking": true,
+          "supportsEffort": true,
+          "thinkingParam": "none",
+          "effortParam": "reasoning_effort",
+          "effortValueMode": "zen",
+          "outputFormat": "reasoning_content"
+        }
+      }
+    ],
+    "normalizedResourcePresets": 213,
+    "normalizedFields": [
+      "apiKeyUrl",
+      "baseUrl",
+      "category",
+      "icon",
+      "iconColor",
+      "id",
+      "models",
+      "name",
+      "protocol",
+      "websiteUrl"
+    ],
+    "adapterFieldsRetainedInNormalizedSchema": false,
+    "codexExtractionIssue": {
+      "source": "scripts/extract-deck-presets.ts:211",
+      "expectedByExtractor": "settingsConfig.model_providers",
+      "actualOriginalShape": "top-level config TOML, apiFormat, codexChatReasoning, modelCatalog",
+      "scope": "All 93 original Codex preset entries use config; other harness catalogs may contribute overlapping providers, so this is not a claim of 93 missing unique vendors."
+    }
+  },
+  "existingEvidence": [
+    {
+      "source": "harness-tests/README.md",
+      "filesInWholeTree": 208,
+      "plannedCases": 20,
+      "passedCases": 12,
+      "upstream403": 4,
+      "upstream503": 2,
+      "loginBlocked": 2,
+      "scope": "Actual installed harness tool workflows against two OpenRouter free models; not per-provider effort verification."
+    },
+    {
+      "source": "harness-tests/arena-retest/README.md",
+      "plannedCases": 3,
+      "passedCases": 3,
+      "scope": "Actual interactive Claude/Codex/OpenCode against Arena using their selected native upstream protocols."
+    },
+    {
+      "source": "harness-tests/arena-retest/request-context.json",
+      "recordsByCapture": {
+        "claude": 11,
+        "opencodeDirect": 66,
+        "codex": 63,
+        "arenaUpstream": 17,
+        "opencodeGateway": 6
+      },
+      "scope": "Sanitized headers, paths, model, statuses; exported request bodies and reasoning parameters are absent."
+    },
+    {
+      "source": "harness-tests/gateway-records.jsonl",
+      "records": 204,
+      "scope": "Sanitized request metadata and results; no inference request body."
+    },
+    {
+      "source": "harness-tests/cursor-direct/gateway-records.jsonl",
+      "records": 20,
+      "scope": "Cursor local engine and OpenRouter attribution/tool workflow evidence."
+    },
+    {
+      "source": "/Users/vita/.cc-switch/cc-switch.db",
+      "table": "proxy_request_logs",
+      "rowsAtRead": 16444,
+      "byDataSource": {
+        "codex_session": 13707,
+        "opencode_session": 2535,
+        "proxy": 194,
+        "session_log": 8
+      },
+      "scope": "Request/usage/status records; no request-body columns, cannot establish reasoning field spelling."
+    }
+  ],
+  "confirmedGaps": [
+    {
+      "id": "provider-aware-dispatch-bypassed",
+      "source": "src-tauri/src/model_clients/gateway.rs:271",
+      "detail": "The new Responses-to-Chat path calls the generic converter and then writes reasoning_effort. Original provider selection chooses effortParam and thinkingParam first."
+    },
+    {
+      "id": "upstream-adapter-metadata-not-represented",
+      "source": "src-tauri/src/deck/types.rs:26",
+      "detail": "UpstreamProvider stores URL/protocol/credentials but no provider-specific reasoning/auth/request overrides."
+    },
+    {
+      "id": "authentication-policy-collapsed",
+      "source": "src-tauri/src/deck/gateway.rs:560",
+      "detail": "The new Messages upstream path chooses x-api-key by protocol. Original provider logic distinguishes OpenRouter/Bearer/Anthropic auth; actual endpoint acceptance must be tested."
+    },
+    {
+      "id": "mock-coverage-not-provider-compatibility-proof",
+      "source": "src-tauri/src/deck/gateway/tests.rs:151",
+      "detail": "Generic Chat mock accepts request payloads without enforcing provider schemas. Successful tests do not prove per-provider field/value acceptance."
+    },
+    {
+      "id": "old-openrouter-value-rule-requires-revalidation",
+      "source": "src-tauri/src/proxy/providers/codex.rs:732",
+      "detail": "Historical OpenRouter rule clamps max to xhigh and claims max unsupported; current public model metadata includes max. Reuse provider dispatch structure without treating historical value rules as current wire evidence."
+    }
+  ],
+  "verification": {
+    "originalProviderResolverTests": {
+      "passed": 8,
+      "log": "/private/tmp/modeldeck-original-provider-policy-tests.log"
+    },
+    "originalChatConverterTests": {
+      "passed": 101,
+      "log": "/private/tmp/modeldeck-original-chat-contract-tests.log"
+    },
+    "productSourceModifiedDuringAudit": false,
+    "installedApplicationChangedDuringAudit": false,
+    "realModelApiCallsDuringAudit": 0,
+    "allProvidersValidated": false
+  },
+  "nextAcceptanceCriteria": [
+    "Inventory provider/plan/upstream-protocol contracts and their evidence dates.",
+    "Preserve explicit provider metadata and restore provider-aware dispatch using the existing adapter core.",
+    "Keep native configuration option names distinct from outbound HTTP fields.",
+    "Use strict per-provider request validation rather than a permissive generic mock.",
+    "Replay retained usable captures and validate complete native tool turns where actual evidence exists.",
+    "Label unavailable credentials/missing payload captures as unverified instead of inferring compatibility."
+  ],
+  "restorationPass": {
+    "status": "passed",
+    "baseline": "CC Switch v3.20.4 / 43e1d990",
+    "originalPresetMetadataRestored": 15,
+    "strictRequestContractCases": 8,
+    "originalAuthStrategies": true,
+    "originalUrlBuilders": true,
+    "providerMetadataPreserved": true,
+    "explicitMetadataOverridesPresets": true,
+    "platformBeforeModelVendor": true,
+    "messagesProviderNormalization": true,
+    "kimiSchemaCompatibility": true,
+    "nativeClientMockTestsPassed": 4,
+    "configurationFilesUnchanged": true,
+    "allProvidersProductionValidated": false,
+    "installedPath": "/Applications/ModelDeck.app",
+    "scope": "Existing adapter kernel reconnected for provider reasoning fields, authentication, URL building, Messages conversion/normalization, cache hints and Kimi tool schema. Full production replay and complete preset-extractor rebuild remain separate."
+  }
+}

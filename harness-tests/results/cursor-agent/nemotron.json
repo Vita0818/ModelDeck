@@ -1,0 +1,300 @@
+{
+  "client": "cursor-agent",
+  "case": "nemotron",
+  "requested": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "model_used": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "real_client": true,
+  "native_runtime": "official agent-cli-local",
+  "apply_status": 200,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "Cursor-CLI/2026.06.12-19-59-36-f6aba9a (darwin arm64)",
+      "tools": 16,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "Shell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Glob",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AwaitShell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "StrReplace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "EditNotebook",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "TodoWrite",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "WriteShellStdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AskQuestion",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Task",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ListMcpResources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "FetchMcpResource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "SwitchMode",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 4148
+    },
+    {
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "Cursor-CLI/2026.06.12-19-59-36-f6aba9a (darwin arm64)",
+      "tools": 16,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "Shell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Glob",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AwaitShell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "StrReplace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "EditNotebook",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "TodoWrite",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "WriteShellStdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AskQuestion",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Task",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ListMcpResources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "FetchMcpResource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "SwitchMode",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3446
+    },
+    {
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "Cursor-CLI/2026.06.12-19-59-36-f6aba9a (darwin arm64)",
+      "tools": 16,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "Shell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Glob",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AwaitShell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "StrReplace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "EditNotebook",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "TodoWrite",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "WriteShellStdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AskQuestion",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Task",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ListMcpResources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "FetchMcpResource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "SwitchMode",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 4492
+    }
+  ],
+  "passed": false,
+  "exit_code": 1,
+  "seconds": 29.88,
+  "runtime_session_ids": [
+    "d9f7a119-18b6-4ccb-9f59-02f979234601"
+  ],
+  "output_log": "logs/cursor-agent/nemotron.log",
+  "result_file_value": "",
+  "free_rate_limit_429": false,
+  "cursor_account_credentials_provided": false,
+  "native_tool_trace": [],
+  "failure": "Nvidia upstream error code 503: Service temporarily overloaded",
+  "direct_evidence": "cursor-direct/results/managed-nemotron.json"
+}

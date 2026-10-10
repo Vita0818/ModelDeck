@@ -1,0 +1,43 @@
+{
+  "case": "mock-tools",
+  "model": "md-nemotron",
+  "seconds": 4.12,
+  "exitCode": 0,
+  "finalTextSeen": true,
+  "resultFileValue": "89",
+  "cursorAccountCredentialsProvided": false,
+  "nativeVendorBinaryUnmodified": true,
+  "network": [
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/v1/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/v1/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/v1/chat/completions",
+      "blocked": false
+    }
+  ],
+  "passed": true,
+  "toolTrace": [
+    {
+      "tool": "readToolCall",
+      "succeeded": true
+    },
+    {
+      "tool": "editToolCall",
+      "succeeded": true
+    }
+  ],
+  "upstreamStreamErrors": [],
+  "outputLog": "logs/mock-tools.log"
+}

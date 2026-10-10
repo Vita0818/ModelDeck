@@ -1,0 +1,58 @@
+{
+  "client": "muse",
+  "requested": "thinkingmachines/inkling:free",
+  "case": "inkling",
+  "session_id": "510f979b-e1fc-4fed-ad6d-2ac583572378",
+  "apply_status": 200,
+  "model_used": "thinkingmachines/inkling:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/muse/responses",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "muse-build/0.1.0 (non-interactive; macos-aarch64; build 427a430436e233fa027717166326a4cfd392facb)",
+      "tools": 1,
+      "toolNames": [
+        {
+          "type": "namespace",
+          "name": "muse",
+          "children": [
+            "read_file",
+            "search",
+            "write_file",
+            "edit_file",
+            "read_memory",
+            "add_memory",
+            "edit_memory",
+            "bash",
+            "bash_input",
+            "read_skill",
+            "snooze_reminder",
+            "write_todos"
+          ]
+        }
+      ],
+      "status": 403,
+      "latencyMs": 2269,
+      "error": {
+        "error": {
+          "message": "Upstream returned HTTP 403",
+          "type": "model_client_error"
+        }
+      }
+    }
+  ],
+  "passed": false,
+  "pid": 66339,
+  "exit_code": 1,
+  "seconds": 2.84,
+  "runtime_session_ids": [
+    "e0bdc604-a39f-4de9-b9fe-4243b936e508"
+  ],
+  "output_log": "logs/muse/inkling.log",
+  "result_file_value": "",
+  "failure": "ask_id\":\"018f0000-0000-7000-8000-000000002711\",\"reason\":\"API error 403: Upstream returned HTTP 403 (model_client_error)\"}}}\n{\"schema_version\":1,\"id\":\"018f0000-0000-7000-8000-00000000c371\",\"stream\":{\"kind\":\"session\",\"id\":\"e0bdc604-a39f-4de9-b9fe-4243b936e508\"},\"sequence\":19,\"recorded_at\":1780531400000033,\"record_type\":\"event\",\"durability\":\"durable\",\"causation_id\":\"054889b4-3209-4761-ba65-ebf4ba64ae45\",\"payload_type\":\"task.lifecycle.cancelled\",\"payload_schema_version\":1,\"payload\":{\"kind\":\"task_lifecycle\",\"command_id\":\"054889b4-3209-4761-ba65-ebf4ba64ae45\",\"run_stream\":{\"kind\":\"run\",\"id\":\"054889b4-3209-4761-ba65-ebf4ba64ae45\"},\"task_stream\":{\"kind\":\"task\",\"id\":\"018f0000-0000-7000-8000-000000002710\"},\"task_id\":\"018f0000-0000-7000-8000-000000002710\",\"event\":{\"kind\":\"cancelled\",\"task_id\":\"018f0000-0000-7000-8000-000000002710\",\"reason\":\"main run failed\"}}}\n{\"schema_version\":1,\"id\":\"018f0000-0000-7000-8000-00000000c373\",\"stream\":{\"kind\":\"session\",\"id\":\"e0bdc604-a39f-4de9-b9fe-4243b936e508\"},\"sequence\":20,\"recorded_at\":1780531400000035,\"record_type\":\"event\",\"durability\":\"durable\",\"causation_id\":\"054889b4-3209-4761-ba65-ebf4ba64ae45\",\"payload_type\":\"run.terminal.failed\",\"payload_schema_version\":1,\"payload\":{\"kind\":\"run_terminal\",\"command_id\":\"054889b4-3209-4761-ba65-ebf4ba64ae45\",\"run_stream\":{\"kind\":\"run\",\"id\":\"054889b4-3209-4761-ba65-ebf4ba64ae45\"},\"terminal\":\"failed\",\"text\":\"\",\"reason\":\"API error 403: Upstream returned HTTP 403 (model_client_error)\"}}\n{\"schema_version\":1,\"id\":\"018f0000-0000-7000-8000-00000000c374\",\"stream\":{\"kind\":\"session\",\"id\":\"e0bdc604-a39f-4de9-b9fe-4243b936e508\"},\"sequence\":21,\"recorded_at\":1780531400000036,\"record_type\":\"event\",\"durability\":\"durable\",\"causation_id\":\"054889b4-3209-4761-ba65-ebf4ba64ae45\",\"payload_type\":\"session.workspace_branch.observed\",\"payload_schema_version\":1,\"payload\":{\"kind\":\"workspace_branch_observed\",\"command_id\":\"054889b4-3209-4761-ba65-ebf4ba64ae45\",\"record\":{\"command_id\":\"054889b4-3209-4761-ba65-ebf4ba64ae45\",\"workspace_root\":\"/Users/vita/Others/ModelDeck/harness-tests/.runtime/workspaces/muse/inkling\",\"reference\":{\"kind\":\"branch\",\"name\":\"main\"},\"vcs\":\"git\",\"commit\":\"18ce5894060a\",\"dirty\":true}}}\nrun ended with Failed\n",
+  "free_rate_limit_429": false
+}

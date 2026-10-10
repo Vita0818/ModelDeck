@@ -43,9 +43,6 @@ const success = <T>(payload: T) => HttpResponse.json(payload as any);
 export const handlers = [
   http.get(MODELS_DEV_API_URL, () => success({})),
   http.post(`${TAURI_ENDPOINT}/get_migration_result`, () => success(false)),
-  http.post(`${TAURI_ENDPOINT}/get_skills_migration_result`, () =>
-    success(null),
-  ),
   http.post(`${TAURI_ENDPOINT}/list_profiles`, () => success([])),
   http.post(`${TAURI_ENDPOINT}/get_providers`, async ({ request }) => {
     const { app } = await withJson<{ app: AppId }>(request);

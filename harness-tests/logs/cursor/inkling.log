@@ -1,0 +1,2 @@
+Private Cursor GUI profile has no account access/refresh token. Native model catalog is present, but account login is required. No GUI account credentials were copied to the short test profile. Existing Cursor windows were left open.
+{"access_token_present": false, "refresh_token_present": false, "private_renderer_logs_report_unauthorized": true, "private_indexing_logs_report_login_required": true, "launch_pid": 74672, "window_binding_limit": "Native UI automation selected the existing Cursor window; no actions were taken in that window."}

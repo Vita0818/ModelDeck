@@ -1,0 +1,7 @@
+{
+  "removedOwnedTestTrustEntry": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/codex/arena",
+  "semanticFieldsOutsideOwnEntryUnchanged": true,
+  "concurrentCurrentModelPreserved": "gpt-6.1-sol",
+  "beforeCleanupSha256": "610a96b1da30602d5667059813ab5fdc6eb91c2366dac02de23ed4c4aa1fa269",
+  "afterCleanupSha256": "2aafa0325171940f008dd64e1bd75f8924536c4cffc53a9f4f3683ee2e28e942"
+}

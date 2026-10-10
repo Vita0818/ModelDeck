@@ -1825,47 +1825,6 @@
     "officialDescription": "官方登入，不需要填寫 API Key",
     "presetDescription": "使用預設設定，只需填寫 API Key"
   },
-  "workspace": {
-    "title": "Workspace 檔案管理",
-    "manage": "Workspace",
-    "files": {
-      "agents": "Agent 操作指令和規則",
-      "soul": "Agent 人格和溝通風格",
-      "user": "使用者檔案和偏好",
-      "identity": "Agent 名稱和頭像",
-      "tools": "本地工具文件",
-      "memory": "長期記憶和決策紀錄",
-      "heartbeat": "心跳執行清單",
-      "bootstrap": "首次執行儀式",
-      "boot": "閘道器重新啟動清單"
-    },
-    "editing": "編輯 {{filename}}",
-    "saveSuccess": "儲存成功",
-    "saveFailed": "儲存失敗",
-    "loadFailed": "讀取失敗",
-    "openDirectory": "在檔案管理員中開啟",
-    "dailyMemory": {
-      "title": "每日記憶",
-      "sectionTitle": "每日記憶",
-      "cardTitle": "每日記憶檔案",
-      "cardDescription": "瀏覽管理每日記憶",
-      "createToday": "新增記憶",
-      "empty": "暫無每日記憶檔案",
-      "loadFailed": "載入每日記憶檔案失敗",
-      "createFailed": "建立每日記憶檔案失敗",
-      "deleteSuccess": "每日記憶檔案已刪除",
-      "deleteFailed": "刪除每日記憶檔案失敗",
-      "confirmDeleteTitle": "刪除每日記憶",
-      "confirmDeleteMessage": "確定刪除 {{date}} 的每日記憶嗎？此操作不可復原。",
-      "searchPlaceholder": "搜尋全文內容...",
-      "searchScopeHint": "全文搜尋所有每日記憶 ⌘F",
-      "searchCloseHint": "Esc 關閉",
-      "noSearchResults": "沒有找到符合的每日記憶。",
-      "searching": "搜尋中...",
-      "searchFailed": "搜尋失敗",
-      "matchCount": "{{count}} 處相符"
-    }
-  },
   "openclaw": {
     "backupCreated": "已建立備份：{{path}}",
     "providerKey": "供應商標識",
@@ -1996,32 +1955,6 @@
       "modelsHint": "啟用為目前供應商時，第一個模型會設為 Hermes 預設模型。",
       "rateLimitDelay": "請求間隔（秒）",
       "rateLimitDelayHint": "連續請求間的最小間隔秒數（選填）。留空表示無限制。"
-    },
-    "webui": {
-      "open": "開啟 Hermes Web UI",
-      "offline": "Hermes Web UI 未啟動，請先執行 `hermes dashboard` 啟動服務。",
-      "openFailed": "開啟 Hermes Web UI 失敗",
-      "launchConfirmTitle": "Hermes Dashboard 未啟動",
-      "launchConfirmMessage": "是否開啟終端機並執行 `hermes dashboard` 啟動服務？\n\n啟動完成後會自動開啟瀏覽器。\n\n若終端機提示找不到 hermes 或缺少 web 相依套件，請先執行：\npip install hermes-agent[web]",
-      "launchConfirmAction": "開啟終端機並啟動",
-      "launching": "已在終端機啟動 hermes dashboard",
-      "launchFailed": "開啟終端機失敗"
-    },
-    "memory": {
-      "title": "記憶管理",
-      "agentTab": "Agent 記憶 (MEMORY.md)",
-      "userTab": "使用者畫像 (USER.md)",
-      "usage": "已用 {{current}} / {{limit}} 字元",
-      "overLimit": "已超過上限，Hermes 下次載入時會截斷",
-      "enableOn": "已啟用",
-      "enableOff": "已停用",
-      "disabledHint": "在重新啟用前 Hermes 會跳過此記憶",
-      "toggleFailed": "切換記憶狀態失敗",
-      "saveSuccess": "記憶已儲存",
-      "saveFailed": "儲存記憶失敗",
-      "loadFailed": "讀取記憶檔案失敗",
-      "openConfig": "在 Hermes Web UI 調整上限",
-      "runtimeNote": "變更將在 Hermes 下次啟動或建立新工作階段時生效。"
     }
   },
   "env": {
@@ -2634,7 +2567,7 @@
     "capability": {
       "antigravity": "自訂模型的 API 金鑰連線需要 Antigravity CLI 1.2.16 或更新版本。Gemini 端點直接轉發；OpenAI Chat 端點由內建轉接處理文字、圖片和工具呼叫，上游推理等級由此處設定控制。",
       "cursor": "使用 Cursor IDE 原生 OpenAI BYOK 設定，端點須為公開 HTTPS。套用前請結束 Cursor。上下文和推理選項受 Cursor 與模型的原生能力限制。",
-      "cursor-agent": "透過 Cursor 服務以 BYOK 連接所選提供商，需要公開 HTTPS 端點和 Cursor 登入。受管啟動命令會先驗證 CLI 版本，再載入模型轉接器。",
+      "cursor-agent": "選擇已驗證的 cursor-agent-local 執行檔，可透過原生本機 API 使用模型，無需 Cursor 登入或公開端點。一般 cursor-agent 仍使用雲端 BYOK，需要 Cursor 登入及公開 HTTPS。",
       "muse": "內建轉接可連接 Responses、OpenAI Chat 或 Anthropic Messages 端點，並提供 Muse 原生模型目錄、工具命名空間及連續 SSE 事件序號。不支援 max 的版本使用 xhigh。"
     },
     "loading": "正在讀取模型連線",
@@ -2833,13 +2766,14 @@
     "removeRoute": "移除路由",
     "routesHint": "別名就是用戶端看到的模型名稱。層級留空則沿用供應商預設。",
     "compatibleModels": "相容模型",
-    "retainedHint": "遷移時保留的原生登入與用戶端專用檔案。"
+    "retainedHint": "遷移時保留的原生登入與用戶端專用檔案。",
+    "effort": "預設推理檔位",
+    "modelSettingsHint": "在「提供商與模型」修改脈絡與輸出上限，在「端點」設定預設檔位。原生用戶端明確選擇的檔位優先。Claude Code 預設 max 請使用託管啟動命令。"
   },
   "nav": {
     "primary": "主導覽",
     "resources": "資源",
     "clients": "用戶端",
-    "tools": "工具",
     "usage": "用量",
     "applied": "已套用",
     "resource": {

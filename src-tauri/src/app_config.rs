@@ -2,7 +2,6 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::str::FromStr;
 
-
 /// MCP 服务器应用状态（标记应用到哪些客户端）
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct McpApps {
@@ -93,7 +92,6 @@ impl McpApps {
             && !self.mcode
     }
 }
-
 
 /// MCP 服务器定义（v3.7.0 统一结构）
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -640,10 +638,6 @@ impl MultiAppConfig {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use serial_test::serial;
-    use std::env;
-    use std::fs;
-    use tempfile::TempDir;
 
     #[test]
     fn app_type_parses_claude_desktop_aliases() {
@@ -661,54 +655,4 @@ mod tests {
         );
         assert_eq!(AppType::ClaudeDesktop.as_str(), "claude-desktop");
     }
-
-    struct TempHome {
-        #[allow(dead_code)] // 字段通过 Drop trait 管理临时目录生命周期
-        dir: TempDir,
-        original_home: Option<String>,
-        original_userprofile: Option<String>,
-        original_test_home: Option<String>,
-    }
-
-    impl TempHome {
-        fn new() -> Self {
-            let dir = TempDir::new().expect("failed to create temp home");
-            let original_home = env::var("HOME").ok();
-            let original_userprofile = env::var("USERPROFILE").ok();
-            let original_test_home = env::var("CC_SWITCH_TEST_HOME").ok();
-
-            env::set_var("HOME", dir.path());
-            env::set_var("USERPROFILE", dir.path());
-            env::set_var("CC_SWITCH_TEST_HOME", dir.path());
-
-            Self {
-                dir,
-                original_home,
-                original_userprofile,
-                original_test_home,
-            }
-        }
-    }
-
-    impl Drop for TempHome {
-        fn drop(&mut self) {
-            match &self.original_home {
-                Some(value) => env::set_var("HOME", value),
-                None => env::remove_var("HOME"),
-            }
-
-            match &self.original_userprofile {
-                Some(value) => env::set_var("USERPROFILE", value),
-                None => env::remove_var("USERPROFILE"),
-            }
-
-            match &self.original_test_home {
-                Some(value) => env::set_var("CC_SWITCH_TEST_HOME", value),
-                None => env::remove_var("CC_SWITCH_TEST_HOME"),
-            }
-        }
-    }
-
-
-
 }

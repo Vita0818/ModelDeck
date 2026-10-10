@@ -1,0 +1,10 @@
+{
+  "source": "https://anysphere-binaries.s3.amazonaws.com/lab/2026.06.12-19-59-36-f6aba9a/darwin/arm64/agent-cli-local-package.tar.gz",
+  "version": "2026.06.12-19-59-36-f6aba9a",
+  "archiveSha256": "6e746a40db86726e362c686ba06657a4c990fa42e2e72d42822916c767c9192d",
+  "archiveBytes": 57930640,
+  "seconds": 230.43,
+  "entry": "/Users/vita/Others/ModelDeck/.build/cursor-direct/vendor/2026.06.12-19-59-36-f6aba9a/dist-package/cursor-agent-local",
+  "indexSha256": "4da083d162bd59157f6484640055bd12b37f7036e8c2af440548fb65ffbe9da3",
+  "nativeCloudCliUnmodified": true
+}

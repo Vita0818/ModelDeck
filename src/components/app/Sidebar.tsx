@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 import {
   BarChart2,
   Boxes,
-  Brain,
   Grid2x2Check,
   Monitor,
   Network,
@@ -104,7 +103,6 @@ export function Sidebar({
   onNavigate,
   visibleApps,
   appliedClients,
-  showHermesMemory,
   width,
 }: {
   route: Route;
@@ -112,7 +110,6 @@ export function Sidebar({
   visibleApps: VisibleApps;
   /** Clients with an applied binding get a dot, like a running indicator. */
   appliedClients: Set<ClientId>;
-  showHermesMemory: boolean;
   width: number;
 }) {
   const { t } = useTranslation();
@@ -162,18 +159,6 @@ export function Sidebar({
             />
           );
         })}
-
-        {showHermesMemory && (
-          <>
-            <SectionLabel>{t("nav.tools")}</SectionLabel>
-            <Item
-              active={route.kind === "hermesMemory"}
-              icon={<Brain className="size-[17px]" />}
-              label={t("hermes.memory.title")}
-              onClick={() => onNavigate({ kind: "hermesMemory" })}
-            />
-          </>
-        )}
       </div>
 
       <div className="space-y-0.5 border-t border-border px-2 py-2">

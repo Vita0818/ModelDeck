@@ -1,0 +1,94 @@
+{
+  "client": "claude",
+  "displayName": "Claude Code",
+  "mode": "native-interactive-terminal",
+  "gateway": "production ModelDeck apply and gateway",
+  "upstreamProtocol": "anthropic",
+  "requestedModel": "coding-router-preview",
+  "passed": true,
+  "resultFileValue": "89",
+  "finalMarker": "MD_TEST_OK",
+  "nativeSessionId": "ea2ff0fd-5586-44f9-8180-3c579edd737c",
+  "nativeEvidence": "native/claude.json",
+  "gatewayRequests": [
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.280 (external, cli)",
+      "tools": 2,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 6381
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.280 (external, cli)",
+      "tools": 2,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3420
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.280 (external, cli)",
+      "tools": 0,
+      "toolNames": [],
+      "status": 200,
+      "latencyMs": 14351
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-arena",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.280 (external, cli)",
+      "tools": 2,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 8529
+    }
+  ],
+  "headless": false,
+  "credentialOnlyInGateway": true
+}

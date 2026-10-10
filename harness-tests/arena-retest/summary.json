@@ -1,0 +1,112 @@
+{
+  "generatedAtUtc": "2026-10-08T03:47:23.742075+00:00",
+  "status": "passed",
+  "model": "coding-router-preview",
+  "cases": [
+    {
+      "client": "opencode",
+      "displayName": "OpenCode",
+      "mode": "native-interactive-terminal",
+      "gateway": "production ModelDeck apply and gateway",
+      "upstreamProtocol": "openai-chat",
+      "requestedModel": "coding-router-preview",
+      "passed": true,
+      "resultFileValue": "89",
+      "finalMarker": "MD_TEST_OK",
+      "nativeSessionId": "ses_ee664008affetpeT4WgN3kzgby",
+      "nativeEvidence": "opencode-modeldeck-default-native.json",
+      "headless": false,
+      "credentialOnlyInGateway": true,
+      "generatedInputProtocol": "anthropic",
+      "alsoVerifiedInputProtocol": "openai-chat"
+    },
+    {
+      "client": "claude",
+      "displayName": "Claude Code",
+      "mode": "native-interactive-terminal",
+      "gateway": "production ModelDeck apply and gateway",
+      "upstreamProtocol": "anthropic",
+      "requestedModel": "coding-router-preview",
+      "passed": true,
+      "resultFileValue": "89",
+      "finalMarker": "MD_TEST_OK",
+      "nativeSessionId": "ea2ff0fd-5586-44f9-8180-3c579edd737c",
+      "nativeEvidence": "native/claude.json",
+      "headless": false,
+      "credentialOnlyInGateway": true
+    },
+    {
+      "client": "codex",
+      "displayName": "Codex CLI",
+      "mode": "native-interactive-terminal",
+      "gateway": "production ModelDeck apply and gateway",
+      "upstreamProtocol": "openai-responses",
+      "requestedModel": "coding-router-preview",
+      "passed": true,
+      "resultFileValue": "89",
+      "finalMarker": "MD_TEST_OK",
+      "nativeSessionId": "01a11991-9eba-7020-8c28-a13cc5280585",
+      "nativeEvidence": "native/codex-01a11991-9eba-7020-8c28-a13cc5280585.json",
+      "headless": false,
+      "credentialOnlyInGateway": true,
+      "generatedHostedToolSearchCapability": false,
+      "generatedWebSearchMode": "disabled",
+      "testOnlyCapabilityOverrides": false,
+      "recoveredTransient502": true
+    }
+  ],
+  "passedCases": 3,
+  "plannedCases": 3,
+  "modelsProbeStatus": 200,
+  "historical401Cause": "The harness sent an unresolved OpenCode file reference instead of the real token",
+  "historicalKeyInvalidConclusionWithdrawn": true,
+  "resumedOriginalUserAuthorization": true,
+  "headless403WasClientRestriction": true,
+  "paidFallbackCalls": 0,
+  "freeRateLimit429Observed": false,
+  "rustRegression": {
+    "passed": 2703,
+    "failed": 0,
+    "ignored": 14
+  },
+  "credentialRegressionTests": 6,
+  "officialOAuthUnchanged": true,
+  "cleanup": {
+    "ownedProcessesStopped": [
+      95103,
+      95112,
+      95151,
+      96208,
+      97745
+    ],
+    "ownedPorts": {
+      "56205": "closed",
+      "57518": "closed",
+      "58213": "closed",
+      "58400": "closed",
+      "58490": "closed",
+      "58566": "closed",
+      "58672": "closed",
+      "57901": "closed"
+    },
+    "privateRuntimeRemoved": true,
+    "nativeCodexSessions": "archived_recoverable",
+    "archivedCodexSessionIds": [
+      "01a116f2-4b2c-7de1-bc98-127335b2126e",
+      "01a11706-cead-7670-9846-cee3bb3ac23f",
+      "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+      "01a11991-9eba-7020-8c28-a13cc5280585",
+      "01a11980-95b9-7f70-ae81-928dce9ade36",
+      "01a11986-fa1f-7a12-8fab-d8b1a61bd658",
+      "01a1198c-8504-73c3-a053-c930220080d6"
+    ],
+    "officialOAuthUnchanged": true,
+    "originalArenaTokenUnchanged": true,
+    "onlyOwnedTrustEntryRemoved": true,
+    "concurrentCodexSettingsPreserved": true,
+    "openCodeAndClaudeSessionDataRemoved": true,
+    "isolatedEntryTokensRemoved": true,
+    "remainingOwnedProcessIds": []
+  },
+  "artifactSecretCheck": "artifact-secret-check.json"
+}

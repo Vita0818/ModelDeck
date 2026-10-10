@@ -1,0 +1,145 @@
+{
+  "client": "hermes",
+  "requested": "thinkingmachines/inkling:free",
+  "case": "inkling",
+  "session_id": "6282fdd6-83cf-4998-b0f3-8aafa57c554a",
+  "apply_status": 200,
+  "model_used": "thinkingmachines/inkling:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/hermes/api/v1/models",
+      "method": "GET",
+      "model": null,
+      "stream": null,
+      "userAgent": "python-httpx/0.28.1",
+      "tools": null,
+      "toolNames": null,
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/hermes/api/tags",
+      "method": "GET",
+      "model": null,
+      "stream": null,
+      "userAgent": "python-httpx/0.28.1",
+      "tools": null,
+      "toolNames": null,
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/hermes/v1/props",
+      "method": "GET",
+      "model": null,
+      "stream": null,
+      "userAgent": "python-httpx/0.28.1",
+      "tools": null,
+      "toolNames": null,
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/hermes/props",
+      "method": "GET",
+      "model": null,
+      "stream": null,
+      "userAgent": "python-httpx/0.28.1",
+      "tools": null,
+      "toolNames": null,
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/hermes/version",
+      "method": "GET",
+      "model": null,
+      "stream": null,
+      "userAgent": "python-httpx/0.28.1",
+      "tools": null,
+      "toolNames": null,
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/hermes/v1/chat/completions",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "OpenAI/Python 2.24.0",
+      "tools": 4,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_files",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_file",
+          "children": null
+        }
+      ],
+      "status": 403,
+      "latencyMs": 1604,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Upstream returned HTTP 403"
+        }
+      }
+    }
+  ],
+  "passed": false,
+  "pid": 67103,
+  "exit_code": 1,
+  "seconds": 3.53,
+  "runtime_session_ids": [
+    "20261007_160336_91f549"
+  ],
+  "output_log": "logs/hermes/inkling.log",
+  "result_file_value": "",
+  "failure": "{\"type\": \"system\", \"subtype\": \"init\", \"model\": \"md-inkling\", \"session_id\": \"20261007_160336_91f549\", \"timestamp\": 1791360216444}\n{\"type\": \"result\", \"session_id\": \"20261007_160336_91f549\", \"exit_code\": 1, \"text\": \"custom rejected your API key, so the model can't be reached. Update it in Settings → Providers, or run `hermes setup` in a terminal.\\n\\nProvider said: HTTP 403: Upstream returned HTTP 403\", \"tokens\": {\"input\": 0, \"output\": 0, \"total\": 0, \"cache_read\": 0, \"cache_write\": 0}, \"duration_ms\": 2391, \"error\": \"HTTP 403: Upstream returned HTTP 403\", \"timestamp\": 1791360218835}\n\nsession_id: 20261007_160336_91f549\n",
+  "free_rate_limit_429": false
+}

@@ -61,8 +61,6 @@ pub struct TrayTexts {
     pub lightweight_mode: &'static str,
     pub quit: &'static str,
     pub _auto_label: &'static str,
-    pub projects_label: &'static str,
-    pub no_project_label: &'static str,
 }
 
 /// 将系统区域标识映射为托盘支持的语言码。
@@ -110,8 +108,6 @@ impl TrayTexts {
                 lightweight_mode: "Lightweight Mode",
                 quit: "Quit",
                 _auto_label: "Auto (Failover)",
-                projects_label: "Projects",
-                no_project_label: "No project",
             },
             "ja" => Self {
                 show_main: "メインウィンドウを開く",
@@ -120,8 +116,6 @@ impl TrayTexts {
                 lightweight_mode: "軽量モード",
                 quit: "終了",
                 _auto_label: "自動 (フェイルオーバー)",
-                projects_label: "プロジェクト",
-                no_project_label: "プロジェクトを使用しない",
             },
             "zh-TW" => Self {
                 show_main: "開啟主介面",
@@ -130,8 +124,6 @@ impl TrayTexts {
                 lightweight_mode: "輕量模式",
                 quit: "退出",
                 _auto_label: "自動 (故障轉移)",
-                projects_label: "專案",
-                no_project_label: "不使用專案",
             },
             _ => Self {
                 show_main: "打开主界面",
@@ -140,8 +132,6 @@ impl TrayTexts {
                 lightweight_mode: "轻量模式",
                 quit: "退出",
                 _auto_label: "自动 (故障转移)",
-                projects_label: "项目",
-                no_project_label: "不使用项目",
             },
         }
     }
@@ -446,7 +436,6 @@ fn sort_providers(
     });
     sorted
 }
-
 
 /// 处理供应商托盘事件
 pub fn handle_provider_tray_event(app: &tauri::AppHandle, event_id: &str) -> bool {
@@ -774,7 +763,7 @@ pub fn create_tray_menu(
                         provider,
                     );
                 let label = if is_official_blocked {
-                    format!("{} \u{26D4}", &provider.name) // ⛔ emoji
+                    format!("{} \u{26D4}", provider.name) // ⛔ emoji
                 } else {
                     provider.name.clone()
                 };

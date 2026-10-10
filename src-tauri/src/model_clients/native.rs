@@ -12,6 +12,7 @@ use std::{
 
 const CURSOR_STORAGE: &str = "src.vs.platform.reactivestorage.browser.reactiveStorageServiceImpl.persistentStorage.applicationUser";
 const CURSOR_ADAPTER: &str = include_str!("../../resources/cursor-models.cjs");
+const CURSOR_LOCAL_ADAPTER: &str = include_str!("../../resources/cursor-local.cjs");
 const CURSOR_MANIFEST: &str = include_str!("../../resources/cursor-models.manifest.json");
 
 fn gateway_origin_path() -> PathBuf {
@@ -94,6 +95,15 @@ fn find_executable(client: ModelClient) -> Option<PathBuf> {
         ModelClient::Cursor => "cursor",
     };
     let mut candidates = Vec::new();
+    if client == ModelClient::CursorAgent {
+        candidates.extend([
+            get_home_dir().join(".local/bin/cursor-agent-local"),
+            PathBuf::from("/usr/local/bin/cursor-agent-local"),
+        ]);
+        if let Some(path) = std::env::var_os("PATH") {
+            candidates.extend(std::env::split_paths(&path).map(|p| p.join("cursor-agent-local")));
+        }
+    }
     if client == ModelClient::Muse {
         if let Ok(version) = fs::read_to_string(get_home_dir().join(".local/bin/.muse-version")) {
             let version = version.trim();
@@ -132,17 +142,24 @@ pub fn inspect() -> Vec<ClientInspection> {
         let exe = find_executable(client);
         let version = exe.as_ref().and_then(|p| match client {
             ModelClient::Antigravity => command_version(p).ok(),
-            ModelClient::CursorAgent => cursor_runtime(p).ok().map(|(_, version)| version),
+            ModelClient::CursorAgent => cursor_runtime(p).ok().map(|runtime| runtime.version),
             _ => None,
         });
         ClientInspection {
             client,
             installed: exe.is_some() || native_config(client).exists(),
-            executable: exe.map(|p| p.to_string_lossy().into()),
+            executable: exe.as_ref().map(|p| p.to_string_lossy().into()),
             configuration: native_config(client).to_string_lossy().into(),
             capability: match client {
                 ModelClient::Antigravity => "gemini-or-chat",
                 ModelClient::Cursor => "public-chat-endpoint",
+                ModelClient::CursorAgent
+                    if exe.as_ref().is_some_and(|p| {
+                        cursor_runtime(p).is_ok_and(|runtime| runtime.local_api)
+                    }) =>
+                {
+                    "cursor-local-api"
+                }
                 ModelClient::CursorAgent => "cursor-cloud-byok",
                 ModelClient::Muse => "responses-bridge",
             },
@@ -262,7 +279,23 @@ fn command_version(executable: &Path) -> Result<String, String> {
     }
 }
 
-fn cursor_runtime(executable: &Path) -> Result<(PathBuf, String), String> {
+struct CursorRuntime {
+    directory: PathBuf,
+    version: String,
+    local_api: bool,
+}
+
+/// Only the pinned official local runtime relaxes the cloud endpoint constraint.
+pub(crate) fn cursor_agent_is_local(selected_executable: &str) -> bool {
+    let path = if selected_executable.is_empty() {
+        find_executable(ModelClient::CursorAgent)
+    } else {
+        Some(PathBuf::from(selected_executable))
+    };
+    path.is_some_and(|path| cursor_runtime(&path).is_ok_and(|runtime| runtime.local_api))
+}
+
+fn cursor_runtime(executable: &Path) -> Result<CursorRuntime, String> {
     let real = fs::canonicalize(executable).map_err(|e| e.to_string())?;
     let directory = real
         .parent()
@@ -277,7 +310,7 @@ fn cursor_runtime(executable: &Path) -> Result<(PathBuf, String), String> {
     let manifests: Value = serde_json::from_str(CURSOR_MANIFEST)
         .map_err(|_| "Invalid bundled Cursor compatibility manifest")?;
     let hash = format!("{:x}", Sha256::digest(&entry));
-    let manifest=manifests.get(&hash).ok_or("This Cursor Agent version has not been verified with the BYOK adapter. Update CC Switch's adapter before applying.")?;
+    let manifest=manifests.get(&hash).ok_or("This Cursor Agent version has not been verified with the model adapter. Update ModelDeck's adapter before applying.")?;
     for (file, expected) in manifest["chunks"]
         .as_object()
         .ok_or("Invalid Cursor compatibility manifest")?
@@ -288,10 +321,29 @@ fn cursor_runtime(executable: &Path) -> Result<(PathBuf, String), String> {
             return Err("Cursor model module changed; native files have not been modified".into());
         }
     }
-    Ok((
+    Ok(CursorRuntime {
         directory,
-        manifest["version"].as_str().unwrap_or_default().to_string(),
-    ))
+        version: manifest["version"].as_str().unwrap_or_default().to_string(),
+        local_api: manifest["mode"].as_str() == Some("local-api"),
+    })
+}
+
+fn cursor_local_launcher(
+    runtime: &CursorRuntime,
+    profile_path: &Path,
+    origin_path: &Path,
+    adapter_path: &Path,
+    default_model: &str,
+) -> String {
+    format!(
+        "#!/bin/sh\n# Managed by ModelDeck: official Cursor local API runtime.\nset -eu\nexport CCSWITCH_CURSOR_PROFILE_FILE={}\nexport MODELDECK_CURSOR_ORIGIN_FILE={}\nexport CURSOR_INVOKED_AS=cursor-agent-local\nhas_model=0\nfor arg do case \"$arg\" in --) break;; --model|--model=*) has_model=1;; esac; done\nif [ \"$has_model\" = 0 ]; then set -- --model {} \"$@\"; fi\nexec {} --use-system-ca --require {} {} --authless --disable-auto-update \"$@\"\n",
+        quote(&profile_path.to_string_lossy()),
+        quote(&origin_path.to_string_lossy()),
+        quote(default_model),
+        quote(&runtime.directory.join("node").to_string_lossy()),
+        quote(&adapter_path.to_string_lossy()),
+        quote(&runtime.directory.join("index.js").to_string_lossy()),
+    )
 }
 
 fn quote(s: &str) -> String {
@@ -350,6 +402,9 @@ fn patch_settings(
             }
         }
         ModelClient::Muse => {
+            if value.get("schema_version").is_none() {
+                value["schema_version"] = json!(1);
+            }
             value["model"] = json!(p.default_model);
             // New Muse releases honor this pin. Older releases use --base-url
             // in the same managed launcher, with no auth.json modification.
@@ -360,6 +415,7 @@ fn patch_settings(
     value
 }
 
+#[cfg(test)]
 fn launcher(client: ModelClient, p: &ClientProfile, exe: &Path, base: &str) -> String {
     launcher_at(client, p, exe, base, &gateway_origin_path())
 }
@@ -375,7 +431,9 @@ fn launcher_at(
         String::from("#!/bin/sh\n# Managed by CC Switch: model connection only.\nset -eu\n");
     let token = quote(&p.local_token);
     if matches!(client, ModelClient::Antigravity | ModelClient::Muse) {
-        let suffix = format!("/model-clients/{}", client.id());
+        let suffix = url::Url::parse(base)
+            .map(|url| url.path().trim_end_matches('/').to_string())
+            .unwrap_or_else(|_| format!("/model-clients/{}", client.id()));
         let origin = base.strip_suffix(&suffix).unwrap_or(base);
         s.push_str(&format!("gateway_origin={}\nif [ -s {} ]; then IFS= read -r gateway_origin < {}; fi\ngateway_base=\"$gateway_origin{}\"\n",quote(origin),quote(&origin_path.to_string_lossy()),quote(&origin_path.to_string_lossy()),suffix));
     }
@@ -383,6 +441,17 @@ fn launcher_at(
         ModelClient::Antigravity => {
             // Google SDK otherwise prefers a process-wide GOOGLE_API_KEY.
             s.push_str("has_model=0\nfor arg do case \"$arg\" in --) break;; --model|--model=*) has_model=1;; esac; done\n");
+            if !p.effort.is_empty() {
+                s.push_str("has_effort=0\nfor arg do case \"$arg\" in --) break;; --effort|--effort=*) has_effort=1;; esac; done\n");
+                s.push_str(&format!(
+                    "if [ \"$has_effort\" = 0 ]; then set -- --effort {} \"$@\"; fi\n",
+                    quote(if p.effort == "minimal" {
+                        "low"
+                    } else {
+                        &p.effort
+                    })
+                ));
+            }
             s.push_str(&format!("if [ \"$has_model\" = 0 ]; then set -- --model {} \"$@\"; fi\nunset GOOGLE_API_KEY\nexport GEMINI_API_KEY={token}\nexport GOOGLE_GEMINI_BASE_URL=\"$gateway_base\"\nexec {} \"$@\"\n",quote(&p.default_model),quote(&exe.to_string_lossy())));
         }
         ModelClient::Muse => {
@@ -581,6 +650,43 @@ pub fn apply(
     previous: Option<&ClientProfile>,
     commit: impl FnOnce() -> Result<(), String>,
 ) -> Result<ApplyResult, String> {
+    apply_with_routing(
+        client,
+        p,
+        previous,
+        &format!("{origin}/model-clients/{}", client.id()),
+        &super::config_path(),
+        &gateway_origin_path(),
+        commit,
+    )
+}
+
+pub(crate) fn apply_deck(
+    client: ModelClient,
+    p: &ClientProfile,
+    previous: Option<&ClientProfile>,
+    commit: impl FnOnce() -> Result<(), String>,
+) -> Result<ApplyResult, String> {
+    apply_with_routing(
+        client,
+        p,
+        previous,
+        &p.endpoint,
+        &crate::deck::config_path(),
+        &get_app_config_dir().join("deck-gateway-url"),
+        commit,
+    )
+}
+
+fn apply_with_routing(
+    client: ModelClient,
+    p: &ClientProfile,
+    previous: Option<&ClientProfile>,
+    base: &str,
+    profile_path: &Path,
+    origin_path: &Path,
+    commit: impl FnOnce() -> Result<(), String>,
+) -> Result<ApplyResult, String> {
     if client == ModelClient::Cursor {
         apply_cursor(&native_config(client), p, previous, commit)?;
         return Ok(ApplyResult {
@@ -590,21 +696,36 @@ pub fn apply(
     }
     if client == ModelClient::CursorAgent {
         let native = executable(client, p)?;
-        cursor_runtime(&native)?;
+        let runtime = cursor_runtime(&native)?;
         let directory = get_app_config_dir().join("adapters");
-        let adapter_path = directory.join("cursor-models.cjs");
-        let launch_path = get_app_config_dir().join("bin/cursor-agent");
-        let profile_path = if p.local_token.starts_with("deck-") {
-            crate::deck::config_path()
+        let adapter_path = directory.join(if runtime.local_api {
+            "cursor-local.cjs"
         } else {
-            super::config_path()
+            "cursor-models.cjs"
+        });
+        let launch_path = get_app_config_dir().join("bin/cursor-agent");
+        let script = if runtime.local_api {
+            cursor_local_launcher(
+                &runtime,
+                profile_path,
+                origin_path,
+                &adapter_path,
+                &p.default_model,
+            )
+        } else {
+            format!("#!/bin/sh\n# Managed by ModelDeck: Cursor model catalog and BYOK only.\nset -eu\ncursor_native={}\nif command -v realpath >/dev/null 2>&1; then cursor_runtime_dir=$(dirname \"$(realpath \"$cursor_native\")\"); else cursor_runtime_dir=$(dirname \"$(readlink \"$cursor_native\" || printf '%s' \"$cursor_native\")\"); fi\nexport CCSWITCH_CURSOR_PROFILE_FILE={}\nexport CURSOR_INVOKED_AS=cursor-agent\nhas_model=0\nfor arg do case \"$arg\" in --) break;; --model|--model=*) has_model=1;; esac; done\nif [ \"$has_model\" = 0 ]; then set -- --model {} \"$@\"; fi\nexec \"$cursor_runtime_dir/node\" --use-system-ca --require {} \"$cursor_runtime_dir/index.js\" \"$@\"\n",quote(&native.to_string_lossy()),quote(&profile_path.to_string_lossy()),quote(&p.default_model),quote(&adapter_path.to_string_lossy()))
         };
-        let script=format!("#!/bin/sh\n# Managed by ModelDeck: Cursor model catalog and BYOK only.\nset -eu\ncursor_native={}\nif command -v realpath >/dev/null 2>&1; then cursor_runtime_dir=$(dirname \"$(realpath \"$cursor_native\")\"); else cursor_runtime_dir=$(dirname \"$(readlink \"$cursor_native\" || printf '%s' \"$cursor_native\")\"); fi\nexport CCSWITCH_CURSOR_PROFILE_FILE={}\nexport CURSOR_INVOKED_AS=cursor-agent\nhas_model=0\nfor arg do case \"$arg\" in --) break;; --model|--model=*) has_model=1;; esac; done\nif [ \"$has_model\" = 0 ]; then set -- --model {} \"$@\"; fi\nexec \"$cursor_runtime_dir/node\" --use-system-ca --require {} \"$cursor_runtime_dir/index.js\" \"$@\"\n",quote(&native.to_string_lossy()),quote(&profile_path.to_string_lossy()),quote(&p.default_model),quote(&adapter_path.to_string_lossy()));
         commit_files(
             vec![
                 FileUpdate {
                     path: adapter_path,
-                    bytes: CURSOR_ADAPTER.as_bytes().to_vec(),
+                    bytes: if runtime.local_api {
+                        CURSOR_LOCAL_ADAPTER
+                    } else {
+                        CURSOR_ADAPTER
+                    }
+                    .as_bytes()
+                    .to_vec(),
                     executable: false,
                 },
                 FileUpdate {
@@ -625,10 +746,9 @@ pub fn apply(
             restart_required: false,
         });
     }
-    let base = format!("{origin}/model-clients/{}", client.id());
     let exe = executable(client, p)?;
     let path = native_config(client);
-    let settings = patch_settings(client, read_json(&path)?, p, &base, previous);
+    let settings = patch_settings(client, read_json(&path)?, p, base, previous);
     let launch_path = get_app_config_dir().join("bin").join(client.id());
     let bytes = serde_json::to_vec_pretty(&settings).map_err(|e| e.to_string())?;
     commit_files(
@@ -640,7 +760,7 @@ pub fn apply(
             },
             FileUpdate {
                 path: launch_path.clone(),
-                bytes: launcher(client, p, &exe, &base).into_bytes(),
+                bytes: launcher_at(client, p, &exe, base, origin_path).into_bytes(),
                 executable: true,
             },
         ],
@@ -813,6 +933,28 @@ mod tests {
         assert!(!script.contains(&p.api_key));
         assert!(script.contains("'model'\"'\"'; touch /tmp/never'"));
         assert!(script.contains("\"$@\""));
+    }
+    #[test]
+    fn local_cursor_launcher_keeps_keys_out_of_arguments_and_native_auth() {
+        let runtime = CursorRuntime {
+            directory: PathBuf::from("/vendor/Cursor Local"),
+            version: "verified-local".into(),
+            local_api: true,
+        };
+        let script = cursor_local_launcher(
+            &runtime,
+            Path::new("/private/model-deck.json"),
+            Path::new("/private/deck-gateway-url"),
+            Path::new("/private/cursor-local.cjs"),
+            "model'; touch /tmp/never",
+        );
+        assert!(script.contains("--authless --disable-auto-update"));
+        assert!(script.contains("'/vendor/Cursor Local/node'"));
+        assert!(script.contains("'model'\"'\"'; touch /tmp/never'"));
+        assert!(script.contains("MODELDECK_CURSOR_ORIGIN_FILE"));
+        assert!(!script.contains("--local-agent-api-key"));
+        assert!(!script.contains("CURSOR_API_KEY"));
+        assert!(!script.contains("cli-config.json"));
     }
     #[test]
     fn failed_activation_restores_native_settings_and_launchers() {

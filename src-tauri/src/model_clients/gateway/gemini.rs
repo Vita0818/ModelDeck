@@ -199,18 +199,66 @@ fn to_chat(p: &ClientProfile, model: &str, b: &Value, stream: bool) -> Result<Va
             _ => "auto",
         });
     }
-    if !p.effort.is_empty() && m.reasoning.contains(&p.effort) {
-        if url::Url::parse(&p.endpoint)
+    let thinking = b
+        .pointer("/generationConfig/thinkingConfig")
+        .or_else(|| b.pointer("/generation_config/thinking_config"));
+    let mut reasoning = serde_json::Map::new();
+    if let Some(thinking) = thinking {
+        if let Some(level) = thinking
+            .get("thinkingLevel")
+            .or_else(|| thinking.get("thinking_level"))
+        {
+            reasoning.insert(
+                "effort".into(),
+                level
+                    .as_str()
+                    .map(|s| json!(s.to_ascii_lowercase()))
+                    .unwrap_or_else(|| level.clone()),
+            );
+        }
+        if let Some(budget) = thinking
+            .get("thinkingBudget")
+            .or_else(|| thinking.get("thinking_budget"))
+        {
+            match budget.as_i64() {
+                Some(0) => {
+                    reasoning.insert("enabled".into(), json!(false));
+                }
+                Some(-1) => {
+                    reasoning.insert("enabled".into(), json!(true));
+                }
+                _ => {
+                    reasoning.insert("max_tokens".into(), budget.clone());
+                }
+            }
+        }
+        if let Some(include) = thinking
+            .get("includeThoughts")
+            .or_else(|| thinking.get("include_thoughts"))
+            .and_then(Value::as_bool)
+        {
+            reasoning.insert("exclude".into(), json!(!include));
+        }
+    } else if !p.effort.is_empty() {
+        reasoning.insert("effort".into(), json!(p.effort));
+    }
+    if !reasoning.is_empty() {
+        let openrouter = url::Url::parse(&p.endpoint)
             .ok()
             .and_then(|u| u.host_str().map(str::to_owned))
             .as_deref()
-            == Some("openrouter.ai")
-        {
-            out["reasoning"] = json!({"effort":p.effort});
-        } else {
-            out["reasoning_effort"] = json!(p.effort);
+            == Some("openrouter.ai");
+        if !openrouter {
+            if let Some(effort) = reasoning.remove("effort") {
+                out["reasoning_effort"] = effort;
+            }
+        }
+        if !reasoning.is_empty() {
+            out["reasoning"] = Value::Object(reasoning);
         }
     }
+    let provider = crate::model_clients::provider_adapter::project(p, "");
+    crate::model_clients::provider_adapter::adapt_chat(&mut out, &provider);
     Ok(out)
 }
 
@@ -363,35 +411,34 @@ pub(crate) async fn handle(
             .and_then(Value::as_u64)
             .unwrap_or(selected.output);
         body["generationConfig"]["maxOutputTokens"] = json!(requested.min(selected.output));
-        if !p.effort.is_empty() && selected.reasoning.contains(&p.effort) {
-            if !model.trim_start_matches("models/").starts_with("gemini-3")
-                || !matches!(p.effort.as_str(), "minimal" | "low" | "medium" | "high")
-            {
-                return error(StatusCode::BAD_REQUEST,"Use a native Gemini 3 thinking level (minimal, low, medium, high), or the provider default");
-            }
-            let config = body["generationConfig"]
-                .as_object_mut()
-                .expect("validated config");
-            let thinking = config.entry("thinkingConfig").or_insert_with(|| json!({}));
-            if !thinking.is_object() {
-                return error(StatusCode::BAD_REQUEST, "Invalid Gemini thinkingConfig");
-            }
-            thinking.as_object_mut().unwrap().remove("thinkingBudget");
-            thinking["thinkingLevel"] = json!(p.effort.to_uppercase());
+        if body.pointer("/generationConfig/thinkingConfig").is_none()
+            && body.pointer("/generation_config/thinking_config").is_none()
+            && !p.effort.is_empty()
+        {
+            body["generationConfig"]["thinkingConfig"] =
+                json!({"thinkingLevel":p.effort.to_uppercase()});
         }
-        let base = p.endpoint.trim_end_matches('/');
-        let url = format!(
-            "{base}/models/{model}:{method}{}",
-            if stream { "?alt=sse" } else { "" }
+        let url = crate::model_clients::provider_adapter::url(
+            p,
+            &format!(
+                "models/{model}:{method}{}",
+                if stream { "?alt=sse" } else { "" }
+            ),
         );
-        let upstream = match http
+        let request = http
             .post(url)
             .header("accept-encoding", "identity")
-            .header("x-goog-api-key", key)
-            .json(&body)
-            .send()
-            .await
-        {
+            .json(&body);
+        let request = match crate::model_clients::provider_adapter::authenticate(request, p, key) {
+            Ok(request) => request,
+            Err(_) => {
+                return error(
+                    StatusCode::BAD_REQUEST,
+                    "Invalid upstream authentication configuration",
+                )
+            }
+        };
+        let upstream = match request.send().await {
             Ok(r) => r,
             Err(_) => return error(StatusCode::BAD_GATEWAY, "Gemini upstream connection failed"),
         };
@@ -413,15 +460,21 @@ pub(crate) async fn handle(
         Ok(v) => v,
         Err(e) => return error(StatusCode::BAD_REQUEST, &e),
     };
-    let mut req = http
-        .post(format!(
-            "{}/chat/completions",
-            p.endpoint.trim_end_matches('/')
+    let request = http
+        .post(crate::model_clients::provider_adapter::url(
+            p,
+            "chat/completions",
         ))
         .json(&converted);
-    if !key.is_empty() {
-        req = req.bearer_auth(key);
-    }
+    let req = match crate::model_clients::provider_adapter::authenticate(request, p, key) {
+        Ok(request) => request,
+        Err(_) => {
+            return error(
+                StatusCode::BAD_REQUEST,
+                "Invalid upstream authentication configuration",
+            )
+        }
+    };
     let upstream = match req.send().await {
         Ok(r) => r,
         Err(_) => return error(StatusCode::BAD_GATEWAY, "Chat upstream connection failed"),
@@ -482,6 +535,23 @@ mod tests {
         assert_eq!(o["tools"][0]["function"]["parameters"]["type"], "object");
         assert_eq!(o["reasoning"]["effort"], "max");
         assert_eq!(o["max_tokens"], 32000);
+    }
+
+    #[test]
+    fn native_budget_and_disable_controls_do_not_become_a_tier() {
+        for (thinking, expected) in [
+            (json!({"thinkingBudget":2048}), json!({"max_tokens":2048})),
+            (json!({"thinkingBudget":0}), json!({"enabled":false})),
+            (json!({"thinkingBudget":-1}), json!({"enabled":true})),
+            (
+                json!({"thinkingLevel":"XHIGH","includeThoughts":false}),
+                json!({"effort":"xhigh","exclude":true}),
+            ),
+        ] {
+            let body = json!({"contents":[],"generationConfig":{"thinkingConfig":thinking}});
+            let output = to_chat(&p(), "x/model", &body, false).unwrap();
+            assert_eq!(output["reasoning"], expected);
+        }
     }
     #[test]
     fn accumulates_fragmented_calls_and_usage() {

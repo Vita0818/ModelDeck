@@ -1,0 +1,653 @@
+{
+  "generatedAtUtc": "2026-10-08T06:02:49.472431+00:00",
+  "plannedCases": 20,
+  "counts": {
+    "passed": 12,
+    "upstream_403": 4,
+    "upstream_overload_503": 2,
+    "blocked_missing_login": 2
+  },
+  "cases": [
+    {
+      "client": "codex",
+      "displayName": "Codex CLI",
+      "case": "nemotron",
+      "requestedModel": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "status": "passed",
+      "passed": true,
+      "realClientInvoked": true,
+      "modelRequestCount": 3,
+      "sessionIds": [
+        "01a11536-8489-7a01-a151-9ea6bf9a4a12"
+      ],
+      "resultFileValue": "89",
+      "result": "results/codex/nemotron.json",
+      "log": "logs/codex/nemotron.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "codex",
+      "displayName": "Codex CLI",
+      "case": "inkling",
+      "requestedModel": "thinkingmachines/inkling:free",
+      "status": "passed",
+      "passed": true,
+      "realClientInvoked": true,
+      "modelRequestCount": 4,
+      "sessionIds": [
+        "01a1154f-79b2-7283-81a3-a7840f0d23a9"
+      ],
+      "resultFileValue": "89",
+      "result": "results/codex/inkling.json",
+      "log": "logs/codex/inkling.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "claude",
+      "displayName": "Claude Code",
+      "case": "nemotron",
+      "requestedModel": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "status": "passed",
+      "passed": true,
+      "realClientInvoked": true,
+      "modelRequestCount": 3,
+      "sessionIds": [
+        "bb005f81-0f6d-42ae-b2c6-e3ce6de22c9d"
+      ],
+      "resultFileValue": "89",
+      "result": "results/claude/nemotron.json",
+      "log": "logs/claude/nemotron.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "claude",
+      "displayName": "Claude Code",
+      "case": "inkling",
+      "requestedModel": "thinkingmachines/inkling:free",
+      "status": "passed",
+      "passed": true,
+      "realClientInvoked": true,
+      "modelRequestCount": 5,
+      "sessionIds": [
+        "69bf8175-432a-49b2-92e7-f3f213b8d14f"
+      ],
+      "resultFileValue": "89",
+      "result": "results/claude/inkling.json",
+      "log": "logs/claude/inkling.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "claude-desktop",
+      "displayName": "Claude Desktop",
+      "case": "nemotron",
+      "requestedModel": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "status": "passed",
+      "passed": true,
+      "realClientInvoked": true,
+      "modelRequestCount": 12,
+      "sessionIds": [
+        "local_cc48c5dd-4582-4bfe-9d8a-1c6634d804ce"
+      ],
+      "resultFileValue": "89",
+      "result": "results/claude-desktop/nemotron.json",
+      "log": "logs/claude-desktop/nemotron.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "claude-desktop",
+      "displayName": "Claude Desktop",
+      "case": "inkling",
+      "requestedModel": "thinkingmachines/inkling:free",
+      "status": "passed",
+      "passed": true,
+      "realClientInvoked": true,
+      "modelRequestCount": 8,
+      "sessionIds": [
+        "local_ec338788-47cf-4236-8cee-9d6d7a6fe155"
+      ],
+      "resultFileValue": "89",
+      "result": "results/claude-desktop/inkling.json",
+      "log": "logs/claude-desktop/inkling.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "antigravity",
+      "displayName": "Antigravity CLI",
+      "case": "nemotron",
+      "requestedModel": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "status": "passed",
+      "passed": true,
+      "realClientInvoked": true,
+      "modelRequestCount": 5,
+      "sessionIds": [
+        "fa6b771e-ca06-4ee7-ae21-603fa1cb9ae1"
+      ],
+      "resultFileValue": "89",
+      "result": "results/antigravity/nemotron.json",
+      "log": "logs/antigravity/nemotron.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "antigravity",
+      "displayName": "Antigravity CLI",
+      "case": "inkling",
+      "requestedModel": "thinkingmachines/inkling:free",
+      "status": "upstream_403",
+      "passed": false,
+      "realClientInvoked": true,
+      "modelRequestCount": 2,
+      "sessionIds": [
+        "ee353e41-584f-4f9d-bfda-c52bae718a83"
+      ],
+      "resultFileValue": "",
+      "result": "results/antigravity/inkling.json",
+      "log": "logs/antigravity/inkling.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": true
+    },
+    {
+      "client": "cursor-agent",
+      "displayName": "Cursor CLI",
+      "case": "nemotron",
+      "requestedModel": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "status": "upstream_overload_503",
+      "passed": false,
+      "realClientInvoked": true,
+      "modelRequestCount": 3,
+      "sessionIds": [
+        "d9f7a119-18b6-4ccb-9f59-02f979234601"
+      ],
+      "resultFileValue": "",
+      "result": "results/cursor-agent/nemotron.json",
+      "log": "logs/cursor-agent/nemotron.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "cursor-agent",
+      "displayName": "Cursor CLI",
+      "case": "inkling",
+      "requestedModel": "thinkingmachines/inkling:free",
+      "status": "passed",
+      "passed": true,
+      "realClientInvoked": true,
+      "modelRequestCount": 6,
+      "sessionIds": [
+        "f569692c-5c09-407c-9f37-f0cd6c672cb7"
+      ],
+      "resultFileValue": "89",
+      "result": "results/cursor-agent/inkling.json",
+      "log": "logs/cursor-agent/inkling.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "cursor",
+      "displayName": "Cursor GUI",
+      "case": "nemotron",
+      "requestedModel": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "status": "blocked_missing_login",
+      "passed": false,
+      "realClientInvoked": true,
+      "modelRequestCount": 0,
+      "sessionIds": [],
+      "resultFileValue": null,
+      "result": "results/cursor/nemotron.json",
+      "log": "logs/cursor/nemotron.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "cursor",
+      "displayName": "Cursor GUI",
+      "case": "inkling",
+      "requestedModel": "thinkingmachines/inkling:free",
+      "status": "blocked_missing_login",
+      "passed": false,
+      "realClientInvoked": true,
+      "modelRequestCount": 0,
+      "sessionIds": [],
+      "resultFileValue": null,
+      "result": "results/cursor/inkling.json",
+      "log": "logs/cursor/inkling.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "grokbuild",
+      "displayName": "Grok",
+      "case": "nemotron",
+      "requestedModel": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "status": "passed",
+      "passed": true,
+      "realClientInvoked": true,
+      "modelRequestCount": 7,
+      "sessionIds": [
+        "86a06a40-47b1-4511-93dd-ec54c9c611c1"
+      ],
+      "resultFileValue": "89",
+      "result": "results/grokbuild/nemotron.json",
+      "log": "logs/grokbuild/nemotron.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "grokbuild",
+      "displayName": "Grok",
+      "case": "inkling",
+      "requestedModel": "thinkingmachines/inkling:free",
+      "status": "upstream_403",
+      "passed": false,
+      "realClientInvoked": true,
+      "modelRequestCount": 2,
+      "sessionIds": [],
+      "resultFileValue": "",
+      "result": "results/grokbuild/inkling.json",
+      "log": "logs/grokbuild/inkling.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": true
+    },
+    {
+      "client": "muse",
+      "displayName": "Muse Code",
+      "case": "nemotron",
+      "requestedModel": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "status": "upstream_overload_503",
+      "passed": false,
+      "realClientInvoked": true,
+      "modelRequestCount": 2,
+      "sessionIds": [
+        "1c4c6cdd-7415-424c-956d-b2a1b59ab3ba"
+      ],
+      "resultFileValue": "",
+      "result": "results/muse/nemotron.json",
+      "log": "logs/muse/nemotron.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "muse",
+      "displayName": "Muse Code",
+      "case": "inkling",
+      "requestedModel": "thinkingmachines/inkling:free",
+      "status": "upstream_403",
+      "passed": false,
+      "realClientInvoked": true,
+      "modelRequestCount": 1,
+      "sessionIds": [
+        "e0bdc604-a39f-4de9-b9fe-4243b936e508"
+      ],
+      "resultFileValue": "",
+      "result": "results/muse/inkling.json",
+      "log": "logs/muse/inkling.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": true
+    },
+    {
+      "client": "opencode",
+      "displayName": "OpenCode",
+      "case": "nemotron",
+      "requestedModel": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "status": "passed",
+      "passed": true,
+      "realClientInvoked": true,
+      "modelRequestCount": 3,
+      "sessionIds": [
+        "ses_eeaca9fa9ffer58U3IF2P1mVdl"
+      ],
+      "resultFileValue": "89",
+      "result": "results/opencode/nemotron.json",
+      "log": "logs/opencode/nemotron.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "opencode",
+      "displayName": "OpenCode",
+      "case": "inkling",
+      "requestedModel": "thinkingmachines/inkling:free",
+      "status": "passed",
+      "passed": true,
+      "realClientInvoked": true,
+      "modelRequestCount": 3,
+      "sessionIds": [
+        "ses_eeab05bfcffebrMKm0o4JWl52B"
+      ],
+      "resultFileValue": "89",
+      "result": "results/opencode/inkling.json",
+      "log": "logs/opencode/inkling.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "hermes",
+      "displayName": "Hermes",
+      "case": "nemotron",
+      "requestedModel": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "status": "passed",
+      "passed": true,
+      "realClientInvoked": true,
+      "modelRequestCount": 10,
+      "sessionIds": [
+        "20261007_155335_40ae14"
+      ],
+      "resultFileValue": "89",
+      "result": "results/hermes/nemotron.json",
+      "log": "logs/hermes/nemotron.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": false
+    },
+    {
+      "client": "hermes",
+      "displayName": "Hermes",
+      "case": "inkling",
+      "requestedModel": "thinkingmachines/inkling:free",
+      "status": "upstream_403",
+      "passed": false,
+      "realClientInvoked": true,
+      "modelRequestCount": 1,
+      "sessionIds": [
+        "20261007_160336_91f549"
+      ],
+      "resultFileValue": "",
+      "result": "results/hermes/inkling.json",
+      "log": "logs/hermes/inkling.log",
+      "freeRateLimit429": false,
+      "diagnosisInferred": true
+    }
+  ],
+  "freeRateLimit429Observed": false,
+  "paidFallbackCalls": 0,
+  "paidFallbackRuns": 0,
+  "arena": {
+    "generatedAtUtc": "2026-10-08T03:47:23.742075+00:00",
+    "status": "passed",
+    "model": "coding-router-preview",
+    "cases": [
+      {
+        "client": "opencode",
+        "displayName": "OpenCode",
+        "mode": "native-interactive-terminal",
+        "gateway": "production ModelDeck apply and gateway",
+        "upstreamProtocol": "openai-chat",
+        "requestedModel": "coding-router-preview",
+        "passed": true,
+        "resultFileValue": "89",
+        "finalMarker": "MD_TEST_OK",
+        "nativeSessionId": "ses_ee664008affetpeT4WgN3kzgby",
+        "nativeEvidence": "opencode-modeldeck-default-native.json",
+        "headless": false,
+        "credentialOnlyInGateway": true,
+        "generatedInputProtocol": "anthropic",
+        "alsoVerifiedInputProtocol": "openai-chat"
+      },
+      {
+        "client": "claude",
+        "displayName": "Claude Code",
+        "mode": "native-interactive-terminal",
+        "gateway": "production ModelDeck apply and gateway",
+        "upstreamProtocol": "anthropic",
+        "requestedModel": "coding-router-preview",
+        "passed": true,
+        "resultFileValue": "89",
+        "finalMarker": "MD_TEST_OK",
+        "nativeSessionId": "ea2ff0fd-5586-44f9-8180-3c579edd737c",
+        "nativeEvidence": "native/claude.json",
+        "headless": false,
+        "credentialOnlyInGateway": true
+      },
+      {
+        "client": "codex",
+        "displayName": "Codex CLI",
+        "mode": "native-interactive-terminal",
+        "gateway": "production ModelDeck apply and gateway",
+        "upstreamProtocol": "openai-responses",
+        "requestedModel": "coding-router-preview",
+        "passed": true,
+        "resultFileValue": "89",
+        "finalMarker": "MD_TEST_OK",
+        "nativeSessionId": "01a11991-9eba-7020-8c28-a13cc5280585",
+        "nativeEvidence": "native/codex-01a11991-9eba-7020-8c28-a13cc5280585.json",
+        "headless": false,
+        "credentialOnlyInGateway": true,
+        "generatedHostedToolSearchCapability": false,
+        "generatedWebSearchMode": "disabled",
+        "testOnlyCapabilityOverrides": false,
+        "recoveredTransient502": true
+      }
+    ],
+    "passedCases": 3,
+    "plannedCases": 3,
+    "modelsProbeStatus": 200,
+    "historical401Cause": "The harness sent an unresolved OpenCode file reference instead of the real token",
+    "historicalKeyInvalidConclusionWithdrawn": true,
+    "resumedOriginalUserAuthorization": true,
+    "headless403WasClientRestriction": true,
+    "paidFallbackCalls": 0,
+    "freeRateLimit429Observed": false,
+    "rustRegression": {
+      "passed": 2703,
+      "failed": 0,
+      "ignored": 14
+    },
+    "credentialRegressionTests": 6,
+    "officialOAuthUnchanged": true,
+    "cleanup": {
+      "ownedProcessesStopped": [
+        95103,
+        95112,
+        95151,
+        96208,
+        97745
+      ],
+      "ownedPorts": {
+        "56205": "closed",
+        "57518": "closed",
+        "58213": "closed",
+        "58400": "closed",
+        "58490": "closed",
+        "58566": "closed",
+        "58672": "closed",
+        "57901": "closed"
+      },
+      "privateRuntimeRemoved": true,
+      "nativeCodexSessions": "archived_recoverable",
+      "archivedCodexSessionIds": [
+        "01a116f2-4b2c-7de1-bc98-127335b2126e",
+        "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "01a11991-9eba-7020-8c28-a13cc5280585",
+        "01a11980-95b9-7f70-ae81-928dce9ade36",
+        "01a11986-fa1f-7a12-8fab-d8b1a61bd658",
+        "01a1198c-8504-73c3-a053-c930220080d6"
+      ],
+      "officialOAuthUnchanged": true,
+      "originalArenaTokenUnchanged": true,
+      "onlyOwnedTrustEntryRemoved": true,
+      "concurrentCodexSettingsPreserved": true,
+      "openCodeAndClaudeSessionDataRemoved": true,
+      "isolatedEntryTokensRemoved": true,
+      "remainingOwnedProcessIds": []
+    },
+    "artifactSecretCheck": "artifact-secret-check.json"
+  },
+  "credentialMigration": {
+    "date": "2026-10-08",
+    "timezone": "Australia/Perth",
+    "status": "passed",
+    "nativeCredentialRegressions": 5,
+    "legacyMigrationRegressions": 2,
+    "rustRegression": {
+      "passed": 2710,
+      "failed": 0,
+      "ignored": 15
+    },
+    "existingCredentialAudit": {
+      "passed": true,
+      "providersVerified": [
+        "OpenRouter",
+        "Arena",
+        "LM Studio"
+      ],
+      "sourcesVerified": [
+        "environment reference",
+        "file reference",
+        "empty local key"
+      ],
+      "rawCredentialCopiesPersisted": false,
+      "protectedFilesUnchanged": true,
+      "inferenceRequests": 0,
+      "personalResourceGraphCreated": false,
+      "nativeConfigurationApplied": false
+    },
+    "logs": {
+      "regression": "../../.build/arena-retest/rust-lib-migration-final.log",
+      "audit": "../../.build/arena-retest/credential-migration-audit.log"
+    }
+  },
+  "protectedConfigsUnchanged": true,
+  "cleanup": {
+    "stopped": [
+      {
+        "pid": 65031,
+        "label": "public_tunnel"
+      },
+      {
+        "pid": 65017,
+        "label": "public_ingress"
+      },
+      {
+        "pid": 74682,
+        "label": "private_cursor"
+      },
+      {
+        "pid": 74677,
+        "label": "private_cursor"
+      },
+      {
+        "pid": 74675,
+        "label": "private_cursor"
+      },
+      {
+        "pid": 74674,
+        "label": "private_cursor"
+      },
+      {
+        "pid": 74672,
+        "label": "private_cursor"
+      },
+      {
+        "pid": 65007,
+        "label": "gateway_fixture"
+      }
+    ],
+    "skipped": [],
+    "remainingProcesses": [],
+    "temporaryPorts": {
+      "15721": "closed",
+      "15722": "closed"
+    },
+    "existingCursorProcessesClosed": false,
+    "desktopTestSessions": {
+      "local_cc48c5dd-4582-4bfe-9d8a-1c6634d804ce": "archived, native UI verified",
+      "local_ec338788-47cf-4236-8cee-9d6d7a6fe155": "archived, native UI verified"
+    },
+    "remainingDisposableDirectoryProcesses": [],
+    "removedDisposableDirectories": [
+      ".runtime",
+      ".cursor",
+      "vendor",
+      "__pycache__"
+    ],
+    "privateCredentialCopiesRemoved": true,
+    "cliSessionDataRemoved": true,
+    "temporaryHermesDependenciesRemoved": true,
+    "cursorLocalFollowup": {
+      "stoppedOwnedServices": [
+        {
+          "label": "gateway",
+          "pid": 84266
+        },
+        {
+          "label": "mock",
+          "pid": 78798
+        }
+      ],
+      "portsClosed": {
+        "54028": true,
+        "64533": true,
+        "64841": true,
+        "53263": true
+      },
+      "privateRuntimeRemoved": true,
+      "nativeCliSessionDataRemoved": true,
+      "temporaryTokensRemoved": true,
+      "removedFixtureGitDirectories": [
+        "harness-tests/workspaces/cursor-agent-local/managed-catalog/.git",
+        "harness-tests/workspaces/cursor-agent-local/mock-tools/.git",
+        "harness-tests/workspaces/cursor-agent-local/inkling/.git",
+        "harness-tests/workspaces/cursor-agent-local/nemotron-retry/.git",
+        "harness-tests/workspaces/cursor-agent-local/mock/.git",
+        "harness-tests/workspaces/cursor-agent-local/managed-inkling/.git",
+        "harness-tests/workspaces/cursor-agent-local/nemotron-native-retries/.git",
+        "harness-tests/workspaces/cursor-agent-local/managed-catalog-final/.git",
+        "harness-tests/workspaces/cursor-agent-local/managed-nemotron/.git",
+        "harness-tests/workspaces/cursor-agent-local/nemotron/.git"
+      ],
+      "officialCliUnmodified": true,
+      "existingCursorGuiClosedByTest": false,
+      "localVendorPackageRetainedForUse": true,
+      "protectedConfigurationsUnchanged": true,
+      "remainingOwnedProcessIds": []
+    },
+    "arenaRetest": {
+      "ownedProcessesStopped": [
+        95103,
+        95112,
+        95151,
+        96208,
+        97745
+      ],
+      "ownedPorts": {
+        "56205": "closed",
+        "57518": "closed",
+        "58213": "closed",
+        "58400": "closed",
+        "58490": "closed",
+        "58566": "closed",
+        "58672": "closed",
+        "57901": "closed"
+      },
+      "privateRuntimeRemoved": true,
+      "nativeCodexSessions": "archived_recoverable",
+      "archivedCodexSessionIds": [
+        "01a116f2-4b2c-7de1-bc98-127335b2126e",
+        "01a11706-cead-7670-9846-cee3bb3ac23f",
+        "01a1197b-1b3d-7cf3-8846-730191a0fd1e",
+        "01a11991-9eba-7020-8c28-a13cc5280585",
+        "01a11980-95b9-7f70-ae81-928dce9ade36",
+        "01a11986-fa1f-7a12-8fab-d8b1a61bd658",
+        "01a1198c-8504-73c3-a053-c930220080d6"
+      ],
+      "officialOAuthUnchanged": true,
+      "originalArenaTokenUnchanged": true,
+      "onlyOwnedTrustEntryRemoved": true,
+      "concurrentCodexSettingsPreserved": true,
+      "openCodeAndClaudeSessionDataRemoved": true,
+      "isolatedEntryTokensRemoved": true,
+      "remainingOwnedProcessIds": []
+    }
+  },
+  "completion": {
+    "passed": 12,
+    "upstreamFailures": 6,
+    "blockedByLogin": 2
+  }
+}

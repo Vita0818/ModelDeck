@@ -29,7 +29,11 @@ import {
   Row,
 } from "@/components/ui/group";
 import { Page, EmptyState } from "@/components/app/Page";
-import { PROTOCOLS, PROTOCOL_LABELS } from "@/lib/api/deck";
+import {
+  PROTOCOLS,
+  PROTOCOL_LABELS,
+  defaultReasoningEffort,
+} from "@/lib/api/deck";
 import { copyText } from "@/lib/clipboard";
 import { extractErrorMessage } from "@/utils/errorUtils";
 import { newId, useResourceDraft } from "./useResourceDraft";
@@ -133,7 +137,10 @@ export default function EndpointsPage() {
     patchEndpoint({
       routes: {
         ...endpoint.routes,
-        [alias]: { modelId: models[0]?.id ?? "", effort: "" },
+        [alias]: {
+          modelId: models[0]?.id ?? "",
+          effort: defaultReasoningEffort(models[0]),
+        },
       },
     });
     setAliasDraft("");
@@ -319,12 +326,23 @@ export default function EndpointsPage() {
                   patchEndpoint({
                     routes: {
                       ...endpoint.routes,
-                      [alias]: { ...route, modelId: value },
+                      [alias]: {
+                        ...route,
+                        modelId: value,
+                        effort: draft.models[value]?.reasoning.includes(
+                          route.effort,
+                        )
+                          ? route.effort
+                          : defaultReasoningEffort(draft.models[value]),
+                      },
                     },
                   })
                 }
               >
-                <SelectTrigger className="flex-1">
+                <SelectTrigger
+                  aria-label={`${t("deck.selectModel")}: ${alias}`}
+                  className="flex-1"
+                >
                   <SelectValue placeholder={t("deck.selectModel")} />
                 </SelectTrigger>
                 <SelectContent>
@@ -335,19 +353,40 @@ export default function EndpointsPage() {
                   ))}
                 </SelectContent>
               </Select>
-              <Input
-                value={route.effort}
-                onChange={(e) =>
+              <Select
+                value={route.effort || "__provider_default__"}
+                disabled={!draft.models[route.modelId]?.reasoning.length}
+                onValueChange={(value) =>
                   patchEndpoint({
                     routes: {
                       ...endpoint.routes,
-                      [alias]: { ...route, effort: e.target.value },
+                      [alias]: {
+                        ...route,
+                        effort: value === "__provider_default__" ? "" : value,
+                      },
                     },
                   })
                 }
-                placeholder={t("deck.providerDefault")}
-                className="w-28 shrink-0"
-              />
+              >
+                <SelectTrigger
+                  aria-label={`${t("deck.effort")}: ${alias}`}
+                  className="w-36 shrink-0"
+                >
+                  <SelectValue placeholder={t("deck.providerDefault")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__provider_default__">
+                    {t("deck.providerDefault")}
+                  </SelectItem>
+                  {(draft.models[route.modelId]?.reasoning ?? []).map(
+                    (effort) => (
+                      <SelectItem key={effort} value={effort}>
+                        {effort}
+                      </SelectItem>
+                    ),
+                  )}
+                </SelectContent>
+              </Select>
               <Button
                 variant="ghost"
                 size="icon-sm"

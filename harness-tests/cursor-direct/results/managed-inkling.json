@@ -1,0 +1,96 @@
+{
+  "case": "managed-inkling",
+  "model": "md-inkling",
+  "seconds": 39.29,
+  "exitCode": 0,
+  "finalTextSeen": true,
+  "sessionIds": [
+    "f569692c-5c09-407c-9f37-f0cd6c672cb7"
+  ],
+  "resultFileValue": "89",
+  "cursorAccountCredentialsProvided": false,
+  "nativeVendorBinaryUnmodified": true,
+  "network": [
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck-clients/cursor-agent/models",
+      "blocked": false
+    },
+    {
+      "surface": "node:https.request",
+      "host": "registry.npmjs.org",
+      "path": "/typescript-language-server",
+      "blocked": true
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "node:https.request",
+      "host": "registry.npmjs.org",
+      "path": "/typescript-language-server",
+      "blocked": true
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "blocked": false
+    },
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "blocked": false
+    }
+  ],
+  "managedLauncher": "/Users/vita/Others/ModelDeck/.build/cursor-direct/.runtime/gateway/home/.cc-switch/bin/cursor-agent",
+  "modelCatalogProbe": false,
+  "passed": true,
+  "toolTrace": [
+    {
+      "tool": "globToolCall",
+      "succeeded": false
+    },
+    {
+      "tool": "globToolCall",
+      "succeeded": true
+    },
+    {
+      "tool": "readToolCall",
+      "succeeded": true
+    },
+    {
+      "tool": "shellToolCall",
+      "succeeded": true
+    },
+    {
+      "tool": "readToolCall",
+      "succeeded": true
+    }
+  ],
+  "upstreamStreamErrors": [],
+  "outputLog": "logs/managed-inkling.log"
+}

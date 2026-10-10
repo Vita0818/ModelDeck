@@ -1,0 +1,365 @@
+{
+  "sessionId": "ses_ee910e683ffe1ajsyMSEeU0KDZ",
+  "messages": [
+    {
+      "role": "user",
+      "time": {
+        "created": 1791386130859
+      },
+      "agent": "build",
+      "model": {
+        "providerID": "arena",
+        "modelID": "coding-router-preview",
+        "variant": "default"
+      },
+      "summary": {
+        "diffs": [
+          {
+            "file": "result.txt",
+            "patch": "Index: result.txt\n===================================================================\n--- result.txt\t\n+++ result.txt\t\n@@ -0,0 +1,1 @@\n+89\n\\ No newline at end of file\n",
+            "additions": 1,
+            "deletions": 0,
+            "status": "modified"
+          }
+        ]
+      }
+    },
+    {
+      "parentID": "msg_116ef1980001Bna0ji1q75bw4q",
+      "role": "assistant",
+      "mode": "build",
+      "agent": "build",
+      "variant": "default",
+      "path": {
+        "cwd": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena",
+        "root": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena"
+      },
+      "cost": 0,
+      "tokens": {
+        "total": 2889,
+        "input": 2831,
+        "output": 42,
+        "reasoning": 16,
+        "cache": {
+          "write": 0,
+          "read": 0
+        }
+      },
+      "modelID": "coding-router-preview",
+      "providerID": "arena",
+      "time": {
+        "created": 1791386130869,
+        "completed": 1791386134600
+      },
+      "finish": "tool-calls"
+    },
+    {
+      "parentID": "msg_116ef1980001Bna0ji1q75bw4q",
+      "role": "assistant",
+      "mode": "build",
+      "agent": "build",
+      "variant": "default",
+      "path": {
+        "cwd": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena",
+        "root": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena"
+      },
+      "cost": 0,
+      "tokens": {
+        "total": 3049,
+        "input": 124,
+        "output": 97,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 2828
+        }
+      },
+      "modelID": "coding-router-preview",
+      "providerID": "arena",
+      "time": {
+        "created": 1791386134602,
+        "completed": 1791386137376
+      },
+      "finish": "tool-calls"
+    },
+    {
+      "parentID": "msg_116ef1980001Bna0ji1q75bw4q",
+      "role": "assistant",
+      "mode": "build",
+      "agent": "build",
+      "variant": "default",
+      "path": {
+        "cwd": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena",
+        "root": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena"
+      },
+      "cost": 0,
+      "tokens": {
+        "total": 3290,
+        "input": 274,
+        "output": 48,
+        "reasoning": 19,
+        "cache": {
+          "write": 0,
+          "read": 2949
+        }
+      },
+      "modelID": "coding-router-preview",
+      "providerID": "arena",
+      "time": {
+        "created": 1791386137377,
+        "completed": 1791386139276
+      },
+      "finish": "tool-calls"
+    },
+    {
+      "parentID": "msg_116ef1980001Bna0ji1q75bw4q",
+      "role": "assistant",
+      "mode": "build",
+      "agent": "build",
+      "variant": "default",
+      "path": {
+        "cwd": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena",
+        "root": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena"
+      },
+      "cost": 0,
+      "tokens": {
+        "total": 3312,
+        "input": 85,
+        "output": 7,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 3220
+        }
+      },
+      "modelID": "coding-router-preview",
+      "providerID": "arena",
+      "time": {
+        "created": 1791386139277,
+        "completed": 1791386141201
+      },
+      "finish": "stop"
+    }
+  ],
+  "parts": [
+    {
+      "type": "text",
+      "text": "Use tools to read fixture.json. Sum the numbers and write only that integer to result.txt in this workspace. Finish with MD_TEST_OK. Do not read outside this workspace or create subagents."
+    },
+    {
+      "snapshot": "0c72547b022287f4595b952549792de50eb9cb04",
+      "type": "step-start"
+    },
+    {
+      "type": "tool",
+      "tool": "read",
+      "callID": "call_D3VIVYmzAPm4lYI37pAV7UtO",
+      "state": {
+        "status": "completed",
+        "input": {
+          "filePath": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena"
+        },
+        "output": "<path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena</path>\n<type>directory</type>\n<entries>\n.git/\nfixture.json\nresult.txt\n\n(3 entries)\n</entries>",
+        "metadata": {
+          "preview": ".git/\nfixture.json\nresult.txt",
+          "truncated": false,
+          "loaded": [],
+          "display": {
+            "type": "directory",
+            "path": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena",
+            "entries": [
+              ".git/",
+              "fixture.json",
+              "result.txt"
+            ],
+            "offset": 1,
+            "totalEntries": 3,
+            "truncated": false
+          }
+        },
+        "title": "",
+        "time": {
+          "start": 1791386134550,
+          "end": 1791386134555
+        }
+      }
+    },
+    {
+      "reason": "tool-calls",
+      "snapshot": "0c72547b022287f4595b952549792de50eb9cb04",
+      "type": "step-finish",
+      "tokens": {
+        "total": 2889,
+        "input": 2831,
+        "output": 42,
+        "reasoning": 16,
+        "cache": {
+          "write": 0,
+          "read": 0
+        }
+      },
+      "cost": 0
+    },
+    {
+      "snapshot": "0c72547b022287f4595b952549792de50eb9cb04",
+      "type": "step-start"
+    },
+    {
+      "type": "tool",
+      "tool": "read",
+      "callID": "call_mw052TSefZI9Qixq1pOSAvji",
+      "state": {
+        "status": "completed",
+        "input": {
+          "filePath": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena/fixture.json"
+        },
+        "output": "<path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena/fixture.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"numbers\": [\n3:     17,\n4:     29,\n5:     43\n6:   ],\n7:   \"case\": \"opencode/arena-interactive\"\n8: }\n\n(End of file - total 8 lines)\n</content>",
+        "metadata": {
+          "preview": "{\n  \"numbers\": [\n    17,\n    29,\n    43\n  ],\n  \"case\": \"opencode/arena-interactive\"\n}",
+          "truncated": false,
+          "loaded": [],
+          "display": {
+            "type": "file",
+            "path": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena/fixture.json",
+            "text": "{\n  \"numbers\": [\n    17,\n    29,\n    43\n  ],\n  \"case\": \"opencode/arena-interactive\"\n}",
+            "lineStart": 1,
+            "lineEnd": 8,
+            "totalLines": 8,
+            "truncated": false
+          }
+        },
+        "title": "fixture.json",
+        "time": {
+          "start": 1791386137325,
+          "end": 1791386137335
+        }
+      }
+    },
+    {
+      "type": "tool",
+      "tool": "read",
+      "callID": "call_6UiGGnVBpokCRE5T6WaLkcO1",
+      "state": {
+        "status": "completed",
+        "input": {
+          "filePath": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena/result.txt"
+        },
+        "output": "<path>/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena/result.txt</path>\n<type>file</type>\n<content>\n\n\n(End of file - total 0 lines)\n</content>",
+        "metadata": {
+          "preview": "",
+          "truncated": false,
+          "loaded": [],
+          "display": {
+            "type": "file",
+            "path": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena/result.txt",
+            "text": "",
+            "lineStart": 1,
+            "lineEnd": 0,
+            "totalLines": 0,
+            "truncated": false
+          }
+        },
+        "title": "result.txt",
+        "time": {
+          "start": 1791386137328,
+          "end": 1791386137331
+        }
+      }
+    },
+    {
+      "reason": "tool-calls",
+      "snapshot": "0c72547b022287f4595b952549792de50eb9cb04",
+      "type": "step-finish",
+      "tokens": {
+        "total": 3049,
+        "input": 124,
+        "output": 97,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 2828
+        }
+      },
+      "cost": 0
+    },
+    {
+      "snapshot": "0c72547b022287f4595b952549792de50eb9cb04",
+      "type": "step-start"
+    },
+    {
+      "type": "tool",
+      "tool": "write",
+      "callID": "call_H0splA5pC96gVcPYsegCbtyS",
+      "state": {
+        "status": "completed",
+        "input": {
+          "filePath": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena/result.txt",
+          "content": "89"
+        },
+        "output": "Wrote file successfully.",
+        "metadata": {
+          "diagnostics": {},
+          "filepath": "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena/result.txt",
+          "exists": true,
+          "truncated": false
+        },
+        "title": "result.txt",
+        "time": {
+          "start": 1791386139080,
+          "end": 1791386139090
+        }
+      }
+    },
+    {
+      "reason": "tool-calls",
+      "snapshot": "aa47aa4d01fe4f052f4f588be76e0f9e5b0fc14c",
+      "type": "step-finish",
+      "tokens": {
+        "total": 3290,
+        "input": 274,
+        "output": 48,
+        "reasoning": 19,
+        "cache": {
+          "write": 0,
+          "read": 2949
+        }
+      },
+      "cost": 0
+    },
+    {
+      "type": "patch",
+      "hash": "0c72547b022287f4595b952549792de50eb9cb04",
+      "files": [
+        "/Users/vita/Others/ModelDeck/.build/arena-retest/.runtime/workspaces/opencode/arena/result.txt"
+      ]
+    },
+    {
+      "snapshot": "aa47aa4d01fe4f052f4f588be76e0f9e5b0fc14c",
+      "type": "step-start"
+    },
+    {
+      "type": "text",
+      "text": "MD_TEST_OK",
+      "time": {
+        "start": 1791386141035,
+        "end": 1791386141148
+      }
+    },
+    {
+      "reason": "stop",
+      "snapshot": "aa47aa4d01fe4f052f4f588be76e0f9e5b0fc14c",
+      "type": "step-finish",
+      "tokens": {
+        "total": 3312,
+        "input": 85,
+        "output": 7,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 3220
+        }
+      },
+      "cost": 0
+    }
+  ]
+}

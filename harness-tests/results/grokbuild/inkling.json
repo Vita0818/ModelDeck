@@ -1,0 +1,176 @@
+{
+  "client": "grokbuild",
+  "requested": "thinkingmachines/inkling:free",
+  "case": "inkling",
+  "session_id": "9992f588-d193-4cf1-be76-ce17956cc1d8",
+  "apply_status": 200,
+  "model_used": "thinkingmachines/inkling:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/grokbuild/v1/responses",
+      "method": "POST",
+      "model": "grok-4.5",
+      "stream": true,
+      "userAgent": "grok-shell/1.0.0 (macos; aarch64)",
+      "tools": 1,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "session_title",
+          "children": null
+        }
+      ],
+      "status": 400,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "The requested model is unavailable on this endpoint and protocol"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/grokbuild/v1/responses",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "grok-shell/1.0.0 (macos; aarch64)",
+      "tools": 23,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "run_terminal_command",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_replace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_dir",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "kill_command_or_subagent",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "todo_write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "get_command_or_subagent_output",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "scheduler_create",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "scheduler_delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "scheduler_list",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "monitor",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_tool",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "use_tool",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "workflow",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "enter_plan_mode",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "exit_plan_mode",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ask_user_question",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "image_gen",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "image_edit",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "image_to_video",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "reference_to_video",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write",
+          "children": null
+        }
+      ],
+      "status": 403,
+      "latencyMs": 1975,
+      "error": {
+        "error": {
+          "message": "Upstream returned HTTP 403",
+          "type": "model_client_error"
+        }
+      }
+    }
+  ],
+  "passed": false,
+  "pid": 66106,
+  "exit_code": 1,
+  "seconds": 3.08,
+  "runtime_session_ids": [],
+  "output_log": "logs/grokbuild/inkling.log",
+  "result_file_value": "",
+  "failure": "e_gen\",\"image_edit\",\"image_to_video\",\"reference_to_video\",\"write\"],\"commands\":[\"compact\",\"always-approve\",\"context\",\"session-info\",\"feedback\",\"deep-research\",\"workflow\",\"goal\",\"loop\",\"bailian-cli\",\"reference\",\"bailian-docs-llm-wiki\",\"application-user-guide\",\"user:guides\",\"bailian-finetune\",\"bailian-gen\",\"bailian-managed-agent\",\"bailian-model-recommend\",\"bailian-protocol\",\"bailian-sandbox\",\"bailian-train-deploy\",\"bailian-web-search\"]}\n\u001b[2m2026-10-07T07:50:14.565919Z\u001b[0m \u001b[31mERROR\u001b[0m responses API error \u001b[3mstatus\u001b[0m\u001b[2m=\u001b[0m400 Bad Request \u001b[3merror_message\u001b[0m\u001b[2m=\u001b[0mmodeldeck_error: The requested model is unavailable on this endpoint and protocol \u001b[3mbody_preview\u001b[0m\u001b[2m=\u001b[0m{\"error\":{\"type\":\"modeldeck_error\",\"message\":\"The requested model is unavailable on this endpoint and protocol\"}} \u001b[3mmodel_id\u001b[0m\u001b[2m=\u001b[0mgrok-4.5\n\u001b[2m2026-10-07T07:50:14.565949Z\u001b[0m \u001b[33m WARN\u001b[0m session title generation failed, falling back to truncated user text \u001b[3mmodel\u001b[0m\u001b[2m=\u001b[0mgrok-4.5 \u001b[3merror\u001b[0m\u001b[2m=\u001b[0mAPI error (status 400 Bad Request): modeldeck_error: The requested model is unavailable on this endpoint and protocol\n\u001b[2m2026-10-07T07:50:16.569970Z\u001b[0m \u001b[31mERROR\u001b[0m responses API error \u001b[3mstatus\u001b[0m\u001b[2m=\u001b[0m403 Forbidden \u001b[3merror_message\u001b[0m\u001b[2m=\u001b[0mmodel_client_error: Upstream returned HTTP 403 \u001b[3mbody_preview\u001b[0m\u001b[2m=\u001b[0m{\"error\":{\"message\":\"Upstream returned HTTP 403\",\"type\":\"model_client_error\"}} \u001b[3mmodel_id\u001b[0m\u001b[2m=\u001b[0mmd-inkling\n\u001b[2m2026-10-07T07:50:16.572960Z\u001b[0m \u001b[31mERROR\u001b[0m \u001b[3merror\u001b[0m\u001b[2m=\u001b[0mInternal error: {\n  \"message\": \"API error (status 403 Forbidden): model_client_error: Upstream returned HTTP 403\",\n  \"http_status\": 403\n}\n\u001b[2m2026-10-07T07:50:16.572978Z\u001b[0m \u001b[31mERROR\u001b[0m \u001b[3merror\u001b[0m\u001b[2m=\u001b[0mInternal error: {\n  \"message\": \"API error (status 403 Forbidden): model_client_error: Upstream returned HTTP 403\",\n  \"http_status\": 403\n}\n{\"type\":\"error\",\"message\":\"Internal error: {\\n  \\\"message\\\": \\\"API error (status 403 Forbidden): model_client_error: Upstream returned HTTP 403\\\",\\n  \\\"http_status\\\": 403\\n}\"}\nError: Internal error: {\n  \"message\": \"API error (status 403 Forbidden): model_client_error: Upstream returned HTTP 403\",\n  \"http_status\": 403\n}\n",
+  "free_rate_limit_429": false
+}

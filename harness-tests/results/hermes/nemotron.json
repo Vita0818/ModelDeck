@@ -1,0 +1,437 @@
+{
+  "client": "hermes",
+  "requested": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "case": "nemotron",
+  "session_id": "bb441472-efda-4abf-8567-cbc95b88623e",
+  "apply_status": 200,
+  "model_used": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/hermes/api/v1/models",
+      "method": "GET",
+      "model": null,
+      "stream": null,
+      "userAgent": "python-httpx/0.28.1",
+      "tools": null,
+      "toolNames": null,
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/hermes/api/tags",
+      "method": "GET",
+      "model": null,
+      "stream": null,
+      "userAgent": "python-httpx/0.28.1",
+      "tools": null,
+      "toolNames": null,
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/hermes/v1/props",
+      "method": "GET",
+      "model": null,
+      "stream": null,
+      "userAgent": "python-httpx/0.28.1",
+      "tools": null,
+      "toolNames": null,
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/hermes/props",
+      "method": "GET",
+      "model": null,
+      "stream": null,
+      "userAgent": "python-httpx/0.28.1",
+      "tools": null,
+      "toolNames": null,
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/hermes/version",
+      "method": "GET",
+      "model": null,
+      "stream": null,
+      "userAgent": "python-httpx/0.28.1",
+      "tools": null,
+      "toolNames": null,
+      "status": 404,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Unsupported endpoint operation"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/hermes/v1/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "OpenAI/Python 2.24.0",
+      "tools": 4,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_files",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_file",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3026
+    },
+    {
+      "path": "/deck-clients/hermes/v1/models",
+      "method": "GET",
+      "model": null,
+      "stream": null,
+      "userAgent": "python-httpx/0.28.1",
+      "tools": null,
+      "toolNames": null,
+      "status": 200,
+      "latencyMs": 0
+    },
+    {
+      "path": "/deck-clients/hermes/v1/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "OpenAI/Python 2.24.0",
+      "tools": 4,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_files",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_file",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 1988
+    },
+    {
+      "path": "/deck-clients/hermes/v1/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": null,
+      "userAgent": "OpenAI/Python 2.24.0",
+      "tools": 4,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_files",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_file",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 5861
+    },
+    {
+      "path": "/deck-clients/hermes/v1/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "OpenAI/Python 2.24.0",
+      "tools": 4,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_files",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_file",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 2555
+    },
+    {
+      "path": "/deck-clients/hermes/v1/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "OpenAI/Python 2.24.0",
+      "tools": 4,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_files",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_file",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 1883
+    },
+    {
+      "path": "/deck-clients/hermes/v1/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "OpenAI/Python 2.24.0",
+      "tools": 4,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_files",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_file",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 1978
+    },
+    {
+      "path": "/deck-clients/hermes/v1/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "OpenAI/Python 2.24.0",
+      "tools": 4,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_files",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_file",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 1871
+    },
+    {
+      "path": "/deck-clients/hermes/v1/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "OpenAI/Python 2.24.0",
+      "tools": 4,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_files",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_file",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 1857
+    },
+    {
+      "path": "/deck-clients/hermes/v1/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "OpenAI/Python 2.24.0",
+      "tools": 4,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_files",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_file",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 2200
+    },
+    {
+      "path": "/deck-clients/hermes/v1/chat/completions",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "OpenAI/Python 2.24.0",
+      "tools": 4,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "patch",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_files",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write_file",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 1805
+    }
+  ],
+  "passed": true,
+  "pid": 66286,
+  "exit_code": 0,
+  "seconds": 75.17,
+  "runtime_session_ids": [
+    "20261007_155335_40ae14"
+  ],
+  "output_log": "logs/hermes/nemotron.log",
+  "result_file_value": "89",
+  "free_rate_limit_429": false
+}

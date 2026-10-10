@@ -1,0 +1,148 @@
+{
+  "client": "claude",
+  "requested": "thinkingmachines/inkling:free",
+  "case": "inkling",
+  "session_id": "69bf8175-432a-49b2-92e7-f3f213b8d14f",
+  "apply_status": 200,
+  "model_used": "thinkingmachines/inkling:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/claude/api/hello",
+      "method": "HEAD",
+      "model": null,
+      "stream": null,
+      "userAgent": "Bun/1.4.3",
+      "tools": null,
+      "toolNames": null,
+      "status": 401,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "Invalid ModelDeck endpoint credential"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.280 (external, sdk-cli)",
+      "tools": 2,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 2341
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.280 (external, sdk-cli)",
+      "tools": 2,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 1820
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.280 (external, sdk-cli)",
+      "tools": 2,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 2824
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.280 (external, sdk-cli)",
+      "tools": 2,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 2681
+    },
+    {
+      "path": "/deck-clients/claude/v1/messages",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "claude-cli/2.1.280 (external, sdk-cli)",
+      "tools": 2,
+      "toolNames": [
+        {
+          "type": null,
+          "name": "Edit",
+          "children": null
+        },
+        {
+          "type": null,
+          "name": "Read",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 4151
+    }
+  ],
+  "passed": true,
+  "pid": 66064,
+  "exit_code": 0,
+  "seconds": 19.27,
+  "runtime_session_ids": [
+    "69bf8175-432a-49b2-92e7-f3f213b8d14f"
+  ],
+  "output_log": "logs/claude/inkling.log",
+  "result_file_value": "89",
+  "free_rate_limit_429": false
+}

@@ -233,14 +233,6 @@ fn set_model(p: &ClientProfile, body: &mut Value) -> Result<(), String> {
         .find(|m| m.id == id)
         .ok_or("Model is not in this client's configured catalog")?;
     body["model"] = json!(id);
-    if model.reasoning_supported == Some(false) {
-        body.as_object_mut()
-            .expect("validated object")
-            .remove("reasoning");
-        body.as_object_mut()
-            .expect("validated object")
-            .remove("reasoning_effort");
-    }
     for field in ["max_output_tokens", "max_tokens"] {
         if let Some(n) = body.get(field).and_then(Value::as_u64) {
             body[field] = json!(n.min(model.output));
@@ -260,13 +252,16 @@ pub(crate) async fn forward(
     if let Err(e) = set_model(p, &mut body) {
         return error(StatusCode::BAD_REQUEST, &e);
     }
+    let provider = super::provider_adapter::project(p, key);
     let map = namespace_restore_map(&body);
     let tool_context = transform_codex_chat::build_codex_tool_context_from_request(&body);
     let stream = body.get("stream").and_then(Value::as_bool).unwrap_or(false);
-    let base = p.endpoint.trim_end_matches('/');
-    let mut url = format!("{base}/{suffix}");
+    let mut url = super::provider_adapter::url(p, suffix);
     if muse {
-        if p.protocol == "openai-responses" && flatten_request_namespaces(&mut body).is_err() {
+        if p.protocol == "openai-responses"
+            && crate::proxy::providers::provider_needs_responses_namespace_flatten(&provider)
+            && flatten_request_namespaces(&mut body).is_err()
+        {
             return error(
                 StatusCode::BAD_REQUEST,
                 "Ambiguous namespaced tool definitions",
@@ -277,8 +272,16 @@ pub(crate) async fn forward(
         body["store"] = json!(false);
     }
     if muse && p.protocol == "openai-chat" {
-        url = format!("{base}/chat/completions");
-        body = match transform_codex_chat::responses_to_chat_completions(body) {
+        url = super::provider_adapter::url(p, "chat/completions");
+        let prompt_cache_key = body
+            .get("prompt_cache_key")
+            .and_then(Value::as_str)
+            .map(str::to_string);
+        let reasoning = super::provider_adapter::reasoning_config(&provider, &body);
+        body = match transform_codex_chat::responses_to_chat_completions_with_reasoning(
+            body,
+            reasoning.as_ref(),
+        ) {
             Ok(v) => v,
             Err(_) => {
                 return error(
@@ -287,24 +290,20 @@ pub(crate) async fn forward(
                 )
             }
         };
-        if !p.effort.is_empty()
-            && p.models.iter().any(|model| {
-                Some(model.id.as_str()) == body.get("model").and_then(Value::as_str)
-                    && model.reasoning_supported != Some(false)
-                    && model.reasoning.contains(&p.effort)
-            })
-        {
+        if reasoning.is_none() && !p.effort.is_empty() {
             body["reasoning_effort"] = json!(p.effort);
         }
-    } else if muse && p.protocol == "anthropic" {
-        url = format!(
-            "{base}/{}",
-            if base.ends_with("/v1") {
-                "messages"
-            } else {
-                "v1/messages"
-            }
+        crate::proxy::providers::inject_codex_chat_prompt_cache_key(
+            &provider,
+            &mut body,
+            prompt_cache_key.as_deref(),
+            None,
         );
+        if crate::proxy::providers::transform_codex_chat_moonshot_schema::upstream_requires_ref_sibling_all_of(&p.endpoint) {
+            crate::proxy::providers::transform_codex_chat_moonshot_schema::wrap_ref_siblings_in_chat_tools(&mut body);
+        }
+    } else if muse && p.protocol == "anthropic" {
+        url = super::provider_adapter::url(p, "/v1/messages");
         let limit = p
             .models
             .iter()
@@ -320,19 +319,27 @@ pub(crate) async fn forward(
                 )
             }
         };
+        // Carry the chosen value across field names without inferring a tier.
+        if !p.effort.is_empty() {
+            if !body["output_config"].is_object() {
+                body["output_config"] = json!({});
+            }
+            body["output_config"]["effort"] = json!(p.effort);
+        }
     }
-    let mut req = http
+    let req = http
         .post(url)
         .header("accept-encoding", "identity")
         .json(&body);
-    if !key.is_empty() {
-        req = req.bearer_auth(key);
-    }
-    if muse && p.protocol == "anthropic" {
-        req = req
-            .header("anthropic-version", "2023-06-01")
-            .header("x-api-key", key);
-    }
+    let req = match super::provider_adapter::authenticate(req, p, key) {
+        Ok(request) => request,
+        Err(_) => {
+            return error(
+                StatusCode::BAD_REQUEST,
+                "Invalid upstream authentication configuration",
+            )
+        }
+    };
     let upstream = match req.send().await {
         Ok(r) => r,
         Err(_) => return error(StatusCode::BAD_GATEWAY, "Upstream connection failed"),
@@ -496,4 +503,4 @@ mod tests {
 }
 
 #[cfg(test)]
-mod native_tests;
+pub(crate) mod native_tests;

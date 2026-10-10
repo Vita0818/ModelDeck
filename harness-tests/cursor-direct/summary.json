@@ -1,0 +1,484 @@
+{
+  "officialLocalRuntimeVerified": true,
+  "cursorAccountCredentialsUsed": false,
+  "sharedGatewayApplySucceeded": true,
+  "nativeModelListSucceeded": true,
+  "mockNativeReadWritePassed": true,
+  "inklingNativeToolWorkflowPassed": true,
+  "nemotronNativeToolWorkflowPassed": false,
+  "nemotronUpstreamError": 503,
+  "earlierNemotronReadAndWriteSucceededBeforeFinal503": true,
+  "inklingUsageRecords": 6,
+  "inklingReportedCostUsd": 0,
+  "paidFallbackCalls": 0,
+  "freeRateLimit429Observed": false,
+  "guiLocalModeVerified": false,
+  "attempts": [
+    {
+      "case": "inkling",
+      "model": "md-inkling",
+      "seconds": 6.36,
+      "exitCode": 1,
+      "finalTextSeen": false,
+      "resultFileValue": "",
+      "cursorAccountCredentialsProvided": false,
+      "nativeVendorBinaryUnmodified": true,
+      "network": [
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck/cursor-local/v1/chat/completions",
+          "blocked": false
+        }
+      ],
+      "passed": false,
+      "toolTrace": [],
+      "upstreamStreamErrors": [],
+      "outputLog": "logs/inkling.log"
+    },
+    {
+      "case": "managed-catalog",
+      "model": "md-inkling",
+      "seconds": 1.11,
+      "exitCode": 0,
+      "finalTextSeen": false,
+      "sessionIds": [],
+      "resultFileValue": "",
+      "cursorAccountCredentialsProvided": false,
+      "nativeVendorBinaryUnmodified": true,
+      "network": [],
+      "managedLauncher": "/Users/vita/Others/ModelDeck/.build/cursor-direct/.runtime/gateway/home/.cc-switch/bin/cursor-agent",
+      "modelCatalogProbe": true,
+      "passed": false,
+      "toolTrace": [],
+      "upstreamStreamErrors": [],
+      "outputLog": "logs/managed-catalog.log"
+    },
+    {
+      "case": "managed-catalog-final",
+      "model": "md-nemotron",
+      "seconds": 1.0,
+      "exitCode": 0,
+      "finalTextSeen": true,
+      "sessionIds": [],
+      "resultFileValue": "",
+      "cursorAccountCredentialsProvided": false,
+      "nativeVendorBinaryUnmodified": true,
+      "network": [],
+      "managedLauncher": "/Users/vita/Others/ModelDeck/.build/cursor-direct/.runtime/gateway/home/.cc-switch/bin/cursor-agent",
+      "modelCatalogProbe": true,
+      "passed": true,
+      "toolTrace": [],
+      "upstreamStreamErrors": [],
+      "outputLog": "logs/managed-catalog-final.log"
+    },
+    {
+      "case": "managed-inkling",
+      "model": "md-inkling",
+      "seconds": 39.29,
+      "exitCode": 0,
+      "finalTextSeen": true,
+      "sessionIds": [
+        "f569692c-5c09-407c-9f37-f0cd6c672cb7"
+      ],
+      "resultFileValue": "89",
+      "cursorAccountCredentialsProvided": false,
+      "nativeVendorBinaryUnmodified": true,
+      "network": [
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck-clients/cursor-agent/models",
+          "blocked": false
+        },
+        {
+          "surface": "node:https.request",
+          "host": "registry.npmjs.org",
+          "path": "/typescript-language-server",
+          "blocked": true
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck-clients/cursor-agent/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "node:https.request",
+          "host": "registry.npmjs.org",
+          "path": "/typescript-language-server",
+          "blocked": true
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck-clients/cursor-agent/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck-clients/cursor-agent/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck-clients/cursor-agent/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck-clients/cursor-agent/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck-clients/cursor-agent/chat/completions",
+          "blocked": false
+        }
+      ],
+      "managedLauncher": "/Users/vita/Others/ModelDeck/.build/cursor-direct/.runtime/gateway/home/.cc-switch/bin/cursor-agent",
+      "modelCatalogProbe": false,
+      "passed": true,
+      "toolTrace": [
+        {
+          "tool": "globToolCall",
+          "succeeded": false
+        },
+        {
+          "tool": "globToolCall",
+          "succeeded": true
+        },
+        {
+          "tool": "readToolCall",
+          "succeeded": true
+        },
+        {
+          "tool": "shellToolCall",
+          "succeeded": true
+        },
+        {
+          "tool": "readToolCall",
+          "succeeded": true
+        }
+      ],
+      "upstreamStreamErrors": [],
+      "outputLog": "logs/managed-inkling.log"
+    },
+    {
+      "case": "managed-nemotron",
+      "model": "md-nemotron",
+      "seconds": 29.88,
+      "exitCode": 1,
+      "finalTextSeen": false,
+      "sessionIds": [
+        "d9f7a119-18b6-4ccb-9f59-02f979234601"
+      ],
+      "resultFileValue": "",
+      "cursorAccountCredentialsProvided": false,
+      "nativeVendorBinaryUnmodified": true,
+      "network": [
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck-clients/cursor-agent/models",
+          "blocked": false
+        },
+        {
+          "surface": "node:https.request",
+          "host": "registry.npmjs.org",
+          "path": "/typescript-language-server",
+          "blocked": true
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck-clients/cursor-agent/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "node:https.request",
+          "host": "registry.npmjs.org",
+          "path": "/typescript-language-server",
+          "blocked": true
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck-clients/cursor-agent/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck-clients/cursor-agent/chat/completions",
+          "blocked": false
+        }
+      ],
+      "managedLauncher": "/Users/vita/Others/ModelDeck/.build/cursor-direct/.runtime/gateway/home/.cc-switch/bin/cursor-agent",
+      "modelCatalogProbe": false,
+      "passed": false,
+      "toolTrace": [],
+      "upstreamStreamErrors": [
+        {
+          "provider": "Nvidia",
+          "error": {
+            "code": 503,
+            "message": "Upstream error from Nvidia: Service temporarily overloaded",
+            "metadata": {
+              "error_type": "provider_overloaded"
+            }
+          }
+        },
+        {
+          "provider": "Nvidia",
+          "error": {
+            "code": 503,
+            "message": "Upstream error from Nvidia: Service temporarily overloaded",
+            "metadata": {
+              "error_type": "provider_overloaded"
+            }
+          }
+        },
+        {
+          "provider": "Nvidia",
+          "error": {
+            "code": 503,
+            "message": "Upstream error from Nvidia: Service temporarily overloaded",
+            "metadata": {
+              "error_type": "provider_overloaded"
+            }
+          }
+        }
+      ],
+      "outputLog": "logs/managed-nemotron.log"
+    },
+    {
+      "case": "mock",
+      "model": "md-nemotron",
+      "seconds": 4.08,
+      "exitCode": 0,
+      "finalTextSeen": true,
+      "resultFileValue": "",
+      "cursorAccountCredentialsProvided": false,
+      "nativeVendorBinaryUnmodified": true,
+      "network": [
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/v1/chat/completions",
+          "blocked": false
+        }
+      ],
+      "passed": true,
+      "toolTrace": [],
+      "upstreamStreamErrors": [],
+      "outputLog": "logs/mock.log"
+    },
+    {
+      "case": "mock-tools",
+      "model": "md-nemotron",
+      "seconds": 4.12,
+      "exitCode": 0,
+      "finalTextSeen": true,
+      "resultFileValue": "89",
+      "cursorAccountCredentialsProvided": false,
+      "nativeVendorBinaryUnmodified": true,
+      "network": [
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/v1/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/v1/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/v1/chat/completions",
+          "blocked": false
+        }
+      ],
+      "passed": true,
+      "toolTrace": [
+        {
+          "tool": "readToolCall",
+          "succeeded": true
+        },
+        {
+          "tool": "editToolCall",
+          "succeeded": true
+        }
+      ],
+      "upstreamStreamErrors": [],
+      "outputLog": "logs/mock-tools.log"
+    },
+    {
+      "case": "nemotron",
+      "model": "md-nemotron",
+      "seconds": 7.84,
+      "exitCode": 1,
+      "finalTextSeen": false,
+      "resultFileValue": "",
+      "cursorAccountCredentialsProvided": false,
+      "nativeVendorBinaryUnmodified": true,
+      "network": [
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck/cursor-local/v1/chat/completions",
+          "blocked": false
+        }
+      ],
+      "passed": false,
+      "toolTrace": [],
+      "upstreamStreamErrors": [],
+      "outputLog": "logs/nemotron.log"
+    },
+    {
+      "case": "nemotron-native-retries",
+      "model": "md-nemotron",
+      "seconds": 42.54,
+      "exitCode": 1,
+      "finalTextSeen": false,
+      "sessionIds": [
+        "a0b9eb31-a265-448a-bbb5-7c7963489ac1"
+      ],
+      "resultFileValue": "89",
+      "cursorAccountCredentialsProvided": false,
+      "nativeVendorBinaryUnmodified": true,
+      "network": [
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck/cursor-local/v1/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck/cursor-local/v1/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck/cursor-local/v1/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck/cursor-local/v1/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck/cursor-local/v1/chat/completions",
+          "blocked": false
+        }
+      ],
+      "passed": false,
+      "toolTrace": [
+        {
+          "tool": "readToolCall",
+          "succeeded": true
+        },
+        {
+          "tool": "editToolCall",
+          "succeeded": true
+        }
+      ],
+      "upstreamStreamErrors": [
+        {
+          "provider": "Nvidia",
+          "error": {
+            "code": 503,
+            "message": "Upstream error from Nvidia: Service temporarily overloaded",
+            "metadata": {
+              "error_type": "provider_overloaded"
+            }
+          }
+        },
+        {
+          "provider": "Nvidia",
+          "error": {
+            "code": 503,
+            "message": "Upstream error from Nvidia: Service temporarily overloaded",
+            "metadata": {
+              "error_type": "provider_overloaded"
+            }
+          }
+        },
+        {
+          "provider": "Nvidia",
+          "error": {
+            "code": 503,
+            "message": "Upstream error from Nvidia: Service temporarily overloaded",
+            "metadata": {
+              "error_type": "provider_overloaded"
+            }
+          }
+        }
+      ],
+      "outputLog": "logs/nemotron-native-retries.log"
+    },
+    {
+      "case": "nemotron-retry",
+      "model": "md-nemotron",
+      "seconds": 18.98,
+      "exitCode": 1,
+      "finalTextSeen": false,
+      "sessionIds": [
+        "f054e750-f612-48ca-8410-b50eb9aba830"
+      ],
+      "resultFileValue": "",
+      "cursorAccountCredentialsProvided": false,
+      "nativeVendorBinaryUnmodified": true,
+      "network": [
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck/cursor-local/v1/chat/completions",
+          "blocked": false
+        },
+        {
+          "surface": "fetch",
+          "host": "127.0.0.1",
+          "path": "/deck/cursor-local/v1/chat/completions",
+          "blocked": false
+        }
+      ],
+      "passed": false,
+      "toolTrace": [
+        {
+          "tool": "readToolCall",
+          "succeeded": true
+        }
+      ],
+      "upstreamStreamErrors": [
+        {
+          "provider": "Nvidia",
+          "error": {
+            "code": 503,
+            "message": "Upstream error from Nvidia: Service temporarily overloaded",
+            "metadata": {
+              "error_type": "provider_overloaded"
+            }
+          }
+        }
+      ],
+      "outputLog": "logs/nemotron-retry.log"
+    }
+  ],
+  "protectedConfigurationsUnchanged": true
+}

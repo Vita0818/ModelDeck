@@ -1,0 +1,55 @@
+[2m2026-10-07T08:17:20.099293Z[0m [33m WARN[0m Failed to fetch models: Auth("No auth credentials for cli-chat-proxy")
+[2m2026-10-07T08:17:20.099945Z[0m [33m WARN[0m model refresh failed, leaving existing models unchanged
+[2m2026-10-07T08:17:20.101280Z[0m [33m WARN[0m Failed to fetch models: Auth("No auth credentials for cli-chat-proxy")
+[2m2026-10-07T08:17:20.101404Z[0m [33m WARN[0m model refresh failed, leaving existing models unchanged
+[2m2026-10-07T08:17:20.237122Z[0m [33m WARN[0m no credentials for auxiliary model; falling back to active model [3maux_model[0m[2m=[0mgrok-4.5
+{"type":"available_commands","tools":["run_terminal_command","read_file","search_replace","list_dir","grep","kill_command_or_subagent","todo_write","get_command_or_subagent_output","scheduler_create","scheduler_delete","scheduler_list","monitor","search_tool","use_tool","workflow","enter_plan_mode","exit_plan_mode","ask_user_question","image_gen","image_edit","image_to_video","reference_to_video","write"],"commands":["compact","always-approve","context","session-info","feedback","deep-research","workflow","goal","loop","bailian-cli","reference","bailian-docs-llm-wiki","application-user-guide","user:guides","bailian-finetune","bailian-gen","bailian-managed-agent","bailian-model-recommend","bailian-protocol","bailian-sandbox","bailian-train-deploy","bailian-web-search"]}
+{"type":"available_commands","tools":["run_terminal_command","read_file","search_replace","list_dir","grep","kill_command_or_subagent","todo_write","get_command_or_subagent_output","scheduler_create","scheduler_delete","scheduler_list","monitor","search_tool","use_tool","workflow","enter_plan_mode","exit_plan_mode","ask_user_question","image_gen","image_edit","image_to_video","reference_to_video","write"],"commands":["compact","always-approve","context","session-info","feedback","deep-research","workflow","goal","loop","bailian-cli","reference","bailian-docs-llm-wiki","application-user-guide","user:guides","bailian-finetune","bailian-gen","bailian-managed-agent","bailian-model-recommend","bailian-protocol","bailian-sandbox","bailian-train-deploy","bailian-web-search"]}
+[2m2026-10-07T08:17:20.768211Z[0m [31mERROR[0m responses API error [3mstatus[0m[2m=[0m400 Bad Request [3merror_message[0m[2m=[0mmodeldeck_error: The requested model is unavailable on this endpoint and protocol [3mbody_preview[0m[2m=[0m{"error":{"type":"modeldeck_error","message":"The requested model is unavailable on this endpoint and protocol"}} [3mmodel_id[0m[2m=[0mgrok-4.5
+[2m2026-10-07T08:17:20.768248Z[0m [33m WARN[0m session title generation failed, falling back to truncated user text [3mmodel[0m[2m=[0mgrok-4.5 [3merror[0m[2m=[0mAPI error (status 400 Bad Request): modeldeck_error: The requested model is unavailable on this endpoint and protocol
+[2m2026-10-07T08:17:25.104130Z[0m [33m WARN[0m Failed to fetch models: Auth("No auth credentials for cli-chat-proxy")
+[2m2026-10-07T08:17:25.104167Z[0m [33m WARN[0m model refresh failed, leaving existing models unchanged
+{"type":"thought","data":"The"}
+{"type":"thought","data":" user wants me to"}
+{"type":"thought","data":":\n1. Read"}
+{"type":"thought","data":" fixture.json in the"}
+{"type":"thought","data":" current workspace\n2"}
+{"type":"thought","data":". Compute the sum"}
+{"type":"thought","data":" of its numbers\n"}
+{"type":"thought","data":"3. Write that"}
+{"type":"thought","data":" integer to result.txt"}
+{"type":"thought","data":"\n4. Finish"}
+{"type":"thought","data":" with MD"}
+{"type":"thought","data":"_TEST_OK\n\nLet"}
+{"type":"thought","data":" me start by reading"}
+{"type":"thought","data":" the fixture.json file"}
+{"type":"thought","data":"."}
+{"type":"available_commands","tools":["run_terminal_command","read_file","search_replace","list_dir","grep","kill_command_or_subagent","todo_write","get_command_or_subagent_output","scheduler_create","scheduler_delete","scheduler_list","monitor","search_tool","use_tool","workflow","enter_plan_mode","exit_plan_mode","ask_user_question","image_gen","image_edit","image_to_video","reference_to_video","write"],"commands":["compact","always-approve","context","session-info","feedback","deep-research","workflow","goal","loop","bailian-cli","reference","bailian-docs-llm-wiki","application-user-guide","user:guides","bailian-finetune","bailian-gen","bailian-managed-agent","bailian-model-recommend","bailian-protocol","bailian-sandbox","bailian-train-deploy","bailian-web-search"]}
+{"type":"usage","usage":{"input_tokens":11607,"output_tokens":81,"cache_read_input_tokens":0,"cache_creation_input_tokens":0,"reasoning_tokens":55}}
+{"type":"tool_call","toolCallId":"call-1a4a05a5-ca1c-4b55-8820-fc2ea922ec1f","title":"read_file","kind":"read","status":"pending","toolName":"read_file","rawInput":{"target_file":"fixture.json"},"content":[],"locations":[]}
+{"type":"tool_call_update","toolCallId":"call-1a4a05a5-ca1c-4b55-8820-fc2ea922ec1f","status":null,"content":[],"rawOutput":null,"locations":[{"path":"fixture.json"}]}
+{"type":"tool_call_update","toolCallId":"call-1a4a05a5-ca1c-4b55-8820-fc2ea922ec1f","status":"completed","content":[{"type":"content","content":{"type":"text","text":"1→{\n  \"numbers\": [\n    17,\n    29,\n    43\n  ],\n  \"case\": \"grokbuild/nemotron\"\n}\n"}}],"rawOutput":{"type":"ReadFile","FileContent":{"content":"1→{\n  \"numbers\": [\n    17,\n    29,\n    43\n  ],\n  \"case\": \"grokbuild/nemotron\"\n}\n","content_concise":"1→{\n  \"numbers\": [\n    17,\n    29,\n    43\n  ],\n  \"case\": \"grokbuild/nemotron\"\n}\n","absolute_path":"/Users/vita/Others/ModelDeck/harness-tests/.runtime/workspaces/grokbuild/nemotron/fixture.json","offset":null,"raw_output":"{\n  \"numbers\": [\n    17,\n    29,\n    43\n  ],\n  \"case\": \"grokbuild/nemotron\"\n}\n","total_lines":9}},"locations":[]}
+[2m2026-10-07T08:17:35.107084Z[0m [33m WARN[0m Failed to fetch models: Auth("No auth credentials for cli-chat-proxy")
+[2m2026-10-07T08:17:35.107122Z[0m [33m WARN[0m model refresh failed, leaving existing models unchanged
+{"type":"thought","data":"The"}
+{"type":"thought","data":" fixture.json contains a"}
+{"type":"thought","data":" numbers"}
+{"type":"thought","data":" array with values"}
+{"type":"thought","data":" "}
+{"type":"thought","data":"17, "}
+{"type":"thought","data":"29, and"}
+{"type":"thought","data":" 43."}
+{"type":"thought","data":" The sum is "}
+{"type":"thought","data":"17 + "}
+{"type":"thought","data":"29 + "}
+{"type":"thought","data":"43 = "}
+{"type":"thought","data":"89. Now"}
+{"type":"thought","data":" I'll"}
+{"type":"thought","data":" write this to"}
+{"type":"thought","data":" result.txt."}
+{"type":"available_commands","tools":["run_terminal_command","read_file","search_replace","list_dir","grep","kill_command_or_subagent","todo_write","get_command_or_subagent_output","scheduler_create","scheduler_delete","scheduler_list","monitor","search_tool","use_tool","workflow","enter_plan_mode","exit_plan_mode","ask_user_question","image_gen","image_edit","image_to_video","reference_to_video","write"],"commands":["compact","always-approve","context","session-info","feedback","deep-research","workflow","goal","loop","bailian-cli","reference","bailian-docs-llm-wiki","application-user-guide","user:guides","bailian-finetune","bailian-gen","bailian-managed-agent","bailian-model-recommend","bailian-protocol","bailian-sandbox","bailian-train-deploy","bailian-web-search"]}
+{"type":"usage","usage":{"input_tokens":11742,"output_tokens":88,"cache_read_input_tokens":0,"cache_creation_input_tokens":0,"reasoning_tokens":34}}
+{"type":"tool_call","toolCallId":"call-9719be09-c795-4bd7-af6c-0a1a79c4bf0b","title":"write","kind":"write","status":"pending","toolName":"write","rawInput":{"content":"89","file_path":"result.txt"},"content":[],"locations":[]}
+{"type":"tool_call_update","toolCallId":"call-9719be09-c795-4bd7-af6c-0a1a79c4bf0b","status":null,"content":[{"type":"diff","path":"/Users/vita/Others/ModelDeck/harness-tests/.runtime/workspaces/grokbuild/nemotron/result.txt","oldText":"","newText":"89"}],"rawOutput":null,"locations":[{"path":"result.txt"}]}
+{"type":"tool_call_update","toolCallId":"call-9719be09-c795-4bd7-af6c-0a1a79c4bf0b","status":"failed","content":[{"type":"content","content":{"type":"text","text":"User cancelled the execution for tool `write`"}}],"rawOutput":null,"locations":[]}
+{"type":"end","stopReason":"cancelled","sessionId":"378e71e8-ab61-44a4-8658-0debbc18f7cd","requestId":"bfe6b776-56da-4a3f-baff-e24bf2aec8fc","usage":{"input_tokens":23349,"cache_read_input_tokens":0,"cache_creation_input_tokens":0,"output_tokens":169,"reasoning_tokens":89,"total_tokens":23518},"num_turns":2,"modelUsage":{"md-nemotron":{"inputTokens":23349,"outputTokens":169,"cacheReadInputTokens":0,"cacheCreationInputTokens":0,"modelCalls":2}}}

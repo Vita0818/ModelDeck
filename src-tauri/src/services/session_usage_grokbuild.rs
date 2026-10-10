@@ -577,6 +577,15 @@ fn insert_grok_session_entry(
     Ok(changed)
 }
 
+/// Grok Build 会话目录。用量统计按这些根目录扫描 JSONL。
+fn grok_session_roots() -> Vec<std::path::PathBuf> {
+    let config_dir = crate::grok_config::get_grok_config_dir();
+    vec![
+        config_dir.join("sessions"),
+        config_dir.join("archived_sessions"),
+    ]
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1323,13 +1332,4 @@ mod tests {
             "only the real updates.jsonl should be collected; symlink cycle must not crash"
         );
     }
-}
-
-/// Grok Build 会话目录。用量统计按这些根目录扫描 JSONL。
-fn grok_session_roots() -> Vec<std::path::PathBuf> {
-    let config_dir = crate::grok_config::get_grok_config_dir();
-    vec![
-        config_dir.join("sessions"),
-        config_dir.join("archived_sessions"),
-    ]
 }

@@ -31,9 +31,6 @@ vi.mock("@/components/settings/SettingsPage", () => ({
 vi.mock("@/components/usage/UsageDashboard", () => ({
   UsageDashboard: () => <div data-testid="usage-page" />,
 }));
-vi.mock("@/components/hermes/HermesMemoryPanel", () => ({
-  default: () => <div data-testid="hermes-page" />,
-}));
 vi.mock("@/components/DeepLinkImportDialog", () => ({
   DeepLinkImportDialog: () => null,
 }));
@@ -79,6 +76,26 @@ describe("App shell", () => {
     expect(
       await screen.findByRole("heading", { name: "Codex CLI" }),
     ).toBeInTheDocument();
+    expect(invokeMock).toHaveBeenCalledWith("get_migration_result");
+    expect(invokeMock).not.toHaveBeenCalledWith("get_skills_migration_result");
+  });
+
+  it("recovers a removed memory destination to the last client while keeping usage", async () => {
+    localStorage.setItem("modeldeck-route", "hermesMemory");
+    localStorage.setItem("modeldeck-last-client", "hermes");
+    const { default: App } = await import("@/App");
+    renderApp(App);
+
+    expect(
+      await screen.findByRole("heading", { name: "Hermes" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /memory|hermes\.memory/i }),
+    ).not.toBeInTheDocument();
+    expect(localStorage.getItem("modeldeck-route")).toBe("client:hermes");
+
+    fireEvent.click(screen.getByRole("button", { name: /nav\.usage/ }));
+    expect(await screen.findByTestId("usage-page")).toBeInTheDocument();
   });
 
   it("keeps the sidebar visible on every destination", async () => {
@@ -132,6 +149,53 @@ describe("App shell", () => {
     expect(
       await screen.findByRole("heading", { name: "nav.resource.endpoints" }),
     ).toBeInTheDocument();
+  });
+
+  it("saves the selection before applying its new revision and reflects the active binding", async () => {
+    const fixture = deckFixture();
+    invokeMock.mockImplementation(
+      async (cmd: string, args?: Record<string, unknown>) => {
+        if (cmd === "get_deck") return fixture;
+        if (cmd === "get_settings") return { language: "en" };
+        if (cmd === "check_all_env_conflicts") return {};
+        if (cmd === "save_deck") {
+          return {
+            ...fixture,
+            store: { ...(args?.store as typeof fixture.store), revision: 1 },
+          };
+        }
+        if (cmd === "apply_deck_binding") {
+          expect(args).toEqual({ client: "codex", revision: 1 });
+          return {
+            view: {
+              ...fixture,
+              store: {
+                ...fixture.store,
+                revision: 2,
+                activeBindings: { codex: fixture.store.bindings.codex },
+              },
+            },
+            restartRequired: false,
+          };
+        }
+        return null;
+      },
+    );
+    const { default: App } = await import("@/App");
+    renderApp(App);
+    await screen.findByText("Shared endpoint");
+    fireEvent.click(screen.getByRole("button", { name: "deck.saveAndApply" }));
+    await waitFor(() =>
+      expect(invokeMock).toHaveBeenCalledWith("apply_deck_binding", {
+        client: "codex",
+        revision: 1,
+      }),
+    );
+    expect(await screen.findByText("deck.activeBinding")).toBeInTheDocument();
+    const mutations = invokeMock.mock.calls
+      .filter(([cmd]) => ["save_deck", "apply_deck_binding"].includes(cmd))
+      .map(([cmd]) => cmd);
+    expect(mutations).toEqual(["save_deck", "apply_deck_binding"]);
   });
 
   it("fetches the deck once and shares it across pages", async () => {

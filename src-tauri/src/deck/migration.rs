@@ -6,7 +6,7 @@ use crate::{
 };
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 fn id(prefix: &str, value: &Value) -> String {
     let hash = Sha256::digest(value.to_string().as_bytes());
@@ -26,6 +26,70 @@ fn protocol(value: &str) -> Option<Protocol> {
     })
 }
 
+fn openrouter_suffix(proto: Protocol) -> String {
+    let protocol = match proto {
+        Protocol::OpenaiChat => "Chat",
+        Protocol::OpenaiResponses => "Responses",
+        Protocol::Anthropic => "Messages",
+        Protocol::Gemini => "Gemini",
+    };
+    format!(" · OpenRouter（{protocol}）")
+}
+
+fn imported_connection_name(client: &str, profile: &ClientProfile, proto: Protocol) -> String {
+    let name = profile.connection_name.trim();
+    let openrouter =
+        validate_url(&profile.endpoint).is_ok_and(|url| url.host_str() == Some("openrouter.ai"));
+    if openrouter
+        && matches!(
+            name,
+            "" | "default"
+                | "Imported provider"
+                | "OpenRouter"
+                | "OpenRouter (Codex CLI)"
+                | "OpenRouter (Claude Desktop)"
+        )
+    {
+        let client = match client {
+            "codex" => "Codex CLI",
+            "claude" => "Claude Code",
+            "claude-desktop" => "Claude Desktop",
+            "antigravity" => "Antigravity CLI",
+            "cursor-agent" => "Cursor CLI",
+            "cursor" => "Cursor GUI",
+            "muse" => "Muse Code",
+            "opencode" => "OpenCode",
+            "grokbuild" => "Grok",
+            "hermes" => "Hermes",
+            other => other,
+        };
+        return format!("{client}{}", openrouter_suffix(proto));
+    }
+    if name.is_empty() {
+        "Imported provider".into()
+    } else {
+        name.into()
+    }
+}
+
+fn merge_imported_name(existing: &mut String, incoming: &str, proto: Protocol) {
+    let suffix = openrouter_suffix(proto);
+    if let (Some(previous), Some(next)) = (
+        existing.strip_suffix(&suffix),
+        incoming.strip_suffix(&suffix),
+    ) {
+        let clients = previous
+            .split(" / ")
+            .chain(next.split(" / "))
+            .collect::<BTreeSet<_>>();
+        *existing = format!(
+            "{}{}",
+            clients.into_iter().collect::<Vec<_>>().join(" / "),
+            suffix
+        );
+    }
+}
+
 fn add_profile(
     store: &mut DeckStore,
     client: &str,
@@ -35,38 +99,39 @@ fn add_profile(
     if validate_url(&profile.endpoint).is_err() {
         return None;
     }
+    let source_dir = if client == "opencode" {
+        crate::opencode_config::get_opencode_config_path()
+            .parent()?
+            .to_path_buf()
+    } else {
+        get_app_config_dir()
+    };
+    let (api_key, key_env) = credentials::imported(&profile.api_key, &profile.key_env, &source_dir);
+    let connection_name = imported_connection_name(client, profile, proto);
     let provider_id = id(
         "provider",
         &json!([
             profile.endpoint.trim_end_matches('/'),
             proto,
-            profile.api_key,
-            profile.key_env
+            api_key,
+            key_env,
+            profile.provider_meta
         ]),
     );
-    store
+    let provider = store
         .providers
         .entry(provider_id.clone())
         .or_insert_with(|| UpstreamProvider {
             id: provider_id.clone(),
-            name: if profile.connection_name.is_empty() {
-                "Imported provider".into()
-            } else {
-                profile.connection_name.clone()
-            },
+            name: connection_name.clone(),
             base_url: profile.endpoint.trim_end_matches('/').into(),
             protocol: proto,
-            api_key: profile.api_key.clone(),
-            key_env: profile.key_env.clone(),
-            key_source: Some(
-                if profile.key_env.is_empty() {
-                    "stored"
-                } else {
-                    "env"
-                }
-                .into(),
-            ),
+            provider_meta: profile.provider_meta.clone(),
+            api_key: api_key.clone(),
+            key_env: key_env.clone(),
+            key_source: Some(if key_env.is_empty() { "stored" } else { "env" }.into()),
         });
+    merge_imported_name(&mut provider.name, &connection_name, proto);
     let mut routes = BTreeMap::new();
     for model in &profile.models {
         if model.id.is_empty()
@@ -124,14 +189,7 @@ fn add_profile(
         .entry(endpoint_id.clone())
         .or_insert_with(|| ExposedEndpoint {
             id: endpoint_id.clone(),
-            name: profile
-                .connection_name
-                .clone()
-                .trim()
-                .to_string()
-                .chars()
-                .take(80)
-                .collect::<String>(),
+            name: connection_name.clone(),
             protocols: vec![
                 Protocol::OpenaiChat,
                 Protocol::OpenaiResponses,
@@ -143,6 +201,7 @@ fn add_profile(
             routes,
         });
     let endpoint = store.endpoints.get_mut(&endpoint_id)?;
+    merge_imported_name(&mut endpoint.name, &connection_name, proto);
     if endpoint.name.is_empty() {
         endpoint.name = "Imported endpoint".into();
     }
@@ -153,7 +212,7 @@ fn add_profile(
         models.first()?.clone()
     };
     Some(HarnessBinding {
-        input_protocol: None,
+        input_protocol: client_protocols(client).contains(&proto).then_some(proto),
         endpoint_id,
         model,
         utility_model: if models.contains(&profile.utility_model) {
@@ -227,6 +286,7 @@ fn model(id: &str, value: &Value) -> ClientModel {
         context,
         output,
         reasoning,
+        default_effort: String::new(),
         reasoning_supported: value.get("reasoning").and_then(Value::as_bool),
     }
 }
@@ -286,6 +346,7 @@ fn legacy_profile(client: &str, provider: &Provider) -> Option<ClientProfile> {
     )
     .to_string();
     let mut effort = String::new();
+    let mut key_env = String::new();
     if let Some(text) = config.get("config").and_then(Value::as_str) {
         if client == "grokbuild" {
             if let Some(parsed) = crate::grok_config::extract_model_config(text) {
@@ -320,6 +381,22 @@ fn legacy_profile(client: &str, provider: &Provider) -> Option<ClientProfile> {
                     .and_then(toml::Value::as_str)
                     .and_then(protocol)
                     .unwrap_or(proto);
+                if let Some(token) = table
+                    .get("experimental_bearer_token")
+                    .and_then(toml::Value::as_str)
+                    .filter(|value| !value.trim().is_empty())
+                {
+                    key = token.into();
+                } else if let Some(name) = table
+                    .get("env_key")
+                    .and_then(toml::Value::as_str)
+                    .filter(|value| !value.is_empty())
+                {
+                    // The selected provider's credentials are independent of
+                    // auth.json, which may retain an unrelated official login.
+                    key.clear();
+                    key_env = name.into();
+                }
             }
         }
     }
@@ -341,6 +418,7 @@ fn legacy_profile(client: &str, provider: &Provider) -> Option<ClientProfile> {
             if let Some(id) = entry
                 .get("id")
                 .or_else(|| entry.get("slug"))
+                .or_else(|| entry.get("model"))
                 .and_then(Value::as_str)
             {
                 models.insert(id.into(), model(id, entry));
@@ -388,8 +466,9 @@ fn legacy_profile(client: &str, provider: &Provider) -> Option<ClientProfile> {
         connection_name: provider.name.clone(),
         endpoint: base,
         protocol: proto.as_str().into(),
+        provider_meta: crate::model_clients::provider_adapter::preserved_meta(provider),
         api_key: key,
-        key_env: String::new(),
+        key_env,
         models: models.into_values().collect(),
         default_model: default,
         utility_model: String::new(),
@@ -403,6 +482,14 @@ fn legacy_profile(client: &str, provider: &Provider) -> Option<ClientProfile> {
 pub fn import(db: &Database) -> Result<DeckStore, String> {
     let mut store = DeckStore::default();
     let old = crate::model_clients::read_store()?;
+    let opencode_selection = crate::opencode_config::read_opencode_config()
+        .ok()
+        .and_then(|config| {
+            config
+                .get("model")
+                .and_then(Value::as_str)
+                .map(str::to_owned)
+        });
     for (client, profiles) in &old.saved_profiles {
         for profile in profiles.values() {
             add_profile(&mut store, client.id(), profile);
@@ -425,6 +512,22 @@ pub fn import(db: &Database) -> Result<DeckStore, String> {
         {
             if let Some(profile) = legacy_profile(client, provider) {
                 if let Some(mut binding) = add_profile(&mut store, client, &profile) {
+                    let selected_in_opencode = client == "opencode"
+                        && opencode_selection.as_deref().is_some_and(|selection| {
+                            selection
+                                .strip_prefix(&format!("{}/", provider.id))
+                                .is_some_and(|model| {
+                                    if store.endpoints[&binding.endpoint_id]
+                                        .routes
+                                        .contains_key(model)
+                                    {
+                                        binding.model = model.into();
+                                        true
+                                    } else {
+                                        false
+                                    }
+                                })
+                        });
                     if client == "claude-desktop" {
                         // Preserve Desktop's public role names while moving its
                         // upstream mappings into the shared endpoint graph.
@@ -446,7 +549,7 @@ pub fn import(db: &Database) -> Result<DeckStore, String> {
                                 .unwrap_or(binding.model);
                         }
                     }
-                    if current.as_ref() == Some(&provider.id)
+                    if (current.as_ref() == Some(&provider.id) || selected_in_opencode)
                         && validate_binding(&store, client, &binding, false).is_ok()
                     {
                         store.bindings.insert(client.into(), binding);
@@ -489,4 +592,259 @@ pub(super) fn import_profiles(profiles: &[(&str, ClientProfile)]) -> DeckStore {
         }
     }
     store
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn migration_preserves_free_tier_names_and_saved_selections() {
+        let profile: ClientProfile = serde_json::from_value(json!({
+            "connectionName":"OpenRouter", "endpoint":"https://example.test/v1", "protocol":"openai-chat",
+            "keyEnv":"OR_TEST_KEY", "models":[{"id":"thinkingmachines/inkling:free","name":"Inkling","context":200000,"output":8192}],
+            "defaultModel":"thinkingmachines/inkling:free", "utilityModel":"thinkingmachines/inkling:free"
+        })).unwrap();
+        let store = import_profiles(&[
+            ("antigravity", profile.clone()),
+            ("cursor-agent", profile.clone()),
+            ("muse", profile),
+        ]);
+        validate(&store)
+            .expect("one free-tier model must not prevent all legacy resources loading");
+        assert_eq!(store.models.len(), 1);
+        assert_eq!(
+            store.providers.values().next().unwrap().key_env,
+            "OR_TEST_KEY"
+        );
+        for client in ["antigravity", "cursor-agent", "muse"] {
+            assert_eq!(
+                store.bindings[client].model,
+                "thinkingmachines/inkling:free"
+            );
+            assert_eq!(
+                store.bindings[client].utility_model,
+                "thinkingmachines/inkling:free"
+            );
+        }
+        assert!(store.active_bindings.is_empty());
+    }
+
+    #[test]
+    fn codex_migration_retains_selected_provider_environment_credentials() {
+        let config = "model = \"model\"\nmodel_provider = \"router\"\n[model_providers.router]\nbase_url = \"https://example.test/v1\"\nwire_api = \"responses\"\nenv_key = \"CX_TEST_KEY\"\n";
+        let provider = Provider::with_id(
+            "legacy".into(),
+            "Codex".into(),
+            json!({"auth":{},"config":config}),
+            None,
+        );
+        let profile = legacy_profile("codex", &provider).unwrap();
+        assert_eq!(profile.key_env, "CX_TEST_KEY");
+        let store = import_profiles(&[("codex", profile)]);
+        validate(&store).unwrap();
+        assert_eq!(
+            store.providers.values().next().unwrap().key_env,
+            "CX_TEST_KEY"
+        );
+        assert!(store.providers.values().next().unwrap().api_key.is_empty());
+    }
+
+    #[test]
+    fn codex_migration_uses_provider_token_instead_of_preserved_login_auth() {
+        let config = "model = \"model\"\nmodel_provider = \"router\"\n[model_providers.router]\nbase_url = \"https://example.test/v1\"\nwire_api = \"responses\"\nexperimental_bearer_token = \"provider-only-test-key\"\n";
+        let provider = Provider::with_id(
+            "legacy".into(),
+            "Codex".into(),
+            json!({"auth":{"OPENAI_API_KEY":"unrelated-login-test-key"},"config":config}),
+            None,
+        );
+        let profile = legacy_profile("codex", &provider).unwrap();
+        assert_eq!(profile.api_key, "provider-only-test-key");
+        assert!(profile.key_env.is_empty());
+    }
+
+    #[test]
+    #[ignore = "Requires a private snapshot of existing legacy settings; no network or native writes"]
+    fn private_legacy_snapshot_migrates_without_losing_model_routes() {
+        let home = PathBuf::from(std::env::var("MODELDECK_LEGACY_MIGRATION_HOME").unwrap());
+        assert_eq!(
+            crate::config::get_home_dir(),
+            home,
+            "use only the private snapshot"
+        );
+        let db = Database::init().unwrap();
+        let original = crate::model_clients::read_store().unwrap();
+        let store = import(&db).unwrap();
+        validate(&store).expect("the complete legacy snapshot must migrate successfully");
+        for (client, profile) in &original.profiles {
+            let binding = &store.bindings[client.id()];
+            assert_eq!(binding.model, profile.default_model);
+            let endpoint = &store.endpoints[&binding.endpoint_id];
+            for model in &profile.models {
+                assert!(
+                    endpoint.routes.contains_key(&model.id),
+                    "a saved model route was lost"
+                );
+                assert_eq!(
+                    store.models[&endpoint.routes[&model.id].model_id].upstream_id,
+                    model.id
+                );
+            }
+            let resource = &store.models[&endpoint.routes[&binding.model].model_id];
+            assert_eq!(
+                store.providers[&resource.provider_id].key_env,
+                profile.key_env
+            );
+        }
+        assert!(store.active_bindings.is_empty());
+        if let Some(selected) = crate::opencode_config::read_opencode_config()
+            .ok()
+            .and_then(|config| {
+                config
+                    .get("model")
+                    .and_then(Value::as_str)
+                    .map(str::to_owned)
+            })
+        {
+            if let Some((_, model)) = selected.split_once('/') {
+                let binding = store
+                    .bindings
+                    .get("opencode")
+                    .expect("preserve the native OpenCode selection");
+                assert_eq!(binding.model, model);
+                assert_eq!(binding.input_protocol, Some(Protocol::OpenaiChat));
+            }
+        }
+        eprintln!("Legacy snapshot restored: {} providers, {} model resources, {} endpoints, {} saved harness selections",store.providers.len(),store.models.len(),store.endpoints.len(),store.bindings.len());
+    }
+
+    fn provider(reference: &str) -> Provider {
+        Provider::with_id(
+            "legacy".into(),
+            "Legacy OpenCode".into(),
+            json!({
+                "options":{"baseURL":"https://example.test/v1","apiKey":reference},
+                "models":{"router":{"name":"Router","limit":{"context":8192,"output":1024}}}
+            }),
+            None,
+        )
+    }
+
+    #[test]
+    fn legacy_environment_references_share_the_named_environment_resource() {
+        let original = provider("{env:MODELDECK_TEST_KEY}");
+        let profile = legacy_profile("opencode", &original).unwrap();
+        let mut named = profile.clone();
+        named.api_key.clear();
+        named.key_env = "MODELDECK_TEST_KEY".into();
+        let store = import_profiles(&[("opencode", profile), ("muse", named)]);
+        assert_eq!(store.providers.len(), 1);
+        let imported = store.providers.values().next().unwrap();
+        assert!(imported.api_key.is_empty());
+        assert_eq!(imported.key_env, "MODELDECK_TEST_KEY");
+        assert_eq!(imported.key_source.as_deref(), Some("env"));
+        assert_eq!(
+            original.settings_config["options"]["apiKey"],
+            "{env:MODELDECK_TEST_KEY}"
+        );
+        validate(&store).unwrap();
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn legacy_file_references_keep_the_original_opencode_directory() {
+        let original = provider("{file:keys/token}");
+        let profile = legacy_profile("opencode", &original).unwrap();
+        let store = import_profiles(&[("opencode", profile)]);
+        let imported = store.providers.values().next().unwrap();
+        let expected = crate::opencode_config::get_opencode_config_path()
+            .parent()
+            .unwrap()
+            .join("keys/token");
+        assert_eq!(imported.api_key, format!("{{file:{}}}", expected.display()));
+        assert!(imported.key_env.is_empty());
+        assert_eq!(
+            original.settings_config["options"]["apiKey"],
+            "{file:keys/token}"
+        );
+        assert!(store.active_bindings.is_empty());
+        validate(&store).unwrap();
+    }
+
+    #[test]
+    #[ignore = "Explicitly authorized read-only audit of existing OpenCode credentials; no network or native writes"]
+    fn existing_opencode_reference_credentials_resolve_without_copying_keys() {
+        use rusqlite::{Connection, OpenFlags};
+        let home = PathBuf::from(std::env::var("MODELDECK_CREDENTIAL_AUDIT_HOME").unwrap());
+        let db_path = home.join(".cc-switch/cc-switch.db");
+        let config_path = home.join(".config/opencode/opencode.json");
+        let token_path = home.join(".arena/token");
+        let protected = [
+            db_path.clone(),
+            config_path,
+            token_path.clone(),
+            home.join(".codex/auth.json"),
+        ];
+        let before: Vec<_> = protected
+            .iter()
+            .map(|path| std::fs::read(path).unwrap())
+            .collect();
+        let db = Connection::open_with_flags(db_path, OpenFlags::SQLITE_OPEN_READ_ONLY).unwrap();
+        let mut statement = db
+            .prepare("SELECT id,name,settings_config FROM providers WHERE app_type='opencode'")
+            .unwrap();
+        let values = statement
+            .query_map([], |row| {
+                Ok((
+                    row.get::<_, String>(0)?,
+                    row.get::<_, String>(1)?,
+                    row.get::<_, String>(2)?,
+                ))
+            })
+            .unwrap();
+        let mut verified = 0;
+        for value in values {
+            let (id, name, config) = value.unwrap();
+            if !matches!(id.as_str(), "arena" | "OpenRouter" | "LM Studio") {
+                continue;
+            }
+            let original = Provider::with_id(
+                id.clone(),
+                name,
+                serde_json::from_str(&config).unwrap(),
+                None,
+            );
+            let profile = legacy_profile("opencode", &original).unwrap();
+            let store = import_profiles(&[("opencode", profile)]);
+            let imported = store.providers.values().next().unwrap();
+            let resolved = resolve_key(imported).unwrap();
+            let expected = match id.as_str() {
+                "arena" => std::fs::read_to_string(&token_path)
+                    .unwrap()
+                    .trim()
+                    .to_string(),
+                "OpenRouter" => std::env::var("OC_OR_KEY").unwrap(),
+                _ => String::new(),
+            };
+            assert!(
+                resolved == expected,
+                "The migrated credential did not match its original source"
+            );
+            if !expected.is_empty() {
+                assert!(
+                    !serde_json::to_string(&store).unwrap().contains(&expected),
+                    "Migration copied a credential value into the resource graph"
+                );
+            }
+            verified += 1;
+        }
+        assert_eq!(verified, 3);
+        for (path, original) in protected.iter().zip(before) {
+            assert!(
+                std::fs::read(path).unwrap() == original,
+                "The read-only credential audit changed a protected file"
+            );
+        }
+    }
 }

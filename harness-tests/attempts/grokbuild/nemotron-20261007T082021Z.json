@@ -1,0 +1,426 @@
+{
+  "client": "grokbuild",
+  "requested": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "case": "nemotron",
+  "session_id": "378e71e8-ab61-44a4-8658-0debbc18f7cd",
+  "apply_status": 200,
+  "model_used": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "real_client": true,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/grokbuild/v1/responses",
+      "method": "POST",
+      "model": "grok-4.5",
+      "stream": true,
+      "userAgent": "grok-shell/1.0.0 (macos; aarch64)",
+      "tools": 1,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "session_title",
+          "children": null
+        }
+      ],
+      "status": 400,
+      "latencyMs": 0,
+      "error": {
+        "error": {
+          "type": "modeldeck_error",
+          "message": "The requested model is unavailable on this endpoint and protocol"
+        }
+      }
+    },
+    {
+      "path": "/deck-clients/grokbuild/v1/responses",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "grok-shell/1.0.0 (macos; aarch64)",
+      "tools": 23,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "run_terminal_command",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_replace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_dir",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "kill_command_or_subagent",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "todo_write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "get_command_or_subagent_output",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "scheduler_create",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "scheduler_delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "scheduler_list",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "monitor",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_tool",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "use_tool",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "workflow",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "enter_plan_mode",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "exit_plan_mode",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ask_user_question",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "image_gen",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "image_edit",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "image_to_video",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "reference_to_video",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 4125
+    },
+    {
+      "path": "/deck-clients/grokbuild/v1/responses",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "grok-shell/1.0.0 (macos; aarch64)",
+      "tools": 23,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "run_terminal_command",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_replace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_dir",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "kill_command_or_subagent",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "todo_write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "get_command_or_subagent_output",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "scheduler_create",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "scheduler_delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "scheduler_list",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "monitor",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_tool",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "use_tool",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "workflow",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "enter_plan_mode",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "exit_plan_mode",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ask_user_question",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "image_gen",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "image_edit",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "image_to_video",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "reference_to_video",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 5101
+    },
+    {
+      "path": "/deck-clients/grokbuild/v1/responses",
+      "method": "POST",
+      "model": "md-nemotron",
+      "stream": true,
+      "userAgent": "grok-shell/1.0.0 (macos; aarch64)",
+      "tools": 23,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "run_terminal_command",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "read_file",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_replace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "list_dir",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "kill_command_or_subagent",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "todo_write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "get_command_or_subagent_output",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "scheduler_create",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "scheduler_delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "scheduler_list",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "monitor",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "search_tool",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "use_tool",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "workflow",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "enter_plan_mode",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "exit_plan_mode",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ask_user_question",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "image_gen",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "image_edit",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "image_to_video",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "reference_to_video",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "write",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 5093
+    }
+  ],
+  "passed": false,
+  "pid": 67691,
+  "exit_code": 0,
+  "seconds": 24.28,
+  "runtime_session_ids": [
+    "378e71e8-ab61-44a4-8658-0debbc18f7cd"
+  ],
+  "output_log": "logs/grokbuild/nemotron.log",
+  "result_file_value": "",
+  "failure": "pe\":\"thought\",\"data\":\" result.txt.\"}\n{\"type\":\"available_commands\",\"tools\":[\"run_terminal_command\",\"read_file\",\"search_replace\",\"list_dir\",\"grep\",\"kill_command_or_subagent\",\"todo_write\",\"get_command_or_subagent_output\",\"scheduler_create\",\"scheduler_delete\",\"scheduler_list\",\"monitor\",\"search_tool\",\"use_tool\",\"workflow\",\"enter_plan_mode\",\"exit_plan_mode\",\"ask_user_question\",\"image_gen\",\"image_edit\",\"image_to_video\",\"reference_to_video\",\"write\"],\"commands\":[\"compact\",\"always-approve\",\"context\",\"session-info\",\"feedback\",\"deep-research\",\"workflow\",\"goal\",\"loop\",\"bailian-cli\",\"reference\",\"bailian-docs-llm-wiki\",\"application-user-guide\",\"user:guides\",\"bailian-finetune\",\"bailian-gen\",\"bailian-managed-agent\",\"bailian-model-recommend\",\"bailian-protocol\",\"bailian-sandbox\",\"bailian-train-deploy\",\"bailian-web-search\"]}\n{\"type\":\"usage\",\"usage\":{\"input_tokens\":11742,\"output_tokens\":88,\"cache_read_input_tokens\":0,\"cache_creation_input_tokens\":0,\"reasoning_tokens\":34}}\n{\"type\":\"tool_call\",\"toolCallId\":\"call-9719be09-c795-4bd7-af6c-0a1a79c4bf0b\",\"title\":\"write\",\"kind\":\"write\",\"status\":\"pending\",\"toolName\":\"write\",\"rawInput\":{\"content\":\"89\",\"file_path\":\"result.txt\"},\"content\":[],\"locations\":[]}\n{\"type\":\"tool_call_update\",\"toolCallId\":\"call-9719be09-c795-4bd7-af6c-0a1a79c4bf0b\",\"status\":null,\"content\":[{\"type\":\"diff\",\"path\":\"/Users/vita/Others/ModelDeck/harness-tests/.runtime/workspaces/grokbuild/nemotron/result.txt\",\"oldText\":\"\",\"newText\":\"89\"}],\"rawOutput\":null,\"locations\":[{\"path\":\"result.txt\"}]}\n{\"type\":\"tool_call_update\",\"toolCallId\":\"call-9719be09-c795-4bd7-af6c-0a1a79c4bf0b\",\"status\":\"failed\",\"content\":[{\"type\":\"content\",\"content\":{\"type\":\"text\",\"text\":\"User cancelled the execution for tool `write`\"}}],\"rawOutput\":null,\"locations\":[]}\n{\"type\":\"end\",\"stopReason\":\"cancelled\",\"sessionId\":\"378e71e8-ab61-44a4-8658-0debbc18f7cd\",\"requestId\":\"bfe6b776-56da-4a3f-baff-e24bf2aec8fc\",\"usage\":{\"input_tokens\":23349,\"cache_read_input_tokens\":0,\"cache_creation_input_tokens\":0,\"output_tokens\":169,\"reasoning_tokens\":89,\"total_tokens\":23518},\"num_turns\":2,\"modelUsage\":{\"md-nemotron\":{\"inputTokens\":23349,\"outputTokens\":169,\"cacheReadInputTokens\":0,\"cacheCreationInputTokens\":0,\"modelCalls\":2}}}\n",
+  "free_rate_limit_429": false
+}

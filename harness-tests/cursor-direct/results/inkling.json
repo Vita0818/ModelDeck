@@ -1,0 +1,22 @@
+{
+  "case": "inkling",
+  "model": "md-inkling",
+  "seconds": 6.36,
+  "exitCode": 1,
+  "finalTextSeen": false,
+  "resultFileValue": "",
+  "cursorAccountCredentialsProvided": false,
+  "nativeVendorBinaryUnmodified": true,
+  "network": [
+    {
+      "surface": "fetch",
+      "host": "127.0.0.1",
+      "path": "/deck/cursor-local/v1/chat/completions",
+      "blocked": false
+    }
+  ],
+  "passed": false,
+  "toolTrace": [],
+  "upstreamStreamErrors": [],
+  "outputLog": "logs/inkling.log"
+}

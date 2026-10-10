@@ -1824,47 +1824,6 @@
     "officialDescription": "Official login, no API Key required",
     "presetDescription": "Use preset configuration, only API Key required"
   },
-  "workspace": {
-    "title": "Workspace Files",
-    "manage": "Workspace",
-    "files": {
-      "agents": "Agent instructions and rules",
-      "soul": "Agent personality and communication style",
-      "user": "User profile and preferences",
-      "identity": "Agent name and avatar",
-      "tools": "Local tool documentation",
-      "memory": "Long-term memory and decisions",
-      "heartbeat": "Heartbeat run checklist",
-      "bootstrap": "First-run bootstrap ritual",
-      "boot": "Gateway reboot checklist"
-    },
-    "editing": "Edit {{filename}}",
-    "saveSuccess": "Saved successfully",
-    "saveFailed": "Failed to save",
-    "loadFailed": "Failed to load",
-    "openDirectory": "Open in file manager",
-    "dailyMemory": {
-      "title": "Daily Memory",
-      "sectionTitle": "Daily Memory",
-      "cardTitle": "Daily Memory Files",
-      "cardDescription": "Browse & manage daily memories",
-      "createToday": "Add Memory",
-      "empty": "No daily memory files yet",
-      "loadFailed": "Failed to load daily memory files",
-      "createFailed": "Failed to create daily memory file",
-      "deleteSuccess": "Daily memory file deleted",
-      "deleteFailed": "Failed to delete daily memory file",
-      "confirmDeleteTitle": "Delete Daily Memory",
-      "confirmDeleteMessage": "Delete the daily memory for {{date}}? This cannot be undone.",
-      "searchPlaceholder": "Search full content...",
-      "searchScopeHint": "Full-text search across all daily memories. ⌘F",
-      "searchCloseHint": "Esc to close",
-      "noSearchResults": "No daily memories match your search.",
-      "searching": "Searching...",
-      "searchFailed": "Search failed",
-      "matchCount": "{{count}} match(es)"
-    }
-  },
   "openclaw": {
     "backupCreated": "Backup created: {{path}}",
     "providerKey": "Provider Key",
@@ -1995,32 +1954,6 @@
       "modelsHint": "When activated, the first model becomes the Hermes default.",
       "rateLimitDelay": "Rate limit delay (seconds)",
       "rateLimitDelayHint": "Minimum delay in seconds between consecutive requests (optional). Leave empty for no limit."
-    },
-    "webui": {
-      "open": "Open Hermes Web UI",
-      "offline": "Hermes Web UI is not running. Start it with `hermes dashboard` first.",
-      "openFailed": "Failed to open Hermes Web UI",
-      "launchConfirmTitle": "Hermes Dashboard is not running",
-      "launchConfirmMessage": "Open a terminal and start it now with `hermes dashboard`?\n\nThe browser will open automatically once startup completes.\n\nIf the terminal reports that `hermes` cannot be found or the web extras are missing, run first:\npip install hermes-agent[web]",
-      "launchConfirmAction": "Open terminal & launch",
-      "launching": "Started `hermes dashboard` in a terminal.",
-      "launchFailed": "Failed to open terminal"
-    },
-    "memory": {
-      "title": "Memory",
-      "agentTab": "Agent Memory (MEMORY.md)",
-      "userTab": "User Profile (USER.md)",
-      "usage": "{{current}} / {{limit}} characters",
-      "overLimit": "Over budget — Hermes will truncate on next load",
-      "enableOn": "Enabled",
-      "enableOff": "Disabled",
-      "disabledHint": "Hermes will skip this memory until re-enabled",
-      "toggleFailed": "Failed to toggle memory",
-      "saveSuccess": "Memory saved",
-      "saveFailed": "Failed to save memory",
-      "loadFailed": "Failed to read memory file",
-      "openConfig": "Adjust limits in Hermes Web UI",
-      "runtimeNote": "Changes apply on Hermes restart or new session."
     }
   },
   "env": {
@@ -2633,7 +2566,7 @@
     "capability": {
       "antigravity": "Requires Antigravity CLI 1.2.16 or newer for custom models with API-key authentication. Gemini endpoints connect directly; OpenAI Chat endpoints use the built-in bridge for text, images, and function calls. The configured upstream reasoning is applied by the bridge.",
       "cursor": "Cursor IDE uses its native OpenAI BYOK settings. The endpoint must be public HTTPS. Quit Cursor before applying. Native context limits and reasoning controls remain subject to Cursor and the selected model.",
-      "cursor-agent": "Connects your selected provider through Cursor’s service using its BYOK protocol. A public HTTPS endpoint and a Cursor login are required. The managed launcher validates the installed CLI version before loading its model adapter.",
+      "cursor-agent": "Select a verified cursor-agent-local executable to use the native local API without Cursor login or a public endpoint. The regular cursor-agent uses cloud BYOK and requires Cursor login plus public HTTPS.",
       "muse": "The built-in bridge accepts Responses, OpenAI Chat, or Anthropic Messages endpoints and provides Muse’s model catalog, tool namespaces, and ordered SSE events. On versions without max, the launcher selects xhigh."
     },
     "loading": "Loading model connections",
@@ -2832,13 +2765,14 @@
     "removeRoute": "Remove route",
     "routesHint": "The alias is the model name clients see. Leave the tier empty to use the provider default.",
     "compatibleModels": "Compatible models",
-    "retainedHint": "Native login and client-specific files preserved during migration."
+    "retainedHint": "Native login and client-specific files preserved during migration.",
+    "effort": "Default reasoning tier",
+    "modelSettingsHint": "Edit context and output limits in Providers & Models. The endpoint route sets the default tier; an explicit native client choice overrides it. Use the managed Claude Code command to start at max."
   },
   "nav": {
     "primary": "Primary",
     "resources": "Resources",
     "clients": "Clients",
-    "tools": "Tools",
     "usage": "Usage",
     "applied": "Applied",
     "resource": {

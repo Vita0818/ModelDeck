@@ -759,7 +759,13 @@ impl ChatToResponsesState {
 
     fn failed_event(&mut self, message: String, error_type: Option<String>) -> Bytes {
         self.completed = true;
-        let mut error = json!({ "message": message });
+        // Responses clients require a string code even when the Chat upstream
+        // supplied only a message or a provider-specific error type.
+        let code = match error_type.as_deref() {
+            Some("rate_limit_exceeded" | "rate_limit_error") => "rate_limit_exceeded",
+            _ => "server_error",
+        };
+        let mut error = json!({ "message": message, "code": code });
         if let Some(error_type) = error_type.filter(|value| !value.is_empty()) {
             error["type"] = json!(error_type);
         }
@@ -1488,6 +1494,35 @@ mod tests {
         assert!(output.contains("event: response.failed"));
         assert!(output.contains("quota exceeded"));
         assert!(output.contains("rate_limit_exceeded"));
+        assert!(!output.contains("event: response.completed"));
+        let events = parse_sse_events(&output);
+        let failure = events
+            .iter()
+            .find(|event| event["type"] == "response.failed")
+            .unwrap();
+        assert_eq!(failure["response"]["error"]["code"], "rate_limit_exceeded");
+    }
+
+    #[tokio::test]
+    async fn message_only_upstream_error_has_deserializable_response_error_code() {
+        let output = collect(vec![
+            "data: {\"error\":{\"message\":\"Upstream error from Nvidia: Service temporarily overloaded\",\"code\":503}}\n\n",
+            "data: [DONE]\n\n",
+        ]).await;
+        #[derive(serde::Deserialize)]
+        struct ResponseError {
+            code: String,
+            message: String,
+        }
+        let events = parse_sse_events(&output);
+        let failure = events
+            .iter()
+            .find(|event| event["type"] == "response.failed")
+            .unwrap();
+        let error: ResponseError =
+            serde_json::from_value(failure["response"]["error"].clone()).unwrap();
+        assert_eq!(error.code, "server_error");
+        assert!(error.message.contains("Service temporarily overloaded"));
         assert!(!output.contains("event: response.completed"));
     }
 }

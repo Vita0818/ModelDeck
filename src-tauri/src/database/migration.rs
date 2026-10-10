@@ -52,8 +52,6 @@ impl Database {
         // 2. 迁移 MCP Servers
         Self::migrate_mcp_servers(tx, config)?;
 
-
-
         // 5. 迁移 Common Config
         Self::migrate_common_config(tx, config)?;
 

@@ -23,6 +23,7 @@ export interface UpstreamProvider {
   name: string;
   baseUrl: string;
   protocol: Protocol;
+  providerMeta?: Record<string, unknown> | null;
   apiKey: string;
   keyEnv: string;
   keySource?: "stored" | "env" | null;
@@ -39,6 +40,17 @@ export interface ModelResource {
   tools: boolean;
   images: boolean;
 }
+
+export function defaultReasoningEffort(model?: ModelResource): string {
+  if (!model || model.reasoningSupported === false) return "";
+  if (model.reasoning.includes("max")) return "max";
+  return (
+    ["ultra", "xhigh", "high", "medium", "low", "minimal", "none"].find(
+      (effort) => model.reasoning.includes(effort),
+    ) ?? ""
+  );
+}
+
 export interface ModelRoute {
   modelId: string;
   effort: string;

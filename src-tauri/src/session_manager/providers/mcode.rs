@@ -1,8 +1,12 @@
 //! MCode TUI and desktop share the local runtime database.
+#[cfg(test)]
 use crate::session_manager::{SessionMessage, SessionMeta};
 use rusqlite::{Connection, OpenFlags};
+#[cfg(test)]
 use serde_json::Value;
-use std::path::{Path, PathBuf};
+#[cfg(test)]
+use std::path::Path;
+use std::path::PathBuf;
 
 pub(crate) fn database_path() -> PathBuf {
     crate::mcode_config::data_dir().join("v2/sqlite/runtime-state.sqlite")
@@ -12,25 +16,7 @@ pub(crate) fn open_database() -> rusqlite::Result<Connection> {
     Connection::open_with_flags(database_path(), OpenFlags::SQLITE_OPEN_READ_ONLY)
 }
 
-pub fn scan_sessions() -> Vec<SessionMeta> {
-    let Ok(data_dir) = std::path::absolute(crate::mcode_config::data_dir()) else {
-        return vec![];
-    };
-    let database = data_dir.join("v2/sqlite/runtime-state.sqlite");
-    if !database.exists() {
-        return vec![];
-    }
-    match Connection::open_with_flags(database, OpenFlags::SQLITE_OPEN_READ_ONLY)
-        .and_then(|conn| scan(&conn, &data_dir))
-    {
-        Ok(sessions) => sessions,
-        Err(error) => {
-            log::warn!("Cannot read MCode sessions: {error}");
-            vec![]
-        }
-    }
-}
-
+#[cfg(test)]
 fn scan(conn: &Connection, data_dir: &Path) -> rusqlite::Result<Vec<SessionMeta>> {
     #[cfg(not(windows))]
     let command = format!(
@@ -68,14 +54,7 @@ fn scan(conn: &Connection, data_dir: &Path) -> rusqlite::Result<Vec<SessionMeta>
     rows.collect()
 }
 
-pub fn load_messages(source: &str) -> Result<Vec<SessionMessage>, String> {
-    let id = source
-        .strip_prefix("mcode:")
-        .ok_or("Invalid MCode session source")?;
-    let conn = open_database().map_err(|e| e.to_string())?;
-    read_messages(&conn, id).map_err(|e| e.to_string())
-}
-
+#[cfg(test)]
 fn read_messages(conn: &Connection, id: &str) -> rusqlite::Result<Vec<SessionMessage>> {
     let mut query = conn.prepare(
         "WITH migrated AS (
@@ -115,6 +94,35 @@ fn read_messages(conn: &Connection, id: &str) -> rusqlite::Result<Vec<SessionMes
         other => Some(other),
     })
     .collect()
+}
+
+#[cfg(test)]
+pub fn scan_sessions() -> Vec<SessionMeta> {
+    let Ok(data_dir) = std::path::absolute(crate::mcode_config::data_dir()) else {
+        return vec![];
+    };
+    let database = data_dir.join("v2/sqlite/runtime-state.sqlite");
+    if !database.exists() {
+        return vec![];
+    }
+    match Connection::open_with_flags(database, OpenFlags::SQLITE_OPEN_READ_ONLY)
+        .and_then(|conn| scan(&conn, &data_dir))
+    {
+        Ok(sessions) => sessions,
+        Err(error) => {
+            log::warn!("Cannot read MCode sessions: {error}");
+            vec![]
+        }
+    }
+}
+
+#[cfg(test)]
+pub fn load_messages(source: &str) -> Result<Vec<SessionMessage>, String> {
+    let id = source
+        .strip_prefix("mcode:")
+        .ok_or("Invalid MCode session source")?;
+    let conn = open_database().map_err(|e| e.to_string())?;
+    read_messages(&conn, id).map_err(|e| e.to_string())
 }
 
 #[cfg(test)]

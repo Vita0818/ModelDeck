@@ -1,0 +1,364 @@
+{
+  "requested": {
+    "nemotron": {
+      "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "canonical_slug": "nvidia/nemotron-3-ultra-550b-a55b-20260604",
+      "hugging_face_id": "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16",
+      "name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "created": 1780551208,
+      "description": "NVIDIA Nemotron 3 Ultra is an open frontier-reasoning and orchestration model from NVIDIA, with 55B active parameters out of 550B total (MoE). Built on a hybrid Transformer-Mamba mixture-of-experts architecture, it...",
+      "context_length": 1000000,
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "pricing": {
+        "prompt": "0",
+        "completion": "0"
+      },
+      "top_provider": {
+        "context_length": 1000000,
+        "max_completion_tokens": 65536,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "seed",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ],
+      "default_parameters": {
+        "temperature": 1,
+        "top_p": 0.95,
+        "top_k": null,
+        "frequency_penalty": null,
+        "presence_penalty": null,
+        "repetition_penalty": null
+      },
+      "supported_voices": null,
+      "knowledge_cutoff": null,
+      "expiration_date": null,
+      "links": {
+        "details": "/api/v1/models/nvidia/nemotron-3-ultra-550b-a55b-20260604/endpoints"
+      },
+      "benchmarks": {
+        "design_arena": [
+          {
+            "arena": "models",
+            "category": "3d",
+            "elo": 1139,
+            "win_rate": 39.2,
+            "rank": 68
+          },
+          {
+            "arena": "models",
+            "category": "asciiart",
+            "elo": 1105,
+            "win_rate": 38,
+            "rank": 58
+          },
+          {
+            "arena": "models",
+            "category": "codecategories",
+            "elo": 1149,
+            "win_rate": 36.1,
+            "rank": 77
+          },
+          {
+            "arena": "models",
+            "category": "dataviz",
+            "elo": 1145,
+            "win_rate": 37.3,
+            "rank": 78
+          },
+          {
+            "arena": "models",
+            "category": "gamedev",
+            "elo": 1150,
+            "win_rate": 36.8,
+            "rank": 68
+          },
+          {
+            "arena": "models",
+            "category": "svg",
+            "elo": 1069,
+            "win_rate": 32.5,
+            "rank": 68
+          },
+          {
+            "arena": "models",
+            "category": "uicomponent",
+            "elo": 1146,
+            "win_rate": 36.3,
+            "rank": 75
+          },
+          {
+            "arena": "models",
+            "category": "website",
+            "elo": 1146,
+            "win_rate": 34.8,
+            "rank": 86
+          }
+        ],
+        "artificial_analysis": {
+          "intelligence_index": 22.9,
+          "coding_index": 49.3,
+          "agentic_index": 20.1
+        }
+      },
+      "reasoning": {
+        "mandatory": false,
+        "default_enabled": true,
+        "supports_max_tokens": true,
+        "supported_efforts": [
+          "high",
+          "medium"
+        ],
+        "default_effort": "high"
+      }
+    },
+    "inkling": {
+      "id": "thinkingmachines/inkling:free",
+      "canonical_slug": "thinkingmachines/inkling-20260715",
+      "hugging_face_id": "thinkingmachines/Inkling",
+      "name": "Thinking Machines: Inkling (free)",
+      "created": 1784325956,
+      "description": "Inkling is an open-weight multimodal mixture-of-experts model from Thinking Machines Lab, with 41B active parameters out of 975B total. It is designed for general-purpose reasoning, coding, agentic and tool-use systems,...",
+      "context_length": 1048576,
+      "architecture": {
+        "modality": "text+image+audio->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "audio"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "pricing": {
+        "prompt": "0",
+        "completion": "0"
+      },
+      "top_provider": {
+        "context_length": 1048576,
+        "max_completion_tokens": 262144,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "reasoning_effort",
+        "seed",
+        "stop",
+        "temperature",
+        "tools",
+        "top_p"
+      ],
+      "default_parameters": {
+        "temperature": null,
+        "top_p": null,
+        "top_k": null,
+        "frequency_penalty": null,
+        "presence_penalty": null,
+        "repetition_penalty": null
+      },
+      "supported_voices": null,
+      "knowledge_cutoff": null,
+      "expiration_date": null,
+      "links": {
+        "details": "/api/v1/models/thinkingmachines/inkling-20260715/endpoints"
+      },
+      "benchmarks": {
+        "design_arena": [
+          {
+            "arena": "models",
+            "category": "3d",
+            "elo": 1166,
+            "win_rate": 39.8,
+            "rank": 57
+          },
+          {
+            "arena": "models",
+            "category": "asciiart",
+            "elo": 1099,
+            "win_rate": 34,
+            "rank": 61
+          },
+          {
+            "arena": "models",
+            "category": "codecategories",
+            "elo": 1208,
+            "win_rate": 42,
+            "rank": 50
+          },
+          {
+            "arena": "models",
+            "category": "dataviz",
+            "elo": 1171,
+            "win_rate": 37.9,
+            "rank": 68
+          },
+          {
+            "arena": "models",
+            "category": "gamedev",
+            "elo": 1173,
+            "win_rate": 37.7,
+            "rank": 61
+          },
+          {
+            "arena": "models",
+            "category": "svg",
+            "elo": 1113,
+            "win_rate": 33.9,
+            "rank": 56
+          },
+          {
+            "arena": "models",
+            "category": "uicomponent",
+            "elo": 1204,
+            "win_rate": 40.9,
+            "rank": 53
+          },
+          {
+            "arena": "models",
+            "category": "website",
+            "elo": 1228,
+            "win_rate": 44.3,
+            "rank": 49
+          }
+        ],
+        "artificial_analysis": {
+          "intelligence_index": 25,
+          "coding_index": 52.1,
+          "agentic_index": 22.5
+        }
+      },
+      "reasoning": {
+        "mandatory": false,
+        "default_enabled": true,
+        "supported_efforts": [
+          "max",
+          "high",
+          "medium",
+          "low",
+          "minimal",
+          "none"
+        ],
+        "default_effort": "high"
+      }
+    }
+  },
+  "fallback_candidate": {
+    "id": "openai/gpt-6-luna",
+    "canonical_slug": "openai/gpt-6-luna-20260922",
+    "hugging_face_id": null,
+    "name": "OpenAI: GPT-6 Luna",
+    "created": 1790100786,
+    "description": "GPT-6 Luna is the fast, cost-efficient model in OpenAI's GPT-6 series, positioned below GPT-6 Sol. It is suited for high-volume and latency-sensitive workloads such as chat, classification, and lightweight agentic...",
+    "context_length": 1050000,
+    "architecture": {
+      "modality": "text+image+file->text",
+      "input_modalities": [
+        "file",
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "tokenizer": "GPT",
+      "instruct_type": null
+    },
+    "pricing": {
+      "prompt": "0.0000001",
+      "completion": "0.0000005",
+      "web_search": "0.01",
+      "input_cache_read": "0.00000001",
+      "input_cache_write": "0.000000125",
+      "overrides": [
+        {
+          "min_prompt_tokens": 272000,
+          "prompt": "0.0000002",
+          "completion": "0.00000075",
+          "input_cache_read": "0.00000002",
+          "input_cache_write": "0.00000025"
+        }
+      ]
+    },
+    "top_provider": {
+      "context_length": 1050000,
+      "max_completion_tokens": 128000,
+      "is_moderated": true
+    },
+    "per_request_limits": null,
+    "supported_parameters": [
+      "include_reasoning",
+      "max_completion_tokens",
+      "max_tokens",
+      "reasoning",
+      "reasoning_effort",
+      "response_format",
+      "seed",
+      "structured_outputs",
+      "tool_choice",
+      "tools",
+      "verbosity"
+    ],
+    "default_parameters": {
+      "temperature": null,
+      "top_p": null,
+      "top_k": null,
+      "frequency_penalty": null,
+      "presence_penalty": null,
+      "repetition_penalty": null
+    },
+    "supported_voices": null,
+    "knowledge_cutoff": null,
+    "expiration_date": null,
+    "links": {
+      "details": "/api/v1/models/openai/gpt-6-luna-20260922/endpoints"
+    },
+    "benchmarks": {
+      "design_arena": [],
+      "artificial_analysis": {
+        "intelligence_index": 38.1,
+        "coding_index": null,
+        "agentic_index": null
+      }
+    },
+    "reasoning": {
+      "mandatory": false,
+      "default_enabled": true,
+      "supported_efforts": [
+        "max",
+        "xhigh",
+        "high",
+        "medium",
+        "low",
+        "none"
+      ],
+      "default_effort": "medium"
+    }
+  },
+  "arena_requested": null
+}

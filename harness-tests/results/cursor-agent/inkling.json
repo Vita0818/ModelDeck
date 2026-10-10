@@ -1,0 +1,597 @@
+{
+  "client": "cursor-agent",
+  "case": "inkling",
+  "requested": "thinkingmachines/inkling:free",
+  "model_used": "thinkingmachines/inkling:free",
+  "real_client": true,
+  "native_runtime": "official agent-cli-local",
+  "apply_status": 200,
+  "gateway_requests": [
+    {
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "Cursor-CLI/2026.06.12-19-59-36-f6aba9a (darwin arm64)",
+      "tools": 16,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "Shell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Glob",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AwaitShell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "StrReplace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "EditNotebook",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "TodoWrite",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "WriteShellStdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AskQuestion",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Task",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ListMcpResources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "FetchMcpResource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "SwitchMode",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 7689
+    },
+    {
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "Cursor-CLI/2026.06.12-19-59-36-f6aba9a (darwin arm64)",
+      "tools": 16,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "Shell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Glob",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AwaitShell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "StrReplace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "EditNotebook",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "TodoWrite",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "WriteShellStdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AskQuestion",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Task",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ListMcpResources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "FetchMcpResource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "SwitchMode",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 4639
+    },
+    {
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "Cursor-CLI/2026.06.12-19-59-36-f6aba9a (darwin arm64)",
+      "tools": 16,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "Shell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Glob",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AwaitShell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "StrReplace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "EditNotebook",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "TodoWrite",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "WriteShellStdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AskQuestion",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Task",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ListMcpResources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "FetchMcpResource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "SwitchMode",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3442
+    },
+    {
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "Cursor-CLI/2026.06.12-19-59-36-f6aba9a (darwin arm64)",
+      "tools": 16,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "Shell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Glob",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AwaitShell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "StrReplace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "EditNotebook",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "TodoWrite",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "WriteShellStdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AskQuestion",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Task",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ListMcpResources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "FetchMcpResource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "SwitchMode",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 5344
+    },
+    {
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "Cursor-CLI/2026.06.12-19-59-36-f6aba9a (darwin arm64)",
+      "tools": 16,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "Shell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Glob",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AwaitShell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "StrReplace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "EditNotebook",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "TodoWrite",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "WriteShellStdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AskQuestion",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Task",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ListMcpResources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "FetchMcpResource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "SwitchMode",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 5848
+    },
+    {
+      "path": "/deck-clients/cursor-agent/chat/completions",
+      "method": "POST",
+      "model": "md-inkling",
+      "stream": true,
+      "userAgent": "Cursor-CLI/2026.06.12-19-59-36-f6aba9a (darwin arm64)",
+      "tools": 16,
+      "toolNames": [
+        {
+          "type": "function",
+          "name": "Shell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Glob",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Grep",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AwaitShell",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Read",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Delete",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "StrReplace",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Write",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "EditNotebook",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "TodoWrite",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "WriteShellStdin",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "AskQuestion",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "Task",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "ListMcpResources",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "FetchMcpResource",
+          "children": null
+        },
+        {
+          "type": "function",
+          "name": "SwitchMode",
+          "children": null
+        }
+      ],
+      "status": 200,
+      "latencyMs": 3290
+    }
+  ],
+  "passed": true,
+  "exit_code": 0,
+  "seconds": 39.29,
+  "runtime_session_ids": [
+    "f569692c-5c09-407c-9f37-f0cd6c672cb7"
+  ],
+  "output_log": "logs/cursor-agent/inkling.log",
+  "result_file_value": "89",
+  "free_rate_limit_429": false,
+  "cursor_account_credentials_provided": false,
+  "native_tool_trace": [
+    {
+      "tool": "globToolCall",
+      "succeeded": false
+    },
+    {
+      "tool": "globToolCall",
+      "succeeded": true
+    },
+    {
+      "tool": "readToolCall",
+      "succeeded": true
+    },
+    {
+      "tool": "shellToolCall",
+      "succeeded": true
+    },
+    {
+      "tool": "readToolCall",
+      "succeeded": true
+    }
+  ],
+  "failure": "",
+  "direct_evidence": "cursor-direct/results/managed-inkling.json"
+}

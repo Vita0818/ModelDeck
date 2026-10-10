@@ -40,7 +40,12 @@ import { MODELDECK_CLIENTS, type ClientId } from "@/config/modeldeckClients";
 import type { Route } from "@/components/app/routes";
 
 /** Clients launched through a managed command can override the executable. */
-const EXECUTABLE_CLIENTS: ClientId[] = ["antigravity", "muse", "cursor-agent"];
+const EXECUTABLE_CLIENTS: ClientId[] = [
+  "claude",
+  "antigravity",
+  "muse",
+  "cursor-agent",
+];
 
 const blank = (): HarnessBinding => ({
   endpointId: "",
@@ -84,6 +89,11 @@ export default function HarnessPage({
     (c) => c.endpointId === draft.endpointId,
   );
   const models = selected?.models ?? [];
+  const selectedRoute =
+    view?.store.endpoints[draft.endpointId]?.routes[draft.model];
+  const selectedModel = selectedRoute
+    ? view?.store.models[selectedRoute.modelId]
+    : undefined;
   const busy =
     save.isPending || apply.isPending || restore.isPending || isLoading;
 
@@ -216,7 +226,7 @@ export default function HarnessPage({
         <Group>
           <FieldRow label={t("deck.endpoint")}>
             <Select
-              value={draft.endpointId || undefined}
+              value={draft.endpointId}
               onValueChange={(value) =>
                 patch({ endpointId: value, model: "", utilityModel: "" })
               }
@@ -250,7 +260,7 @@ export default function HarnessPage({
             }
           >
             <Select
-              value={draft.model || undefined}
+              value={draft.model}
               onValueChange={(value) => patch({ model: value })}
               disabled={busy || !models.length}
             >
@@ -266,6 +276,40 @@ export default function HarnessPage({
               </SelectContent>
             </Select>
           </FieldRow>
+
+          {selectedModel && (
+            <div className="space-y-2 px-3.5 py-3" data-testid="model-settings">
+              <dl className="grid gap-3 sm:grid-cols-3">
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    {t("deck.context")}
+                  </dt>
+                  <dd className="font-mono text-base tabular-nums">
+                    {selectedModel.context.toLocaleString()} tokens
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    {t("deck.maxOutput")}
+                  </dt>
+                  <dd className="font-mono text-base tabular-nums">
+                    {selectedModel.output.toLocaleString()} tokens
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    {t("deck.effort")}
+                  </dt>
+                  <dd className="text-base">
+                    {selectedRoute?.effort || t("deck.providerDefault")}
+                  </dd>
+                </div>
+              </dl>
+              <p className="text-sm text-muted-foreground">
+                {t("deck.modelSettingsHint")}
+              </p>
+            </div>
+          )}
 
           <FieldRow
             label={t("deck.utilityModel")}
