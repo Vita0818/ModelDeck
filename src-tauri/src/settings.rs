@@ -36,6 +36,10 @@ pub struct VisibleApps {
     pub cursor_agent: Option<bool>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub muse: Option<bool>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub dsh: Option<bool>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub copilot: Option<bool>,
     #[serde(default = "default_true")]
     pub claude: bool,
     #[serde(
@@ -70,6 +74,8 @@ impl Default for VisibleApps {
             cursor: Some(true),
             cursor_agent: Some(true),
             muse: Some(true),
+            dsh: Some(true),
+            copilot: Some(true),
             claude: true,
             claude_desktop: true,
             codex: true,
@@ -110,6 +116,8 @@ impl VisibleApps {
             "cursor" => self.cursor.unwrap_or(true),
             "cursor-agent" => self.cursor_agent.unwrap_or(true),
             "muse" => self.muse.unwrap_or(true),
+            "dsh" => self.dsh.unwrap_or(true),
+            "copilot" => self.copilot.unwrap_or(true),
             _ => false,
         }
     }
@@ -897,11 +905,20 @@ mod tests {
             assert!(!legacy.is_visible(&app));
         }
         assert!(legacy.is_visible(&AppType::Hermes));
-        for id in ["antigravity", "cursor-agent", "cursor", "muse"] {
+        for id in [
+            "antigravity",
+            "cursor-agent",
+            "cursor",
+            "muse",
+            "dsh",
+            "copilot",
+        ] {
             assert!(legacy.is_model_client_visible(id));
         }
         let selected = VisibleApps {
             cursor_agent: Some(false),
+            dsh: Some(false),
+            copilot: Some(false),
             hermes: false,
             ..VisibleApps::default()
         };
@@ -909,6 +926,8 @@ mod tests {
             serde_json::from_value(serde_json::to_value(selected).unwrap()).unwrap();
         assert!(!restored.is_model_client_visible("cursor-agent"));
         assert!(restored.is_model_client_visible("cursor"));
+        assert!(!restored.is_model_client_visible("dsh"));
+        assert!(!restored.is_model_client_visible("copilot"));
         assert!(!restored.is_visible(&AppType::Hermes));
     }
 

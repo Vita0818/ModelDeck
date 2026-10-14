@@ -1,7 +1,13 @@
 import type { AppId } from "@/lib/api/types";
 import type { VisibleApps } from "@/types";
 
-export type ModelClientId = "antigravity" | "cursor" | "cursor-agent" | "muse";
+export type ModelClientId =
+  | "antigravity"
+  | "cursor"
+  | "cursor-agent"
+  | "muse"
+  | "dsh"
+  | "copilot";
 export type ProviderClientId = Extract<
   AppId,
   "codex" | "claude" | "claude-desktop" | "grokbuild" | "opencode" | "hermes"
@@ -31,6 +37,8 @@ export const MODELDECK_CLIENTS: {
   { id: "muse", name: "Muse Code", icon: "meta" },
   { id: "opencode", name: "OpenCode", icon: "opencode" },
   { id: "hermes", name: "Hermes", icon: "hermes" },
+  { id: "dsh", name: "DeepSeek Harness", icon: "deepseek" },
+  { id: "copilot", name: "GitHub Copilot CLI", icon: "githubcopilot" },
 ];
 
 export const CLIENT_IDS = MODELDECK_CLIENTS.map(({ id }) => id);
@@ -41,7 +49,14 @@ export function isClientId(value: string | null): value is ClientId {
 }
 
 export function isModelClientId(value: string): value is ModelClientId {
-  return ["antigravity", "cursor", "cursor-agent", "muse"].includes(value);
+  return [
+    "antigravity",
+    "cursor",
+    "cursor-agent",
+    "muse",
+    "dsh",
+    "copilot",
+  ].includes(value);
 }
 
 export function resolveClientVisibility(
@@ -62,6 +77,8 @@ export function resolveClientVisibility(
     cursor: true,
     "cursor-agent": true,
     muse: true,
+    dsh: true,
+    copilot: true,
   };
   for (const id of CLIENT_IDS) {
     if (typeof saved?.[id] === "boolean") visibility[id] = saved[id];

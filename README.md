@@ -12,7 +12,7 @@ The application keeps three areas:
 - **Client connections:** select an endpoint, default model and auxiliary model, then explicitly apply or restore native configuration.
 - **Usage and settings:** read actual client usage records and manage pricing, the gateway, upstream network proxy, window behavior, directories, logging and local database archives.
 
-Supported clients are **Codex CLI, Claude Code, Claude Desktop, Antigravity CLI, Cursor CLI, Cursor GUI, Grok, Muse Code, OpenCode and Hermes**. Native usage collectors cover Claude Code, Codex CLI, OpenCode and Grok. Other clients retain historical records; consult the usage page's data-source descriptions for coverage.
+Supported clients are **Codex CLI, Claude Code, Claude Desktop, Antigravity CLI, Cursor CLI, Cursor GUI, Grok, Muse Code, OpenCode, Hermes, DeepSeek Harness (DSH) and GitHub Copilot CLI**. DSH and Copilot CLI connect to shared endpoints through managed launch commands; see [the setup guide](docs/TWO_LAYER_MODELDECK.md#deepseek-harness-与-github-copilot-cli). Native usage collectors cover Claude Code, Codex CLI, OpenCode and Grok. Other clients retain historical records; consult the usage page's data-source descriptions for coverage.
 
 Memory, MCP, Skills, prompts, session browsing, OpenClaw workspaces, the OAuth account center, cloud sync, automatic failover, scripted quota queries, tool installers and application auto-updates have had their management UI and runtime implementations removed. Native management and usage collectors for MiniMax Code, OpenClaw, Pi and Gemini CLI are excluded from the build. The Gemini model protocol remains supported for model routing and Antigravity.
 

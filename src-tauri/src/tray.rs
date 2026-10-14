@@ -1,4 +1,4 @@
-//! Navigation for the ten ModelDeck clients. Applying connections remains an
+//! Navigation for ModelDeck clients. Applying connections remains an
 //! explicit operation in the main window.
 
 use crate::{error::AppError, store::AppState};
@@ -22,6 +22,8 @@ fn client_label(client: &str) -> &str {
         "muse" => "Muse Code",
         "opencode" => "OpenCode",
         "hermes" => "Hermes",
+        "dsh" => "DeepSeek Harness",
+        "copilot" => "GitHub Copilot CLI",
         other => other,
     }
 }

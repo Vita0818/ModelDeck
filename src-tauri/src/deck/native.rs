@@ -31,6 +31,9 @@ fn backup_path(client: &str) -> Result<PathBuf, String> {
 }
 
 fn paths(client: &str) -> Result<Vec<PathBuf>, String> {
+    if cli::supports(client) {
+        return Ok(cli::paths(client));
+    }
     let home = get_home_dir();
     let mut paths = match client {
         "claude" => vec![crate::config::get_claude_settings_path()],
@@ -317,6 +320,14 @@ pub(super) fn generated_provider(client: &str, p: &ClientProfile) -> Result<Prov
 }
 
 pub fn command(client: &str) -> Option<String> {
+    if cli::supports(client) {
+        return Some(cli::quote(
+            &get_app_config_dir()
+                .join("bin")
+                .join(client)
+                .to_string_lossy(),
+        ));
+    }
     (matches!(client, "antigravity" | "muse" | "cursor-agent")
         || client == "claude" && get_app_config_dir().join("bin/claude").exists())
     .then(|| {
@@ -384,6 +395,11 @@ pub fn apply(
     state: &AppState,
     commit: impl FnOnce() -> Result<(), String>,
 ) -> Result<(), String> {
+    let cli_executable = if cli::supports(client) {
+        Some(cli::preflight(client, p)?)
+    } else {
+        None
+    };
     let claude_executable = if client == "claude" {
         claude_executable(p)?
     } else {
@@ -409,7 +425,9 @@ pub fn apply(
         }
     }
     let result = (|| {
-        if let Some(adapter) = adapter {
+        if let Some(executable) = cli_executable.as_ref() {
+            cli::apply(client, p, executable)?;
+        } else if let Some(adapter) = adapter {
             // Native adapters consume an ephemeral catalog; the global graph
             // remains the only model source and is read on every gateway call.
             adapters::apply_deck(adapter, p, previous, || Ok(()))?;

@@ -45,6 +45,8 @@ const EXECUTABLE_CLIENTS: ClientId[] = [
   "antigravity",
   "muse",
   "cursor-agent",
+  "dsh",
+  "copilot",
 ];
 
 const blank = (): HarnessBinding => ({
@@ -193,6 +195,7 @@ export default function HarnessPage({
   }
 
   const dirty = JSON.stringify(draft) !== JSON.stringify(saved ?? blank());
+  const launchCommand = command || (active ? view.commands?.[client] : "");
 
   return (
     <Page
@@ -311,32 +314,34 @@ export default function HarnessPage({
             </div>
           )}
 
-          <FieldRow
-            label={t("deck.utilityModel")}
-            hint={t("deck.utilityModelHint")}
-          >
-            <Select
-              value={draft.utilityModel || "__none__"}
-              onValueChange={(value) =>
-                patch({ utilityModel: value === "__none__" ? "" : value })
-              }
-              disabled={busy || !models.length}
+          {client !== "copilot" && (
+            <FieldRow
+              label={t("deck.utilityModel")}
+              hint={t("deck.utilityModelHint")}
             >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="__none__">
-                  {t("deck.sameAsDefault")}
-                </SelectItem>
-                {models.map((model) => (
-                  <SelectItem key={model} value={model}>
-                    {model}
+              <Select
+                value={draft.utilityModel || "__none__"}
+                onValueChange={(value) =>
+                  patch({ utilityModel: value === "__none__" ? "" : value })
+                }
+                disabled={busy || !models.length}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__none__">
+                    {t("deck.sameAsDefault")}
                   </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </FieldRow>
+                  {models.map((model) => (
+                    <SelectItem key={model} value={model}>
+                      {model}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FieldRow>
+          )}
 
           {EXECUTABLE_CLIENTS.includes(client) && (
             <FieldRow
@@ -357,20 +362,20 @@ export default function HarnessPage({
         )}
       </section>
 
-      {command && (
+      {launchCommand && (
         <section>
           <GroupTitle>{t("deck.launchCommand")}</GroupTitle>
           <Group>
             <div className="flex items-start gap-3 px-3.5 py-3">
               <code className="min-w-0 flex-1 break-all font-mono text-sm text-foreground">
-                {command}
+                {launchCommand}
               </code>
               <Button
                 variant="ghost"
                 size="icon-sm"
                 aria-label={t("common.copy")}
                 onClick={() => {
-                  void copyText(command);
+                  void copyText(launchCommand);
                   toast.success(t("common.copied"));
                 }}
               >
@@ -378,7 +383,15 @@ export default function HarnessPage({
               </Button>
             </div>
           </Group>
-          <GroupFooter>{t("deck.launchCommandHint")}</GroupFooter>
+          <GroupFooter>
+            {t(
+              client === "dsh"
+                ? "deck.dshLaunchHint"
+                : client === "copilot"
+                  ? "deck.copilotLaunchHint"
+                  : "deck.launchCommandHint",
+            )}
+          </GroupFooter>
         </section>
       )}
 

@@ -1,5 +1,6 @@
 //! ModelDeck's two independent layers: upstream resources and public routes.
 //! Harnesses store references into the graph; native catalogs are projections.
+mod cli;
 mod credentials;
 pub(crate) mod gateway;
 mod migration;
@@ -14,7 +15,7 @@ use std::{collections::HashSet, path::PathBuf, sync::Mutex};
 pub use types::*;
 
 static STORE_LOCK: Mutex<()> = Mutex::new(());
-pub const CLIENTS: [&str; 10] = [
+pub const CLIENTS: [&str; 12] = [
     "codex",
     "claude",
     "claude-desktop",
@@ -25,6 +26,8 @@ pub const CLIENTS: [&str; 10] = [
     "muse",
     "opencode",
     "hermes",
+    "dsh",
+    "copilot",
 ];
 pub const LEVELS: [&str; 8] = [
     "none", "minimal", "low", "medium", "high", "xhigh", "max", "ultra",
@@ -69,13 +72,15 @@ pub fn client_protocol(client: &str) -> Option<Protocol> {
         "codex" | "grokbuild" | "muse" => Protocol::OpenaiResponses,
         "claude" | "claude-desktop" => Protocol::Anthropic,
         "antigravity" => Protocol::Gemini,
-        "cursor" | "cursor-agent" | "opencode" | "hermes" => Protocol::OpenaiChat,
+        "cursor" | "cursor-agent" | "opencode" | "hermes" | "dsh" | "copilot" => {
+            Protocol::OpenaiChat
+        }
         _ => return None,
     })
 }
 
 pub fn client_protocols(client: &str) -> Vec<Protocol> {
-    if matches!(client, "opencode" | "hermes") {
+    if matches!(client, "opencode" | "hermes" | "dsh" | "copilot") {
         vec![
             Protocol::Anthropic,
             Protocol::OpenaiChat,
@@ -107,10 +112,13 @@ fn binding_protocol(
         .providers
         .get(&model.provider_id)
         .ok_or("Provider is unavailable")?;
-    let candidates = binding
+    let mut candidates = binding
         .input_protocol
         .map(|p| vec![p])
         .unwrap_or_else(|| client_protocols(client));
+    if matches!(client, "dsh" | "copilot") && binding.input_protocol.is_none() {
+        candidates.sort_by_key(|input| *input != provider.protocol);
+    }
     candidates
         .into_iter()
         .find(|p| {
@@ -278,6 +286,9 @@ pub fn validate_binding(
     }
     if !binding.utility_model.is_empty() && !models.contains(&binding.utility_model) {
         return Err("The auxiliary model is incompatible with this harness".into());
+    }
+    if client == "copilot" && !binding.utility_model.is_empty() {
+        return Err("Copilot CLI does not support a separate auxiliary model selection".into());
     }
     if !binding.utility_model.is_empty() {
         let model = &store.models[&endpoint.routes[&binding.utility_model].model_id];
@@ -451,6 +462,7 @@ pub fn project_profile(
                 name: alias,
                 context: model.context,
                 output: model.output,
+                images: model.images,
                 reasoning: model.reasoning.clone(),
                 default_effort: route.effort.clone(),
                 reasoning_supported: model.reasoning_supported,
@@ -505,6 +517,11 @@ pub fn publish_origin(address: &str, port: u16) -> Result<(), String> {
 fn view(store: DeckStore) -> DeckView {
     DeckView {
         compatibility: compatibility(&store),
+        commands: store
+            .active_bindings
+            .keys()
+            .filter_map(|client| native::command(client).map(|command| (client.clone(), command)))
+            .collect(),
         store,
         origin: origin(),
     }

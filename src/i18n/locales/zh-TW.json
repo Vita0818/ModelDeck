@@ -2765,6 +2765,8 @@
     "executableHint": "留空則使用 PATH 中的用戶端。",
     "executablePlaceholder": "/usr/local/bin/client",
     "launchCommandHint": "透過此指令啟動用戶端即可使用目前選擇。",
+    "dshLaunchHint": "預設開啟 Web 介面。在指令後加上 headless \"任務\" 或 --profile <名稱> 可選擇其他執行方式。",
+    "copilotLaunchHint": "透過此指令啟動 Copilot CLI。加上 --model <模型別名> 可選擇此連線中的其他模型。",
     "appliedState": "已套用",
     "activeBinding": "已套用 · {{model}}",
     "notApplied": "未套用",

@@ -150,4 +150,5 @@ pub struct DeckView {
     pub store: DeckStore,
     pub compatibility: Vec<Compatibility>,
     pub origin: String,
+    pub commands: BTreeMap<String, String>,
 }

@@ -48,7 +48,51 @@ pub(super) fn fixture() -> DeckStore {
 }
 
 #[test]
-fn all_ten_harnesses_reference_the_same_resource_graph() {
+fn new_clients_project_supported_protocols_and_keep_commands_after_reloading() {
+    for client in ["dsh", "copilot"] {
+        for protocol in [
+            Protocol::OpenaiChat,
+            Protocol::OpenaiResponses,
+            Protocol::Anthropic,
+            Protocol::Gemini,
+        ] {
+            let mut store = fixture();
+            store.providers.get_mut("upstream").unwrap().protocol = protocol;
+            store.models.get_mut("resource").unwrap().images = true;
+            let binding = HarnessBinding {
+                endpoint_id: "entry".into(),
+                model: "coding".into(),
+                ..Default::default()
+            };
+            let profile =
+                project_profile(&store, client, &binding, "http://127.0.0.1:15721").unwrap();
+            assert!(client_protocols(client)
+                .iter()
+                .any(|p| p.as_str() == profile.protocol));
+            if protocol != Protocol::Gemini {
+                assert_eq!(profile.protocol, protocol.as_str());
+            }
+            assert!(profile.models.iter().all(|m| m.images));
+            assert!(view(store.clone()).commands.is_empty());
+            store.active_bindings.insert(client.into(), binding);
+            assert!(view(store).commands[client].contains(&format!("bin/{client}")));
+        }
+    }
+    let store = fixture();
+    let binding = HarnessBinding {
+        endpoint_id: "entry".into(),
+        model: "coding".into(),
+        utility_model: "claude-sonnet-5".into(),
+        ..Default::default()
+    };
+    assert!(validate_binding(&store, "dsh", &binding, true).is_ok());
+    assert!(validate_binding(&store, "copilot", &binding, true)
+        .unwrap_err()
+        .contains("auxiliary"));
+}
+
+#[test]
+fn all_harnesses_reference_the_same_resource_graph() {
     let mut store = fixture();
     store.endpoints.get_mut("entry").unwrap().public_url =
         "https://gateway.example/deck/entry".into();
@@ -97,6 +141,8 @@ fn shared_model_changes_reach_every_projection() {
         "antigravity",
         "opencode",
         "hermes",
+        "dsh",
+        "copilot",
     ] {
         assert_eq!(
             project_profile(&store, client, &binding, "http://localhost:15721")

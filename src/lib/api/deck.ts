@@ -94,6 +94,7 @@ export interface DeckView {
   store: DeckStore;
   compatibility: Compatibility[];
   origin: string;
+  commands?: Partial<Record<ClientId, string>>;
 }
 
 export const deckApi = {

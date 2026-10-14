@@ -28,13 +28,13 @@
 - **保存并应用**：启动网关，为该客户端生成原生配置或启动命令。
 - **恢复原生配置**：恢复首次应用前的配置。如果原生文件在应用后又被其他程序修改，恢复会停止并说明对应文件，以保留这些修改。
 
-Claude Code、Antigravity、Muse 和 Cursor CLI 使用页面提供的托管启动命令；命令调用原来的客户端可执行文件。Claude Code 不支持在 settings.json 中持久保存 max，托管命令通过 --effort 设置所选模型的默认档位，不设置会锁定运行时选择的环境变量。显式 --effort 和会话中的 /effort 可覆盖初始值。当前 Muse 会把 ultra 和 xhigh 都发成 xhigh，网关保留该原生值，不将其升级为 max。该版本无法原生发送 max，托管启动默认使用其支持的 xhigh，实际请求仍以客户端发送的值为准。Cursor GUI 和 Claude Desktop 需要重启客户端加载配置。
+Claude Code、Antigravity、Muse、Cursor CLI、DeepSeek Harness 和 GitHub Copilot CLI 使用页面提供的托管启动命令；命令调用原来的客户端可执行文件，已应用连接的命令在重新打开页面后仍可查看。Claude Code 不支持在 settings.json 中持久保存 max，托管命令通过 --effort 设置所选模型的默认档位，不设置会锁定运行时选择的环境变量。显式 --effort 和会话中的 /effort 可覆盖初始值。当前 Muse 会把 ultra 和 xhigh 都发成 xhigh，网关保留该原生值，不将其升级为 max。该版本无法原生发送 max，托管启动默认使用其支持的 xhigh，实际请求仍以客户端发送的值为准。Cursor GUI 和 Claude Desktop 需要重启客户端加载配置。
 
 每个 harness 保存的是端点 ID、默认模型名、辅助模型名和必要的原生适配信息。模型目录从全局资源生成。新增、删除对外模型或修改目录中的上下文信息后，再应用一次需要更新原生模型菜单的客户端。
 
 ## 兼容组合
 
-「资源管理 → 兼容范围」列出每个端点与十个 harness 的兼容模型数量。完全兼容时可以自由组合；数量按实际协议转换和客户端限制计算。
+「资源管理 → 兼容范围」列出每个端点与十二个 harness 的兼容模型数量。完全兼容时可以自由组合；数量按实际协议转换和客户端限制计算。
 
 | harness 接入协议 | 可调用的上游协议 |
 | --- | --- |
@@ -43,13 +43,25 @@ Claude Code、Antigravity、Muse 和 Cursor CLI 使用页面提供的托管启�
 | Gemini | Gemini、Chat Completions |
 | OpenAI Chat Completions | Chat Completions |
 
-OpenCode 和 Hermes 根据端点及模型自动选择它们支持的接入协议。已应用的协议会保留在绑定中；资源修改不能使已有绑定失去兼容性。
+OpenCode、Hermes、DSH 和 Copilot CLI 根据端点及模型自动选择 Anthropic Messages、OpenAI Chat Completions 或 OpenAI Responses 接入协议。已应用的协议会保留在绑定中；资源修改不能使已有绑定失去兼容性。
 
 普通 Cursor 云端 CLI 与 Cursor GUI 使用公开可访问的 HTTPS 网关地址。端点的「公开网关地址」填写该端点的外部入口，例如 `https://gateway.example/deck/<端点 ID>`。选择经过校验的官方 `cursor-agent-local` 可执行文件后，Cursor CLI 使用本机网关和官方 authless 模式；该本地运行包需单独准备，当前验证的版本与路径见 [本地 CLI 验证](../harness-tests/cursor-direct/README.md)。客户端使用网关接入凭据，上游密钥仍留在 ModelDeck。
 
 Claude Desktop 的对外模型名需要符合其原生菜单要求，例如 `claude-sonnet-5`。这个名称可以映射到任意兼容的后台模型。Antigravity 固定的后台辅助请求使用所选辅助模型，未指定时使用默认模型。原生档位分别读取 Responses 的 reasoning.effort、Chat 的 reasoning.effort/reasoning_effort、Messages 的 output_config.effort 和 Gemini 的 thinkingLevel。同协议完整保留原生推理配置。Gemini 转 OR Chat 时将档位和预算转换为 reasoning.effort/max_tokens，显式关闭和自动预算保留相应含义，不按预算猜测档位。
 
 托管客户端配置使用固定的网关监听端口。在设置中配置端口后再应用选择。
+
+## DeepSeek Harness 与 GitHub Copilot CLI
+
+在客户端列表中选择 **DeepSeek Harness** 或 **GitHub Copilot CLI**，选择端点和默认模型后点击「保存并应用」。需要已安装对应客户端；可执行文件留空时会从 PATH 和常见安装目录查找，也可以指定原始可执行文件的绝对路径。受管启动命令目前支持 macOS 和 Linux。
+
+DSH 使用官方 profile 的 `--patch` 配置层，生成 `deck-clients/dsh.patch.yml`，配置 `llm-pi-ai` 模型目录、默认模型和标题辅助模型。目录保留上下文、输出上限、图片输入能力及 DSH 支持的推理档位；不支持的原生档位不会改名为其他档位。默认打开 Web 界面；在启动命令后添加 `headless "任务"`、`web --port 3080` 或 `--profile <名称>` 可切换运行方式。原有 profile、插件、凭据和会话继续由 DSH 管理。此适配面向支持 `--profile` / `--patch` 的新版 DSH，不使用旧版 `settings.yaml` 导入机制。
+
+Copilot CLI 使用官方 BYOK 接口。启动命令设置独立的提供商配置路径和当前模型的上下文、输出上限；可以通过 `--model <对外模型名>` 选择同一连接中的其他模型。Copilot CLI 当前没有独立辅助模型选择，连接页不提供该字段。原生登录、用户提供商目录和其他偏好继续由 Copilot 管理。
+
+两个启动命令都会在运行时读取 `deck-gateway-url`，跟随当前网关端口；它们只持有端点的本地访问令牌，上游密钥仍由 ModelDeck 解析。配置和命令保存在 ModelDeck 数据目录的 `deck-clients/` 与 `bin/` 下，应用失败会回滚，恢复操作会检查外部修改。修改资源目录后重新应用以刷新原生目录；上游路由和凭据修改在后续网关请求中生效。
+
+参考：[DSH 启动命令](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/cli-help.md)、[DSH 自定义模型 API](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/guide/providers.md)、[Copilot CLI BYOK](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-byok-models)、[Copilot CLI 提供商配置路径](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference#providersjson)。
 
 ## 现有数据
 

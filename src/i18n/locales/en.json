@@ -2764,6 +2764,8 @@
     "executableHint": "Leave empty to use the client found on PATH.",
     "executablePlaceholder": "/usr/local/bin/client",
     "launchCommandHint": "Run the client through this command to use the selection.",
+    "dshLaunchHint": "Opens the Web UI by default. Append headless \"task\" or --profile <name> to choose another mode.",
+    "copilotLaunchHint": "Launch Copilot CLI with this command. Append --model <model alias> to select another model in this connection.",
     "appliedState": "Applied",
     "activeBinding": "Applied · {{model}}",
     "notApplied": "Not applied",

@@ -144,6 +144,35 @@ fn connection_from_native_files(client: &str) -> NativeConnection {
                 model: config["model"]["default"].as_str().unwrap().into(),
             }
         }
+        #[cfg(unix)]
+        "dsh" | "copilot" => {
+            let output = std::process::Command::new(get_app_config_dir().join("bin").join(client))
+                .output()
+                .unwrap();
+            assert!(output.status.success());
+            let stdout = String::from_utf8(output.stdout).unwrap();
+            let lines: Vec<_> = stdout.lines().collect();
+            let model = if client == "dsh" {
+                let patches: serde_yaml::Value =
+                    serde_yaml::from_slice(&fs::read(&cli::paths(client)[0]).unwrap()).unwrap();
+                patches
+                    .as_sequence()
+                    .unwrap()
+                    .iter()
+                    .find(|row| row["id"].as_str() == Some("agent-default-model"))
+                    .unwrap()["config"]["model"]
+                    .as_str()
+                    .unwrap()
+                    .into()
+            } else {
+                lines[2].into()
+            };
+            NativeConnection {
+                base: lines[0].into(),
+                token: lines[1].into(),
+                model,
+            }
+        }
         _ => panic!("Unsupported fixture client"),
     }
 }
@@ -193,14 +222,17 @@ async fn applied_native_provider_configs_reach_the_persisted_shared_gateway() {
     let client = reqwest::Client::builder().no_proxy().build().unwrap();
     let mut connections = Vec::new();
 
-    for id in [
+    let clients = vec![
         "codex",
         "claude",
         "claude-desktop",
         "grokbuild",
         "opencode",
         "hermes",
-    ] {
+    ];
+    #[cfg(unix)]
+    let clients = [clients, vec!["dsh", "copilot"]].concat();
+    for id in clients {
         let binding = HarnessBinding {
             endpoint_id: "entry".into(),
             model: if id == "claude-desktop" {
@@ -214,6 +246,14 @@ async fn applied_native_provider_configs_reach_the_persisted_shared_gateway() {
         store.bindings.insert(id.into(), binding.clone());
         store.active_bindings.insert(id.into(), binding.clone());
         let profile = project_profile(&store, id, &binding, &origin).unwrap();
+        #[cfg(unix)]
+        let profile = {
+            let mut profile = profile;
+            if cli::supports(id) {
+                profile.executable = fake_model_cli(&home, id).to_string_lossy().into();
+            }
+            profile
+        };
         apply(id, &profile, None, &state, || {
             crate::deck::write_store(&store)
         })
@@ -335,7 +375,7 @@ async fn applied_native_provider_configs_reach_the_persisted_shared_gateway() {
         fs::read(crate::codex_config::get_codex_config_path()).unwrap(),
         unchanged_config
     );
-    assert_eq!(records.lock().unwrap().len(), 7);
+    assert_eq!(records.lock().unwrap().len(), connections.len() + 1);
     for (id, _) in connections {
         restore(id, || Ok(())).unwrap();
     }
@@ -673,6 +713,235 @@ fn old_claude_backups_restore_the_new_managed_launcher_too() {
 }
 
 #[cfg(unix)]
+fn fake_model_cli(home: &TestHome, client: &str) -> PathBuf {
+    use std::os::unix::fs::PermissionsExt;
+    let executable = home.dir.path().join("native clients'").join(client);
+    fs::create_dir_all(executable.parent().unwrap()).unwrap();
+    let script = if client == "dsh" {
+        "#!/bin/sh\nprintf '%s\\n' \"$MODELDECK_DSH_BASE_URL\" \"$MODELDECK_DSH_TOKEN\" \"$@\"\n"
+    } else {
+        "#!/bin/sh\nprintf '%s\\n' \"$COPILOT_PROVIDER_BASE_URL\" \"$COPILOT_PROVIDER_API_KEY\" \"$COPILOT_MODEL\" \"$COPILOT_PROVIDER_MAX_PROMPT_TOKENS\" \"$COPILOT_PROVIDER_MAX_OUTPUT_TOKENS\" \"$COPILOT_PROVIDER_TYPE\" \"$COPILOT_PROVIDER_WIRE_API\" \"$COPILOT_PROVIDERS_CONFIG\" \"${COPILOT_PROVIDER_API_KEY_COMMAND-unset}\" \"${COPILOT_PROVIDER_HEADERS-unset}\" \"$@\"\n"
+    };
+    fs::write(&executable, script).unwrap();
+    fs::set_permissions(&executable, fs::Permissions::from_mode(0o700)).unwrap();
+    executable
+}
+
+#[cfg(unix)]
+#[test]
+#[serial]
+fn managed_dsh_and_copilot_launchers_preserve_arguments_and_follow_gateway_changes() {
+    use std::process::Command;
+    let home = TestHome::new();
+    let state = home.state();
+    for id in ["dsh", "copilot"] {
+        let mut profile = home.projection(id);
+        profile.executable = fake_model_cli(&home, id).to_string_lossy().into();
+        profile.api_key = "upstream-must-not-enter-launcher".into();
+        apply(id, &profile, None, &state, || Ok(())).unwrap();
+        let launcher = get_app_config_dir().join("bin").join(id);
+        assert!(Command::new("sh")
+            .arg("-n")
+            .arg(&launcher)
+            .status()
+            .unwrap()
+            .success());
+        assert!(!fs::read_to_string(&launcher)
+            .unwrap()
+            .contains(&profile.api_key));
+        publish_origin("127.0.0.1", 29999).unwrap();
+        let arguments: Vec<Vec<&str>> = if id == "dsh" {
+            vec![
+                vec![],
+                vec!["headless", "task with ' quotes and $ signs"],
+                vec!["--profile", "custom", "--resume", "session-id"],
+            ]
+        } else {
+            vec![
+                vec![],
+                vec![
+                    "--model=claude-sonnet-5",
+                    "-p",
+                    "task with ' quotes and $ signs",
+                ],
+                vec!["--model", "claude-sonnet-5", "-p", "another task"],
+                vec!["-p", "--model=prompt-text"],
+            ]
+        };
+        for args in arguments {
+            let output = Command::new(&launcher)
+                .args(&args)
+                .env("COPILOT_PROVIDER_API_KEY_COMMAND", "exit 99")
+                .env("COPILOT_PROVIDER_HEADERS", "Authorization: wrong")
+                .output()
+                .unwrap();
+            assert!(
+                output.status.success(),
+                "{}",
+                String::from_utf8_lossy(&output.stderr)
+            );
+            let stdout = String::from_utf8(output.stdout).unwrap();
+            let lines: Vec<_> = stdout.lines().collect();
+            assert_eq!(
+                lines[0],
+                format!("http://127.0.0.1:29999/deck-clients/{id}/v1")
+            );
+            assert_eq!(lines[1], profile.local_token);
+            if id == "dsh" {
+                assert_eq!(lines[2], "--patch");
+                assert_eq!(lines[3], cli::paths(id)[0].to_string_lossy());
+                let expected = if args.is_empty() {
+                    vec!["--profile", "web"]
+                } else if args[0] == "headless" {
+                    vec!["--profile", "headless", args[1]]
+                } else {
+                    args.clone()
+                };
+                assert_eq!(&lines[4..], expected);
+            } else {
+                assert_eq!(
+                    lines[2],
+                    if args.first().is_some_and(|arg| arg.starts_with("--model")) {
+                        "claude-sonnet-5"
+                    } else {
+                        "coding"
+                    }
+                );
+                assert_eq!(lines[3], "191808");
+                assert_eq!(lines[4], "8192");
+                assert_eq!(lines[5], "openai");
+                assert_eq!(lines[7], cli::paths(id)[0].to_string_lossy());
+                assert_eq!(&lines[8..10], ["unset", "unset"]);
+                assert_eq!(&lines[10..], args);
+            }
+        }
+        restore(id, || Ok(())).unwrap();
+        assert!(cli::paths(id).iter().all(|path| !path.exists()));
+    }
+}
+
+#[cfg(unix)]
+#[test]
+#[serial]
+fn dsh_patch_preserves_native_model_capacity_modalities_tiers_and_title_selection() {
+    let home = TestHome::new();
+    let state = home.state();
+    let mut profile = home.projection("dsh");
+    profile.executable = fake_model_cli(&home, "dsh").to_string_lossy().into();
+    profile.utility_model = "claude-sonnet-5".into();
+    profile.models[0].images = true;
+    for (protocol, api) in [
+        ("openai-chat", "openai-completions"),
+        ("openai-responses", "openai-responses"),
+        ("anthropic", "anthropic-messages"),
+    ] {
+        profile.protocol = protocol.into();
+        apply("dsh", &profile, None, &state, || Ok(())).unwrap();
+        let text = fs::read_to_string(&cli::paths("dsh")[0]).unwrap();
+        let patches: serde_yaml::Value = serde_yaml::from_str(&text).unwrap();
+        let rows = patches.as_sequence().unwrap();
+        let provider = &rows[0]["config"]["providers"]["modeldeck"];
+        assert_eq!(provider["api"].as_str(), Some(api));
+        assert_eq!(provider["apiKeyEnv"].as_str(), Some("MODELDECK_DSH_TOKEN"));
+        assert_eq!(
+            provider["models"][0]["contextWindow"].as_u64(),
+            Some(200000)
+        );
+        assert_eq!(provider["models"][0]["maxTokens"].as_u64(), Some(8192));
+        assert_eq!(provider["models"][0]["input"][1].as_str(), Some("image"));
+        assert_eq!(
+            provider["models"][0]["reasoningEfforts"]["max"].as_str(),
+            Some("max")
+        );
+        assert_eq!(rows[1]["config"]["model"].as_str(), Some("coding"));
+        assert_eq!(rows[2]["config"]["model"].as_str(), Some("claude-sonnet-5"));
+        assert_eq!(rows[3]["config"]["reasoningEffort"].as_str(), Some("high"));
+        assert!(!text.contains("upstream-only"));
+    }
+    for model in &mut profile.models {
+        model.reasoning_supported = Some(false);
+    }
+    apply("dsh", &profile, None, &state, || Ok(())).unwrap();
+    let text = fs::read_to_string(&cli::paths("dsh")[0]).unwrap();
+    assert!(text.contains("reasoningEfforts: false"));
+    assert!(text.contains("reasoningEffort: !!js undefined"));
+}
+
+#[cfg(unix)]
+#[test]
+#[serial]
+fn managed_cli_apply_rolls_back_and_restore_preserves_external_edits_and_native_state() {
+    use std::os::unix::fs::{symlink, PermissionsExt};
+    let home = TestHome::new();
+    let state = home.state();
+    let native_files = [
+        ".dsh/profiles/web/cordis.patch.yml",
+        ".dsh/.credentials.yaml",
+        ".copilot/config.json",
+        ".copilot/providers.json",
+        ".copilot/settings.json",
+    ];
+    for name in native_files {
+        let path = home.dir.path().join(name);
+        fs::create_dir_all(path.parent().unwrap()).unwrap();
+        fs::write(path, "client-owned state").unwrap();
+    }
+    for id in ["dsh", "copilot"] {
+        let mut profile = home.projection(id);
+        profile.executable = fake_model_cli(&home, id).to_string_lossy().into();
+        let managed = cli::paths(id);
+        for path in &managed {
+            fs::create_dir_all(path.parent().unwrap()).unwrap();
+            fs::write(path, "original managed file").unwrap();
+            fs::set_permissions(path, fs::Permissions::from_mode(0o640)).unwrap();
+        }
+        let failed = apply(id, &profile, None, &state, || {
+            Err("store commit failed".into())
+        });
+        assert_eq!(failed.unwrap_err(), "store commit failed");
+        assert!(!backup_path(id).unwrap().exists());
+        for path in &managed {
+            assert_eq!(fs::read_to_string(path).unwrap(), "original managed file");
+            assert_eq!(
+                fs::metadata(path).unwrap().permissions().mode() & 0o777,
+                0o640
+            );
+        }
+        apply(id, &profile, None, &state, || Ok(())).unwrap();
+        assert_eq!(
+            fs::metadata(&managed[0]).unwrap().permissions().mode() & 0o777,
+            0o600
+        );
+        assert_eq!(
+            fs::metadata(&managed[1]).unwrap().permissions().mode() & 0o777,
+            0o700
+        );
+        restore(id, || Ok(())).unwrap();
+        for path in &managed {
+            assert_eq!(fs::read_to_string(path).unwrap(), "original managed file");
+        }
+        apply(id, &profile, None, &state, || Ok(())).unwrap();
+        fs::write(&managed[0], "external edit").unwrap();
+        assert!(restore(id, || panic!("must not commit"))
+            .unwrap_err()
+            .contains("changed after"));
+        assert_eq!(fs::read_to_string(&managed[0]).unwrap(), "external edit");
+        let alias = home.dir.path().join(format!("{id}-launcher-alias"));
+        symlink(&managed[1], &alias).unwrap();
+        profile.executable = alias.to_string_lossy().into();
+        assert!(apply(id, &profile, None, &state, || Ok(()))
+            .unwrap_err()
+            .contains("cannot launch itself"));
+    }
+    for name in native_files {
+        assert_eq!(
+            fs::read_to_string(home.dir.path().join(name)).unwrap(),
+            "client-owned state"
+        );
+    }
+}
+
+#[cfg(unix)]
 async fn installed_client_uses_applied_deck(id: &str, executable: String) {
     use crate::model_clients::gateway::native_tests::{upstream, Probe};
     use axum::{routing::any, Router};
@@ -833,6 +1102,36 @@ async fn installed_client_uses_applied_deck(id: &str, executable: String) {
                     "--settings",
                 ])
                 .arg(crate::config::get_claude_settings_path());
+        } else if id == "copilot" {
+            command
+                .env("COPILOT_HOME", home.dir.path().join(".copilot"))
+                .env("COPILOT_CACHE_HOME", home.dir.path().join("copilot-cache"))
+                .env("COPILOT_OFFLINE", "true")
+                .env("COPILOT_AUTO_UPDATE", "false")
+                .env_remove("COPILOT_GITHUB_TOKEN")
+                .env_remove("GH_TOKEN")
+                .env_remove("GITHUB_TOKEN")
+                .args([
+                    "--disable-builtin-mcps",
+                    "-p",
+                    "Reply native-probe-ready; do not call tools.",
+                ]);
+        } else if id == "dsh" {
+            command
+                .env("DSH_HOME", home.dir.path().join(".dsh"))
+                .args(["--profile", "headless"]);
+            if let Some(effort) = requested {
+                let overlay = home.dir.path().join("native-effort.patch.yml");
+                fs::write(
+                    &overlay,
+                    format!(
+                        "- id: agent-default-model\n  config:\n    reasoningEffort: {effort}\n"
+                    ),
+                )
+                .unwrap();
+                command.arg("--patch").arg(overlay);
+            }
+            command.arg("Reply native-probe-ready; do not call tools.");
         } else {
             command
                 .env("XDG_CONFIG_HOME", home.dir.path().join(".config"))
@@ -852,7 +1151,7 @@ async fn installed_client_uses_applied_deck(id: &str, executable: String) {
                     "Reply native-probe-ready; do not call tools.",
                 ]);
         }
-        if let Some(effort) = requested {
+        if let Some(effort) = requested.filter(|_| id != "dsh") {
             if id == "codex" {
                 command.args(["-c", &format!("model_reasoning_effort=\"{effort}\"")]);
             } else {
@@ -944,6 +1243,26 @@ async fn codex_installed_client_uses_applied_deck() {
 async fn claude_installed_client_uses_applied_deck() {
     installed_client_uses_applied_deck("claude", std::env::var("CC_SWITCH_NATIVE_CLAUDE").unwrap())
         .await;
+}
+
+#[cfg(unix)]
+#[tokio::test(flavor = "multi_thread")]
+#[serial]
+#[ignore = "Requires a DSH installation; isolated state and localhost only"]
+async fn dsh_installed_client_uses_applied_deck() {
+    installed_client_uses_applied_deck("dsh", std::env::var("MODELDECK_NATIVE_DSH").unwrap()).await;
+}
+
+#[cfg(unix)]
+#[tokio::test(flavor = "multi_thread")]
+#[serial]
+#[ignore = "Requires Copilot CLI; isolated state and localhost only"]
+async fn copilot_installed_client_uses_applied_deck() {
+    installed_client_uses_applied_deck(
+        "copilot",
+        std::env::var("MODELDECK_NATIVE_COPILOT").unwrap(),
+    )
+    .await;
 }
 
 // Explicit opt-in fixture for the installed clients and real upstream APIs.

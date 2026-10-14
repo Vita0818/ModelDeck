@@ -293,6 +293,8 @@ export interface VisibleApps {
   cursor?: boolean;
   "cursor-agent"?: boolean;
   muse?: boolean;
+  dsh?: boolean;
+  copilot?: boolean;
   claude: boolean;
   "claude-desktop": boolean;
   codex: boolean;

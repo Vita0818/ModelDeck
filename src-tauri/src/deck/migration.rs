@@ -285,6 +285,7 @@ fn model(id: &str, value: &Value) -> ClientModel {
             .into(),
         context,
         output,
+        images: false,
         reasoning,
         default_effort: String::new(),
         reasoning_supported: value.get("reasoning").and_then(Value::as_bool),

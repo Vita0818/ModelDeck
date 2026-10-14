@@ -47,6 +47,8 @@ pub struct ClientModel {
     pub context: u64,
     pub output: u64,
     #[serde(default)]
+    pub images: bool,
+    #[serde(default)]
     pub reasoning: Vec<String>,
     /// Default from the selected resource route, used only in native projections.
     #[serde(default, skip_serializing_if = "String::is_empty")]

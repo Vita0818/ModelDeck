@@ -411,6 +411,7 @@ async fn serve(
             name: alias.clone(),
             context: model.context,
             output: model.output,
+            images: model.images,
             reasoning: model.reasoning.clone(),
             default_effort: route.effort.clone(),
             reasoning_supported: model.reasoning_supported,
