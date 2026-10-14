@@ -1,6 +1,7 @@
 //! ModelDeck's two independent layers: upstream resources and public routes.
 //! Harnesses store references into the graph; native catalogs are projections.
 mod cli;
+mod copilot_desktop;
 mod credentials;
 pub(crate) mod gateway;
 mod migration;
@@ -15,7 +16,7 @@ use std::{collections::HashSet, path::PathBuf, sync::Mutex};
 pub use types::*;
 
 static STORE_LOCK: Mutex<()> = Mutex::new(());
-pub const CLIENTS: [&str; 12] = [
+pub const CLIENTS: [&str; 13] = [
     "codex",
     "claude",
     "claude-desktop",
@@ -28,6 +29,7 @@ pub const CLIENTS: [&str; 12] = [
     "hermes",
     "dsh",
     "copilot",
+    "copilot-desktop",
 ];
 pub const LEVELS: [&str; 8] = [
     "none", "minimal", "low", "medium", "high", "xhigh", "max", "ultra",
@@ -72,15 +74,17 @@ pub fn client_protocol(client: &str) -> Option<Protocol> {
         "codex" | "grokbuild" | "muse" => Protocol::OpenaiResponses,
         "claude" | "claude-desktop" => Protocol::Anthropic,
         "antigravity" => Protocol::Gemini,
-        "cursor" | "cursor-agent" | "opencode" | "hermes" | "dsh" | "copilot" => {
-            Protocol::OpenaiChat
-        }
+        "cursor" | "cursor-agent" | "opencode" | "hermes" | "dsh" | "copilot"
+        | "copilot-desktop" => Protocol::OpenaiChat,
         _ => return None,
     })
 }
 
 pub fn client_protocols(client: &str) -> Vec<Protocol> {
-    if matches!(client, "opencode" | "hermes" | "dsh" | "copilot") {
+    if matches!(
+        client,
+        "opencode" | "hermes" | "dsh" | "copilot" | "copilot-desktop"
+    ) {
         vec![
             Protocol::Anthropic,
             Protocol::OpenaiChat,
@@ -116,7 +120,7 @@ fn binding_protocol(
         .input_protocol
         .map(|p| vec![p])
         .unwrap_or_else(|| client_protocols(client));
-    if matches!(client, "dsh" | "copilot") && binding.input_protocol.is_none() {
+    if matches!(client, "dsh" | "copilot" | "copilot-desktop") && binding.input_protocol.is_none() {
         candidates.sort_by_key(|input| *input != provider.protocol);
     }
     candidates
@@ -287,8 +291,8 @@ pub fn validate_binding(
     if !binding.utility_model.is_empty() && !models.contains(&binding.utility_model) {
         return Err("The auxiliary model is incompatible with this harness".into());
     }
-    if client == "copilot" && !binding.utility_model.is_empty() {
-        return Err("Copilot CLI does not support a separate auxiliary model selection".into());
+    if matches!(client, "copilot" | "copilot-desktop") && !binding.utility_model.is_empty() {
+        return Err("Copilot does not support a separate auxiliary model selection".into());
     }
     if !binding.utility_model.is_empty() {
         let model = &store.models[&endpoint.routes[&binding.utility_model].model_id];
@@ -665,7 +669,7 @@ pub async fn apply_deck_binding(
     })?;
     crate::tray::refresh_tray_menu(&app);
     Ok(
-        serde_json::json!({"view":view(current),"restartRequired":matches!(client.as_str(),"cursor"|"claude-desktop"),"command":native::command(&client)}),
+        serde_json::json!({"view":view(current),"restartRequired":matches!(client.as_str(),"cursor"|"claude-desktop"|"copilot-desktop"),"command":native::command(&client)}),
     )
 }
 

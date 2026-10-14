@@ -2766,6 +2766,7 @@
     "launchCommandHint": "このコマンドでクライアントを起動すると選択が反映されます。",
     "dshLaunchHint": "既定では Web UI を開きます。headless \"タスク\" または --profile <名前> を追加すると別の実行モードを選べます。",
     "copilotLaunchHint": "このコマンドで Copilot CLI を起動します。--model <モデルの別名> を追加すると、この接続の別のモデルを選べます。",
+    "copilotDesktopHint": "最初に GitHub Copilot を一度起動してください。適用後はデスクトップアプリを終了して再度開きます。このコンピュータの新しいセッションには選択したモデルが使われ、既存のセッションは元の選択を維持します。",
     "appliedState": "適用済み",
     "activeBinding": "適用済み · {{model}}",
     "notApplied": "未適用",

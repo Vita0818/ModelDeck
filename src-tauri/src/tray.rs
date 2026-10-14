@@ -24,6 +24,7 @@ fn client_label(client: &str) -> &str {
         "hermes" => "Hermes",
         "dsh" => "DeepSeek Harness",
         "copilot" => "GitHub Copilot CLI",
+        "copilot-desktop" => "GitHub Copilot",
         other => other,
     }
 }

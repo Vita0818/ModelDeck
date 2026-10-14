@@ -1,6 +1,6 @@
 {
   "name": "modeldeck",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Personal model connection manager for AI coding clients",
   "type": "module",
   "scripts": {

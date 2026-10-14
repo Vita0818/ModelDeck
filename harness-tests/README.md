@@ -73,3 +73,16 @@ python3 harness-tests/report.py
 `gateway` 使用忽略的 Rust 实时测试 fixture，调用实际的 ModelDeck apply 和协议网关。其余 CLI 名称见 `run.py` 的 `CLIENTS`。Hermes 依赖已移除；如需复跑，可按 [hermes-runtime-source.json](hermes-runtime-source.json) 的官方仓库和 commit 重建临时环境。Cursor 本地 CLI 的独立复跑入口和版本信息见 [cursor-direct](cursor-direct/README.md)。GUI 项需重新执行原生界面流程；普通 Cursor 云端 CLI 与 GUI 仍使用账号和公网 HTTPS。`public_ingress.py` 是只开放经 token 认证的 Cursor 测试路径的临时入口。
 
 `MD_TEST_INCLUDE_ARENA=1` 会启用 Arena 的目录预检。Arena 的本轮授权交互复测见 `arena-retest/interactive.py`，需在真实终端执行各客户端原生界面；普通 headless 探测的准入失败不能据此判断真实 Key 无效。付费回退只有在捕获到上游 429、且错误明确包含免费模型限流信息时才能触发；认证、准入、过载、协议与超时错误均保持在指定免费模型上。
+
+
+## Copilot 桌面端本地验证
+
+使用已安装的官方桌面端 SDK 和 Copilot CLI，验证原生模型记录到共享网关的 Chat Completions、Responses、Anthropic 请求。配置、会话和数据库均使用临时目录；上游为本机模拟服务，不读取真实账号凭据，也不调用付费模型。
+
+```sh
+MODELDECK_NATIVE_COPILOT=/absolute/path/to/copilot \
+MODELDECK_NATIVE_COPILOT_SDK='/Applications/GitHub Copilot.app/Contents/Resources/copilot-sdk/index.js' \
+cargo test --manifest-path src-tauri/Cargo.toml --lib \
+  deck::copilot_desktop::tests::installed_desktop_sdk_uses_the_database_model_records \
+  -- --ignored --exact
+```

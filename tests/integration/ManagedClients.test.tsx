@@ -133,4 +133,81 @@ describe("DSH and Copilot model connections", () => {
       ).toBeInTheDocument();
     },
   );
+
+  it("applies the Copilot desktop selection and offers native restoration without a launcher", async () => {
+    const client = "copilot-desktop";
+    let current = deckFixture();
+    invokeMock.mockImplementation(
+      async (action: string, args?: { store?: DeckStore }) => {
+        if (action === "get_deck") return current;
+        if (action === "save_deck") {
+          current = { ...current, store: { ...args!.store!, revision: 1 } };
+          return current;
+        }
+        if (action === "apply_deck_binding") {
+          current = {
+            ...current,
+            store: {
+              ...current.store,
+              revision: 2,
+              activeBindings: { [client]: current.store.bindings[client] },
+            },
+          };
+          return { view: current, restartRequired: true };
+        }
+        if (action === "reset_deck_binding") {
+          current = {
+            ...current,
+            store: { ...current.store, revision: 3, activeBindings: {} },
+          };
+          return current;
+        }
+        return null;
+      },
+    );
+    const { default: HarnessPage } = await import(
+      "@/components/deck/HarnessPage"
+    );
+    const query = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    render(
+      <QueryClientProvider client={query}>
+        <HarnessPage client={client} onNavigate={() => {}} />
+      </QueryClientProvider>,
+    );
+    expect(
+      await screen.findByText("deck.copilotDesktopHint"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "GitHub Copilot" }),
+    ).toBeInTheDocument();
+    expect(screen.queryByText("deck.utilityModel")).not.toBeInTheDocument();
+    expect(
+      screen.queryByPlaceholderText("deck.executablePlaceholder"),
+    ).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "deck.saveAndApply" }));
+    await waitFor(() =>
+      expect(invokeMock).toHaveBeenCalledWith("apply_deck_binding", {
+        client,
+        revision: 1,
+      }),
+    );
+    expect(
+      await screen.findByRole("button", { name: "deck.restoreNative" }),
+    ).toBeInTheDocument();
+    expect(screen.queryByText("deck.launchCommand")).not.toBeInTheDocument();
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: "deck.restoreNative" }),
+      ).toBeEnabled(),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "deck.restoreNative" }));
+    await waitFor(() =>
+      expect(invokeMock).toHaveBeenCalledWith("reset_deck_binding", {
+        client,
+        revision: 2,
+      }),
+    );
+  });
 });

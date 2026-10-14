@@ -49,7 +49,7 @@ pub(super) fn fixture() -> DeckStore {
 
 #[test]
 fn new_clients_project_supported_protocols_and_keep_commands_after_reloading() {
-    for client in ["dsh", "copilot"] {
+    for client in ["dsh", "copilot", "copilot-desktop"] {
         for protocol in [
             Protocol::OpenaiChat,
             Protocol::OpenaiResponses,
@@ -75,7 +75,11 @@ fn new_clients_project_supported_protocols_and_keep_commands_after_reloading() {
             assert!(profile.models.iter().all(|m| m.images));
             assert!(view(store.clone()).commands.is_empty());
             store.active_bindings.insert(client.into(), binding);
-            assert!(view(store).commands[client].contains(&format!("bin/{client}")));
+            if client == "copilot-desktop" {
+                assert!(!view(store).commands.contains_key(client));
+            } else {
+                assert!(view(store).commands[client].contains(&format!("bin/{client}")));
+            }
         }
     }
     let store = fixture();

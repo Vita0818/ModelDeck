@@ -2766,6 +2766,7 @@
     "launchCommandHint": "通过该命令启动客户端即可使用当前选择。",
     "dshLaunchHint": "默认打开 Web 界面。在命令后添加 headless \"任务\" 或 --profile <名称> 可选择其他运行方式。",
     "copilotLaunchHint": "通过该命令启动 Copilot CLI。添加 --model <模型别名> 可选择此连接中的其他模型。",
+    "copilotDesktopHint": "请先运行一次 GitHub Copilot 完成初始化。应用后完全退出并重新打开桌面端，本机新会话使用所选模型；已有会话保持自己的模型选择。",
     "appliedState": "已应用",
     "activeBinding": "已应用 · {{model}}",
     "notApplied": "未应用",

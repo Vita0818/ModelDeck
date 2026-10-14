@@ -395,6 +395,9 @@ pub fn apply(
     state: &AppState,
     commit: impl FnOnce() -> Result<(), String>,
 ) -> Result<(), String> {
+    if client == "copilot-desktop" {
+        return copilot_desktop::apply(p, commit);
+    }
     let cli_executable = if cli::supports(client) {
         Some(cli::preflight(client, p)?)
     } else {
@@ -538,6 +541,9 @@ pub fn apply(
 }
 
 pub fn restore(client: &str, commit: impl FnOnce() -> Result<(), String>) -> Result<(), String> {
+    if client == "copilot-desktop" {
+        return copilot_desktop::restore(commit);
+    }
     if client == "cursor" {
         adapters::ensure_cursor_closed()?;
     }

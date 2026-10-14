@@ -7,7 +7,8 @@ export type ModelClientId =
   | "cursor-agent"
   | "muse"
   | "dsh"
-  | "copilot";
+  | "copilot"
+  | "copilot-desktop";
 export type ProviderClientId = Extract<
   AppId,
   "codex" | "claude" | "claude-desktop" | "grokbuild" | "opencode" | "hermes"
@@ -38,7 +39,18 @@ export const MODELDECK_CLIENTS: {
   { id: "opencode", name: "OpenCode", icon: "opencode" },
   { id: "hermes", name: "Hermes", icon: "hermes" },
   { id: "dsh", name: "DeepSeek Harness", icon: "deepseek" },
-  { id: "copilot", name: "GitHub Copilot CLI", icon: "githubcopilot" },
+  {
+    id: "copilot",
+    name: "GitHub Copilot CLI",
+    icon: "githubcopilot",
+    badge: "terminal",
+  },
+  {
+    id: "copilot-desktop",
+    name: "GitHub Copilot",
+    icon: "githubcopilot",
+    badge: "desktop",
+  },
 ];
 
 export const CLIENT_IDS = MODELDECK_CLIENTS.map(({ id }) => id);
@@ -56,6 +68,7 @@ export function isModelClientId(value: string): value is ModelClientId {
     "muse",
     "dsh",
     "copilot",
+    "copilot-desktop",
   ].includes(value);
 }
 
@@ -79,6 +92,7 @@ export function resolveClientVisibility(
     muse: true,
     dsh: true,
     copilot: true,
+    "copilot-desktop": true,
   };
   for (const id of CLIENT_IDS) {
     if (typeof saved?.[id] === "boolean") visibility[id] = saved[id];

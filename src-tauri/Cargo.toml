@@ -1,6 +1,6 @@
 [package]
 name = "modeldeck"
-version = "0.4.0"
+version = "0.4.1"
 description = "Personal model connection manager for AI coding clients"
 authors = ["ModelDeck contributors", "Jason Young (upstream CC Switch)"]
 license = "MIT"

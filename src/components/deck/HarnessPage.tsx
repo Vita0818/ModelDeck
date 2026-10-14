@@ -314,7 +314,7 @@ export default function HarnessPage({
             </div>
           )}
 
-          {client !== "copilot" && (
+          {!client.startsWith("copilot") && (
             <FieldRow
               label={t("deck.utilityModel")}
               hint={t("deck.utilityModelHint")}
@@ -359,6 +359,9 @@ export default function HarnessPage({
         </Group>
         {selected?.issue && (
           <GroupFooter className="text-warning">{selected.issue}</GroupFooter>
+        )}
+        {client === "copilot-desktop" && (
+          <GroupFooter>{t("deck.copilotDesktopHint")}</GroupFooter>
         )}
       </section>
 

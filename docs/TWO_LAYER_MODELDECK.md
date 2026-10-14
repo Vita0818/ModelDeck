@@ -16,7 +16,7 @@
   fast   → 提供商 B / 模型 Y / 提供商默认
 ```
 
-修改 `coding` 的后台资源或默认档位，会影响所有使用这个端点和模型名的调用。客户端发送的档位、预算、开关和其他原生推理配置优先透传；同协议不重写这些字段，跨协议只转换所需字段和枚举大小写。客户端未发送推理配置时才补路由默认，默认也留空则使用上游默认。目录能力只用于界面与默认选项，不在请求中强行升降档或过滤新值；不支持的值由上游返回错误。请求按当前全局资源解析，无需在各个 harness 中重新填写上游地址、密钥或真实模型 ID。
+修改 `coding` 的后台资源或默认档位，会影响所有使用这个端点和模型名的调用。客户端发送的档位、预算、开关和其他原生推理配置优先透传；同协议不重写这些字段，跨协议只转换所需字段和枚举大小写。客户端未发送档位、预算或思考开关时才补路由默认，默认也留空则使用上游默认。推理摘要设置会保留，但不会阻止补齐缺失的默认档位。目录能力只用于界面与默认选项，不在请求中强行升降档或过滤新值；不支持的值由上游返回错误。请求按当前全局资源解析，无需在各个 harness 中重新填写上游地址、密钥或真实模型 ID。
 
 资源删除受到引用检查保护。先移除端点中的模型映射，再删除模型资源；先清除引用该端点的选择并恢复已应用配置，再删除端点。
 
@@ -34,7 +34,7 @@ Claude Code、Antigravity、Muse、Cursor CLI、DeepSeek Harness 和 GitHub Copi
 
 ## 兼容组合
 
-「资源管理 → 兼容范围」列出每个端点与十二个 harness 的兼容模型数量。完全兼容时可以自由组合；数量按实际协议转换和客户端限制计算。
+「资源管理 → 兼容范围」列出每个端点与十三个 harness 的兼容模型数量。完全兼容时可以自由组合；数量按实际协议转换和客户端限制计算。
 
 | harness 接入协议 | 可调用的上游协议 |
 | --- | --- |
@@ -43,7 +43,7 @@ Claude Code、Antigravity、Muse、Cursor CLI、DeepSeek Harness 和 GitHub Copi
 | Gemini | Gemini、Chat Completions |
 | OpenAI Chat Completions | Chat Completions |
 
-OpenCode、Hermes、DSH 和 Copilot CLI 根据端点及模型自动选择 Anthropic Messages、OpenAI Chat Completions 或 OpenAI Responses 接入协议。已应用的协议会保留在绑定中；资源修改不能使已有绑定失去兼容性。
+OpenCode、Hermes、DSH、Copilot CLI 和 Copilot 桌面端 根据端点及模型自动选择 Anthropic Messages、OpenAI Chat Completions 或 OpenAI Responses 接入协议。已应用的协议会保留在绑定中；资源修改不能使已有绑定失去兼容性。
 
 普通 Cursor 云端 CLI 与 Cursor GUI 使用公开可访问的 HTTPS 网关地址。端点的「公开网关地址」填写该端点的外部入口，例如 `https://gateway.example/deck/<端点 ID>`。选择经过校验的官方 `cursor-agent-local` 可执行文件后，Cursor CLI 使用本机网关和官方 authless 模式；该本地运行包需单独准备，当前验证的版本与路径见 [本地 CLI 验证](../harness-tests/cursor-direct/README.md)。客户端使用网关接入凭据，上游密钥仍留在 ModelDeck。
 
@@ -51,7 +51,7 @@ Claude Desktop 的对外模型名需要符合其原生菜单要求，例如 `cla
 
 托管客户端配置使用固定的网关监听端口。在设置中配置端口后再应用选择。
 
-## DeepSeek Harness 与 GitHub Copilot CLI
+## DeepSeek Harness 与 GitHub Copilot
 
 在客户端列表中选择 **DeepSeek Harness** 或 **GitHub Copilot CLI**，选择端点和默认模型后点击「保存并应用」。需要已安装对应客户端；可执行文件留空时会从 PATH 和常见安装目录查找，也可以指定原始可执行文件的绝对路径。受管启动命令目前支持 macOS 和 Linux。
 
@@ -59,9 +59,13 @@ DSH 使用官方 profile 的 `--patch` 配置层，生成 `deck-clients/dsh.patc
 
 Copilot CLI 使用官方 BYOK 接口。启动命令设置独立的提供商配置路径和当前模型的上下文、输出上限；可以通过 `--model <对外模型名>` 选择同一连接中的其他模型。Copilot CLI 当前没有独立辅助模型选择，连接页不提供该字段。原生登录、用户提供商目录和其他偏好继续由 Copilot 管理。
 
-两个启动命令都会在运行时读取 `deck-gateway-url`，跟随当前网关端口；它们只持有端点的本地访问令牌，上游密钥仍由 ModelDeck 解析。配置和命令保存在 ModelDeck 数据目录的 `deck-clients/` 与 `bin/` 下，应用失败会回滚，恢复操作会检查外部修改。修改资源目录后重新应用以刷新原生目录；上游路由和凭据修改在后续网关请求中生效。
+**GitHub Copilot 桌面端**是独立的客户端入口。它写入原生模型提供商、模型目录和本机新会话默认选择；应用后完全退出并重新打开 GitHub Copilot，已有会话仍保留自己的模型选择。桌面端适配已核对 macOS 1.0.19 的数据库结构；未知结构会在修改前停止。
 
-参考：[DSH 启动命令](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/cli-help.md)、[DSH 自定义模型 API](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/guide/providers.md)、[Copilot CLI BYOK](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-byok-models)、[Copilot CLI 提供商配置路径](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference#providersjson)。
+桌面端只维护专属 ModelDeck 提供商及其模型行，不复制或回写账号表、会话内容或整份数据库。它使用端点的本地访问令牌，原有提供商及钥匙串登录不参与修改；恢复时检查这些模型行是否被外部编辑，并保留用户后来选择的其他提供商模型。更换网关端口后需要重新应用桌面端连接。
+
+两个 CLI 启动命令都会在运行时读取 `deck-gateway-url`，跟随当前网关端口；它们只持有端点的本地访问令牌，上游密钥仍由 ModelDeck 解析。配置和命令保存在 ModelDeck 数据目录的 `deck-clients/` 与 `bin/` 下，应用失败会回滚，恢复操作会检查外部修改。修改资源目录后重新应用以刷新原生目录；上游路由和凭据修改在后续网关请求中生效。
+
+参考：[DSH 启动命令](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/cli-help.md)、[DSH 自定义模型 API](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/guide/providers.md)、[Copilot CLI BYOK](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-byok-models)、[Copilot 桌面端自定义模型](https://docs.github.com/en/copilot/how-tos/github-copilot-app/use-byok-models)、[Copilot CLI 提供商配置路径](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference#providersjson)。
 
 ## 现有数据
 

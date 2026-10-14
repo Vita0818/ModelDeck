@@ -28,6 +28,14 @@ fn effort(input: Protocol, body: &Value) -> Option<&Value> {
     }
 }
 
+fn has_reasoning_controls(body: &Value) -> bool {
+    match body.get("reasoning") {
+        None => false,
+        Some(Value::Object(fields)) => fields.keys().any(|key| key != "summary"),
+        Some(_) => true,
+    }
+}
+
 pub(super) fn prepare(
     input: Protocol,
     body: &mut Value,
@@ -35,9 +43,9 @@ pub(super) fn prepare(
     default: &str,
 ) -> String {
     let configured = match input {
-        Protocol::OpenaiResponses => body.get("reasoning").is_some(),
+        Protocol::OpenaiResponses => has_reasoning_controls(body),
         Protocol::OpenaiChat => {
-            body.get("reasoning").is_some()
+            has_reasoning_controls(body)
                 || body.get("reasoning_effort").is_some()
                 || body.get("thinking").is_some()
                 || body.get("enable_thinking").is_some()
@@ -52,7 +60,14 @@ pub(super) fn prepare(
     if !configured && !default.is_empty() && model.reasoning_supported != Some(false) {
         match input {
             Protocol::OpenaiChat => body["reasoning_effort"] = json!(default),
-            Protocol::OpenaiResponses => body["reasoning"] = json!({"effort":default}),
+            Protocol::OpenaiResponses => {
+                if body.get("reasoning").is_none() {
+                    body["reasoning"] = json!({});
+                }
+                if let Some(reasoning) = body["reasoning"].as_object_mut() {
+                    reasoning.insert("effort".into(), json!(default));
+                }
+            }
             Protocol::Anthropic => {
                 if body.get("output_config").is_none() {
                     body["output_config"] = json!({});
@@ -88,6 +103,35 @@ pub(super) fn prepare(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn summary_preferences_preserve_the_summary_and_fill_the_missing_route_effort() {
+        let model = crate::deck::tests::fixture()
+            .models
+            .remove("resource")
+            .unwrap();
+        for summary in ["auto", "concise", "detailed"] {
+            let mut body = json!({"reasoning":{"summary":summary}});
+            assert_eq!(
+                prepare(Protocol::OpenaiResponses, &mut body, &model, "high"),
+                "high"
+            );
+            assert_eq!(
+                body,
+                json!({"reasoning":{"summary":summary,"effort":"high"}})
+            );
+        }
+        for mut body in [
+            json!({"reasoning":{"summary":"auto","effort":"low"}}),
+            json!({"reasoning":{"summary":"auto","enabled":false}}),
+            json!({"reasoning":{"summary":"auto","max_tokens":1024}}),
+            json!({"reasoning":{"summary":"auto","vendor_option":true}}),
+        ] {
+            let original = body.clone();
+            prepare(Protocol::OpenaiResponses, &mut body, &model, "high");
+            assert_eq!(body, original);
+        }
+    }
 
     #[test]
     fn explicit_native_levels_are_not_clamped_or_renamed() {

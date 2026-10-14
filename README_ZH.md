@@ -4,7 +4,7 @@
 
 ModelDeck 是独立维护的个人桌面项目，用于管理模型提供商、端点、独立密钥、模型目录、上下文限制与推理档位。它复用 CC Switch 的部分原生配置与协议适配代码，并按自己的产品范围维护。
 
-## 当前版本：v0.4.0
+## 当前版本：v0.4.1
 
 产品保留三个入口：
 
@@ -12,13 +12,13 @@ ModelDeck 是独立维护的个人桌面项目，用于管理模型提供商、�
 - **客户端连接**：为客户端选择端点、默认模型和辅助模型，明确应用或恢复原生配置。
 - **用量与设置**：读取支持客户端的实际用量记录，管理计价、网关、网络代理、窗口、配置目录、日志和本地数据库备份。
 
-支持 **Codex CLI、Claude Code、Claude Desktop、Antigravity CLI、Cursor CLI、Cursor GUI、Grok、Muse Code、OpenCode、Hermes、DeepSeek Harness（DSH）、GitHub Copilot CLI**。DSH 与 Copilot CLI 使用受管启动命令连接共享端点，配置方式见[两层管理说明](docs/TWO_LAYER_MODELDECK.md#deepseek-harness-与-github-copilot-cli)。原生用量采集保留 Claude Code、Codex CLI、OpenCode、Grok 的解析器；其他客户端继续显示已有记录，覆盖范围以用量页的数据源说明为准。
+支持 **Codex CLI、Claude Code、Claude Desktop、Antigravity CLI、Cursor CLI、Cursor GUI、Grok、Muse Code、OpenCode、Hermes、DeepSeek Harness（DSH）、GitHub Copilot CLI、GitHub Copilot 桌面端**。DSH 与 Copilot CLI 使用受管启动命令连接共享端点，配置方式见[两层管理说明](docs/TWO_LAYER_MODELDECK.md#deepseek-harness-与-github-copilot)。原生用量采集保留 Claude Code、Codex CLI、OpenCode、Grok 的解析器；其他客户端继续显示已有记录，覆盖范围以用量页的数据源说明为准。
 
 Memory、MCP、Skills、提示词、会话浏览、OpenClaw 工作区、OAuth 账号中心、云同步、自动故障切换、脚本额度查询、工具安装器和应用自动更新的管理入口与运行时实现已移除。MiniMax Code、OpenClaw、Pi、Gemini CLI 的原生管理与用量采集也不参与构建。Gemini 模型协议仍保留，供模型连接与 Antigravity 使用。
 
 保留各提供商的认证头、端点拼接、请求字段、推理参数和流式协议转换。编辑资源路由会影响所有引用它的连接；连接只保存引用，不复制另一套上游凭据与模型目录。
 
-[两层管理使用说明](docs/TWO_LAYER_MODELDECK.md) · [客户端适配说明](docs/CLIENT_MODELS.md) · [v0.4.0 变更](docs/releases/v0.4.0.md)
+[两层管理使用说明](docs/TWO_LAYER_MODELDECK.md) · [客户端适配说明](docs/CLIENT_MODELS.md) · [v0.4.1 变更](docs/releases/v0.4.1.md)
 
 ## 原生配置与数据
 

@@ -40,6 +40,12 @@ pub struct VisibleApps {
     pub dsh: Option<bool>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub copilot: Option<bool>,
+    #[serde(
+        rename = "copilot-desktop",
+        default,
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub copilot_desktop: Option<bool>,
     #[serde(default = "default_true")]
     pub claude: bool,
     #[serde(
@@ -76,6 +82,7 @@ impl Default for VisibleApps {
             muse: Some(true),
             dsh: Some(true),
             copilot: Some(true),
+            copilot_desktop: Some(true),
             claude: true,
             claude_desktop: true,
             codex: true,
@@ -118,6 +125,7 @@ impl VisibleApps {
             "muse" => self.muse.unwrap_or(true),
             "dsh" => self.dsh.unwrap_or(true),
             "copilot" => self.copilot.unwrap_or(true),
+            "copilot-desktop" => self.copilot_desktop.unwrap_or(true),
             _ => false,
         }
     }

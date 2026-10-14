@@ -19,12 +19,18 @@ pub(crate) async fn upstream(State(probe): State<Probe>, req: Request) -> Respon
         .and_then(|v| v.to_str().ok())
         .unwrap_or_default()
         .to_owned();
+    let auth_matches = auth == "Bearer native-client-dedicated-test-key"
+        || req
+            .headers()
+            .get("x-api-key")
+            .and_then(|value| value.to_str().ok())
+            == Some("native-client-dedicated-test-key");
     let path = req.uri().path().to_owned();
     let body = axum::body::to_bytes(req.into_body(), 32 * 1024 * 1024)
         .await
         .unwrap();
     let data: Value = serde_json::from_slice(&body).unwrap_or(Value::Null);
-    probe.requests.lock().unwrap().push(json!({"path":path,"authMatches":auth=="Bearer native-client-dedicated-test-key","model":data.get("model"),"effort":data.pointer("/reasoning/effort").or_else(||data.get("reasoning_effort")).or_else(||data.pointer("/output_config/effort")),"tools":data.get("tools").and_then(Value::as_array).map(Vec::len)}));
+    probe.requests.lock().unwrap().push(json!({"path":path,"authMatches":auth_matches,"model":data.get("model"),"effort":data.pointer("/reasoning/effort").or_else(||data.get("reasoning_effort")).or_else(||data.pointer("/output_config/effort")),"reasoning":data.get("reasoning"),"thinking":data.get("thinking"),"tools":data.get("tools").and_then(Value::as_array).map(Vec::len)}));
     if path.ends_with("chat/completions") {
         let events = [
             json!({"id":"probe","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"role":"assistant","content":"native-probe-ready"},"finish_reason":null}]}),

@@ -2766,6 +2766,7 @@
     "launchCommandHint": "Run the client through this command to use the selection.",
     "dshLaunchHint": "Opens the Web UI by default. Append headless \"task\" or --profile <name> to choose another mode.",
     "copilotLaunchHint": "Launch Copilot CLI with this command. Append --model <model alias> to select another model in this connection.",
+    "copilotDesktopHint": "Run GitHub Copilot once to initialize it. After applying, quit and reopen the desktop app. New local sessions use the selected model; existing sessions keep their own selection.",
     "appliedState": "Applied",
     "activeBinding": "Applied · {{model}}",
     "notApplied": "Not applied",

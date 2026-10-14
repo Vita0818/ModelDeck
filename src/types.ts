@@ -295,6 +295,7 @@ export interface VisibleApps {
   muse?: boolean;
   dsh?: boolean;
   copilot?: boolean;
+  "copilot-desktop"?: boolean;
   claude: boolean;
   "claude-desktop": boolean;
   codex: boolean;
