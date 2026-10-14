@@ -200,14 +200,12 @@ export type AppType =
 
 export type AppTypeFilter = "all" | AppType;
 
+// Active collectors only. Historical app IDs remain readable above.
 export const KNOWN_APP_TYPES: ReadonlyArray<AppType> = [
   "claude",
   "codex",
-  "gemini",
   "grokbuild",
   "opencode",
-  "pi",
-  "mcode",
 ];
 
 /**

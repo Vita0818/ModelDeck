@@ -32,8 +32,8 @@ export function WindowSettings({ settings, onChange }: WindowSettingsProps) {
       )}
       <ToggleRow
         icon={<Minimize2 className="size-4" />}
-        title={t("settings.minimizeToTrayOnClose")}
-        description={t("settings.minimizeToTrayOnCloseDescription")}
+        title={t("settings.minimizeToTray")}
+        description={t("settings.minimizeToTrayDescription")}
         checked={!!settings.minimizeToTrayOnClose}
         onCheckedChange={(value) => onChange({ minimizeToTrayOnClose: value })}
       />

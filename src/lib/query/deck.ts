@@ -20,7 +20,7 @@ export const deckKeys = {
 async function invalidateRuntime(queryClient: QueryClient) {
   await Promise.all([
     queryClient.invalidateQueries({ queryKey: proxyKeys.status }),
-    queryClient.invalidateQueries({ queryKey: proxyKeys.takeoverStatus }),
+    queryClient.invalidateQueries({ queryKey: proxyKeys.globalConfig }),
     queryClient.invalidateQueries({ queryKey: ["settings"] }),
   ]);
 }

@@ -5,8 +5,7 @@
 use super::utils::{decode_base64_param, infer_homepage_from_endpoint};
 use super::DeepLinkImportRequest;
 use crate::error::AppError;
-use crate::provider::{ClaudeDesktopMode, Provider, ProviderMeta, UsageScript};
-use crate::services::ProviderService;
+use crate::provider::{ClaudeDesktopMode, Provider, ProviderMeta};
 use crate::store::AppState;
 use crate::AppType;
 use serde_json::json;
@@ -18,8 +17,8 @@ use std::str::FromStr;
 /// 1. Validates the request
 /// 2. Merges config file if provided (v3.8+)
 /// 3. Converts it to a Provider structure
-/// 4. Delegates to ProviderService for actual import
-/// 5. Optionally sets as current provider if enabled=true
+/// 4. Adds resources to the model graph
+/// 5. Optionally saves the harness selection; applying remains explicit
 pub fn import_provider_from_deeplink(
     state: &AppState,
     request: DeepLinkImportRequest,
@@ -95,6 +94,12 @@ pub fn import_provider_from_deeplink(
     let app_type = AppType::from_str(&app_str)
         .map_err(|_| AppError::InvalidInput(format!("Invalid app type: {app_str}")))?;
 
+    if !crate::product::supports_provider_app(&app_type) {
+        return Err(AppError::InvalidInput(
+            "This client is outside ModelDeck scope".into(),
+        ));
+    }
+
     // Build provider configuration based on app type
     let mut provider = build_provider_from_request(&app_type, &merged_request)?;
 
@@ -107,34 +112,23 @@ pub fn import_provider_from_deeplink(
         .to_lowercase();
     provider.id = format!("{sanitized_name}-{timestamp}");
 
-    let provider_id = provider.id.clone();
-
-    // Use ProviderService to add the provider
-    ProviderService::add(state, app_type.clone(), provider, true)?;
-
-    // Add extra endpoints as custom endpoints (skip first one as it's the primary)
-    for ep in all_endpoints.iter().skip(1) {
-        let normalized = ep.trim().trim_end_matches('/').to_string();
-        if !normalized.is_empty() {
-            if let Err(e) = ProviderService::add_custom_endpoint(
-                state,
-                app_type.clone(),
-                &provider_id,
-                normalized.clone(),
-            ) {
-                log::warn!(
-                    "Failed to add custom endpoint '{}': {e}",
-                    crate::url_for_log(&normalized)
-                );
-            }
-        }
+    let mut providers = vec![provider];
+    for endpoint in all_endpoints.iter().skip(1) {
+        let mut alternate = merged_request.clone();
+        alternate.endpoint = Some(endpoint.clone());
+        providers.push(build_provider_from_request(&app_type, &alternate)?);
     }
-
-    // If enabled=true, set as current provider
-    if merged_request.enabled.unwrap_or(false) {
-        ProviderService::switch(state, app_type.clone(), &provider_id)?;
-        log::info!("Provider '{provider_id}' set as current for {app_type:?}");
-    }
+    let imported = crate::deck::import_model_providers(
+        &state.db,
+        app_type.as_str(),
+        &providers,
+        merged_request.enabled.unwrap_or(false),
+    )
+    .map_err(AppError::Message)?;
+    let provider_id = imported
+        .into_iter()
+        .next()
+        .ok_or_else(|| AppError::Message("No model provider imported".into()))?;
 
     Ok(provider_id)
 }
@@ -147,25 +141,18 @@ pub(crate) fn build_provider_from_request(
     let settings_config = match app_type {
         AppType::Claude | AppType::ClaudeDesktop => build_claude_settings(request),
         AppType::Codex => build_codex_settings(request),
-        AppType::Gemini => build_gemini_settings(request),
         AppType::GrokBuild => build_grokbuild_settings(request),
         AppType::OpenCode => build_opencode_settings(request),
-        AppType::OpenClaw => build_additive_app_settings(request),
         AppType::Hermes => build_hermes_settings(request),
-        AppType::Mcode => {
+        _ => {
             return Err(AppError::InvalidInput(
-                "Add MCode providers from the MCode page".into(),
+                "This client is outside ModelDeck scope".into(),
             ))
-        }
-        AppType::Pi => {
-            return Err(AppError::InvalidInput(
-                "Pi providers must be added from the Pi provider page".to_string(),
-            ));
         }
     };
 
-    // Build usage script configuration if provided
-    let mut meta = build_provider_meta(request)?;
+    // Import only model connection metadata.
+    let mut meta: Option<ProviderMeta> = None;
     if matches!(app_type, AppType::ClaudeDesktop) {
         meta.get_or_insert_with(ProviderMeta::default)
             .claude_desktop_mode = Some(ClaudeDesktopMode::Direct);
@@ -197,108 +184,6 @@ fn get_primary_endpoint(request: &DeepLinkImportRequest) -> String {
         .and_then(|ep| ep.split(',').next())
         .map(|s| s.trim().to_string())
         .unwrap_or_default()
-}
-
-fn normalize_deeplink_api_key(api_key: &str) -> String {
-    api_key.trim().to_string()
-}
-
-fn normalize_deeplink_base_url(base_url: &str) -> String {
-    base_url.trim().trim_end_matches('/').to_string()
-}
-
-fn usage_api_key_override(request: &DeepLinkImportRequest) -> Option<String> {
-    let usage_api_key = normalize_deeplink_api_key(request.usage_api_key.as_deref()?);
-    if usage_api_key.is_empty() {
-        return None;
-    }
-
-    let provider_api_key = request
-        .api_key
-        .as_deref()
-        .map(normalize_deeplink_api_key)
-        .unwrap_or_default();
-
-    if !provider_api_key.is_empty() && usage_api_key == provider_api_key {
-        None
-    } else {
-        Some(usage_api_key)
-    }
-}
-
-fn usage_base_url_override(request: &DeepLinkImportRequest) -> Option<String> {
-    let usage_base_url = normalize_deeplink_base_url(request.usage_base_url.as_deref()?);
-    if usage_base_url.is_empty() {
-        return None;
-    }
-
-    let provider_base_url = normalize_deeplink_base_url(&get_primary_endpoint(request));
-
-    if !provider_base_url.is_empty() && usage_base_url == provider_base_url {
-        None
-    } else {
-        Some(usage_base_url)
-    }
-}
-
-/// Build provider meta with usage script configuration
-fn build_provider_meta(request: &DeepLinkImportRequest) -> Result<Option<ProviderMeta>, AppError> {
-    // Check if any usage script fields are provided
-    if request.usage_script.is_none()
-        && request.usage_enabled.is_none()
-        && request.usage_api_key.is_none()
-        && request.usage_base_url.is_none()
-        && request.usage_access_token.is_none()
-        && request.usage_user_id.is_none()
-        && request.usage_auto_interval.is_none()
-    {
-        return Ok(None);
-    }
-
-    // Decode usage script code if provided
-    let code = if let Some(script_b64) = &request.usage_script {
-        let decoded = decode_base64_param("usage_script", script_b64)?;
-        String::from_utf8(decoded)
-            .map_err(|e| AppError::InvalidInput(format!("Invalid UTF-8 in usage_script: {e}")))?
-    } else {
-        String::new()
-    };
-
-    // Determine enabled state: explicit param only, defaulting to disabled.
-    //
-    // 「携带了代码」不构成用户的启用决定。此处的输入来自 deeplink——即第三方
-    // 构造、经浏览器抵达的不可信载荷——而 `code` 是一段会在查询用量时执行的
-    // JavaScript。若以 `!code.is_empty()` 作默认，一条链接就能让脚本在用户
-    // 从未勾选过的情况下进入启用态。
-    //
-    // 要启用，链接必须显式携带 `usageEnabled=true`。注意该参数是**链接作者**的
-    // 请求，不构成用户的同意；用户的同意体现在确认框展示了完整脚本正文与启用
-    // 徽章之后仍点了导入——所以那两处展示是本设计的承重部分，不可省略。
-    // 用户在应用内手动配置的脚本不走这条路径。
-    let enabled = request.usage_enabled.unwrap_or(false);
-
-    let usage_script = UsageScript {
-        enabled,
-        language: "javascript".to_string(),
-        code,
-        timeout: Some(10),
-        api_key: usage_api_key_override(request),
-        base_url: usage_base_url_override(request),
-        access_token: request.usage_access_token.clone(),
-        user_id: request.usage_user_id.clone(),
-        template_type: None, // Deeplink providers don't specify template type (will use backward compatibility logic)
-        auto_query_interval: request.usage_auto_interval,
-        coding_plan_provider: None,
-        access_key_id: None,
-        secret_access_key: None,
-        team_organization_id: None,
-        team_project_id: None,
-    };
-
-    Ok(Some(ProviderMeta {
-        usage_script: Some(usage_script),
-        ..Default::default()
-    }))
 }
 
 /// Build Claude settings configuration
@@ -451,23 +336,6 @@ requires_openai_auth = true
     })
 }
 
-/// Build Gemini settings configuration
-fn build_gemini_settings(request: &DeepLinkImportRequest) -> serde_json::Value {
-    let mut env = serde_json::Map::new();
-    env.insert("GEMINI_API_KEY".to_string(), json!(request.api_key));
-    env.insert(
-        "GOOGLE_GEMINI_BASE_URL".to_string(),
-        json!(get_primary_endpoint(request)),
-    );
-
-    // Add model if provided
-    if let Some(model) = &request.model {
-        env.insert("GEMINI_MODEL".to_string(), json!(model));
-    }
-
-    json!({ "env": env })
-}
-
 fn build_grokbuild_settings(request: &DeepLinkImportRequest) -> serde_json::Value {
     let model = request
         .model
@@ -523,33 +391,6 @@ fn build_opencode_settings(request: &DeepLinkImportRequest) -> serde_json::Value
         "options": options,
         "models": models
     })
-}
-
-/// Build settings for OpenClaw (camelCase live config).
-/// Format: { baseUrl, apiKey, api, models }
-fn build_additive_app_settings(request: &DeepLinkImportRequest) -> serde_json::Value {
-    let endpoint = get_primary_endpoint(request);
-
-    let mut config = serde_json::Map::new();
-
-    if !endpoint.is_empty() {
-        config.insert("baseUrl".to_string(), json!(endpoint));
-    }
-
-    if let Some(api_key) = &request.api_key {
-        config.insert("apiKey".to_string(), json!(api_key));
-    }
-
-    config.insert("api".to_string(), json!("openai-completions"));
-
-    if let Some(model) = &request.model {
-        config.insert(
-            "models".to_string(),
-            json!([{ "id": model, "name": model }]),
-        );
-    }
-
-    json!(config)
 }
 
 /// Build Hermes provider settings (snake_case YAML-native fields).
@@ -1170,23 +1011,5 @@ mod tests {
                 .and_then(|value| value.as_str()),
             Some("https://api.example.com/v1")
         );
-    }
-
-    #[test]
-    fn openclaw_still_uses_camel_case() {
-        // OpenClaw's live config natively uses camelCase; guard against a
-        // refactor accidentally flipping it to snake_case.
-        let request = DeepLinkImportRequest {
-            resource: "provider".to_string(),
-            app: Some("openclaw".to_string()),
-            name: Some("c".to_string()),
-            endpoint: Some("https://api.example.com".to_string()),
-            api_key: Some("k".to_string()),
-            ..Default::default()
-        };
-        let settings = build_additive_app_settings(&request);
-        let obj = settings.as_object().unwrap();
-        assert!(obj.contains_key("baseUrl"));
-        assert!(obj.contains_key("apiKey"));
     }
 }

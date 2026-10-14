@@ -83,6 +83,7 @@ fn import_authorizer(context: rusqlite::hooks::AuthContext<'_>) -> rusqlite::hoo
 }
 
 /// Tables whose data rows are skipped when exporting for WebDAV sync.
+#[cfg(test)]
 const SYNC_SKIP_TABLES: &[&str] = &[
     "proxy_request_logs",
     "stream_check_logs",
@@ -95,6 +96,7 @@ const SYNC_SKIP_TABLES: &[&str] = &[
 
 /// Tables whose local data is preserved from the live database during WebDAV import.
 /// Excludes ephemeral tables like provider_health that can safely rebuild at runtime.
+#[cfg(test)]
 const SYNC_PRESERVE_TABLES: &[&str] = &[
     "proxy_request_logs",
     "stream_check_logs",
@@ -121,6 +123,7 @@ impl Database {
     }
 
     /// Export SQL for sync (WebDAV), skipping local-only tables' data
+    #[cfg(test)]
     pub fn export_sql_string_for_sync(&self) -> Result<String, AppError> {
         let snapshot = self.snapshot_to_memory()?;
         Self::dump_sql(&snapshot, SYNC_SKIP_TABLES)
@@ -158,6 +161,7 @@ impl Database {
 
     /// Import SQL generated for sync, then restore local-only tables from the
     /// current live database before replacing it.
+    #[cfg(test)]
     pub(crate) fn import_sql_string_for_sync(&self, sql_raw: &str) -> Result<String, AppError> {
         self.import_sql_string_inner(sql_raw, SYNC_PRESERVE_TABLES)
     }
@@ -441,31 +445,6 @@ impl Database {
                     );
                     self.backup_database_file_locked(&backup_file_guard)?;
                 }
-            }
-        }
-
-        // Periodic maintenance is always enabled, regardless of auto-backup settings.
-        let mut reclaimed_rows = 0u64;
-        match self.cleanup_old_stream_check_logs(7) {
-            Ok(deleted) => {
-                reclaimed_rows += deleted;
-            }
-            Err(e) => {
-                log::warn!("Periodic stream_check_logs cleanup failed: {e}");
-            }
-        }
-        match self.rollup_and_prune(30) {
-            Ok(deleted) => {
-                reclaimed_rows += deleted;
-            }
-            Err(e) => {
-                log::warn!("Periodic rollup_and_prune failed: {e}");
-            }
-        }
-        if reclaimed_rows > 0 {
-            let conn = lock_conn!(self.conn);
-            if let Err(e) = conn.execute_batch("PRAGMA incremental_vacuum;") {
-                log::warn!("Periodic incremental vacuum failed: {e}");
             }
         }
 
@@ -3029,7 +3008,7 @@ mod tests {
 
     #[test]
     #[serial]
-    fn periodic_maintenance_runs_even_when_auto_backup_disabled() -> Result<(), AppError> {
+    fn periodic_backup_preserves_usage_and_probe_history() -> Result<(), AppError> {
         let _test_home = TestHomeGuard::new();
 
         let settings = AppSettings {
@@ -3082,14 +3061,14 @@ mod tests {
         };
 
         assert_eq!(
-            remaining_request_logs, 0,
-            "old request logs should still be pruned when auto backup is disabled"
+            remaining_request_logs, 1,
+            "periodic backup must preserve historical usage records"
         );
         assert_eq!(
-            stream_logs, 0,
-            "old stream check logs should still be pruned when auto backup is disabled"
+            stream_logs, 1,
+            "retired probe records must remain available in database archives"
         );
-        assert_eq!(rollups, 1, "old request logs should be rolled up");
+        assert_eq!(rollups, 0, "preserved records must not also be rolled up");
 
         Ok(())
     }

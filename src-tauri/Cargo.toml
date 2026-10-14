@@ -1,6 +1,6 @@
 [package]
 name = "modeldeck"
-version = "0.3.0"
+version = "0.4.0"
 description = "Personal model connection manager for AI coding clients"
 authors = ["ModelDeck contributors", "Jason Young (upstream CC Switch)"]
 license = "MIT"
@@ -10,8 +10,8 @@ rust-version = "1.85.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
-name = "cc_switch_lib"
-crate-type = ["staticlib", "cdylib", "rlib"]
+name = "modeldeck_lib"
+crate-type = ["rlib"]
 doctest = false
 
 [features]
@@ -30,7 +30,6 @@ tauri = { version = "2.8.2", features = ["tray-icon", "protocol-asset", "image-p
 tauri-plugin-log = "2"
 tauri-plugin-opener = "2"
 tauri-plugin-process = "2"
-tauri-plugin-updater = "2"
 tauri-plugin-dialog = "2"
 tauri-plugin-store = "2"
 tauri-plugin-deep-link = "2"
@@ -40,32 +39,14 @@ toml = "0.8"
 toml_edit = "0.22"
 reqwest = { version = "0.12", features = ["rustls-tls", "json", "stream", "socks"] }
 arboard = "3.6"
-flate2 = "1"
-brotli = "7"
-zstd = "0.13"
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "time", "sync"] }
 futures = "0.3"
 async-stream = "0.3"
 bytes = "1.5"
 axum = "0.7"
-tower = "0.4"
-tower-http = { version = "0.5", features = ["cors"] }
-hyper = { version = "1.0", features = ["full"] }
-hyper-util = { version = "0.1", features = ["tokio", "http1", "client-legacy"] }
-hyper-rustls = { version = "0.27", features = ["http1", "tls12", "ring", "webpki-tokio"] }
 http = "1"
-http-body = "1"
-http-body-util = "0.1"
-httparse = "1"
-tokio-rustls = "0.26"
-rustls = "0.23"
-webpki-roots = "0.26"
-rustls-native-certs = "0.8"
 regex = "1.10"
-rquickjs = { version = "0.8", features = ["array-buffer", "classes"] }
 thiserror = "2.0"
-anyhow = "1.0"
-zip = "2.2"
 serde_yaml = "0.9"
 tempfile = "3"
 url = "2.5"
@@ -77,10 +58,14 @@ indexmap = { version = "2", features = ["serde"] }
 rust_decimal = "1.33"
 uuid = { version = "1.11", features = ["v4"] }
 sha2 = "0.10"
-hmac = "0.12"
 json5 = "0.4"
-json-five = "0.3.1"
 sys-locale = "0.3"
+
+flate2 = "1"
+
+brotli = "7"
+
+zstd = "0.13"
 
 [target.'cfg(any(target_os = "macos", target_os = "windows", target_os = "linux"))'.dependencies]
 tauri-plugin-single-instance = "2"
@@ -99,12 +84,19 @@ windows-sys = { version = "0.61", features = [
     "Win32_UI_Shell",
 ] }
 
-[target.'cfg(all(target_os = "windows", target_arch = "aarch64"))'.dependencies]
-rquickjs = { version = "0.8", features = ["bindgen"] }
-
 [target.'cfg(target_os = "macos")'.dependencies]
 objc2 = "0.5"
 objc2-app-kit = { version = "0.2", features = ["NSColor"] }
+
+# Keep file and line information for backtraces without retaining full debugger
+# data and incremental object caches from repeated desktop builds and test runs.
+[profile.dev]
+debug = "line-tables-only"
+incremental = false
+
+[profile.test]
+debug = "line-tables-only"
+incremental = false
 
 # Optimize release binary size to help reduce AppImage footprint
 [profile.release]
@@ -116,5 +108,6 @@ panic = "unwind"
 strip = "symbols"
 
 [dev-dependencies]
+tower = { version = "0.5", features = ["util"] }
 serial_test = "3"
 tempfile = "3"

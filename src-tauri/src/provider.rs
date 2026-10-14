@@ -219,7 +219,7 @@ impl Provider {
             ),
             // Pi custom providers use the native models.json field names.
             AppType::Pi => (
-                crate::pi_config::provider_base_url(settings).unwrap_or_default(),
+                str_at(settings.get("baseUrl").or_else(|| settings.get("base_url"))),
                 str_at(settings.get("apiKey")),
             ),
             // OpenCode (OMO) nests credentials under `options` (the SDK options object).
@@ -315,40 +315,6 @@ pub struct UsageScript {
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(rename = "teamProjectId")]
     pub team_project_id: Option<String>,
-}
-
-/// 用量数据
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct UsageData {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[serde(rename = "planName")]
-    pub plan_name: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub extra: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[serde(rename = "isValid")]
-    pub is_valid: Option<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[serde(rename = "invalidMessage")]
-    pub invalid_message: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub total: Option<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub used: Option<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub remaining: Option<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub unit: Option<String>,
-}
-
-/// 用量查询结果（支持多套餐）
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct UsageResult {
-    pub success: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub data: Option<Vec<UsageData>>, // 支持返回多个套餐
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub error: Option<String>,
 }
 
 /// 认证绑定来源
@@ -743,6 +709,7 @@ pub struct UniversalProvider {
 
 impl UniversalProvider {
     /// 创建新的统一供应商
+    #[cfg(test)]
     pub fn new(
         id: String,
         name: String,
@@ -881,6 +848,7 @@ requires_openai_auth = true"#
     }
 
     /// 生成 Gemini 供应商配置
+    #[cfg(test)]
     pub fn to_gemini_provider(&self) -> Option<Provider> {
         if !self.apps.gemini {
             return None;
@@ -920,104 +888,11 @@ requires_openai_auth = true"#
 // OpenCode 供应商配置结构
 // ============================================================================
 
-/// OpenCode 供应商的 settings_config 结构
-///
-/// OpenCode 使用 AI SDK 包名来指定供应商类型，与其他应用的配置格式不同。
-/// 配置示例：
-/// ```json
-/// {
-///   "npm": "@ai-sdk/openai-compatible",
-///   "options": { "baseURL": "https://api.example.com/v1", "apiKey": "sk-xxx" },
-///   "models": { "gpt-4o": { "name": "GPT-4o" } }
-/// }
-/// ```
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct OpenCodeProviderConfig {
-    /// AI SDK 包名，如 "@ai-sdk/openai-compatible", "@ai-sdk/anthropic"
-    pub npm: String,
-
-    /// 供应商名称（可选，用于显示）
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub name: Option<String>,
-
-    /// 供应商选项（API 密钥、基础 URL 等）
-    #[serde(default)]
-    pub options: OpenCodeProviderOptions,
-
-    /// 模型定义映射
-    #[serde(default)]
-    pub models: HashMap<String, OpenCodeModel>,
-}
-
-impl Default for OpenCodeProviderConfig {
-    fn default() -> Self {
-        Self {
-            npm: "@ai-sdk/openai-compatible".to_string(),
-            name: None,
-            options: OpenCodeProviderOptions::default(),
-            models: HashMap::new(),
-        }
-    }
-}
-
-/// OpenCode 供应商选项
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
-pub struct OpenCodeProviderOptions {
-    /// API 基础 URL
-    #[serde(rename = "baseURL", skip_serializing_if = "Option::is_none")]
-    pub base_url: Option<String>,
-
-    /// API 密钥（支持环境变量引用，如 "{env:API_KEY}"）
-    #[serde(rename = "apiKey", skip_serializing_if = "Option::is_none")]
-    pub api_key: Option<String>,
-
-    /// 自定义请求头
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub headers: Option<HashMap<String, String>>,
-
-    /// 额外选项（timeout, setCacheKey 等）
-    /// 使用 flatten 捕获所有未明确定义的字段
-    #[serde(flatten, default, skip_serializing_if = "HashMap::is_empty")]
-    pub extra: HashMap<String, Value>,
-}
-
-/// OpenCode 模型定义
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct OpenCodeModel {
-    /// 模型显示名称
-    pub name: String,
-
-    /// 模型限制（上下文和输出 token 数）
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub limit: Option<OpenCodeModelLimit>,
-
-    /// 模型额外选项（provider 路由等）
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub options: Option<HashMap<String, Value>>,
-
-    /// 额外字段（cost、modalities、thinking、variants 等）
-    /// 使用 flatten 捕获所有未明确定义的字段
-    #[serde(flatten, default, skip_serializing_if = "HashMap::is_empty")]
-    pub extra: HashMap<String, Value>,
-}
-
-/// OpenCode 模型限制
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
-pub struct OpenCodeModelLimit {
-    /// 上下文 token 限制
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub context: Option<u64>,
-
-    /// 输出 token 限制
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub output: Option<u64>,
-}
-
 #[cfg(test)]
 mod tests {
     use super::{
         ClaudeModelConfig, CodexModelConfig, GeminiModelConfig, LocalProxyRequestOverrides,
-        OpenCodeProviderConfig, Provider, ProviderManager, ProviderMeta, UniversalProvider,
+        Provider, ProviderManager, ProviderMeta, UniversalProvider,
     };
     use serde_json::json;
     use std::collections::HashMap;
@@ -1390,18 +1265,6 @@ mod tests {
     }
 
     #[test]
-    fn opencode_provider_config_defaults() {
-        let config = OpenCodeProviderConfig::default();
-        assert_eq!(config.npm, "@ai-sdk/openai-compatible");
-        assert!(config.name.is_none());
-        assert!(config.models.is_empty());
-        assert!(config.options.base_url.is_none());
-        assert!(config.options.api_key.is_none());
-        assert!(config.options.headers.is_none());
-        assert!(config.options.extra.is_empty());
-    }
-
-    #[test]
     fn universal_codex_provider_origin_base_url_adds_v1() {
         let mut p = UniversalProvider::new(
             "id".to_string(),
@@ -1570,25 +1433,6 @@ mod tests {
             (
                 "https://api.deepseek.com".to_string(),
                 "sk-openclaw".to_string()
-            )
-        );
-    }
-
-    #[test]
-    fn resolve_credentials_pi_uses_native_model_level_base_url() {
-        let p = provider_with(json!({
-            "apiKey": "sk-pi",
-            "models": [{
-                "id": "model-a",
-                "api": "openai-completions",
-                "baseUrl": "https://api.example.com/v1/"
-            }]
-        }));
-        assert_eq!(
-            p.resolve_usage_credentials(&AppType::Pi),
-            (
-                "https://api.example.com/v1".to_string(),
-                "sk-pi".to_string()
             )
         );
     }

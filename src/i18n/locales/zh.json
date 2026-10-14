@@ -350,7 +350,7 @@
     "tabGeneral": "通用",
     "tabAuth": "认证",
     "tabAdvanced": "高级",
-    "tabProxy": "路由",
+    "tabProxy": "网关",
     "authCenter": {
       "title": "OAuth 认证中心",
       "description": "在 Claude Code 中使用您的其他订阅，请注意合规风险。",
@@ -362,7 +362,7 @@
     "advanced": {
       "configDir": {
         "title": "配置文件目录",
-        "description": "管理 Claude、Codex 和 Gemini 的配置存储路径"
+        "description": "管理受支持客户端的原生配置目录"
       },
       "proxy": {
         "title": "本地路由",
@@ -391,8 +391,8 @@
         "description": "配置 ModelDeck 访问外部 API 时使用的代理"
       },
       "data": {
-        "title": "数据管理",
-        "description": "导入和导出本地配置数据"
+        "title": "用量数据库",
+        "description": "导入和导出用量及历史记录数据库"
       },
       "backup": {
         "title": "备份与恢复",
@@ -459,7 +459,7 @@
     "themeDark": "深色",
     "themeSystem": "跟随系统",
     "importExport": "SQL 导入导出",
-    "importExportHint": "导入/导出数据库 SQL 备份（仅支持导入由 ModelDeck 导出的备份），便于备份或迁移。",
+    "importExportHint": "SQL 备份包含用量、计价和历史数据库记录。模型资源、设备设置及原生配置快照需通过备份整个数据目录保存。",
     "exportConfig": "导出 SQL 备份",
     "selectConfigFile": "选择 SQL 文件",
     "noFileSelected": "尚未选择配置文件。",
@@ -752,9 +752,9 @@
       }
     },
     "configDirectoryOverride": "配置目录覆盖（高级）",
-    "configDirectoryDescription": "在 WSL 等环境使用 Claude Code 或 Codex 的时候，可手动指定为 WSL 里的配置目录，供应商数据与主环境保持一致。",
+    "configDirectoryDescription": "指定客户端实际使用的配置目录。更改前请先恢复该客户端的原生配置，保存后再应用模型连接。",
     "appConfigDir": "ModelDeck 配置目录",
-    "appConfigDirDescription": "自定义 ModelDeck 的配置存储位置（指定到云同步文件夹即可云同步配置）",
+    "appConfigDirDescription": "选择资源、设置和用量数据库的存储位置。更改前请先恢复已应用客户端的原生配置。",
     "browsePlaceholderApp": "例如：C:\\Users\\Administrator\\.cc-switch",
     "claudeConfigDir": "Claude Code 配置目录",
     "claudeConfigDirDescription": "覆盖 Claude 配置目录 (settings.json)。真正自定义目录会在目录内存放 Claude MCP 的 .claude.json；默认 ~/.claude 目录仍使用 Claude 默认的 ~/.claude.json。",
@@ -853,7 +853,7 @@
     "saving": "正在保存...",
     "globalProxy": {
       "label": "全局代理",
-      "hint": "代理所有请求（API、Skills 下载等）。开启本地路由时，应用的请求也会经过此代理。留空表示直连。",
+      "hint": "为 ModelDeck 访问模型 API 和模型目录配置出站代理。留空表示直连。",
       "username": "用户名（可选）",
       "password": "密码（可选）",
       "test": "测试连接",
@@ -880,7 +880,27 @@
       "defaultCostMultiplierInvalid": "默认倍率格式不正确"
     },
     "saveFailedGeneric": "保存失败，请重试",
-    "appearance": "外观"
+    "appearance": "外观",
+    "gateway": {
+      "title": "共享模型网关",
+      "status": "网关状态",
+      "stopped": "已停止",
+      "start": "启动",
+      "stop": "停止",
+      "address": "监听地址",
+      "port": "监听端口",
+      "hint": "应用客户端连接时会自动启动网关。更改地址或端口前，请先恢复已应用客户端的原生配置。",
+      "saved": "网关设置已保存",
+      "upstream": "上游网络代理",
+      "unavailable": "网关配置尚未加载，请稍后重试"
+    },
+    "aboutIndependentDescription": "独立的桌面模型管理工具，用于模型资源、客户端连接和用量统计。",
+    "aboutProject": "项目",
+    "aboutBuild": "版本类型",
+    "aboutLocalBuild": "本地构建",
+    "aboutPortableBuild": "便携构建",
+    "aboutSource": "源码来源",
+    "aboutSourceNotice": "复用 CC Switch 的模型适配代码，保留上游 MIT 版权声明。"
   },
   "apps": {
     "claude": "Claude",
@@ -2043,7 +2063,14 @@
       "envHijack": "该配置包含可改变进程加载行为的环境变量（如注入动态库、替换 CA 证书），请确认来源可信。",
       "privateEndpoint": "该地址指向本机或内网。若非你自建的本地服务，请勿导入。",
       "shellCommand": "该配置通过 shell 执行一整段命令，实际运行的内容在参数里，请逐行核对。"
-    }
+    },
+    "resourceTitle": "导入模型资源",
+    "resourceDescription": "导入只添加提供商和模型资源。需要更改连接时，请到客户端页面选择端点并应用。",
+    "resourceEndpoint": "端点",
+    "resourceModel": "模型",
+    "resourcePreview": "预览配置",
+    "resourceImport": "导入资源",
+    "resourceImported": "资源已导入，请到客户端页面选择并应用连接。"
   },
   "iconPicker": {
     "search": "搜索图标",

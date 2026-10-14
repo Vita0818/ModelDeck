@@ -344,6 +344,7 @@ fn validate_anthropic_web_search_direct_mode(tool: &Value) -> Result<(), ProxyEr
     }
 }
 
+#[cfg(test)]
 pub(crate) fn anthropic_web_search_tool_name(body: &Value) -> Option<&str> {
     let tools = body.get("tools").and_then(Value::as_array)?;
     let forced_name = body
@@ -423,32 +424,6 @@ fn anthropic_web_search_to_responses(
     }
 
     Ok((response_tool, max_uses))
-}
-
-pub(crate) fn anthropic_web_search_max_uses(body: &Value) -> Option<u64> {
-    let tools = body.get("tools").and_then(Value::as_array)?;
-    let forced_name = body
-        .get("tool_choice")
-        .and_then(Value::as_object)
-        .filter(|choice| choice.get("type").and_then(Value::as_str) == Some("tool"))
-        .and_then(|choice| choice.get("name"))
-        .and_then(Value::as_str)
-        .filter(|name| {
-            tools.iter().any(|tool| {
-                is_anthropic_web_search_tool(tool)
-                    && tool.get("name").and_then(Value::as_str) == Some(*name)
-            })
-        });
-    tools
-        .iter()
-        .filter(|tool| {
-            is_anthropic_web_search_tool(tool)
-                && forced_name
-                    .is_none_or(|name| tool.get("name").and_then(Value::as_str) == Some(name))
-        })
-        .filter_map(|tool| tool.get("max_uses").and_then(Value::as_u64))
-        .filter(|limit| *limit > 0)
-        .min()
 }
 
 pub(crate) fn web_search_action_input(item: &Value) -> Value {

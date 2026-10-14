@@ -82,39 +82,3 @@ pub(crate) const OFFICIAL_SEEDS: &[OfficialProviderSeed] = &[
         settings_config_json: r#"{"config":""}"#,
     },
 ];
-
-/// 判断给定的 provider id 是否属于内置官方种子。
-///
-/// 单一事实源：直接扫描 `OFFICIAL_SEEDS`，避免在多处重复维护 id 列表。
-pub(crate) fn is_official_seed_id(id: &str) -> bool {
-    OFFICIAL_SEEDS.iter().any(|seed| seed.id == id)
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn official_seeds_include_claude_desktop() {
-        let seed = OFFICIAL_SEEDS
-            .iter()
-            .find(|seed| seed.id == CLAUDE_DESKTOP_OFFICIAL_PROVIDER_ID)
-            .expect("claude desktop official seed");
-
-        assert_eq!(seed.app_type, AppType::ClaudeDesktop);
-        assert!(is_official_seed_id(CLAUDE_DESKTOP_OFFICIAL_PROVIDER_ID));
-    }
-
-    #[test]
-    fn official_seeds_include_grokbuild() {
-        let seed = OFFICIAL_SEEDS
-            .iter()
-            .find(|seed| seed.id == GROKBUILD_OFFICIAL_PROVIDER_ID)
-            .expect("grok build official seed");
-
-        assert_eq!(seed.app_type, AppType::GrokBuild);
-        assert!(is_official_seed_id(GROKBUILD_OFFICIAL_PROVIDER_ID));
-        // 空 config = 官方登录态：切换时不注入自定义模型表
-        assert_eq!(seed.settings_config_json, r#"{"config":""}"#);
-    }
-}

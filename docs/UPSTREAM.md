@@ -14,3 +14,11 @@ The source baseline was cloned with its Git history into the user-owned ModelDec
 Internal compatibility names such as `cc_switch_lib`, `.cc-switch` and `cc-switch.db` remain in the first release to preserve the established runtime data contract. User-facing product identity and OS registration use ModelDeck.
 
 The original release and R2 mirror workflows are archived under `docs/upstream/workflows/`; they do not run as ModelDeck release jobs. The inherited CI checks remain available.
+
+## ModelDeck 0.4.0
+
+ModelDeck is maintained as its own model connection application. Version 0.4.0 removes the inherited account managers, cloud synchronization, automatic failover and general client-management services from the source and build. It retains the protocol adapters, native model configuration writers and actual usage collectors required by the supported client set.
+
+The internal Rust library is now `modeldeck_lib`, with only an `rlib` target. `.cc-switch` and `cc-switch.db` remain storage compatibility names so existing resources, archives and usage records remain readable. The primary resource graph is `model-deck.json`.
+
+The publishing repository is [Vita0818/ModelDeck](https://github.com/Vita0818/ModelDeck). Its current Git history includes the inherited source history; this release does not rewrite that history. Source attribution and MIT notices remain part of the project regardless of repository history organization.

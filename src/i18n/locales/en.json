@@ -350,7 +350,7 @@
     "tabGeneral": "General",
     "tabAuth": "Auth",
     "tabAdvanced": "Advanced",
-    "tabProxy": "Routing",
+    "tabProxy": "Gateway",
     "authCenter": {
       "title": "OAuth Authentication Center",
       "description": "Use your other subscriptions in Claude Code — please be mindful of compliance risks.",
@@ -362,7 +362,7 @@
     "advanced": {
       "configDir": {
         "title": "Configuration Directory",
-        "description": "Manage storage paths for Claude, Codex and Gemini configurations"
+        "description": "Manage native configuration directories for supported clients"
       },
       "proxy": {
         "title": "Local Routing",
@@ -391,8 +391,8 @@
         "description": "Configure proxy for ModelDeck to access external APIs"
       },
       "data": {
-        "title": "Data Management",
-        "description": "Import and export local configuration data"
+        "title": "Usage database",
+        "description": "Import and export usage and historical database records"
       },
       "backup": {
         "title": "Backup & Restore",
@@ -459,7 +459,7 @@
     "themeDark": "Dark",
     "themeSystem": "System",
     "importExport": "SQL Import/Export",
-    "importExportHint": "Import or export database SQL backups for migration or restore (import supports only backups exported by ModelDeck).",
+    "importExportHint": "SQL archives contain usage, pricing and historical database records. Back up the complete data directory to preserve model resources, device settings and native configuration snapshots.",
     "exportConfig": "Export SQL Backup",
     "selectConfigFile": "Select SQL File",
     "noFileSelected": "No configuration file selected.",
@@ -752,9 +752,9 @@
       }
     },
     "configDirectoryOverride": "Configuration Directory Override (Advanced)",
-    "configDirectoryDescription": "When using Claude Code or Codex in environments like WSL, you can manually specify the configuration directory to the one in WSL to keep provider data consistent with the main environment.",
+    "configDirectoryDescription": "Point to the directory the client uses. Restore its native configuration before changing the path, then save and apply the model connection again.",
     "appConfigDir": "ModelDeck Configuration Directory",
-    "appConfigDirDescription": "Customize the storage location for ModelDeck configuration (point to cloud sync folder to enable config sync)",
+    "appConfigDirDescription": "Choose where ModelDeck stores resources, settings and usage. Restore active client configurations before changing this location.",
     "browsePlaceholderApp": "e.g., C:\\Users\\Administrator\\.cc-switch",
     "claudeConfigDir": "Claude Code Configuration Directory",
     "claudeConfigDirDescription": "Override Claude configuration directory (settings.json). Custom directories store .claude.json (MCP) inside the directory; the default ~/.claude directory keeps Claude Code's split ~/.claude.json path.",
@@ -853,7 +853,7 @@
     "saving": "Saving...",
     "globalProxy": {
       "label": "Global Proxy",
-      "hint": "Proxy all requests (API, Skills download, etc.). When local routing is enabled, app traffic is also routed through this proxy. Leave empty for direct connection.",
+      "hint": "Configure outbound access to model APIs and catalogs. Leave empty for a direct connection.",
       "username": "Username (optional)",
       "password": "Password (optional)",
       "test": "Test Connection",
@@ -880,7 +880,27 @@
       "defaultCostMultiplierInvalid": "Invalid multiplier format"
     },
     "saveFailedGeneric": "Save failed, please try again",
-    "appearance": "Appearance"
+    "appearance": "Appearance",
+    "gateway": {
+      "title": "Shared model gateway",
+      "status": "Gateway status",
+      "stopped": "Stopped",
+      "start": "Start",
+      "stop": "Stop",
+      "address": "Listen address",
+      "port": "Listen port",
+      "hint": "Applying a client starts the gateway automatically. Restore active clients before changing the address or port.",
+      "saved": "Gateway settings saved",
+      "upstream": "Upstream network proxy",
+      "unavailable": "Gateway configuration is unavailable. Try again after it loads."
+    },
+    "aboutIndependentDescription": "Independent desktop app for model resources, client connections and usage statistics.",
+    "aboutProject": "Project",
+    "aboutBuild": "Build",
+    "aboutLocalBuild": "Local build",
+    "aboutPortableBuild": "Portable build",
+    "aboutSource": "Source attribution",
+    "aboutSourceNotice": "Reuses CC Switch model adapters. Upstream MIT copyright notices are retained."
   },
   "apps": {
     "claude": "Claude",
@@ -2043,7 +2063,14 @@
       "envHijack": "This config sets environment variables that change how processes load code (e.g. injecting libraries or replacing CA certificates). Import only from a source you trust.",
       "privateEndpoint": "This address points at localhost or a private network. Do not import unless it is your own local service.",
       "shellCommand": "This config runs a full command line through a shell — what actually executes is in the arguments. Review each line."
-    }
+    },
+    "resourceTitle": "Import model resources",
+    "resourceDescription": "This adds provider and model resources. Choose an endpoint and apply it in the client page to change a connection.",
+    "resourceEndpoint": "Endpoint",
+    "resourceModel": "Model",
+    "resourcePreview": "Preview configuration",
+    "resourceImport": "Import resources",
+    "resourceImported": "Resources imported. Choose and apply the connection in the client page."
   },
   "iconPicker": {
     "search": "Search Icons",

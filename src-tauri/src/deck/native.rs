@@ -1,6 +1,5 @@
 use super::*;
 use crate::{
-    app_config::AppType,
     config::{get_home_dir, read_json_file},
     model_clients::{native as adapters, ModelClient},
     provider::{ClaudeDesktopModelRoute, Provider, ProviderMeta},
@@ -416,24 +415,40 @@ pub fn apply(
             adapters::apply_deck(adapter, p, previous, || Ok(()))?;
         } else {
             let provider = generated_provider(client, p)?;
-            let app = client.parse::<AppType>().map_err(|e| e.to_string())?;
-            if client == "codex" {
-                let settings =
-                    crate::services::provider::build_effective_settings_with_common_config(
-                        state.db.as_ref(),
-                        &app,
-                        &provider,
+            match client {
+                "codex" => {
+                    let profile =
+                        crate::proxy::providers::resolve_codex_catalog_tool_profile(&provider);
+                    crate::codex_config::write_codex_deck_live_with_catalog(
+                        &provider.settings_config,
+                        profile,
                     )
                     .map_err(|e| e.to_string())?;
-                let profile =
-                    crate::proxy::providers::resolve_codex_catalog_tool_profile(&provider);
-                crate::codex_config::write_codex_deck_live_with_catalog(&settings, profile)
-                    .map_err(|e| e.to_string())?;
-            } else {
-                crate::services::provider::write_live_with_common_config_for_state(
-                    state, &app, &provider,
+                }
+                "claude" => crate::config::write_json_file(
+                    &crate::config::get_claude_settings_path(),
+                    &provider.settings_config,
                 )
-                .map_err(|e| e.to_string())?;
+                .map_err(|e| e.to_string())?,
+                "claude-desktop" => {
+                    crate::claude_desktop_config::apply_provider(&state.db, &provider)
+                        .map_err(|e| e.to_string())?
+                }
+                "grokbuild" => crate::grok_config::write_grok_provider_live(&provider)
+                    .map_err(|e| e.to_string())?,
+                "opencode" => crate::opencode_config::set_provider(
+                    &provider.id,
+                    provider.settings_config.clone(),
+                )
+                .map_err(|e| e.to_string())?,
+                "hermes" => {
+                    crate::hermes_config::set_provider(
+                        &provider.id,
+                        provider.settings_config.clone(),
+                    )
+                    .map_err(|e| e.to_string())?;
+                }
+                _ => return Err("Unknown provider harness".into()),
             }
             if client == "claude" {
                 if let Some(executable) = claude_executable {

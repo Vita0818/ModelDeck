@@ -1,48 +1,13 @@
 use crate::config::write_json_file_with_contents;
 use crate::error::AppError;
-use crate::provider::OpenCodeProviderConfig;
 use crate::settings::get_opencode_override_dir;
-use indexmap::IndexMap;
-use serde_json::{json, Map, Value};
+use serde_json::{json, Value};
 use std::path::{Path, PathBuf};
 use std::sync::{Mutex, OnceLock};
 
-const STANDARD_OMO_PLUGIN_PREFIXES: [&str; 2] = ["oh-my-openagent", "oh-my-opencode"];
-const SLIM_OMO_PLUGIN_PREFIXES: [&str; 1] = ["oh-my-opencode-slim"];
 fn opencode_config_lock() -> &'static Mutex<()> {
     static LOCK: OnceLock<Mutex<()>> = OnceLock::new();
     LOCK.get_or_init(|| Mutex::new(()))
-}
-
-fn read_config_contents(path: &Path) -> Result<Option<Vec<u8>>, AppError> {
-    match std::fs::read(path) {
-        Ok(contents) => Ok(Some(contents)),
-        Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(None),
-        Err(err) => Err(AppError::io(path, err)),
-    }
-}
-
-fn matches_plugin_prefix(plugin_name: &str, prefix: &str) -> bool {
-    plugin_name == prefix
-        || plugin_name
-            .strip_prefix(prefix)
-            .map(|suffix| suffix.starts_with('@'))
-            .unwrap_or(false)
-}
-
-fn matches_any_plugin_prefix(plugin_name: &str, prefixes: &[&str]) -> bool {
-    prefixes
-        .iter()
-        .any(|prefix| matches_plugin_prefix(plugin_name, prefix))
-}
-
-fn canonicalize_plugin_name(plugin_name: &str) -> String {
-    if let Some(suffix) = plugin_name.strip_prefix("oh-my-opencode") {
-        if suffix.is_empty() || suffix.starts_with('@') {
-            return format!("oh-my-openagent{suffix}");
-        }
-    }
-    plugin_name.to_string()
 }
 
 pub fn get_opencode_dir() -> PathBuf {
@@ -145,15 +110,6 @@ fn write_opencode_config_to_path_with_contents(
     Ok(contents)
 }
 
-pub fn get_providers() -> Result<Map<String, Value>, AppError> {
-    let config = read_opencode_config()?;
-    Ok(config
-        .get("provider")
-        .and_then(|v| v.as_object())
-        .cloned()
-        .unwrap_or_default())
-}
-
 pub fn set_provider(id: &str, config: Value) -> Result<(), AppError> {
     let _guard = opencode_config_lock().lock()?;
     let path = get_opencode_config_path();
@@ -177,134 +133,6 @@ pub fn set_provider(id: &str, config: Value) -> Result<(), AppError> {
     }
 
     write_opencode_config_to_path_with_contents(&path, &full_config).map(|_| ())
-}
-
-pub fn remove_provider(id: &str) -> Result<(), AppError> {
-    let _guard = opencode_config_lock().lock()?;
-    let path = get_opencode_config_path();
-    let mut config = read_opencode_config_from_path(&path)?;
-
-    if let Some(providers) = config.get_mut("provider").and_then(|v| v.as_object_mut()) {
-        providers.remove(id);
-    } else if config.get("provider").is_some() {
-        log::warn!("opencode.json 的 provider 不是对象，无法删除供应商 '{id}'");
-    }
-
-    write_opencode_config_to_path_with_contents(&path, &config).map(|_| ())
-}
-
-pub fn get_typed_providers() -> Result<IndexMap<String, OpenCodeProviderConfig>, AppError> {
-    let providers = get_providers()?;
-    let mut result = IndexMap::new();
-
-    for (id, value) in providers {
-        match serde_json::from_value::<OpenCodeProviderConfig>(value.clone()) {
-            Ok(config) => {
-                result.insert(id, config);
-            }
-            Err(e) => {
-                log::warn!("Failed to parse provider '{id}': {e}");
-            }
-        }
-    }
-
-    Ok(result)
-}
-
-pub fn set_typed_provider(id: &str, config: &OpenCodeProviderConfig) -> Result<(), AppError> {
-    let value = serde_json::to_value(config).map_err(|e| AppError::JsonSerialize { source: e })?;
-    set_provider(id, value)
-}
-
-pub fn add_plugin(path: &Path, plugin_name: &str) -> Result<(), AppError> {
-    let _guard = opencode_config_lock().lock()?;
-    let mut config = read_opencode_config_from_path(path)?;
-    let normalized_plugin_name = canonicalize_plugin_name(plugin_name);
-    let target_is_omo =
-        matches_any_plugin_prefix(&normalized_plugin_name, &STANDARD_OMO_PLUGIN_PREFIXES)
-            || matches_any_plugin_prefix(&normalized_plugin_name, &SLIM_OMO_PLUGIN_PREFIXES);
-    let mut changed = false;
-
-    let plugins = config.get_mut("plugin").and_then(|v| v.as_array_mut());
-
-    match plugins {
-        Some(arr) => {
-            let mut found_target = false;
-            arr.retain(|value| {
-                let Some(existing_name) = value.as_str() else {
-                    return true;
-                };
-                if existing_name == normalized_plugin_name {
-                    if found_target {
-                        changed = true;
-                        return false;
-                    }
-                    found_target = true;
-                    return true;
-                }
-
-                // Standard OMO and OMO Slim are mutually exclusive.
-                if target_is_omo
-                    && (matches_any_plugin_prefix(existing_name, &STANDARD_OMO_PLUGIN_PREFIXES)
-                        || matches_any_plugin_prefix(existing_name, &SLIM_OMO_PLUGIN_PREFIXES))
-                {
-                    changed = true;
-                    return false;
-                }
-                true
-            });
-
-            if !found_target {
-                arr.push(Value::String(normalized_plugin_name));
-                changed = true;
-            }
-        }
-        None => {
-            config["plugin"] = json!([normalized_plugin_name]);
-            changed = true;
-        }
-    }
-
-    if !changed {
-        return Ok(());
-    }
-
-    write_opencode_config_to_path_with_contents(path, &config).map(|_| ())
-}
-
-pub fn remove_plugins_by_prefixes(path: &Path, prefixes: &[&str]) -> Result<bool, AppError> {
-    let _guard = opencode_config_lock().lock()?;
-    let previous_contents = read_config_contents(path)?;
-    let mut config = read_opencode_config_from_path(path)?;
-
-    let mut changed = false;
-    if let Some(arr) = config.get_mut("plugin").and_then(|v| v.as_array_mut()) {
-        let previous_len = arr.len();
-        arr.retain(|v| {
-            v.as_str()
-                .map(|s| !matches_any_plugin_prefix(s, prefixes))
-                .unwrap_or(true)
-        });
-        changed = arr.len() != previous_len;
-
-        if changed && arr.is_empty() {
-            config.as_object_mut().map(|obj| obj.remove("plugin"));
-        }
-    }
-
-    if !changed {
-        return Ok(false);
-    }
-
-    let current_contents = read_config_contents(path)?;
-    if current_contents != previous_contents {
-        return Err(AppError::Config(
-            "OpenCode config changed on disk. Please reload and try again.".to_string(),
-        ));
-    }
-
-    write_opencode_config_to_path_with_contents(path, &config)?;
-    Ok(true)
 }
 
 #[cfg(test)]
@@ -379,49 +207,5 @@ mod tests {
             config["model"], "keep-me",
             "unrelated user config must be preserved"
         );
-    }
-
-    #[test]
-    fn remove_missing_plugin_does_not_create_config_file() {
-        let temp = tempfile::tempdir().expect("tempdir");
-        let path = temp.path().join("opencode.json");
-
-        let result = remove_plugins_by_prefixes(&path, &["oh-my-openagent"]).unwrap();
-
-        assert!(!result);
-        assert!(!path.exists());
-    }
-
-    #[test]
-    fn remove_missing_plugin_preserves_existing_source() {
-        let temp = tempfile::tempdir().expect("tempdir");
-        let path = temp.path().join("opencode.json");
-        let original = r#"{
-  // Keep formatting when the target plugin is absent.
-  "plugin": ["unrelated-plugin"],
-  "theme": "dark",
-}"#;
-        std::fs::write(&path, original).unwrap();
-
-        let result = remove_plugins_by_prefixes(&path, &["oh-my-openagent"]).unwrap();
-
-        assert!(!result);
-        assert_eq!(std::fs::read_to_string(&path).unwrap(), original);
-    }
-
-    #[test]
-    fn add_existing_plugin_preserves_existing_source() {
-        let temp = tempfile::tempdir().expect("tempdir");
-        let path = temp.path().join("opencode.json");
-        let original = r#"{
-  // Keep comments and formatting when the plugin is already configured.
-  plugin: ['oh-my-openagent@latest'],
-  theme: 'dark',
-}"#;
-        std::fs::write(&path, original).unwrap();
-
-        add_plugin(&path, "oh-my-openagent@latest").unwrap();
-
-        assert_eq!(std::fs::read_to_string(&path).unwrap(), original);
     }
 }

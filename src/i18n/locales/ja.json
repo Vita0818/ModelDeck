@@ -350,7 +350,7 @@
     "tabGeneral": "一般",
     "tabAuth": "認証",
     "tabAdvanced": "詳細",
-    "tabProxy": "ルーティング",
+    "tabProxy": "ゲートウェイ",
     "authCenter": {
       "title": "OAuth 認証センター",
       "description": "Claude Code で他のサブスクリプションをご利用いただけます。コンプライアンスリスクにご注意ください。",
@@ -362,7 +362,7 @@
     "advanced": {
       "configDir": {
         "title": "設定ディレクトリ",
-        "description": "Claude、Codex、Gemini の設定保存パスを管理"
+        "description": "対応クライアントのネイティブ設定ディレクトリを管理"
       },
       "proxy": {
         "title": "ローカルルーティング",
@@ -391,8 +391,8 @@
         "description": "ModelDeck が外部 API にアクセスする際のプロキシを設定"
       },
       "data": {
-        "title": "データ管理",
-        "description": "ローカル設定データのインポートとエクスポート"
+        "title": "使用量データベース",
+        "description": "使用量と履歴のデータベースをインポート・エクスポート"
       },
       "backup": {
         "title": "バックアップと復元",
@@ -459,7 +459,7 @@
     "themeDark": "ダーク",
     "themeSystem": "システム",
     "importExport": "SQL インポート/エクスポート",
-    "importExportHint": "移行や復元用にデータベースの SQL バックアップをインポート/エクスポートします（インポートは ModelDeck がエクスポートしたバックアップのみ対応）。",
+    "importExportHint": "SQL バックアップには使用量、料金、履歴のデータベース記録が含まれます。モデルリソース、端末設定、ネイティブ設定のスナップショットはデータディレクトリ全体をバックアップしてください。",
     "exportConfig": "SQL バックアップをエクスポート",
     "selectConfigFile": "SQL ファイルを選択",
     "noFileSelected": "ファイルが選択されていません。",
@@ -752,9 +752,9 @@
       }
     },
     "configDirectoryOverride": "設定ディレクトリの上書き（詳細）",
-    "configDirectoryDescription": "WSL などで Claude Code や Codex を使う場合、ここで設定ディレクトリを WSL 側に合わせるとデータを揃えられます。",
+    "configDirectoryDescription": "クライアントが使用する設定ディレクトリを指定します。変更前にネイティブ設定を復元し、保存後にモデル接続を再適用してください。",
     "appConfigDir": "ModelDeck 設定ディレクトリ",
-    "appConfigDirDescription": "ModelDeck の保存場所をカスタマイズします（クラウド同期フォルダを指定すると設定を同期できます）",
+    "appConfigDirDescription": "リソース、設定、使用量データの保存先を選択します。変更前に適用中のクライアント設定を復元してください。",
     "browsePlaceholderApp": "例: C:\\\\Users\\\\Administrator\\\\.cc-switch",
     "claudeConfigDir": "Claude Code 設定ディレクトリ",
     "claudeConfigDirDescription": "Claude の設定ディレクトリ（settings.json）を上書きします。カスタムディレクトリでは .claude.json（MCP）をその中に保存し、既定の ~/.claude では Claude Code の既定どおり ~/.claude.json を使います。",
@@ -853,7 +853,7 @@
     "saving": "保存中...",
     "globalProxy": {
       "label": "グローバルプロキシ",
-      "hint": "すべてのリクエスト（API、Skills ダウンロードなど）をプロキシ経由で送信します。ローカルルーティング有効時、アプリのリクエストもこのプロキシを経由します。空欄で直接接続。",
+      "hint": "モデル API とカタログへの接続に使うプロキシを設定します。空欄の場合は直接接続します。",
       "username": "ユーザー名（任意）",
       "password": "パスワード（任意）",
       "test": "接続テスト",
@@ -880,7 +880,27 @@
       "defaultCostMultiplierInvalid": "デフォルト倍率の形式が正しくありません"
     },
     "saveFailedGeneric": "保存に失敗しました。もう一度お試しください",
-    "appearance": "外観"
+    "appearance": "外観",
+    "gateway": {
+      "title": "共有モデルゲートウェイ",
+      "status": "ゲートウェイの状態",
+      "stopped": "停止中",
+      "start": "起動",
+      "stop": "停止",
+      "address": "待受アドレス",
+      "port": "待受ポート",
+      "hint": "クライアントに接続を適用すると自動的に起動します。アドレスやポートを変更する前に、適用済みクライアントの設定を復元してください。",
+      "saved": "ゲートウェイ設定を保存しました",
+      "upstream": "上流ネットワークプロキシ",
+      "unavailable": "ゲートウェイ設定を読み込んでから再試行してください。"
+    },
+    "aboutIndependentDescription": "モデルリソース、クライアント接続、利用状況を管理する独立したデスクトップアプリ。",
+    "aboutProject": "プロジェクト",
+    "aboutBuild": "ビルド",
+    "aboutLocalBuild": "ローカルビルド",
+    "aboutPortableBuild": "ポータブルビルド",
+    "aboutSource": "ソースの出典",
+    "aboutSourceNotice": "CC Switch のモデルアダプターを再利用し、上流の MIT 著作権表示を保持しています。"
   },
   "apps": {
     "claude": "Claude",
@@ -2043,7 +2063,14 @@
       "envHijack": "この設定には、プロセスの読み込み動作を変える環境変数（ライブラリの注入、CA 証明書の差し替えなど）が含まれています。信頼できる提供元か確認してください。",
       "privateEndpoint": "このアドレスはローカルホストまたは内部ネットワークを指しています。自分で立てたローカルサービス以外はインポートしないでください。",
       "shellCommand": "この設定はシェル経由でコマンド全体を実行します。実際に動作する内容は引数にあります。1 行ずつ確認してください。"
-    }
+    },
+    "resourceTitle": "モデルリソースをインポート",
+    "resourceDescription": "プロバイダーとモデルのリソースを追加します。接続を変更するには、クライアント画面でエンドポイントを選んで適用してください。",
+    "resourceEndpoint": "エンドポイント",
+    "resourceModel": "モデル",
+    "resourcePreview": "設定をプレビュー",
+    "resourceImport": "リソースをインポート",
+    "resourceImported": "インポートしました。クライアント画面で接続を選んで適用してください。"
   },
   "iconPicker": {
     "search": "アイコンを検索",

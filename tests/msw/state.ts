@@ -6,7 +6,7 @@ import type {
   SessionMeta,
   Settings,
 } from "@/types";
-import { deepClone } from "@/utils/deepClone";
+import { deepClone } from "./deepClone";
 
 type ProvidersByApp = Record<AppId, Record<string, Provider>>;
 type CurrentProviderState = Record<AppId, string>;

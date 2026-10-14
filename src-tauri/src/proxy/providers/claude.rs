@@ -14,7 +14,7 @@
 //! - **OpenRouter**: 已支持 Claude Code 兼容接口，默认透传
 //! - **GitHubCopilot**: GitHub Copilot (OAuth + Copilot Token)
 
-use super::codex_oauth_auth::{CODEX_OAUTH_CLIENT_VERSION, CODEX_OAUTH_ORIGINATOR};
+use super::auth_headers::{CODEX_OAUTH_CLIENT_VERSION, CODEX_OAUTH_ORIGINATOR};
 use super::{AuthInfo, AuthStrategy, ProviderAdapter, ProviderType};
 use crate::provider::Provider;
 use crate::proxy::error::ProxyError;
@@ -88,13 +88,6 @@ pub fn get_claude_api_format(provider: &Provider) -> &'static str {
     } else {
         "anthropic"
     }
-}
-
-pub fn claude_api_format_needs_transform(api_format: &str) -> bool {
-    matches!(
-        api_format,
-        "openai_chat" | "openai_responses" | "gemini_native"
-    )
 }
 
 fn is_reasoning_vendor_identifier(value: &str) -> bool {
@@ -925,23 +918,23 @@ impl ProviderAdapter for ClaudeAdapter {
                     (HeaderName::from_static("authorization"), hv(&bearer)?),
                     (
                         HeaderName::from_static("editor-version"),
-                        HeaderValue::from_static(super::copilot_auth::COPILOT_EDITOR_VERSION),
+                        HeaderValue::from_static(super::auth_headers::COPILOT_EDITOR_VERSION),
                     ),
                     (
                         HeaderName::from_static("editor-plugin-version"),
-                        HeaderValue::from_static(super::copilot_auth::COPILOT_PLUGIN_VERSION),
+                        HeaderValue::from_static(super::auth_headers::COPILOT_PLUGIN_VERSION),
                     ),
                     (
                         HeaderName::from_static("copilot-integration-id"),
-                        HeaderValue::from_static(super::copilot_auth::COPILOT_INTEGRATION_ID),
+                        HeaderValue::from_static(super::auth_headers::COPILOT_INTEGRATION_ID),
                     ),
                     (
                         HeaderName::from_static("user-agent"),
-                        HeaderValue::from_static(super::copilot_auth::COPILOT_USER_AGENT),
+                        HeaderValue::from_static(super::auth_headers::COPILOT_USER_AGENT),
                     ),
                     (
                         HeaderName::from_static("x-github-api-version"),
-                        HeaderValue::from_static(super::copilot_auth::COPILOT_API_VERSION),
+                        HeaderValue::from_static(super::auth_headers::COPILOT_API_VERSION),
                     ),
                     // 26-04-01新增的copilot关键 headers
                     (

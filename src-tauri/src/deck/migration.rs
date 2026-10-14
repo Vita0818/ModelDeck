@@ -479,6 +479,44 @@ fn legacy_profile(client: &str, provider: &Provider) -> Option<ClientProfile> {
     })
 }
 
+pub(super) fn import_provider(
+    store: &mut DeckStore,
+    client: &str,
+    provider: &Provider,
+) -> Option<(String, Option<HarnessBinding>)> {
+    let profile = legacy_profile(client, provider)?;
+    let proto = protocol(&profile.protocol)?;
+    let source_dir = if client == "opencode" {
+        crate::opencode_config::get_opencode_config_path()
+            .parent()?
+            .to_path_buf()
+    } else {
+        get_app_config_dir()
+    };
+    let (key, env) = credentials::imported(&profile.api_key, &profile.key_env, &source_dir);
+    let provider_id = id(
+        "provider",
+        &json!([
+            profile.endpoint.trim_end_matches('/'),
+            proto,
+            key,
+            env,
+            profile.provider_meta
+        ]),
+    );
+    let old_endpoints = store.endpoints.keys().cloned().collect::<BTreeSet<_>>();
+    let binding = add_profile(store, client, &profile);
+    // A provider link without a model is still a useful resource. Models and
+    // routes can be added in the resource page without creating an empty route.
+    store
+        .endpoints
+        .retain(|id, endpoint| old_endpoints.contains(id) || !endpoint.routes.is_empty());
+    store
+        .providers
+        .contains_key(&provider_id)
+        .then_some((provider_id, binding))
+}
+
 pub fn import(db: &Database) -> Result<DeckStore, String> {
     let mut store = DeckStore::default();
     let old = crate::model_clients::read_store()?;

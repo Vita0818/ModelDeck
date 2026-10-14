@@ -5,12 +5,14 @@
 //! ## 客户端检测
 //! 支持检测官方 Codex 客户端 (codex_vscode, codex_cli_rs)
 
+#[cfg(test)]
+use std::collections::HashSet;
+
 use super::{AuthInfo, AuthStrategy, ProviderAdapter};
 use crate::provider::{CodexChatReasoningConfig, Provider};
 use crate::proxy::error::ProxyError;
 use regex::Regex;
 use serde_json::Value as JsonValue;
-use std::collections::HashSet;
 use std::sync::LazyLock;
 use toml::Value as TomlValue;
 
@@ -25,6 +27,7 @@ pub struct CodexAdapter;
 /// Whether this Codex provider's real upstream should be called through
 /// OpenAI Chat Completions, even if the local Codex client is talking to CC
 /// Switch through the Responses API.
+#[cfg(test)]
 pub fn codex_provider_uses_chat_completions(provider: &Provider) -> bool {
     if let Some(api_format) = provider
         .meta
@@ -73,6 +76,7 @@ pub fn codex_provider_uses_chat_completions(provider: &Provider) -> bool {
         .unwrap_or(false)
 }
 
+#[cfg(test)]
 pub fn should_convert_codex_responses_to_chat(provider: &Provider, endpoint: &str) -> bool {
     let path = endpoint
         .split_once('?')
@@ -195,6 +199,7 @@ pub fn codex_provider_uses_anthropic(provider: &Provider) -> bool {
         .unwrap_or(false)
 }
 
+#[cfg(test)]
 pub fn should_convert_codex_responses_to_anthropic(provider: &Provider, endpoint: &str) -> bool {
     let path = endpoint
         .split_once('?')
@@ -465,6 +470,7 @@ pub fn codex_provider_upstream_model(provider: &Provider) -> Option<String> {
         })
 }
 
+#[cfg(test)]
 fn codex_provider_catalog_model_ids(provider: &Provider) -> HashSet<String> {
     provider
         .settings_config
@@ -485,6 +491,7 @@ fn codex_provider_catalog_model_ids(provider: &Provider) -> HashSet<String> {
 
 /// For Codex Chat providers, ensure the request uses the configured upstream
 /// model before converting the request to Chat Completions.
+#[cfg(test)]
 pub fn apply_codex_chat_upstream_model(
     provider: &Provider,
     body: &mut JsonValue,
@@ -498,6 +505,7 @@ pub fn apply_codex_chat_upstream_model(
 /// Same model-substitution logic as `apply_codex_chat_upstream_model`, but without
 /// the chat gating check. Reused by the anthropic conversion path (the forwarder has
 /// already confirmed this provider uses anthropic).
+#[cfg(test)]
 pub fn apply_codex_upstream_model(provider: &Provider, body: &mut JsonValue) -> Option<String> {
     let catalog_model_ids = codex_provider_catalog_model_ids(provider);
     if let Some(request_model) = body
@@ -800,6 +808,7 @@ fn infer_aggregator_platform_config(
     None
 }
 
+#[cfg(test)]
 fn is_chat_wire_api(value: &str) -> bool {
     matches!(
         value.trim().to_ascii_lowercase().as_str(),
@@ -1245,14 +1254,6 @@ context_window = 500000
         managed_with_null_config.category = None;
         managed_with_null_config.settings_config["config"] = JsonValue::Null;
         assert!(is_codex_official_provider(&managed_with_null_config));
-
-        let mut unified_session = create_provider(json!({
-            "auth": {},
-            "config": crate::codex_config::inject_codex_unified_session_bucket("")
-                .expect("inject unified session route")
-        }));
-        unified_session.category = Some("official".to_string());
-        assert!(is_codex_official_provider(&unified_session));
 
         let mut implicit_custom = create_provider(json!({
             "auth": {},

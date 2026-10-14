@@ -350,7 +350,7 @@
     "tabGeneral": "通用",
     "tabAuth": "驗證",
     "tabAdvanced": "進階",
-    "tabProxy": "路由",
+    "tabProxy": "閘道",
     "authCenter": {
       "title": "OAuth 驗證中心",
       "description": "在 Claude Code 中使用您的其他訂閱，請注意合規風險。",
@@ -362,7 +362,7 @@
     "advanced": {
       "configDir": {
         "title": "設定檔目錄",
-        "description": "管理 Claude、Codex 和 Gemini 的設定儲存路徑"
+        "description": "管理支援用戶端的原生設定目錄"
       },
       "proxy": {
         "title": "本地路由",
@@ -391,8 +391,8 @@
         "description": "設定 ModelDeck 存取外部 API 時使用的代理伺服器"
       },
       "data": {
-        "title": "資料管理",
-        "description": "匯入和匯出本地設定資料"
+        "title": "用量資料庫",
+        "description": "匯入和匯出用量及歷史記錄資料庫"
       },
       "backup": {
         "title": "備份與還原",
@@ -459,7 +459,7 @@
     "themeDark": "深色",
     "themeSystem": "跟隨系統",
     "importExport": "SQL 匯入匯出",
-    "importExportHint": "匯入/匯出資料庫 SQL 備份（僅支援匯入由 ModelDeck 匯出的備份），便於備份或遷移。",
+    "importExportHint": "SQL 備份包含用量、計價和歷史資料庫記錄。模型資源、裝置設定及原生設定快照需備份整個資料目錄。",
     "exportConfig": "匯出 SQL 備份",
     "selectConfigFile": "選擇 SQL 檔案",
     "noFileSelected": "尚未選擇設定檔。",
@@ -752,9 +752,9 @@
       }
     },
     "configDirectoryOverride": "設定目錄覆寫（進階）",
-    "configDirectoryDescription": "在 WSL 等環境使用 Claude Code 或 Codex 的時候，可手動指定為 WSL 裡的設定目錄，供應商資料與主環境保持一致。",
+    "configDirectoryDescription": "指定用戶端實際使用的設定目錄。變更前請先還原該用戶端的原生設定，儲存後再套用模型連線。",
     "appConfigDir": "ModelDeck 設定目錄",
-    "appConfigDirDescription": "自訂 ModelDeck 的設定儲存位置（指定至雲端同步資料夾即可雲端同步設定）",
+    "appConfigDirDescription": "選擇資源、設定和用量資料庫的儲存位置。變更前請先還原已套用用戶端的原生設定。",
     "browsePlaceholderApp": "例如：C:\\Users\\Administrator\\.cc-switch",
     "claudeConfigDir": "Claude Code 設定目錄",
     "claudeConfigDirDescription": "覆寫 Claude 設定目錄 (settings.json)。真正自訂目錄會在目錄內存放 Claude MCP 的 .claude.json；預設 ~/.claude 目錄仍使用 Claude 預設的 ~/.claude.json。",
@@ -854,7 +854,7 @@
     "saving": "正在儲存...",
     "globalProxy": {
       "label": "全域代理伺服器",
-      "hint": "代理所有請求（API、Skills 下載等）。開啟本地路由時，應用程式的請求也會經過此代理伺服器。留空表示直連。",
+      "hint": "設定 ModelDeck 存取模型 API 和模型目錄的對外代理。留空表示直接連線。",
       "username": "使用者名稱（選填）",
       "password": "密碼（選填）",
       "test": "測試連線",
@@ -881,7 +881,27 @@
       "defaultCostMultiplierInvalid": "預設倍率格式不正確"
     },
     "saveFailedGeneric": "儲存失敗，請重試",
-    "appearance": "外觀"
+    "appearance": "外觀",
+    "gateway": {
+      "title": "共用模型閘道",
+      "status": "閘道狀態",
+      "stopped": "已停止",
+      "start": "啟動",
+      "stop": "停止",
+      "address": "監聽位址",
+      "port": "監聽連接埠",
+      "hint": "套用用戶端連線時會自動啟動閘道。更改位址或連接埠前，請先還原已套用用戶端的原生設定。",
+      "saved": "閘道設定已儲存",
+      "upstream": "上游網路代理",
+      "unavailable": "閘道設定尚未載入，請稍後重試"
+    },
+    "aboutIndependentDescription": "獨立的桌面模型管理工具，用於模型資源、用戶端連線與用量統計。",
+    "aboutProject": "專案",
+    "aboutBuild": "版本類型",
+    "aboutLocalBuild": "本機建置",
+    "aboutPortableBuild": "可攜式建置",
+    "aboutSource": "原始碼來源",
+    "aboutSourceNotice": "沿用 CC Switch 的模型轉接程式碼，保留上游 MIT 版權聲明。"
   },
   "apps": {
     "claude": "Claude",
@@ -2044,7 +2064,14 @@
       "envHijack": "該設定包含可改變處理程序載入行為的環境變數（例如注入動態程式庫、替換 CA 憑證），請確認來源可信。",
       "privateEndpoint": "該位址指向本機或內部網路。若非你自建的本機服務，請勿匯入。",
       "shellCommand": "該設定透過 shell 執行整段命令，實際執行的內容在參數裡，請逐行核對。"
-    }
+    },
+    "resourceTitle": "匯入模型資源",
+    "resourceDescription": "匯入只新增供應商與模型資源。需要更改連線時，請到用戶端頁面選擇端點並套用。",
+    "resourceEndpoint": "端點",
+    "resourceModel": "模型",
+    "resourcePreview": "預覽設定",
+    "resourceImport": "匯入資源",
+    "resourceImported": "資源已匯入，請到用戶端頁面選擇並套用連線。"
   },
   "iconPicker": {
     "search": "搜尋圖示",

@@ -112,11 +112,8 @@ const createDirectorySettingsMock = (
     appConfig: "/home/mock/.cc-switch",
     claude: "/default/claude",
     codex: "/default/codex",
-    gemini: "/default/gemini",
     opencode: "/default/opencode",
-    openclaw: "/default/openclaw",
     hermes: "/default/hermes",
-    pi: "/default/pi",
   },
   isLoading: false,
   initialAppConfigDir: undefined,
@@ -196,62 +193,6 @@ describe("useSettings hook", () => {
     getQueryDataMock.mockImplementation(() => serverSettings);
   });
 
-  it("auto-saves and applies Claude onboarding skip when toggled on", async () => {
-    serverSettings = {
-      ...serverSettings,
-      skipClaudeOnboarding: false,
-    };
-    useSettingsQueryMock.mockReturnValue({
-      data: serverSettings,
-      isLoading: false,
-    });
-
-    settingsFormMock = createSettingsFormMock({
-      settings: {
-        ...serverSettings,
-        language: "zh",
-        skipClaudeOnboarding: false,
-      },
-    });
-
-    const { result } = renderHook(() => useSettings());
-
-    await act(async () => {
-      await result.current.autoSaveSettings({ skipClaudeOnboarding: true });
-    });
-
-    expect(applyClaudeOnboardingSkipMock).toHaveBeenCalledTimes(1);
-    expect(toastErrorMock).not.toHaveBeenCalled();
-  });
-
-  it("auto-saves and clears Claude onboarding skip when toggled off", async () => {
-    serverSettings = {
-      ...serverSettings,
-      skipClaudeOnboarding: true,
-    };
-    useSettingsQueryMock.mockReturnValue({
-      data: serverSettings,
-      isLoading: false,
-    });
-
-    settingsFormMock = createSettingsFormMock({
-      settings: {
-        ...serverSettings,
-        language: "zh",
-        skipClaudeOnboarding: true,
-      },
-    });
-
-    const { result } = renderHook(() => useSettings());
-
-    await act(async () => {
-      await result.current.autoSaveSettings({ skipClaudeOnboarding: false });
-    });
-
-    expect(clearClaudeOnboardingSkipMock).toHaveBeenCalledTimes(1);
-    expect(toastErrorMock).not.toHaveBeenCalled();
-  });
-
   it("saves settings and flags restart when app config directory changes", async () => {
     serverSettings = {
       ...serverSettings,
@@ -297,18 +238,16 @@ describe("useSettings hook", () => {
     const payload = mutateAsyncMock.mock.calls[0][0] as Settings;
     expect(payload.claudeConfigDir).toBe("/custom/claude");
     expect(payload.codexConfigDir).toBeUndefined();
-    expect(payload.openclawConfigDir).toBe("/custom/openclaw");
+    expect(payload.grokConfigDir).toBeUndefined();
     expect(payload.language).toBe("en");
     expect(setAppConfigDirOverrideMock).toHaveBeenCalledWith("/override/app");
     // 状态改变，应该调用 API
-    expect(applyClaudePluginConfigMock).toHaveBeenCalledWith({
-      official: false,
-    });
+    expect(applyClaudePluginConfigMock).not.toHaveBeenCalled();
     expect(metadataMock.setRequiresRestart).toHaveBeenCalledWith(true);
     expect(window.localStorage.getItem("language")).toBe("en");
     expect(toastErrorMock).not.toHaveBeenCalled();
-    // 插件同步已包含 syncCurrentProvidersLiveSafe，目录变更不再重复调用
-    expect(syncCurrentProvidersLiveMock).toHaveBeenCalledTimes(1);
+    // Saving a directory preference does not project or apply a client configuration.
+    expect(syncCurrentProvidersLiveMock).not.toHaveBeenCalled();
   });
 
   it("saves settings without restart when directory unchanged", async () => {
@@ -354,84 +293,6 @@ describe("useSettings hook", () => {
     expect(syncCurrentProvidersLiveMock).not.toHaveBeenCalled();
   });
 
-  it("shows toast when Claude plugin sync fails but continues flow", async () => {
-    // 设置服务器状态为 false,本地状态为 true,触发状态变化
-    serverSettings = {
-      ...serverSettings,
-      enableClaudePluginIntegration: false,
-    };
-    useSettingsQueryMock.mockReturnValue({
-      data: serverSettings,
-      isLoading: false,
-    });
-
-    settingsFormMock = createSettingsFormMock({
-      settings: {
-        ...serverSettings,
-        enableClaudePluginIntegration: true, // 状态改变
-        language: "zh",
-      },
-    });
-    directorySettingsMock = createDirectorySettingsMock({
-      appConfigDir: "/override/app",
-      initialAppConfigDir: "/prior/app",
-    });
-
-    applyClaudePluginConfigMock.mockRejectedValueOnce(new Error("sync failed"));
-
-    const { result } = renderHook(() => useSettings());
-
-    await act(async () => {
-      await result.current.saveSettings();
-    });
-
-    expect(toastErrorMock).toHaveBeenCalled();
-    const message = toastErrorMock.mock.calls.at(-1)?.[0] as string;
-    expect(message).toContain("同步 Claude 插件失败");
-    expect(metadataMock.setRequiresRestart).toHaveBeenCalledWith(true);
-  });
-
-  it("detects plugin toggle via live cache even when closure data is stale", async () => {
-    // 模拟快速连切后的 race：useSettingsQueryMock 的 data 滞后停留在 false（closure 未更新），
-    // 但 queryClient 缓存（getQueryData）实时值已为 true（上次持久化到 enabled），
-    // form 里用户想切回 false。旧实现会因 data === form 而跳过副作用；新实现应读 prev=true 并执行。
-    serverSettings = {
-      ...serverSettings,
-      enableClaudePluginIntegration: false,
-    };
-    useSettingsQueryMock.mockReturnValue({
-      data: serverSettings,
-      isLoading: false,
-    });
-
-    settingsFormMock = createSettingsFormMock({
-      settings: {
-        ...serverSettings,
-        enableClaudePluginIntegration: false,
-        language: "zh",
-      },
-    });
-    directorySettingsMock = createDirectorySettingsMock();
-
-    // 缓存里的"真实上次值"是 true（enabled），与 closure data(false) 有时序差
-    getQueryDataMock.mockImplementation(() => ({
-      ...serverSettings,
-      enableClaudePluginIntegration: true,
-    }));
-
-    const { result } = renderHook(() => useSettings());
-
-    await act(async () => {
-      await result.current.saveSettings(undefined, { silent: true });
-    });
-
-    // 修复生效：读的是缓存实时值 true，payload=false，差异触发 clear_claude_config
-    expect(applyClaudePluginConfigMock).toHaveBeenCalledWith({
-      official: true,
-    });
-    expect(syncCurrentProvidersLiveMock).toHaveBeenCalled();
-  });
-
   it("resets form, language and directories using server data", () => {
     serverSettings = {
       ...serverSettings,
@@ -466,12 +327,9 @@ describe("useSettings hook", () => {
     expect(directorySettingsMock.resetAllDirectories).toHaveBeenCalledWith({
       claude: "/server/claude",
       codex: undefined,
-      gemini: "/server/gemini",
       grokbuild: undefined,
       opencode: "/server/opencode",
-      openclaw: "/server/openclaw",
       hermes: "/server/hermes",
-      pi: "/server/pi",
     });
     expect(metadataMock.setRequiresRestart).toHaveBeenCalledWith(false);
   });

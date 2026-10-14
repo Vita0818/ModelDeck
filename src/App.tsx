@@ -5,16 +5,13 @@ import { Loader2, Maximize2, Minimize2, Minus, X } from "lucide-react";
 import type { VisibleApps } from "@/types";
 import { useSettingsQuery } from "@/lib/query";
 import { providersApi, type AppId } from "@/lib/api";
-import { useUsageCacheBridge } from "@/hooks/useUsageCacheBridge";
 import { useTauriEvent } from "@/hooks/useTauriEvent";
 import { useWindowChrome } from "@/hooks/app/useWindowChrome";
 import { useEnvConflicts } from "@/hooks/app/useEnvConflicts";
 import { useStartupMigrations } from "@/hooks/app/useStartupMigrations";
-import { useAppEventBridges } from "@/hooks/app/useAppEventBridges";
 import { useDeck } from "@/lib/query/deck";
 import { EnvWarningBanner } from "@/components/env/EnvWarningBanner";
 import { FirstRunNoticeDialog } from "@/components/FirstRunNoticeDialog";
-import { UpdateBadge } from "@/components/UpdateBadge";
 import { Button } from "@/components/ui/button";
 import { Sidebar } from "@/components/app/Sidebar";
 import { loadRoute, persistRoute, type Route } from "@/components/app/routes";
@@ -65,7 +62,7 @@ const toAppId = (client: ClientId): AppId =>
   isModelClientId(client) ? "claude" : client;
 
 function App() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
 
   const [route, setRoute] = useState<Route>(loadRoute);
@@ -73,6 +70,12 @@ function App() {
   useEffect(() => persistRoute(route), [route]);
 
   const { data: settingsData } = useSettingsQuery();
+  useEffect(() => {
+    const language = settingsData?.language;
+    if (!language || !i18n) return;
+    if (i18n.language !== language) void i18n.changeLanguage(language);
+    window.localStorage.setItem("language", language);
+  }, [i18n, settingsData?.language]);
   const { data: deck } = useDeck();
   const {
     useAppWindowControls,
@@ -84,8 +87,6 @@ function App() {
   } = useWindowChrome();
 
   useStartupMigrations();
-  useAppEventBridges();
-  useUsageCacheBridge();
 
   const visibleApps = useMemo<VisibleApps>(
     () => resolveClientVisibility(settingsData?.visibleApps),
@@ -129,6 +130,8 @@ function App() {
 
   const handleImportSuccess = async () => {
     await queryClient.invalidateQueries({ queryKey: ["deck"] });
+    await queryClient.invalidateQueries({ queryKey: ["usage"] });
+    await queryClient.invalidateQueries({ queryKey: ["providers"] });
     try {
       await providersApi.updateTrayMenu();
     } catch (error) {
@@ -228,11 +231,6 @@ function App() {
           <Suspense fallback={<PageFallback />}>{content()}</Suspense>
         </main>
       </div>
-
-      <UpdateBadge
-        className="fixed bottom-4 right-4 z-40"
-        onClick={() => setRoute({ kind: "settings", tab: "about" })}
-      />
 
       <Suspense fallback={null}>
         <DeepLinkImportDialog />

@@ -12,10 +12,8 @@ import {
   Save,
   FolderSearch,
   Database,
-  Cloud,
   ScrollText,
   HardDriveDownload,
-  FlaskConical,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -40,17 +38,12 @@ import { LanguageSettings } from "@/components/settings/LanguageSettings";
 import { ThemeSettings } from "@/components/settings/ThemeSettings";
 import { WindowSettings } from "@/components/settings/WindowSettings";
 import { AppVisibilitySettings } from "@/components/settings/AppVisibilitySettings";
-import { TerminalSettings } from "@/components/settings/TerminalSettings";
 import { DirectorySettings } from "@/components/settings/DirectorySettings";
 import { ImportExportSection } from "@/components/settings/ImportExportSection";
 import { BackupListSection } from "@/components/settings/BackupListSection";
-import { WebdavSyncSection } from "@/components/settings/WebdavSyncSection";
 import { AboutSection } from "@/components/settings/AboutSection";
 import { ProxyTabContent } from "@/components/settings/ProxyTabContent";
-import { ConnectivityCheckConfigPanel } from "@/components/usage/ConnectivityCheckConfigPanel";
 import { LogConfigPanel } from "@/components/settings/LogConfigPanel";
-import { AuthCenterPanel } from "@/components/settings/AuthCenterPanel";
-import { CodexAuthSettings } from "@/components/settings/CodexAuthSettings";
 import { useSettings } from "@/hooks/useSettings";
 import { useImportExport } from "@/hooks/useImportExport";
 import { useTranslation } from "react-i18next";
@@ -109,7 +102,11 @@ export function SettingsPage({
 
   useEffect(() => {
     if (open) {
-      setActiveTab(defaultTab);
+      setActiveTab(
+        ["general", "proxy", "advanced", "about"].includes(defaultTab)
+          ? defaultTab
+          : "general",
+      );
       resetStatus();
     }
   }, [open, resetStatus, defaultTab]);
@@ -171,17 +168,10 @@ export function SettingsPage({
     }
   }, [closeAfterSave, t]);
 
-  // 通用设置即时保存（无需手动点击）
-  // 使用 autoSaveSettings 避免误触发系统 API（开机自启、Claude 插件等）
-  // 返回保存是否成功：需要在保存成功后追加动作的调用方（如统一会话历史
-  // 关闭后的备份还原）据此短路，其余调用方可忽略返回值。
+  // 通用设置即时保存；失败时恢复表单，避免下次保存重放失败的值。
   const handleAutoSave = useCallback(
     async (updates: Partial<SettingsFormState>): Promise<boolean> => {
       if (!settings) return false;
-      // 乐观更新前捕获旧值：autoSaveSettings 发送的是全量表单状态，后端按
-      // diff 触发副作用（如统一会话开关的 live 重写与历史迁移）。保存失败
-      // 不回滚的话，失败的变更会滞留在表单里，被之后任意一次无关保存原样
-      // 重放，绕过确认弹窗。
       const previousValues = Object.fromEntries(
         Object.keys(updates).map((key) => [
           key,
@@ -227,14 +217,11 @@ export function SettingsPage({
             <h1 className="text-xl font-semibold tracking-tight">
               {t("settings.title")}
             </h1>
-            <TabsList className="no-drag grid w-full grid-cols-5">
+            <TabsList className="no-drag grid w-full grid-cols-4">
               <TabsTrigger value="general">
                 {t("settings.tabGeneral")}
               </TabsTrigger>
               <TabsTrigger value="proxy">{t("settings.tabProxy")}</TabsTrigger>
-              <TabsTrigger value="auth">
-                {t("settings.tabAuth", { defaultValue: "认证" })}
-              </TabsTrigger>
               <TabsTrigger value="advanced">
                 {t("settings.tabAdvanced")}
               </TabsTrigger>
@@ -285,41 +272,14 @@ export function SettingsPage({
                           settings={settings}
                           onChange={handleAutoSave}
                         />
-                        <TerminalSettings
-                          value={settings.preferredTerminal}
-                          onChange={(terminal) =>
-                            handleAutoSave({ preferredTerminal: terminal })
-                          }
-                        />
                       </Group>
                     </section>
-
-                    <CodexAuthSettings
-                      settings={settings}
-                      onChange={handleAutoSave}
-                    />
                   </>
                 ) : null}
               </TabsContent>
 
               <TabsContent value="proxy" className="space-y-6 mt-0 pb-4">
-                {settings ? (
-                  <ProxyTabContent
-                    settings={settings}
-                    onAutoSave={handleAutoSave}
-                  />
-                ) : null}
-              </TabsContent>
-
-              <TabsContent value="auth" className="space-y-6 mt-0 pb-4">
-                <motion.div
-                  initial={false}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="space-y-6"
-                >
-                  <AuthCenterPanel />
-                </motion.div>
+                <ProxyTabContent />
               </TabsContent>
 
               <TabsContent value="advanced" className="space-y-6 mt-0 pb-4">
@@ -354,12 +314,9 @@ export function SettingsPage({
                             onResetAppConfig={resetAppConfigDir}
                             claudeDir={settings.claudeConfigDir}
                             codexDir={settings.codexConfigDir}
-                            geminiDir={settings.geminiConfigDir}
                             grokDir={settings.grokConfigDir}
                             opencodeDir={settings.opencodeConfigDir}
-                            openclawDir={settings.openclawConfigDir}
                             hermesDir={settings.hermesConfigDir}
-                            piDir={settings.piConfigDir}
                             onDirectoryChange={updateDirectory}
                             onBrowseDirectory={browseDirectory}
                             onResetDirectory={resetDirectory}
@@ -416,43 +373,6 @@ export function SettingsPage({
                               handleAutoSave(updates)
                             }
                           />
-                        </AccordionContent>
-                      </AccordionItem>
-
-                      <AccordionItem value="cloudSync">
-                        <AccordionTrigger>
-                          <AccordionHeading
-                            icon={<Cloud />}
-                            title={t("settings.advanced.cloudSync.title")}
-                            description={t(
-                              "settings.advanced.cloudSync.description",
-                            )}
-                          />
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <WebdavSyncSection
-                            config={settings?.webdavSync}
-                            s3Config={settings?.s3Sync}
-                            settings={settings}
-                            onAutoSave={handleAutoSave}
-                          />
-                        </AccordionContent>
-                      </AccordionItem>
-
-                      <AccordionItem value="connectivityCheck">
-                        <AccordionTrigger>
-                          <AccordionHeading
-                            icon={<FlaskConical />}
-                            title={t(
-                              "settings.advanced.connectivityCheck.title",
-                            )}
-                            description={t(
-                              "settings.advanced.connectivityCheck.description",
-                            )}
-                          />
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <ConnectivityCheckConfigPanel />
                         </AccordionContent>
                       </AccordionItem>
 

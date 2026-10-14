@@ -6,9 +6,12 @@
 //! - Codex API (非流式和流式)
 //! - Gemini API (非流式和流式)
 
-use serde::{Deserialize, Serialize};
+#[cfg(test)]
 use serde_json::Value;
 
+use serde::{Deserialize, Serialize};
+
+#[cfg(test)]
 fn openai_cache_read_tokens(usage: &Value) -> u32 {
     usage
         .get("cache_read_input_tokens")
@@ -25,6 +28,7 @@ fn openai_cache_read_tokens(usage: &Value) -> u32 {
         .unwrap_or(0) as u32
 }
 
+#[cfg(test)]
 fn openai_cache_write_tokens(usage: &Value) -> u32 {
     usage
         .get("cache_creation_input_tokens")
@@ -40,6 +44,7 @@ pub const SESSION_REQUEST_ID_PREFIX: &str = "session:";
 /// Claude Code and Claude Desktop share Claude message ids with the session
 /// importer, so both use the bare `session:{message_id}` namespace. Other
 /// apps retain app/provider scoping to avoid collisions between upstreams.
+#[cfg(test)]
 pub fn dedup_scope_for_app<'a>(
     app_type: &'a str,
     provider_id: &'a str,
@@ -47,6 +52,7 @@ pub fn dedup_scope_for_app<'a>(
     (!matches!(app_type, "claude" | "claude-desktop")).then_some((app_type, provider_id))
 }
 
+#[cfg(test)]
 fn response_id(body: &Value, field: &str) -> Option<String> {
     body.get(field)
         .and_then(Value::as_str)
@@ -67,9 +73,14 @@ pub struct TokenUsage {
     ///
     /// Claude API: `msg_xxx`，与 session JSONL 中的 `message.id` 一致
     #[serde(skip)]
+    #[allow(
+        dead_code,
+        reason = "Shared token fixtures retain upstream response identity; native collectors assign their own IDs"
+    )]
     pub message_id: Option<String>,
 }
 
+#[cfg(test)]
 impl TokenUsage {
     /// 生成稳定 request_id。Claude 不加作用域，以便继续与 session JSONL 的
     /// `session:{message_id}` 主键收敛；其他协议加入 app/provider 作用域，避免
@@ -99,6 +110,7 @@ impl TokenUsage {
     }
 }
 
+#[cfg(test)]
 impl TokenUsage {
     /// 从 Claude API 非流式响应解析
     pub fn from_claude_response(body: &Value) -> Option<Self> {

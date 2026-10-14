@@ -10,6 +10,11 @@
 //! - `transform_responses.rs`: Anthropic request → Responses request, Responses response → Anthropic response
 //! - this module:               Responses request → Anthropic request, Anthropic response → Responses response
 
+#[cfg(test)]
+use crate::proxy::sse::{strip_sse_field, take_sse_block};
+#[cfg(test)]
+use std::collections::BTreeMap;
+
 use super::transform_codex_chat::{
     build_codex_tool_context_from_request, response_tool_call_item_from_chat_name,
     response_tool_call_item_id_from_chat_name, CodexToolContext,
@@ -17,13 +22,12 @@ use super::transform_codex_chat::{
 use super::transform_responses::{sanitize_anthropic_tool_use_input, TOOL_RESULT_ERROR_MARKER};
 use crate::proxy::error::ProxyError;
 use crate::proxy::json_canonical::canonical_json_string;
-use crate::proxy::sse::{strip_sse_field, take_sse_block};
 use crate::proxy::tool_media::{
     strip_and_clamp_media_from_tool_value, ToolMediaScope, TOOL_RESULT_MEDIA_ATTACHED_MARKER,
 };
 use base64::{engine::general_purpose::URL_SAFE_NO_PAD, Engine as _};
 use serde_json::{json, Value};
-use std::collections::{BTreeMap, HashSet};
+use std::collections::HashSet;
 
 pub(crate) const ANTHROPIC_THINKING_ENCRYPTED_PREFIX: &str = "ccswitch-anthropic-thinking-v1:";
 const TOOL_SEARCH_PROXY_NAME: &str = "tool_search";
@@ -1384,6 +1388,7 @@ pub(crate) fn anthropic_response_to_responses_with_context(
 /// It also tolerates the last event missing a trailing blank line (truncated
 /// stream): after looping over complete event blocks, it processes the residual
 /// buffer as the last event.
+#[cfg(test)]
 pub fn anthropic_sse_to_message_value(body: &str) -> Result<Value, ProxyError> {
     let mut message: Option<Value> = None;
     // Collect blocks by content index along with the partial_json accumulator for their tool_use.
@@ -1608,6 +1613,7 @@ pub fn anthropic_sse_to_message_value(body: &str) -> Result<Value, ProxyError> {
 }
 
 /// Appends content to a string field of a JSON object (creating it if absent).
+#[cfg(test)]
 fn append_str_field(block: &mut Value, field: &str, text: &str) {
     let existing = block
         .get(field)

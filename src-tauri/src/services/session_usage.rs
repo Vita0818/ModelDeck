@@ -70,7 +70,6 @@ pub(crate) struct SyncCursor {
     /// 游标边界前尾部字节的指纹（仅 Claude 路径写入），用于识别文件被
     /// 外部重写；NULL 表示无指纹可校验。
     pub last_tail_fingerprint: Option<i64>,
-    pub last_synced_at: i64,
 }
 
 /// 一次性预取 session_log_sync 全表游标。
@@ -94,7 +93,6 @@ pub(crate) fn load_sync_cursors(db: &Database) -> Result<HashMap<String, SyncCur
             SyncCursor {
                 last_modified: row.get(1)?,
                 last_line_offset: row.get(2)?,
-                last_synced_at: row.get(3)?,
                 last_byte_offset: row.get(4)?,
                 last_tail_fingerprint: row.get(5)?,
             },
@@ -127,11 +125,6 @@ pub fn sync_all_unlocked(db: &Database) -> SessionSyncResult {
     );
     merge_sync_step(
         &mut result,
-        "Gemini",
-        crate::services::session_usage_gemini::sync_gemini_usage(db),
-    );
-    merge_sync_step(
-        &mut result,
         "OpenCode",
         crate::services::session_usage_opencode::sync_opencode_usage(db),
     );
@@ -139,16 +132,6 @@ pub fn sync_all_unlocked(db: &Database) -> SessionSyncResult {
         &mut result,
         "Grok Build",
         crate::services::session_usage_grokbuild::sync_grokbuild_usage(db),
-    );
-    merge_sync_step(
-        &mut result,
-        "Pi",
-        crate::services::session_usage_pi::sync_pi_usage(db),
-    );
-    merge_sync_step(
-        &mut result,
-        "MCode",
-        crate::services::session_usage_mcode::sync_mcode_usage(db),
     );
     notify_sync_result(&result);
     result

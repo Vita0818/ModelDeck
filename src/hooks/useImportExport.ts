@@ -2,7 +2,6 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { settingsApi } from "@/lib/api";
-import { syncCurrentProvidersLiveSafe } from "@/utils/postChangeSync";
 
 export type ImportStatus =
   | "idle"
@@ -101,28 +100,8 @@ export function useImportExport(
       // - 避免依赖 setTimeout（组件卸载会取消）
       void onImportSuccess?.();
 
-      const syncResult = await syncCurrentProvidersLiveSafe();
-      if (syncResult.ok) {
-        setStatus("success");
-        toast.success(
-          t("settings.importSuccess", {
-            defaultValue: "配置导入成功",
-          }),
-          { closeButton: true },
-        );
-      } else {
-        console.error(
-          "[useImportExport] Failed to sync live config",
-          syncResult.error,
-        );
-        setStatus("partial-success");
-        toast.warning(
-          t("settings.importPartialSuccess", {
-            defaultValue:
-              "配置已导入，但同步到当前供应商失败。请手动重新选择一次供应商。",
-          }),
-        );
-      }
+      setStatus("success");
+      toast.success(t("settings.importSuccess"), { closeButton: true });
     } catch (error) {
       console.error("[useImportExport] Failed to import config", error);
       setStatus("error");
@@ -144,7 +123,7 @@ export function useImportExport(
     try {
       const now = new Date();
       const stamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}_${String(now.getHours()).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}${String(now.getSeconds()).padStart(2, "0")}`;
-      const defaultName = `cc-switch-export-${stamp}.sql`;
+      const defaultName = `modeldeck-database-${stamp}.sql`;
       const destination = await settingsApi.saveFileDialog(defaultName);
       if (!destination) {
         toast.error(

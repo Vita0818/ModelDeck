@@ -2,41 +2,39 @@
 
 **Your model connections, across your coding clients.**
 
-ModelDeck is a personal desktop application for managing model providers, endpoints, independent API keys, model catalogs, context limits and reasoning preferences across AI coding clients.
+ModelDeck is an independently maintained personal desktop application for model providers, endpoints, dedicated API keys, model catalogs, context limits and reasoning tiers. It reuses selected native configuration and protocol adapters from CC Switch within its own product scope.
 
-ModelDeck manages model connections, usage and the settings they require. Memory, MCP, Skills, prompts, session browsing and OpenClaw workspace management are outside its product scope. Applying a connection preserves client-owned memory files and unrelated native settings.
+## Version 0.4.0
 
-The ChatGPT desktop app and its official OAuth login are exempt. Applying or restoring a Codex CLI connection manages only model configuration and generated catalogs, preserving official login files even when older backups contain login snapshots.
+The application keeps three areas:
 
-## Version 0.3.0
+- **Resources:** shared upstream providers, credentials, model capabilities and reasoning tiers, exposed through endpoint aliases and routes.
+- **Client connections:** select an endpoint, default model and auxiliary model, then explicitly apply or restore native configuration.
+- **Usage and settings:** read actual client usage records and manage pricing, the gateway, upstream network proxy, window behavior, directories, logging and local database archives.
 
-ModelDeck separates two management layers:
+Supported clients are **Codex CLI, Claude Code, Claude Desktop, Antigravity CLI, Cursor CLI, Cursor GUI, Grok, Muse Code, OpenCode and Hermes**. Native usage collectors cover Claude Code, Codex CLI, OpenCode and Grok. Other clients retain historical records; consult the usage page's data-source descriptions for coverage.
 
-- **Resource management:** shared upstream providers, credentials, models, capabilities and reasoning tiers, exposed through endpoint aliases.
-- **Harness selection:** each client references an endpoint and public models. Native configuration and catalogs are generated from the shared graph.
+Memory, MCP, Skills, prompts, session browsing, OpenClaw workspaces, the OAuth account center, cloud sync, automatic failover, scripted quota queries, tool installers and application auto-updates have had their management UI and runtime implementations removed. Native management and usage collectors for MiniMax Code, OpenClaw, Pi and Gemini CLI are excluded from the build. The Gemini model protocol remains supported for model routing and Antigravity.
 
-Requests resolve the current resource mapping, so a route edit applies to every harness using it. Harness bindings contain references rather than another complete upstream catalog.
+Provider-specific authentication headers, URL construction, request fields, reasoning parameters and streaming conversions remain in the model transport layer. A route edit affects all clients referencing it; bindings store references instead of copying upstream credentials and catalogs.
 
-The supported set remains **Codex CLI, Claude Code, Claude Desktop, Antigravity CLI, Cursor CLI, Cursor GUI, Grok, Muse Code, OpenCode and Hermes**. Existing connections are migrated without applying native configurations. MiniMax Code, OpenClaw, Pi and Gemini CLI remain excluded.
+See [the two-layer guide](docs/TWO_LAYER_MODELDECK.md), [client adapters](docs/CLIENT_MODELS.md) and [v0.4.0 changes](docs/releases/v0.4.0.md).
 
-See [the two-layer guide](docs/TWO_LAYER_MODELDECK.md) and [v0.3.0](docs/releases/v0.3.0.md). The `v0.1.0` and `v0.2.0` snapshots remain available.
+## Native configuration and data
 
-## First version: 0.1.0
+Resources live in `model-deck.json`. Migration and provider-link import save resources and selections; native files change only after an explicit apply. Managed files are snapshotted before application, and restoration checks for external edits.
 
-The first version starts from the complete working implementation already built on CC Switch v3.20.4. The preserved source baseline is `10d0af62b0f5991eab61db5bf07811dfbd347660`, tagged `modeldeck-baseline-2026-10-04`.
+Client-owned memory files, MCP settings and unrelated native preferences remain with each client. The ChatGPT desktop application and official OAuth login are exempt. Codex CLI apply and restore manage model configuration and generated catalogs, preserving official login files even when older backups contain login snapshots.
 
-This release adds ModelDeck's own application identity, name, icon and version. It includes the existing Antigravity CLI, Cursor IDE, Cursor Agent CLI and Muse Code model connections, alongside the inherited clients. Application updates are local builds; there is no upstream auto-update channel.
+The existing `.cc-switch` directory and `cc-switch.db` filename remain for data compatibility. Legacy tables and historical records are retained for migration and local archives; they do not activate removed features. Avoid concurrent applications writing the same database. A separate data directory can be selected in Settings.
 
-- **Antigravity CLI:** custom model catalog, Gemini and OpenAI Chat routes; tested with 1.2.16.
-- **Cursor IDE:** native BYOK and model settings; configuration structure verified for 3.9.16.
-- **Cursor Agent CLI:** the verified official `cursor-agent-local` runtime uses a local model API and native tools without Cursor login or public ingress. The regular CLI retains the cloud BYOK adapter, verified against the installed June build and the October 1 build.
-- **Muse Code:** Responses, OpenAI Chat and Anthropic adapters, catalog and streaming compatibility; tested with 0.1.0-R708.1.
+SQL exports and database snapshots cover database records. The resource graph, device settings and native configuration snapshots are separate files; preserve the complete data directory when backing up the full setup. Personal keys, login state, runtime logs and native client sessions are not part of this repository.
 
-See [client connection usage](docs/CLIENT_MODELS.md) and the [v0.1.0 release notes](docs/releases/v0.1.0.md) for the exact scope and verification limits.
+The registered URL scheme is `modeldeck://`; pasted legacy `ccswitch://` provider links remain accepted. Cursor GUI and the regular cloud CLI use Cursor account services and a publicly reachable HTTPS endpoint. A verified official `cursor-agent-local` executable can use the local gateway. Consult the client guide for version constraints.
 
 ## Development
 
-Requirements: Node.js 18+, pnpm 10.12.3, Rust 1.85+ and the native Tauri 2 platform dependencies.
+Requirements: Node.js 22.12+, pnpm 10.12.3, Rust 1.85+ and Tauri 2 platform dependencies.
 
 ```sh
 pnpm install --frozen-lockfile
@@ -49,26 +47,18 @@ pnpm format:check
 pnpm test:unit
 cd src-tauri
 cargo fmt --check
-cargo clippy
+cargo clippy --all-targets --all-features -- -D warnings
 cargo test
 ```
 
-Build with `pnpm build`. On this Mac, the documented helper also handles the installed Homebrew Rust toolchain: `./scripts/build-modeldeck-macos.sh`. Build products are kept under `release/` and are not committed.
+Build with `pnpm build`. On this Mac, `./scripts/build-modeldeck-macos.sh` creates the application, verifies its signature and archives it under `release/v<version>/`. Build products are not committed.
 
-`pnpm dev`, `pnpm build` and `pnpm tauri` share the `scripts/tauri.mjs` launcher. On macOS it checks Rust first, locates a working library among installed Homebrew Z3 versions when needed, and preserves release proc-macro metadata for Homebrew Rust. It sets the environment after the package manager's shell starts and loads the Tauri CLI directly, avoiding host-detection crashes when macOS clears `DYLD_*`. Running `npx tauri` directly bypasses this setup.
+`pnpm dev`, `pnpm build` and `pnpm tauri` use `scripts/tauri.mjs`. On macOS it checks Rust and, when necessary, uses an installed Homebrew Z3 library. The renderer build loads its emitted library chunks to check initialization cycles that could otherwise produce a blank window.
 
-The renderer build also evaluates its emitted library chunks before packaging. This catches initialization cycles that can otherwise compile successfully and leave the application window blank. Tauri's hooks use Node directly so they do not need a second package-manager invocation.
-
-## First release compatibility
-
-To preserve the current working configuration contract, v0.1.0 retains the existing `.cc-switch` data directory, database filename and internal Rust library name. These are compatibility details; the installed product name is **ModelDeck** and its bundle identifier is **com.vita.modeldeck**. Do not run ModelDeck and CC Switch concurrently against the same configuration directory. A different configuration directory can be selected in Settings.
-
-The registered URL scheme is `modeldeck://`. Pasted legacy `ccswitch://` imports remain accepted. The original CC Switch update endpoints and update signing key are not configured in ModelDeck.
-
-API keys and personal runtime configuration are not part of this repository. Upstream credentials belong to global providers; harnesses use gateway credentials. Cursor IDE and the regular cloud CLI use Cursor account services and a publicly reachable HTTPS endpoint. Selecting the verified official `cursor-agent-local` executable uses the local ModelDeck gateway instead; original vendor files and login state are preserved.
+Development and test profiles retain file and line information without full debugger symbols or incremental object caches. `src-tauri/target` is rebuildable compiler output and can be removed with `cargo clean`. Installed applications, native configuration, usage records and `release/` archives do not depend on it.
 
 ## Source and license
 
-ModelDeck is derived from [CC Switch](https://github.com/farion1231/cc-switch), originally by Jason Young and contributors, under the MIT license. Upstream copyright notices are preserved in [LICENSE](LICENSE). See [source provenance](docs/UPSTREAM.md). Historical upstream documentation is retained in `docs/upstream/` as reference material.
+Project repository: [Vita0818/ModelDeck](https://github.com/Vita0818/ModelDeck). Reused code originates from [CC Switch](https://github.com/farion1231/cc-switch), originally by Jason Young and contributors. MIT notices remain in [LICENSE](LICENSE); provenance and historical baseline references are documented in [docs/UPSTREAM.md](docs/UPSTREAM.md).
 
-The Git remote `upstream` points to CC Switch. No personal publishing remote or hosted release channel has been configured.
+Prior release notes remain under [docs/releases](docs/releases), and upstream documentation under `docs/upstream/`. Historical materials do not describe the current feature set.

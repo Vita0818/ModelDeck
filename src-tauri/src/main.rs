@@ -31,5 +31,5 @@ fn main() {
         }
     }
 
-    cc_switch_lib::run();
+    modeldeck_lib::run();
 }

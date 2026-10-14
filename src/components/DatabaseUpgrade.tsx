@@ -1,18 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { invoke } from "@tauri-apps/api/core";
-import { listen } from "@tauri-apps/api/event";
 import { exit } from "@tauri-apps/plugin-process";
-import {
-  Database,
-  Download,
-  RefreshCw,
-  FolderOpen,
-  Loader2,
-  AlertTriangle,
-} from "lucide-react";
+import { AlertTriangle, FolderOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { APP_UPDATES_ENABLED } from "@/lib/product";
 
 interface DatabaseUpgradeProps {
   payload: {
@@ -24,264 +14,51 @@ interface DatabaseUpgradeProps {
   };
 }
 
-// checking: 启动时检查是否有可用更新
-// upgradable: 有可用更新，升级应用即可解决
-// incompatible: 已是最新版本但数据库仍过新（可能来自第三方客户端），升级无法解决
-// updating: 正在下载/安装更新
-// error: 升级过程出错
-type Phase = "checking" | "upgradable" | "incompatible" | "updating" | "error";
-
-interface DownloadProgress {
-  downloaded: number;
-  total: number | null;
-}
-
-/**
- * 数据库版本过新（应用过旧）时的应用内恢复界面。
- *
- * 启动时先检查是否有可用更新：
- * - 有 → 提供「升级应用」一键下载+安装+重启，并展示下载进度条。
- * - 无 → 说明当前已是最新版本但数据库仍不兼容（通常由第三方客户端或更高版本创建），
- *   升级无法解决，及时提醒用户备份后改用兼容客户端或等待官方支持。
- */
+/** An unsupported database is kept read-only until a compatible build is used. */
 export function DatabaseUpgrade({ payload }: DatabaseUpgradeProps) {
   const { t } = useTranslation();
-  const [phase, setPhase] = useState<Phase>(
-    APP_UPDATES_ENABLED ? "checking" : "incompatible",
-  );
-  const [availableVersion, setAvailableVersion] = useState<string | null>(null);
-  const [progress, setProgress] = useState<DownloadProgress | null>(null);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const unlistenRef = useRef<(() => void) | null>(null);
-
-  const dbVersion = payload.db_version;
-  const supportedVersion = payload.supported_version;
-
-  // 启动时检查可用更新，决定 upgradable / incompatible
-  useEffect(() => {
-    if (!APP_UPDATES_ENABLED) return;
-    let cancelled = false;
-    (async () => {
-      try {
-        const version = await invoke<string | null>(
-          "check_app_update_available",
-        );
-        if (cancelled) return;
-        if (version) {
-          setAvailableVersion(version);
-          setPhase("upgradable");
-        } else {
-          setPhase("incompatible");
-        }
-      } catch {
-        // 检查失败（如离线）：仍允许尝试升级，避免完全卡死
-        if (!cancelled) setPhase("upgradable");
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      unlistenRef.current?.();
-    };
-  }, []);
-
-  const startUpgrade = useCallback(async () => {
-    setPhase("updating");
-    setProgress(null);
-    setErrorMsg(null);
-    try {
-      unlistenRef.current?.();
-      unlistenRef.current = await listen<DownloadProgress>(
-        "update-download-progress",
-        (e) => setProgress(e.payload),
-      );
-      // 成功时后端会下载+安装+重启，不会返回；返回 false 表示无可用更新。
-      const updating = await invoke<boolean>("install_update_and_restart");
-      unlistenRef.current?.();
-      unlistenRef.current = null;
-      if (!updating) {
-        // 竞态：检查时有更新、安装时已无 → 按不兼容处理
-        setPhase("incompatible");
-      }
-      // updating === true：应用即将重启，保持 updating 态直到进程退出。
-    } catch (e) {
-      unlistenRef.current?.();
-      unlistenRef.current = null;
-      setErrorMsg(e instanceof Error ? e.message : String(e));
-      setPhase("error");
-    }
-  }, []);
-
-  const percent =
-    progress && progress.total && progress.total > 0
-      ? Math.min(100, Math.round((progress.downloaded / progress.total) * 100))
-      : null;
-  const fmtMB = (n: number) => (n / 1024 / 1024).toFixed(1);
-
-  const isIncompatible = phase === "incompatible";
-  const accent = isIncompatible
-    ? {
-        chip: "bg-destructive/10 text-destructive dark:bg-destructive/50 dark:text-destructive",
-        Icon: AlertTriangle,
-      }
-    : {
-        chip: "bg-warning/10 text-warning dark:bg-warning/50 dark:text-warning",
-        Icon: Database,
-      };
-  const AccentIcon = accent.Icon;
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-6 text-foreground">
       <div className="w-full max-w-lg space-y-5 rounded-2xl border border-border bg-card p-7 shadow-xl">
         <div className="flex items-start gap-4">
-          <div
-            className={`flex size-12 shrink-0 items-center justify-center rounded-xl ${accent.chip}`}
-          >
-            <AccentIcon className="size-6" />
-          </div>
-          <div className="space-y-1">
-            <h1 className="text-lg font-semibold">
-              {t("dbUpgrade.title", "数据库版本过新")}
-            </h1>
+          <AlertTriangle className="size-8 shrink-0 text-destructive" />
+          <div className="space-y-2">
+            <h1 className="text-lg font-semibold">{t("dbUpgrade.title")}</h1>
             <p className="text-sm text-muted-foreground">
-              {t(
-                "dbUpgrade.description",
-                "当前数据库由更新版本的 ModelDeck 创建，需要兼容的应用版本才能继续使用。",
-              )}
-            </p>
-            {dbVersion != null && supportedVersion != null && (
-              <p className="pt-0.5 text-xs text-muted-foreground tabular-nums">
-                {t("dbUpgrade.versionInfo", {
-                  db: dbVersion,
-                  supported: supportedVersion,
-                  defaultValue: "数据库版本 v{{db}} · 应用支持 v{{supported}}",
-                })}
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* 错误详情 / 数据库路径 */}
-        <div className="space-y-1 rounded-lg border border-border bg-muted p-3 text-xs text-muted-foreground">
-          {payload.error && (
-            <p className="break-words font-mono">{payload.error}</p>
-          )}
-          {payload.path && (
-            <p className="break-all">
-              {t("dbUpgrade.dbPath", "数据库文件")}：{payload.path}
-            </p>
-          )}
-        </div>
-
-        {phase === "checking" && (
-          <p className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Loader2 className="size-4 animate-spin" />
-            {t("dbUpgrade.checking", "正在检查可用更新…")}
-          </p>
-        )}
-
-        {phase === "upgradable" && availableVersion && (
-          <p className="text-sm text-muted-foreground">
-            {t("dbUpgrade.updateAvailable", {
-              version: availableVersion,
-              defaultValue: "发现新版本 v{{version}}，升级后即可继续使用。",
-            })}
-          </p>
-        )}
-
-        {phase === "incompatible" && (
-          <div className="space-y-2 rounded-lg border border-destructive/25 bg-destructive/10 p-3 text-sm text-destructive dark:border-destructive/15 dark:bg-destructive/40 dark:text-destructive">
-            <p className="font-medium">
-              {t("dbUpgrade.title", "数据库版本过新")}
-            </p>
-            <p className="leading-relaxed">
               {t("modeldeck.databaseCompatibility")}
             </p>
-          </div>
-        )}
-
-        {phase === "updating" && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-sm">
-              <span className="flex items-center gap-2 text-muted-foreground">
-                <Loader2 className="size-4 animate-spin" />
-                {percent === null
-                  ? t("dbUpgrade.preparing", "正在准备更新…")
-                  : t("dbUpgrade.downloading", "正在下载更新…")}
-              </span>
-              {percent !== null && (
-                <span className="tabular-nums text-muted-foreground">
-                  {percent}%
-                </span>
+            {payload.db_version != null &&
+              payload.supported_version != null && (
+                <p className="text-xs text-muted-foreground">
+                  {t("dbUpgrade.versionInfo", {
+                    db: payload.db_version,
+                    supported: payload.supported_version,
+                  })}
+                </p>
               )}
-            </div>
-            <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-              <div
-                className={`h-full rounded-full bg-warning transition-all duration-200 ${
-                  percent === null ? "w-1/3 animate-pulse" : ""
-                }`}
-                style={percent === null ? undefined : { width: `${percent}%` }}
-              />
-            </div>
-            {progress && (
-              <p className="text-right text-xs tabular-nums text-muted-foreground">
-                {fmtMB(progress.downloaded)} MB
-                {progress.total ? ` / ${fmtMB(progress.total)} MB` : ""}
-              </p>
-            )}
           </div>
-        )}
-
-        {phase === "error" && errorMsg && (
-          <p className="rounded-lg border border-destructive/25 bg-destructive/10 p-3 text-sm text-destructive dark:border-destructive/15 dark:bg-destructive/40 dark:text-destructive">
-            {errorMsg}
-          </p>
-        )}
-
-        <div className="flex flex-wrap items-center gap-2">
-          {APP_UPDATES_ENABLED &&
-            (phase === "upgradable" || phase === "error") && (
-              <Button
-                onClick={startUpgrade}
-                className="gap-2 bg-warning text-white hover:bg-warning"
-              >
-                {phase === "error" ? (
-                  <RefreshCw className="size-4" />
-                ) : (
-                  <Download className="size-4" />
-                )}
-                {phase === "error"
-                  ? t("dbUpgrade.retry", "重试升级")
-                  : t("dbUpgrade.upgradeNow", "升级应用")}
-              </Button>
-            )}
-
+        </div>
+        <div className="space-y-1 rounded-lg bg-muted p-3 text-xs text-muted-foreground">
+          {payload.error && <p className="break-words">{payload.error}</p>}
+          {payload.path && <p className="break-all">{payload.path}</p>}
+        </div>
+        <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            className="gap-2"
             onClick={() => void invoke("open_app_config_folder")}
-            disabled={phase === "updating"}
           >
             <FolderOpen className="size-4" />
-            {t("dbUpgrade.openConfigDir", "打开配置目录")}
+            {t("dbUpgrade.openConfigDir")}
           </Button>
-
           <Button
             variant="ghost"
-            className="ml-auto text-muted-foreground"
+            className="ml-auto"
             onClick={() => void exit(0)}
-            disabled={phase === "updating"}
           >
-            {t("dbUpgrade.quit", "退出")}
+            {t("dbUpgrade.quit")}
           </Button>
         </div>
       </div>
     </div>
   );
 }
-
-export default DatabaseUpgrade;

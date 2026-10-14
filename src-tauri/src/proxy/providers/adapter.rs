@@ -13,6 +13,10 @@ use serde_json::Value;
 /// - URL 构建
 /// - 认证信息提取和头部注入
 /// - 请求/响应格式转换（可选）
+#[allow(
+    dead_code,
+    reason = "Preserve the upstream adapter contract and protocol conversion tests"
+)]
 pub trait ProviderAdapter: Send + Sync {
     /// 适配器名称（用于日志和调试）
     fn name(&self) -> &'static str;

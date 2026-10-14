@@ -61,17 +61,6 @@ pub struct ApplyResult {
     pub restart_required: bool,
 }
 
-#[derive(Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ClientInspection {
-    pub client: ModelClient,
-    pub installed: bool,
-    pub executable: Option<String>,
-    pub configuration: String,
-    pub capability: &'static str,
-    pub version: Option<String>,
-}
-
 fn native_config(client: ModelClient) -> PathBuf {
     match client {
         ModelClient::Antigravity => get_home_dir().join(".gemini/antigravity-cli/settings.json"),
@@ -128,45 +117,6 @@ fn find_executable(client: ModelClient) -> Option<PathBuf> {
         candidates.extend(std::env::split_paths(&path).map(|p| p.join(name)));
     }
     candidates.into_iter().find(|p| p.is_file())
-}
-
-pub fn inspect() -> Vec<ClientInspection> {
-    [
-        ModelClient::Antigravity,
-        ModelClient::Cursor,
-        ModelClient::CursorAgent,
-        ModelClient::Muse,
-    ]
-    .into_iter()
-    .map(|client| {
-        let exe = find_executable(client);
-        let version = exe.as_ref().and_then(|p| match client {
-            ModelClient::Antigravity => command_version(p).ok(),
-            ModelClient::CursorAgent => cursor_runtime(p).ok().map(|runtime| runtime.version),
-            _ => None,
-        });
-        ClientInspection {
-            client,
-            installed: exe.is_some() || native_config(client).exists(),
-            executable: exe.as_ref().map(|p| p.to_string_lossy().into()),
-            configuration: native_config(client).to_string_lossy().into(),
-            capability: match client {
-                ModelClient::Antigravity => "gemini-or-chat",
-                ModelClient::Cursor => "public-chat-endpoint",
-                ModelClient::CursorAgent
-                    if exe.as_ref().is_some_and(|p| {
-                        cursor_runtime(p).is_ok_and(|runtime| runtime.local_api)
-                    }) =>
-                {
-                    "cursor-local-api"
-                }
-                ModelClient::CursorAgent => "cursor-cloud-byok",
-                ModelClient::Muse => "responses-bridge",
-            },
-            version,
-        }
-    })
-    .collect()
 }
 
 fn executable(client: ModelClient, p: &ClientProfile) -> Result<PathBuf, String> {
@@ -281,7 +231,6 @@ fn command_version(executable: &Path) -> Result<String, String> {
 
 struct CursorRuntime {
     directory: PathBuf,
-    version: String,
     local_api: bool,
 }
 
@@ -323,7 +272,6 @@ fn cursor_runtime(executable: &Path) -> Result<CursorRuntime, String> {
     }
     Ok(CursorRuntime {
         directory,
-        version: manifest["version"].as_str().unwrap_or_default().to_string(),
         local_api: manifest["mode"].as_str() == Some("local-api"),
     })
 }
@@ -643,24 +591,6 @@ fn commit_files(
     Ok(())
 }
 
-pub fn apply(
-    client: ModelClient,
-    p: &ClientProfile,
-    origin: &str,
-    previous: Option<&ClientProfile>,
-    commit: impl FnOnce() -> Result<(), String>,
-) -> Result<ApplyResult, String> {
-    apply_with_routing(
-        client,
-        p,
-        previous,
-        &format!("{origin}/model-clients/{}", client.id()),
-        &super::config_path(),
-        &gateway_origin_path(),
-        commit,
-    )
-}
-
 pub(crate) fn apply_deck(
     client: ModelClient,
     p: &ClientProfile,
@@ -772,117 +702,6 @@ fn apply_with_routing(
     })
 }
 
-fn reset_settings(client: ModelClient, mut value: Value, p: &ClientProfile) -> Value {
-    let owns = |id: Option<&str>| id.is_some_and(|id| p.models.iter().any(|model| model.id == id));
-    if client == ModelClient::Antigravity {
-        if value.get("modelProvider").and_then(Value::as_str) == Some("gemini") {
-            value.as_object_mut().unwrap().remove("modelProvider");
-        }
-        if owns(value.get("model").and_then(Value::as_str)) {
-            value.as_object_mut().unwrap().remove("model");
-        }
-        if let Some(models) = value
-            .pointer_mut("/customModelsConfig/customModels")
-            .and_then(Value::as_object_mut)
-        {
-            for model in &p.models {
-                models.remove(&model.id);
-            }
-        }
-    } else if client == ModelClient::Muse {
-        if value
-            .pointer("/endpoint_transport/base_url")
-            .and_then(Value::as_str)
-            .is_some_and(|s| s.ends_with("/model-clients/muse"))
-        {
-            value.as_object_mut().unwrap().remove("endpoint_transport");
-        }
-        if owns(value.get("model").and_then(Value::as_str)) {
-            value.as_object_mut().unwrap().remove("model");
-        }
-    } else if client == ModelClient::CursorAgent {
-        if owns(value.pointer("/model/modelId").and_then(Value::as_str)) {
-            value["model"] = json!({"modelId":"default","displayModelId":"auto","displayName":"Auto","displayNameShort":"Auto","aliases":["auto"],"maxMode":false});
-        }
-        if owns(
-            value
-                .pointer("/selectedModel/modelId")
-                .and_then(Value::as_str),
-        ) {
-            value.as_object_mut().unwrap().remove("selectedModel");
-        }
-    }
-    value
-}
-
-pub fn reset(
-    client: ModelClient,
-    p: &ClientProfile,
-    commit: impl FnOnce() -> Result<(), String>,
-) -> Result<(), String> {
-    let path = native_config(client);
-    if !path.is_file() {
-        return commit();
-    }
-    if client == ModelClient::Cursor {
-        ensure_cursor_closed()?;
-        let mut conn =
-            Connection::open_with_flags(&path, rusqlite::OpenFlags::SQLITE_OPEN_READ_WRITE)
-                .map_err(|e| e.to_string())?;
-        conn.busy_timeout(Duration::from_secs(3))
-            .map_err(|e| e.to_string())?;
-        let tx = conn
-            .transaction_with_behavior(rusqlite::TransactionBehavior::Immediate)
-            .map_err(|e| e.to_string())?;
-        let raw: String = tx
-            .query_row(
-                "SELECT value FROM ItemTable WHERE key=?1",
-                [CURSOR_STORAGE],
-                |r| r.get(0),
-            )
-            .map_err(|e| e.to_string())?;
-        let mut v: Value =
-            serde_json::from_str(&raw).map_err(|_| "Invalid Cursor model storage")?;
-        v["useOpenAIKey"] = json!(false);
-        if v.get("openAIBaseUrl").and_then(Value::as_str) == Some(p.endpoint.trim_end_matches('/'))
-        {
-            v["openAIBaseUrl"] = Value::Null;
-        }
-        if let Some(models) = v
-            .pointer_mut("/aiSettings/userAddedModels")
-            .and_then(Value::as_array_mut)
-        {
-            models.retain(|id| !p.models.iter().any(|m| id.as_str() == Some(&m.id)));
-        }
-        for feature in ["composer", "plan-execution"] {
-            if let Some(config) = v.pointer_mut(&format!("/aiSettings/modelConfig/{feature}")) {
-                if p.models
-                    .iter()
-                    .any(|m| config.get("modelName").and_then(Value::as_str) == Some(&m.id))
-                {
-                    *config = json!({"modelName":"default","maxMode":false,"selectedModels":[{"modelId":"default","parameters":[]}]});
-                }
-            }
-        }
-        tx.execute(
-            "UPDATE ItemTable SET value=?2 WHERE key=?1",
-            rusqlite::params![CURSOR_STORAGE, v.to_string()],
-        )
-        .map_err(|e| e.to_string())?;
-        commit()?;
-        return tx.commit().map_err(|e| e.to_string());
-    }
-    let value = reset_settings(client, read_json(&path)?, p);
-    commit_files(
-        vec![FileUpdate {
-            path,
-            bytes: serde_json::to_vec_pretty(&value).map_err(|e| e.to_string())?,
-            executable: false,
-        }],
-        commit,
-    )
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -938,7 +757,6 @@ mod tests {
     fn local_cursor_launcher_keeps_keys_out_of_arguments_and_native_auth() {
         let runtime = CursorRuntime {
             directory: PathBuf::from("/vendor/Cursor Local"),
-            version: "verified-local".into(),
             local_api: true,
         };
         let script = cursor_local_launcher(
@@ -1020,40 +838,7 @@ mod tests {
         assert_eq!(args.iter().filter(|a| **a == "--model").count(), 1);
         assert_eq!(args.last(), Some(&"prompt with spaces"));
     }
-    #[test]
-    fn reset_and_provider_switch_preserve_unmanaged_models_and_preferences() {
-        let p = profile();
-        let original = json!({"modelProvider":"gemini","model":p.default_model,"tui":{"theme":"keep"},"customModelsConfig":{"customModels":{"vendor/model":{"modelName":"vendor/model"},"user-model":{"modelName":"keep"}}}});
-        let reset = reset_settings(ModelClient::Antigravity, original.clone(), &p);
-        assert!(reset.get("modelProvider").is_none());
-        assert_eq!(reset["tui"], original["tui"]);
-        assert!(reset["customModelsConfig"]["customModels"]
-            .get("vendor/model")
-            .is_none());
-        assert_eq!(
-            reset["customModelsConfig"]["customModels"]["user-model"]["modelName"],
-            "keep"
-        );
-        let mut next = p.clone();
-        next.models[0].id = "new/model".into();
-        next.default_model = "new/model".into();
-        let switched = patch_settings(
-            ModelClient::Antigravity,
-            original,
-            &next,
-            "http://127.0.0.1:15721/model-clients/antigravity",
-            Some(&p),
-        );
-        assert!(switched["customModelsConfig"]["customModels"]
-            .get("vendor/model")
-            .is_none());
-        assert!(switched["customModelsConfig"]["customModels"]
-            .get("new/model")
-            .is_some());
-        assert!(switched["customModelsConfig"]["customModels"]
-            .get("user-model")
-            .is_some());
-    }
+
     #[test]
     fn cursor_store_failure_rolls_back_both_native_keys() {
         let dir = tempfile::tempdir().unwrap();

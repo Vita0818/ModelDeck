@@ -182,6 +182,7 @@ pub(crate) fn whole_string_image_data_url(value: &str) -> Option<Value> {
 
 /// Read-only media detection using the same shape classifier and recursive
 /// boundaries as [`strip_media_from_tool_value`].
+#[cfg(test)]
 pub(crate) fn tool_output_contains_media(value: &Value, scope: ToolMediaScope) -> bool {
     tool_output_contains_media_at_depth(value, scope, 0)
 }
@@ -193,6 +194,7 @@ pub(crate) fn tool_output_contains_media(value: &Value, scope: ToolMediaScope) -
 /// an originally plain string stays a plain string. Parseable JSON strings are
 /// recursively transformed and canonicalized back into a string only when a
 /// replacement actually occurred.
+#[cfg(test)]
 pub(crate) fn strip_media_from_tool_value(
     value: &mut Value,
     media_parts: &mut Vec<Value>,
@@ -267,6 +269,7 @@ pub(crate) fn clamp_base64ish_strings(value: &mut Value) {
     }
 }
 
+#[cfg(test)]
 fn tool_output_contains_media_at_depth(value: &Value, scope: ToolMediaScope, depth: usize) -> bool {
     if depth > MAX_MEDIA_TRAVERSAL_DEPTH {
         return false;

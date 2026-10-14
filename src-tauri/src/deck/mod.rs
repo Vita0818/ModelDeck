@@ -57,10 +57,6 @@ pub fn needs_gateway() -> bool {
     read_store().is_ok_and(|s| !s.active_bindings.is_empty())
 }
 
-pub fn manages(client: &str) -> bool {
-    read_store().is_ok_and(|s| s.active_bindings.contains_key(client))
-}
-
 pub fn binding_active(client: &str) -> Result<bool, String> {
     if !config_path().exists() {
         return Ok(false);
@@ -514,6 +510,42 @@ fn view(store: DeckStore) -> DeckView {
     }
 }
 
+pub(crate) fn import_model_providers(
+    db: &crate::database::Database,
+    client: &str,
+    providers: &[crate::provider::Provider],
+    select: bool,
+) -> Result<Vec<String>, String> {
+    if !CLIENTS.contains(&client) {
+        return Err("This client is outside ModelDeck's supported scope".into());
+    }
+    let _lock = STORE_LOCK
+        .lock()
+        .map_err(|_| "Resource store lock failed")?;
+    let mut store = if config_path().exists() {
+        read_store()?
+    } else {
+        migration::import(db)?
+    };
+    let mut imported = Vec::new();
+    for (index, provider) in providers.iter().enumerate() {
+        let (id, binding) = migration::import_provider(&mut store, client, provider)
+            .ok_or("This link does not contain a usable API provider")?;
+        imported.push(id);
+        if let Some(binding) = binding {
+            if select && index == 0 {
+                store.bindings.insert(client.into(), binding);
+            } else {
+                store.bindings.entry(client.into()).or_insert(binding);
+            }
+        }
+    }
+    validate(&store)?;
+    store.revision += 1;
+    write_store(&store)?;
+    Ok(imported)
+}
+
 #[tauri::command]
 pub fn get_deck(
     state: tauri::State<'_, AppState>,
@@ -587,7 +619,7 @@ pub async fn apply_deck_binding(
     }
     let config = state
         .db
-        .get_proxy_config()
+        .get_global_proxy_config()
         .await
         .map_err(|e| e.to_string())?;
     if config.listen_port == 0 {

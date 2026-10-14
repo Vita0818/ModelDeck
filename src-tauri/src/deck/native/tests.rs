@@ -499,7 +499,7 @@ fn codex_apply_and_restore_preserve_official_oauth_with_legacy_setting_disabled(
         "model_provider = \"openai\"\nmodel = \"official-model\"\nweb_search = \"live\"\n";
     fs::write(&auth_path, original_auth).unwrap();
     fs::write(&config_path, original_config).unwrap();
-    assert!(!settings::preserve_codex_official_auth_on_switch());
+    assert!(!settings::get_settings().preserve_codex_official_auth_on_switch);
 
     let profile = home.projection("codex");
     apply("codex", &profile, None, &state, || Ok(())).unwrap();

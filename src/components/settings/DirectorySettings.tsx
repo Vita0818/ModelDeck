@@ -3,10 +3,10 @@ import { FolderSearch, Undo2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
-import type { AppId } from "@/lib/api";
-import type { ResolvedDirectories } from "@/hooks/useSettings";
-
-type DirectoryAppId = Exclude<AppId, "claude-desktop" | "mcode">;
+import type {
+  DirectoryAppId,
+  ResolvedDirectories,
+} from "@/hooks/useDirectorySettings";
 
 interface DirectorySettingsProps {
   appConfigDir?: string;
@@ -16,12 +16,9 @@ interface DirectorySettingsProps {
   onResetAppConfig: () => Promise<void>;
   claudeDir?: string;
   codexDir?: string;
-  geminiDir?: string;
   grokDir?: string;
   opencodeDir?: string;
-  openclawDir?: string;
   hermesDir?: string;
-  piDir?: string;
   onDirectoryChange: (app: DirectoryAppId, value?: string) => void;
   onBrowseDirectory: (app: DirectoryAppId) => Promise<void>;
   onResetDirectory: (app: DirectoryAppId) => Promise<void>;
@@ -46,7 +43,7 @@ export function DirectorySettings({
 
   return (
     <div className="space-y-6">
-      {/* CC Switch 配置目录 - 独立区块 */}
+      {/* ModelDeck 配置目录 - 独立区块 */}
       <section className="space-y-4">
         <header className="space-y-1">
           <h3 className="text-sm font-medium">{t("settings.appConfigDir")}</h3>

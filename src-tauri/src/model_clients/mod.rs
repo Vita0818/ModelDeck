@@ -4,15 +4,11 @@ pub(crate) mod gateway;
 pub(crate) mod native;
 pub(crate) mod provider_adapter;
 
-use crate::config::{atomic_write_private, get_app_config_dir};
+use crate::config::get_app_config_dir;
 use serde::{Deserialize, Serialize};
-use std::{
-    collections::{BTreeMap, HashSet},
-    path::PathBuf,
-    sync::Mutex,
-};
-
-static CONFIG_LOCK: Mutex<()> = Mutex::new(());
+#[cfg(test)]
+use std::collections::HashSet;
+use std::{collections::BTreeMap, path::PathBuf};
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
@@ -141,11 +137,7 @@ pub(crate) fn read_store() -> Result<ClientStore, String> {
     }
 }
 
-fn write_store(store: &ClientStore) -> Result<(), String> {
-    let bytes = serde_json::to_vec_pretty(store).map_err(|e| e.to_string())?;
-    atomic_write_private(&config_path(), &bytes).map_err(|e| e.to_string())
-}
-
+#[cfg(test)]
 pub(crate) fn validate(client: ModelClient, p: &ClientProfile) -> Result<(), String> {
     if p.connection_name.chars().count() > 80 || p.connection_name.contains(['\r', '\n']) {
         return Err("Use a connection name of at most 80 characters".into());
@@ -260,225 +252,10 @@ pub(crate) fn validate(client: ModelClient, p: &ClientProfile) -> Result<(), Str
 pub(crate) fn resolve_key(p: &ClientProfile) -> Result<String, String> {
     if !p.key_env.is_empty() {
         std::env::var(&p.key_env).ok().filter(|v| !v.trim().is_empty())
-            .ok_or_else(|| format!("{} is not available in CC Switch's environment. Enter this client's dedicated key, or launch CC Switch with that variable set.", p.key_env))
+            .ok_or_else(|| format!("{} is not available in ModelDeck's environment. Enter this client's dedicated key, or launch ModelDeck with that variable set.", p.key_env))
     } else {
         Ok(p.api_key.clone())
     }
-}
-
-#[tauri::command]
-pub fn get_model_clients() -> Result<ClientStore, String> {
-    read_store()
-}
-
-#[tauri::command]
-pub fn save_model_client(client: ModelClient, mut profile: ClientProfile) -> Result<(), String> {
-    profile.connection_name = profile.connection_name.trim().to_string();
-    validate(client, &profile)?;
-    let _lock = CONFIG_LOCK
-        .lock()
-        .map_err(|_| "Model client configuration lock failed")?;
-    let mut store = read_store()?;
-    // Runtime token/activation are never accepted from renderer input.
-    let previous = store.profiles.get(&client);
-    profile.local_token = previous
-        .map(|p| p.local_token.clone())
-        .filter(|v| !v.is_empty())
-        .unwrap_or_else(|| uuid::Uuid::new_v4().to_string());
-    profile.enabled = previous.is_some_and(|p| p.enabled);
-    if !profile.connection_name.is_empty() {
-        store
-            .saved_profiles
-            .entry(client)
-            .or_default()
-            .insert(profile.connection_name.clone(), profile.clone());
-    }
-    store.profiles.insert(client, profile);
-    write_store(&store)
-}
-
-#[tauri::command]
-pub async fn apply_model_client(
-    client: ModelClient,
-    state: tauri::State<'_, crate::store::AppState>,
-) -> Result<native::ApplyResult, String> {
-    // Preflight before starting the server or changing a native file.
-    let mut profile = read_store()?
-        .profiles
-        .get(&client)
-        .cloned()
-        .ok_or("Save a profile first")?;
-    validate(client, &profile)?;
-    native::preflight(client, &profile)?;
-    let origin = if matches!(client, ModelClient::Cursor | ModelClient::CursorAgent) {
-        String::new()
-    } else {
-        let info = state.proxy_service.start().await?;
-        publish_gateway_origin(&info.address, info.port)?;
-        format!("http://127.0.0.1:{}", info.port)
-    };
-    let _lock = CONFIG_LOCK
-        .lock()
-        .map_err(|_| "Model client configuration lock failed")?;
-    let previous = read_store()?;
-    if previous.profiles.get(&client) != Some(&profile) {
-        return Err("The model connection changed while applying; apply it again".into());
-    }
-    let mut store = previous.clone();
-    profile.enabled = true;
-    store.profiles.insert(client, profile.clone());
-    store.active.insert(client, profile.clone());
-    let mut persisted = false;
-    let result = native::apply(
-        client,
-        &profile,
-        &origin,
-        previous.active.get(&client),
-        || {
-            write_store(&store)?;
-            persisted = true;
-            Ok(())
-        },
-    );
-    if result.is_err() && persisted {
-        if let Err(rollback) = write_store(&previous) {
-            return Err(format!(
-                "Native update failed; restoring the active connection also failed: {rollback}"
-            ));
-        }
-    }
-    result
-}
-
-#[tauri::command]
-pub fn reset_model_client(client: ModelClient) -> Result<(), String> {
-    let _lock = CONFIG_LOCK
-        .lock()
-        .map_err(|_| "Model client configuration lock failed")?;
-    let previous = read_store()?;
-    let Some(profile) = previous.active.get(&client) else {
-        return Ok(());
-    };
-    let mut store = previous.clone();
-    store.active.remove(&client);
-    if let Some(draft) = store.profiles.get_mut(&client) {
-        draft.enabled = false;
-    }
-    let mut persisted = false;
-    let result = native::reset(client, profile, || {
-        write_store(&store)?;
-        persisted = true;
-        Ok(())
-    });
-    if result.is_err() && persisted {
-        write_store(&previous)?;
-    }
-    result
-}
-
-#[tauri::command]
-pub fn inspect_model_clients() -> Vec<native::ClientInspection> {
-    native::inspect()
-}
-
-#[tauri::command]
-pub fn import_model_client_catalog(
-    provider_id: String,
-    state: tauri::State<'_, crate::store::AppState>,
-) -> Result<Vec<ClientModel>, String> {
-    // Read model metadata only. Keys and provider activation never cross clients.
-    let providers = state
-        .db
-        .get_all_providers("opencode")
-        .map_err(|e| e.to_string())?;
-    let mut models = indexmap::IndexMap::new();
-    for provider in providers.values().filter(|p| p.id == provider_id) {
-        if let Some(catalog) = provider
-            .settings_config
-            .get("models")
-            .and_then(serde_json::Value::as_object)
-        {
-            for (id, m) in catalog {
-                let context = m
-                    .pointer("/limit/context")
-                    .and_then(serde_json::Value::as_u64)
-                    .ok_or_else(|| format!("Missing context limit for {id}"))?;
-                let output = m
-                    .pointer("/limit/output")
-                    .and_then(serde_json::Value::as_u64)
-                    .ok_or_else(|| format!("Missing output limit for {id}"))?;
-                let mut reasoning: Vec<String> = m
-                    .get("variants")
-                    .and_then(serde_json::Value::as_object)
-                    .map(|v| {
-                        v.keys()
-                            .filter(|k| {
-                                matches!(
-                                    k.as_str(),
-                                    "none"
-                                        | "minimal"
-                                        | "low"
-                                        | "medium"
-                                        | "high"
-                                        | "xhigh"
-                                        | "max"
-                                        | "ultra"
-                                )
-                            })
-                            .cloned()
-                            .collect()
-                    })
-                    .unwrap_or_default();
-                if let Some(configured) = m
-                    .pointer("/options/reasoningEffort")
-                    .or_else(|| m.pointer("/options/reasoning_effort"))
-                    .or_else(|| m.pointer("/options/reasoning/effort"))
-                    .and_then(serde_json::Value::as_str)
-                {
-                    if matches!(
-                        configured,
-                        "none" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max" | "ultra"
-                    ) && !reasoning.iter().any(|level| level == configured)
-                    {
-                        reasoning.push(configured.to_string());
-                    }
-                }
-                models.entry(id.clone()).or_insert(ClientModel {
-                    id: id.clone(),
-                    name: m
-                        .get("name")
-                        .and_then(serde_json::Value::as_str)
-                        .unwrap_or(id)
-                        .into(),
-                    context,
-                    output,
-                    reasoning,
-                    default_effort: String::new(),
-                    reasoning_supported: m.get("reasoning").and_then(serde_json::Value::as_bool),
-                });
-            }
-        }
-    }
-    Ok(models.into_values().collect())
-}
-
-#[tauri::command]
-pub fn get_model_client_catalog_sources(
-    state: tauri::State<'_, crate::store::AppState>,
-) -> Result<Vec<serde_json::Value>, String> {
-    let providers = state
-        .db
-        .get_all_providers("opencode")
-        .map_err(|e| e.to_string())?;
-    Ok(providers
-        .values()
-        .filter_map(|p| {
-            p.settings_config
-                .get("models")
-                .and_then(serde_json::Value::as_object)
-                .map(|m| serde_json::json!({"id":p.id,"name":p.name,"count":m.len()}))
-        })
-        .collect())
 }
 
 #[cfg(test)]

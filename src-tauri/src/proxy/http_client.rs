@@ -182,20 +182,6 @@ pub fn update_proxy(proxy_url: Option<&str>) -> Result<(), String> {
     Ok(())
 }
 
-/// 获取全局 HTTP 客户端
-///
-/// 返回配置了代理的客户端（如果已配置代理），否则返回跟随系统代理的客户端。
-pub fn get() -> Client {
-    GLOBAL_CLIENT
-        .get()
-        .and_then(|lock| lock.read().ok())
-        .map(|c| c.clone())
-        .unwrap_or_else(|| {
-            log::warn!("[GlobalProxy] [GP-004] Client not initialized, using fallback");
-            build_client(None).unwrap_or_default()
-        })
-}
-
 /// 获取当前代理 URL
 ///
 /// 返回当前配置的代理 URL，None 表示直连。
