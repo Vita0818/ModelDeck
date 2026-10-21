@@ -1513,6 +1513,13 @@
     "noSearchResults": "没有匹配的预设供应商。"
   },
   "usage": {
+    "date": "日期",
+    "calendarRangeHint": "日历按整天选择；可编辑时间精确筛选，结束时间包含所选分钟。",
+    "previousMonth": "上个月",
+    "nextMonth": "下个月",
+    "settingsSaveFailed": "用量设置保存失败",
+    "loadError": "用量数据加载失败",
+    "retry": "重试",
     "title": "使用统计",
     "subtitle": "查看 AI 模型的使用情况和成本统计",
     "today": "24小时",

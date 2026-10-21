@@ -1513,6 +1513,13 @@
     "noSearchResults": "No provider presets match your search."
   },
   "usage": {
+    "date": "Date",
+    "calendarRangeHint": "Calendar dates select full days. Edit times for a precise range; the end includes the selected minute.",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "settingsSaveFailed": "Could not save usage preferences",
+    "loadError": "Could not load usage data",
+    "retry": "Retry",
     "title": "Usage Statistics",
     "subtitle": "View AI model usage and cost statistics",
     "today": "24 Hours",

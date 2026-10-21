@@ -1513,6 +1513,13 @@
     "noSearchResults": "一致するプロバイダープリセットがありません。"
   },
   "usage": {
+    "date": "日付",
+    "calendarRangeHint": "カレンダーは日単位で選択します。時刻を編集して範囲を指定できます。終了時刻には選択した分全体を含みます。",
+    "previousMonth": "前の月",
+    "nextMonth": "次の月",
+    "settingsSaveFailed": "使用状況の設定を保存できませんでした",
+    "loadError": "使用状況データを読み込めませんでした",
+    "retry": "再試行",
     "title": "利用統計",
     "subtitle": "AI モデルの利用状況とコスト統計を表示",
     "today": "24時間",

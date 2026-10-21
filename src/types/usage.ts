@@ -18,6 +18,8 @@ export interface RequestLog {
   pricingModel?: string;
   costMultiplier: string;
   inputTokens: number;
+  /** 0 = legacy, 1 = total input including cache, 2 = fresh input. */
+  inputTokenSemantics?: 0 | 1 | 2;
   outputTokens: number;
   cacheReadTokens: number;
   cacheCreationTokens: number;
@@ -211,12 +213,11 @@ export const KNOWN_APP_TYPES: ReadonlyArray<AppType> = [
 /**
  * App types whose proxy uses an OpenAI-style protocol. Two consequences:
  *
- * 1. `inputTokens` already includes the cached portion (must subtract
- *    `cacheReadTokens` to get fresh-input semantics — see
- *    [getFreshInputTokens]).
- * 2. The protocol does not report cache _creation_ separately, only cache
- *    _reads_. So `cacheCreationTokens` is always 0 for these app types and
- *    the UI should label it as N/A rather than 0.
+ * 1. Unless a row is explicitly marked as fresh input, its cached portion
+ *    must be removed — see [getFreshInputTokens] for the storage formats.
+ * 2. The standard protocol reports cache reads, without a separate cache
+ *    creation counter. Session formats can still supply cache writes; the UI
+ *    must show those recorded values when available.
  *
  * Mirror of the Rust `CACHE_INCLUSIVE_APP_TYPES` whitelist.
  */
@@ -255,19 +256,25 @@ export interface CacheNormalizableLog {
   appType: string;
   inputTokens: number;
   cacheReadTokens: number;
+  cacheCreationTokens?: number;
+  inputTokenSemantics?: 0 | 1 | 2;
 }
 
 /**
- * For a single request log, return the input token count with cache reads
- * removed. Anthropic-style providers already report `inputTokens` without
- * cache, so they pass through unchanged.
+ * Mirror the backend's fresh_input_sql for each row's storage semantics.
+ * Legacy records include cache reads; total-input records also include cache
+ * writes. Already-normalized records and Anthropic input pass through.
  */
 export function getFreshInputTokens(log: CacheNormalizableLog): number {
+  if (log.inputTokenSemantics === 2) return log.inputTokens;
+  const cachedTokens =
+    log.cacheReadTokens +
+    (log.inputTokenSemantics === 1 ? (log.cacheCreationTokens ?? 0) : 0);
   if (
     CACHE_INCLUSIVE_APP_TYPES.has(log.appType) &&
-    log.inputTokens >= log.cacheReadTokens
+    log.inputTokens >= cachedTokens
   ) {
-    return log.inputTokens - log.cacheReadTokens;
+    return log.inputTokens - cachedTokens;
   }
   return log.inputTokens;
 }

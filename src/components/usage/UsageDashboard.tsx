@@ -115,6 +115,7 @@ export function UsageDashboard({
   const [showRebuildConfirm, setShowRebuildConfirm] = useState(false);
   const [rebuildingCodex, setRebuildingCodex] = useState(false);
   const [syncingSession, setSyncingSession] = useState(false);
+  const [savingPreferences, setSavingPreferences] = useState(false);
 
   useEffect(() => {
     setRefreshIntervalMs(normalizeRefreshInterval(savedRefreshIntervalMs));
@@ -141,9 +142,11 @@ export function UsageDashboard({
   useUsageEventBridge();
 
   const changeRefreshInterval = async (next: number) => {
+    if (savingPreferences) return;
     const normalized = normalizeRefreshInterval(next);
     const previous = refreshIntervalMs;
     setRefreshIntervalMs(normalized);
+    setSavingPreferences(true);
     queryClient.invalidateQueries({ queryKey: usageKeys.all });
     try {
       const saved = await onRefreshIntervalChange?.(normalized);
@@ -156,6 +159,23 @@ export function UsageDashboard({
         error,
       );
       setRefreshIntervalMs(previous);
+    } finally {
+      setSavingPreferences(false);
+    }
+  };
+
+  const changeSessionAutoSync = async (next: boolean) => {
+    if (savingPreferences) return;
+    setSavingPreferences(true);
+    try {
+      await onSessionAutoSyncEnabledChange?.(next);
+    } catch (error) {
+      console.error(
+        "[UsageDashboard] Failed to persist session auto-sync",
+        error,
+      );
+    } finally {
+      setSavingPreferences(false);
     }
   };
 
@@ -377,6 +397,7 @@ export function UsageDashboard({
 
           <div className="flex items-center gap-2 ml-auto lg:ml-0">
             <Select
+              disabled={savingPreferences}
               value={String(refreshIntervalMs)}
               onValueChange={(v) => changeRefreshInterval(Number(v))}
             >
@@ -458,7 +479,6 @@ export function UsageDashboard({
                   providerName={providerName}
                   model={model}
                   refreshIntervalMs={refreshIntervalMs}
-                  onRangeChange={setRange}
                 />
               </TabsContent>
 
@@ -510,8 +530,11 @@ export function UsageDashboard({
                   )}
                   <Switch
                     checked={sessionAutoSyncEnabled}
+                    disabled={
+                      savingPreferences || rebuildingCodex || syncingSession
+                    }
                     onCheckedChange={(value) =>
-                      void onSessionAutoSyncEnabledChange?.(value)
+                      void changeSessionAutoSync(value)
                     }
                     aria-label={t("usage.sessionSync.title")}
                   />

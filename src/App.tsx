@@ -2,9 +2,10 @@ import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
 import { Loader2, Maximize2, Minimize2, Minus, X } from "lucide-react";
-import type { VisibleApps } from "@/types";
+import type { Settings, VisibleApps } from "@/types";
 import { useSettingsQuery } from "@/lib/query";
-import { providersApi, type AppId } from "@/lib/api";
+import { providersApi, settingsApi, type AppId } from "@/lib/api";
+import { toast } from "sonner";
 import { useTauriEvent } from "@/hooks/useTauriEvent";
 import { useWindowChrome } from "@/hooks/app/useWindowChrome";
 import { useEnvConflicts } from "@/hooks/app/useEnvConflicts";
@@ -139,6 +140,28 @@ function App() {
     }
   };
 
+  const saveUsagePreferences = async (
+    updates: Partial<
+      Pick<
+        Settings,
+        "usageDashboardRefreshIntervalMs" | "sessionAutoSyncEnabled"
+      >
+    >,
+  ): Promise<boolean> => {
+    try {
+      const latest = await settingsApi.get();
+      const next = { ...latest, ...updates };
+      if (!(await settingsApi.save(next)))
+        throw new Error("Settings were not saved");
+      queryClient.setQueryData(["settings"], next);
+      return true;
+    } catch (error) {
+      console.error("[App] Failed to save usage preferences", error);
+      toast.error(t("usage.settingsSaveFailed"));
+      return false;
+    }
+  };
+
   const content = () => {
     switch (route.kind) {
       case "resources":
@@ -152,7 +175,20 @@ function App() {
       case "client":
         return <HarnessPage client={route.client} onNavigate={setRoute} />;
       case "usage":
-        return <UsageDashboard />;
+        return (
+          <UsageDashboard
+            refreshIntervalMs={settingsData?.usageDashboardRefreshIntervalMs}
+            onRefreshIntervalChange={(next) =>
+              saveUsagePreferences({ usageDashboardRefreshIntervalMs: next })
+            }
+            sessionAutoSyncEnabled={
+              settingsData?.sessionAutoSyncEnabled ?? true
+            }
+            onSessionAutoSyncEnabledChange={(next) =>
+              saveUsagePreferences({ sessionAutoSyncEnabled: next })
+            }
+          />
+        );
       case "settings":
         return (
           <SettingsPage

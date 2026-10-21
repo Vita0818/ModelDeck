@@ -4,7 +4,7 @@
 
 ModelDeck is an independently maintained personal desktop application for model providers, endpoints, dedicated API keys, model catalogs, context limits and reasoning tiers. It reuses selected native configuration and protocol adapters from CC Switch within its own product scope.
 
-## Version 0.4.1
+## Version 0.4.2
 
 The application keeps three areas:
 
@@ -18,7 +18,7 @@ Memory, MCP, Skills, prompts, session browsing, OpenClaw workspaces, the OAuth a
 
 Provider-specific authentication headers, URL construction, request fields, reasoning parameters and streaming conversions remain in the model transport layer. A route edit affects all clients referencing it; bindings store references instead of copying upstream credentials and catalogs.
 
-See [the two-layer guide](docs/TWO_LAYER_MODELDECK.md), [client adapters](docs/CLIENT_MODELS.md) and [v0.4.1 changes](docs/releases/v0.4.1.md).
+See [the two-layer guide](docs/TWO_LAYER_MODELDECK.md), [client adapters](docs/CLIENT_MODELS.md) and [v0.4.2 changes](docs/releases/v0.4.2.md).
 
 ## Native configuration and data
 

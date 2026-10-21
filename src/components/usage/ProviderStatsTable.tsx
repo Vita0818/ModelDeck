@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import { useProviderStats } from "@/lib/query/usage";
 import { fmtUsd } from "./format";
+import { UsageQueryError } from "./UsageQueryError";
 import type { UsageRangeSelection } from "@/types/usage";
 
 interface ProviderStatsTableProps {
@@ -28,13 +29,20 @@ export function ProviderStatsTable({
   refreshIntervalMs,
 }: ProviderStatsTableProps) {
   const { t } = useTranslation();
-  const { data: stats, isLoading } = useProviderStats(
+  const {
+    data: stats,
+    isLoading,
+    isError,
+    refetch,
+  } = useProviderStats(
     range,
     { appType, providerName, model },
     {
       refetchInterval: refreshIntervalMs > 0 ? refreshIntervalMs : false,
     },
   );
+
+  if (isError) return <UsageQueryError onRetry={() => void refetch()} />;
 
   if (isLoading) {
     return <div className="h-[400px] animate-pulse rounded bg-muted" />;

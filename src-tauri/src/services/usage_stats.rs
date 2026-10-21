@@ -138,8 +138,8 @@ pub struct RequestLogDetail {
     pub output_tokens: u32,
     pub cache_read_tokens: u32,
     pub cache_creation_tokens: u32,
-    /// Internal storage semantics; omitted from the UI/API payload.
-    #[serde(skip)]
+    /// Storage semantics are required to normalize request rows like aggregates.
+    #[serde(default)]
     pub input_token_semantics: i64,
     pub input_cost_usd: String,
     pub output_cost_usd: String,
@@ -934,24 +934,18 @@ impl Database {
         let conn = lock_conn!(self.conn);
 
         let end_ts = end_date.unwrap_or_else(|| Local::now().timestamp());
-        let mut start_ts = start_date.unwrap_or_else(|| end_ts - 24 * 60 * 60);
+        let start_ts = start_date.unwrap_or_else(|| end_ts - 24 * 60 * 60);
 
-        if start_ts >= end_ts {
-            start_ts = end_ts - 24 * 60 * 60;
+        if start_ts > end_ts {
+            return Err(AppError::Message("开始时间不能晚于结束时间".to_string()));
         }
 
         let duration = end_ts - start_ts;
         if duration <= 24 * 60 * 60 {
             let bucket_seconds: i64 = 60 * 60;
-            let mut bucket_count: i64 = if duration <= 0 {
-                1
-            } else {
-                (duration + bucket_seconds - 1) / bucket_seconds
-            };
-
-            if bucket_count < 1 {
-                bucket_count = 1;
-            }
+            // Both endpoints are inclusive. An event exactly at end_ts must
+            // keep its own bucket instead of overwriting the previous hour.
+            let bucket_count = duration / bucket_seconds + 1;
 
             let mut extra_conditions: Vec<String> = Vec::new();
             let mut extra_params: Vec<Box<dyn rusqlite::ToSql>> = Vec::new();
@@ -985,7 +979,7 @@ impl Database {
                     CAST((l.created_at - ?1) / ?3 AS INTEGER) as bucket_idx,
                     COUNT(*) as request_count,
                     COALESCE(SUM(CAST(l.total_cost_usd AS REAL)), 0) as total_cost,
-                    COALESCE(SUM({fresh_input} + l.output_tokens), 0) as total_tokens,
+                    COALESCE(SUM({fresh_input} + l.output_tokens + l.cache_creation_tokens + l.cache_read_tokens), 0) as total_tokens,
                     COALESCE(SUM({fresh_input}), 0) as total_input_tokens,
                     COALESCE(SUM(l.output_tokens), 0) as total_output_tokens,
                     COALESCE(SUM(l.cache_creation_tokens), 0) as total_cache_creation_tokens,
@@ -1026,12 +1020,9 @@ impl Database {
                 all_params.iter().map(|p| p.as_ref()).collect();
             let rows = stmt.query_map(param_refs.as_slice(), row_mapper)?;
             for row in rows {
-                let (mut bucket_idx, stat) = row?;
+                let (bucket_idx, stat) = row?;
                 if bucket_idx < 0 {
                     continue;
-                }
-                if bucket_idx >= bucket_count {
-                    bucket_idx = bucket_count - 1;
                 }
                 map.insert(bucket_idx, stat);
             }
@@ -1098,7 +1089,7 @@ impl Database {
                 date(l.created_at, 'unixepoch', 'localtime') as bucket_date,
                 COUNT(*) as request_count,
                 COALESCE(SUM(CAST(l.total_cost_usd AS REAL)), 0) as total_cost,
-                COALESCE(SUM({fresh_input} + l.output_tokens), 0) as total_tokens,
+                COALESCE(SUM({fresh_input} + l.output_tokens + l.cache_creation_tokens + l.cache_read_tokens), 0) as total_tokens,
                 COALESCE(SUM({fresh_input}), 0) as total_input_tokens,
                 COALESCE(SUM(l.output_tokens), 0) as total_output_tokens,
                 COALESCE(SUM(l.cache_creation_tokens), 0) as total_cache_creation_tokens,
@@ -1181,7 +1172,7 @@ impl Database {
                 r.date,
                 COALESCE(SUM(r.request_count), 0),
                 COALESCE(SUM(CAST(r.total_cost_usd AS REAL)), 0),
-                COALESCE(SUM({fresh_input_rollup} + r.output_tokens), 0),
+                COALESCE(SUM({fresh_input_rollup} + r.output_tokens + r.cache_creation_tokens + r.cache_read_tokens), 0),
                 COALESCE(SUM({fresh_input_rollup}), 0),
                 COALESCE(SUM(r.output_tokens), 0),
                 COALESCE(SUM(r.cache_creation_tokens), 0),
@@ -1347,7 +1338,7 @@ impl Database {
                 SELECT l.provider_id, l.app_type,
                     {detail_pname} as provider_name,
                     COUNT(*) as request_count,
-                    COALESCE(SUM({fresh_input_detail} + l.output_tokens), 0) as total_tokens,
+                    COALESCE(SUM({fresh_input_detail} + l.output_tokens + l.cache_creation_tokens + l.cache_read_tokens), 0) as total_tokens,
                     COALESCE(SUM(CAST(l.total_cost_usd AS REAL)), 0) as total_cost,
                     COALESCE(SUM(CASE WHEN l.status_code >= 200 AND l.status_code < 300 THEN 1 ELSE 0 END), 0) as success_count,
                     COALESCE(SUM(l.latency_ms), 0) as latency_sum
@@ -1359,7 +1350,7 @@ impl Database {
                 SELECT r.provider_id, r.app_type,
                     {rollup_pname} as provider_name,
                     COALESCE(SUM(r.request_count), 0),
-                    COALESCE(SUM({fresh_input_rollup} + r.output_tokens), 0),
+                    COALESCE(SUM({fresh_input_rollup} + r.output_tokens + r.cache_creation_tokens + r.cache_read_tokens), 0),
                     COALESCE(SUM(CAST(r.total_cost_usd AS REAL)), 0),
                     COALESCE(SUM(r.success_count), 0),
                     COALESCE(SUM(r.avg_latency_ms * r.request_count), 0)
@@ -1501,7 +1492,7 @@ impl Database {
             FROM (
                 SELECT {detail_model} as model,
                     COUNT(*) as request_count,
-                    COALESCE(SUM({fresh_input_detail} + l.output_tokens), 0) as total_tokens,
+                    COALESCE(SUM({fresh_input_detail} + l.output_tokens + l.cache_creation_tokens + l.cache_read_tokens), 0) as total_tokens,
                     COALESCE(SUM(CAST(l.total_cost_usd AS REAL)), 0) as total_cost
                 FROM proxy_request_logs l
                 {detail_join}
@@ -1510,7 +1501,7 @@ impl Database {
                 UNION ALL
                 SELECT {rollup_model},
                     COALESCE(SUM(r.request_count), 0),
-                    COALESCE(SUM({fresh_input_rollup} + r.output_tokens), 0),
+                    COALESCE(SUM({fresh_input_rollup} + r.output_tokens + r.cache_creation_tokens + r.cache_read_tokens), 0),
                     COALESCE(SUM(CAST(r.total_cost_usd AS REAL)), 0)
                 FROM usage_daily_rollups r
                 {rollup_join}
@@ -3989,9 +3980,117 @@ mod tests {
         }
 
         let stats = db.get_daily_trends(Some(0), Some(15 * 60 * 60), Some("claude"), None, None)?;
-        assert_eq!(stats.len(), 15);
+        assert_eq!(stats.len(), 16);
         assert_eq!(stats[3].request_count, 1);
 
+        Ok(())
+    }
+
+    #[test]
+    fn usage_totals_include_cache_in_every_dashboard_query() -> Result<(), AppError> {
+        let db = Database::memory()?;
+        let start = local_ts(2024, 3, 1, 0, 0, 0);
+        let detail_start = local_ts(2024, 3, 3, 0, 0, 0);
+        let end = local_ts(2024, 3, 3, 23, 59, 59);
+        {
+            let conn = lock_conn!(db.conn);
+            // Three equivalent requests in the three supported storage formats.
+            for (id, semantics, input) in
+                [("legacy", 0, 1000), ("total", 1, 1100), ("fresh", 2, 700)]
+            {
+                insert_usage_log(
+                    &conn,
+                    id,
+                    "codex",
+                    "p1",
+                    "fixture-model",
+                    "proxy",
+                    detail_start + 3600,
+                    input,
+                    100,
+                    300,
+                    100,
+                    200,
+                    "0.01",
+                )?;
+                conn.execute("UPDATE proxy_request_logs SET input_token_semantics = ?1 WHERE request_id = ?2", params![semantics, id])?;
+            }
+            conn.execute(
+                "INSERT INTO usage_daily_rollups (date, app_type, provider_id, model,
+                    request_count, success_count, input_tokens, output_tokens, cache_read_tokens,
+                    cache_creation_tokens, input_token_semantics, total_cost_usd, avg_latency_ms)
+                 VALUES ('2024-03-02', 'codex', 'p1', 'fixture-model', 1, 1, 700, 100, 300, 100, 2, '0.01', 100)", [])?;
+        }
+
+        let summary = db.get_usage_summary(Some(start), Some(end), Some("codex"), None, None)?;
+        assert_eq!(summary.total_requests, 4);
+        assert_eq!(summary.total_input_tokens, 2800);
+        assert_eq!(summary.real_total_tokens, 4800);
+        let by_app = db.get_usage_summary_by_app(Some(start), Some(end), None, None)?;
+        assert_eq!(by_app[0].summary.real_total_tokens, 4800);
+        let providers = db.get_provider_stats(Some(start), Some(end), Some("codex"), None, None)?;
+        assert_eq!(providers[0].total_tokens, 4800);
+        let models = db.get_model_stats(Some(start), Some(end), Some("codex"), None, None)?;
+        assert_eq!(models[0].total_tokens, 4800);
+        let daily = db.get_daily_trends(Some(start), Some(end), Some("codex"), None, None)?;
+        assert_eq!(
+            daily.iter().map(|point| point.total_tokens).sum::<u64>(),
+            4800
+        );
+        let hourly =
+            db.get_daily_trends(Some(detail_start), Some(end), Some("codex"), None, None)?;
+        assert_eq!(
+            hourly.iter().map(|point| point.total_tokens).sum::<u64>(),
+            3600
+        );
+
+        let logs = db.get_request_logs(&LogFilters::default(), 0, 20)?;
+        assert_eq!(logs.total, 3);
+        for log in logs.data {
+            let payload = serde_json::to_value(&log).expect("request payload");
+            assert_eq!(payload["inputTokenSemantics"], log.input_token_semantics);
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn hourly_trends_keep_the_inclusive_end_bucket_and_zero_duration_range() -> Result<(), AppError>
+    {
+        let db = Database::memory()?;
+        {
+            let conn = lock_conn!(db.conn);
+            for (id, timestamp) in [("before-end", 3599), ("at-end", 3600)] {
+                insert_usage_log(
+                    &conn,
+                    id,
+                    "claude",
+                    "p1",
+                    "fixture-model",
+                    "proxy",
+                    timestamp,
+                    100,
+                    50,
+                    0,
+                    0,
+                    200,
+                    "0.01",
+                )?;
+            }
+        }
+        let hourly = db.get_daily_trends(Some(0), Some(3600), None, None, None)?;
+        assert_eq!(hourly.len(), 2);
+        assert_eq!(hourly[0].request_count, 1);
+        assert_eq!(hourly[1].request_count, 1);
+        assert_eq!(
+            hourly.iter().map(|point| point.total_tokens).sum::<u64>(),
+            300
+        );
+        let instant = db.get_daily_trends(Some(3600), Some(3600), None, None, None)?;
+        assert_eq!(instant.len(), 1);
+        assert_eq!(instant[0].request_count, 1);
+        assert!(db
+            .get_daily_trends(Some(3601), Some(3600), None, None, None)
+            .is_err());
         Ok(())
     }
 

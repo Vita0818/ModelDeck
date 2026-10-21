@@ -158,4 +158,124 @@ describe("RequestLogTable", () => {
       );
     });
   });
+
+  it("resets pagination when the end changes between fixed and live", async () => {
+    const range: UsageRangeSelection = {
+      preset: "custom",
+      customStartDate: 100,
+      customEndDate: 200,
+      liveEndTime: false,
+    };
+    const { rerender } = render(
+      <RequestLogTable
+        range={range}
+        rangeLabel="Custom"
+        refreshIntervalMs={0}
+      />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "2" }));
+    rerender(
+      <RequestLogTable
+        range={{ ...range, liveEndTime: true }}
+        rangeLabel="Live"
+        refreshIntervalMs={0}
+      />,
+    );
+    await waitFor(() =>
+      expect(useRequestLogsMock).toHaveBeenLastCalledWith(
+        expect.objectContaining({ page: 0 }),
+      ),
+    );
+  });
+
+  it("recovers when a refreshed result has fewer pages", async () => {
+    const { rerender } = render(
+      <RequestLogTable
+        range={{ preset: "today" }}
+        rangeLabel="Today"
+        refreshIntervalMs={0}
+      />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "6" }));
+    useRequestLogsMock.mockReturnValue({
+      data: { data: [], total: 21, page: 5, pageSize: 20 },
+      isLoading: false,
+    });
+    rerender(
+      <RequestLogTable
+        range={{ preset: "today" }}
+        rangeLabel="Today"
+        refreshIntervalMs={0}
+      />,
+    );
+    await waitFor(() =>
+      expect(useRequestLogsMock).toHaveBeenLastCalledWith(
+        expect.objectContaining({ page: 1 }),
+      ),
+    );
+  });
+
+  it("shows a retryable error instead of presenting failed queries as no data", () => {
+    const refetch = vi.fn();
+    useRequestLogsMock.mockReturnValue({
+      isLoading: false,
+      isError: true,
+      refetch,
+    });
+    render(
+      <RequestLogTable
+        range={{ preset: "today" }}
+        rangeLabel="Today"
+        refreshIntervalMs={0}
+      />,
+    );
+    expect(screen.getByRole("alert")).toHaveTextContent("usage.loadError");
+    expect(screen.queryByText("usage.noData")).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "usage.retry" }));
+    expect(refetch).toHaveBeenCalledOnce();
+  });
+
+  it.each([
+    [0, "700"],
+    [1, "500"],
+    [2, "1,000"],
+  ])(
+    "renders fresh input using storage semantics %s",
+    (inputTokenSemantics, expected) => {
+      useRequestLogsMock.mockReturnValue({
+        data: {
+          total: 1,
+          page: 0,
+          pageSize: 20,
+          data: [
+            {
+              requestId: "fixture",
+              appType: "codex",
+              providerName: "Fixture",
+              model: "fixture-model",
+              inputTokens: 1000,
+              inputTokenSemantics,
+              outputTokens: 100,
+              cacheReadTokens: 300,
+              cacheCreationTokens: 200,
+              totalCostUsd: "0.01",
+              latencyMs: 1000,
+              statusCode: 200,
+              costMultiplier: "1",
+              createdAt: 1000,
+            },
+          ],
+        },
+        isLoading: false,
+      });
+      render(
+        <RequestLogTable
+          range={{ preset: "today" }}
+          rangeLabel="Today"
+          refreshIntervalMs={0}
+        />,
+      );
+      expect(screen.getByText(expected, { exact: true })).toBeInTheDocument();
+    },
+  );
 });

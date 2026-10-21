@@ -28,6 +28,7 @@ import {
 } from "@/types/usage";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { UsageDateRangePicker } from "./UsageDateRangePicker";
+import { UsageQueryError } from "./UsageQueryError";
 import {
   formatOutputTokensPerSecond,
   fmtInt,
@@ -74,7 +75,12 @@ export function RequestLogTable({
     statusCode,
   };
 
-  const { data: result, isLoading } = useRequestLogs({
+  const {
+    data: result,
+    isLoading,
+    isError,
+    refetch,
+  } = useRequestLogs({
     filters: effectiveFilters,
     range,
     page,
@@ -97,7 +103,15 @@ export function RequestLogTable({
     range.customEndDate,
     range.customStartDate,
     range.preset,
+    range.liveEndTime,
   ]);
+
+  useEffect(() => {
+    if (result)
+      setPage((current) =>
+        Math.min(current, Math.max(0, Math.ceil(result.total / pageSize) - 1)),
+      );
+  }, [result?.total]);
 
   const handleGoToPage = () => {
     const trimmed = pageInput.trim();
@@ -149,7 +163,9 @@ export function RequestLogTable({
         </div>
       </div>
 
-      {isLoading ? (
+      {isError ? (
+        <UsageQueryError onRetry={() => void refetch()} />
+      ) : isLoading ? (
         <div className="h-[400px] animate-pulse rounded bg-muted" />
       ) : (
         <>

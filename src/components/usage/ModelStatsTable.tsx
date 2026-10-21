@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import { useModelStats } from "@/lib/query/usage";
 import { fmtUsd } from "./format";
+import { UsageQueryError } from "./UsageQueryError";
 import type { UsageRangeSelection } from "@/types/usage";
 
 interface ModelStatsTableProps {
@@ -28,13 +29,20 @@ export function ModelStatsTable({
   refreshIntervalMs,
 }: ModelStatsTableProps) {
   const { t } = useTranslation();
-  const { data: stats, isLoading } = useModelStats(
+  const {
+    data: stats,
+    isLoading,
+    isError,
+    refetch,
+  } = useModelStats(
     range,
     { appType, providerName, model },
     {
       refetchInterval: refreshIntervalMs > 0 ? refreshIntervalMs : false,
     },
   );
+
+  if (isError) return <UsageQueryError onRetry={() => void refetch()} />;
 
   if (isLoading) {
     return <div className="h-[400px] animate-pulse rounded bg-muted" />;

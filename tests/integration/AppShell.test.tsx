@@ -29,7 +29,25 @@ vi.mock("@/components/settings/SettingsPage", () => ({
   SettingsPage: () => <div data-testid="settings-page" />,
 }));
 vi.mock("@/components/usage/UsageDashboard", () => ({
-  UsageDashboard: () => <div data-testid="usage-page" />,
+  UsageDashboard: (props: {
+    refreshIntervalMs?: number;
+    sessionAutoSyncEnabled?: boolean;
+    onRefreshIntervalChange: (next: number) => Promise<boolean>;
+    onSessionAutoSyncEnabledChange: (next: boolean) => Promise<boolean>;
+  }) => (
+    <div data-testid="usage-page">
+      <span data-testid="saved-usage-refresh">{props.refreshIntervalMs}</span>
+      <span data-testid="saved-session-sync">
+        {String(props.sessionAutoSyncEnabled)}
+      </span>
+      <button onClick={() => void props.onRefreshIntervalChange(5000)}>
+        save-usage-refresh
+      </button>
+      <button onClick={() => void props.onSessionAutoSyncEnabledChange(true)}>
+        enable-session-sync
+      </button>
+    </div>
+  ),
 }));
 vi.mock("@/components/DeepLinkImportDialog", () => ({
   DeepLinkImportDialog: () => null,
@@ -106,6 +124,59 @@ describe("App shell", () => {
     expect(await screen.findByTestId("usage-page")).toBeInTheDocument();
     // The old shell hid navigation on secondary views; it must stay put now.
     expect(screen.getByTestId("sidebar")).toBeInTheDocument();
+  });
+
+  it("reads and persists usage settings without overwriting other preferences", async () => {
+    let settings = {
+      language: "en",
+      showInTray: false,
+      minimizeToTrayOnClose: true,
+      usageDashboardRefreshIntervalMs: 10000,
+      sessionAutoSyncEnabled: false,
+    };
+    invokeMock.mockImplementation(
+      async (command: string, args?: { settings: typeof settings }) => {
+        if (command === "get_settings") return settings;
+        if (command === "save_settings") {
+          settings = args!.settings;
+          return true;
+        }
+        if (command === "get_deck") return deckFixture();
+        if (command === "check_all_env_conflicts") return {};
+        return null;
+      },
+    );
+    localStorage.setItem("modeldeck-route", "usage");
+    const { default: App } = await import("@/App");
+    renderApp(App);
+    await waitFor(() =>
+      expect(screen.getByTestId("saved-usage-refresh")).toHaveTextContent(
+        "10000",
+      ),
+    );
+    expect(screen.getByTestId("saved-session-sync")).toHaveTextContent("false");
+
+    fireEvent.click(screen.getByRole("button", { name: "save-usage-refresh" }));
+    await waitFor(() =>
+      expect(screen.getByTestId("saved-usage-refresh")).toHaveTextContent(
+        "5000",
+      ),
+    );
+    fireEvent.click(
+      screen.getByRole("button", { name: "enable-session-sync" }),
+    );
+    await waitFor(() =>
+      expect(screen.getByTestId("saved-session-sync")).toHaveTextContent(
+        "true",
+      ),
+    );
+    expect(settings).toEqual({
+      language: "en",
+      showInTray: false,
+      minimizeToTrayOnClose: true,
+      usageDashboardRefreshIntervalMs: 5000,
+      sessionAutoSyncEnabled: true,
+    });
   });
 
   it("navigates to the resource layer as a peer of the clients", async () => {

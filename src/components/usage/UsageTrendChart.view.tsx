@@ -17,6 +17,7 @@ import { Loader2 } from "lucide-react";
 import { fmtInt, fmtUsd, getLocaleFromLanguage } from "./format";
 import { resolveUsageRange } from "@/lib/usageRange";
 import { CHART_COLORS } from "./chartPalette";
+import { UsageQueryError } from "./UsageQueryError";
 import type { UsageTrendChartProps } from "./UsageTrendChart";
 import {
   buildUsageTrendChartData,
@@ -36,7 +37,12 @@ export default function UsageTrendChartView({
 }: UsageTrendChartProps) {
   const { t, i18n } = useTranslation();
   const { startDate, endDate } = resolveUsageRange(range);
-  const { data: trends, isLoading } = useUsageTrends(
+  const {
+    data: trends,
+    isLoading,
+    isError,
+    refetch,
+  } = useUsageTrends(
     range,
     { appType, providerName, model },
     {
@@ -63,6 +69,8 @@ export default function UsageTrendChartView({
       }),
     [trends, isHourly, dateLocale, startDate, endDate],
   );
+
+  if (isError) return <UsageQueryError onRetry={() => void refetch()} />;
 
   if (isLoading) {
     return (

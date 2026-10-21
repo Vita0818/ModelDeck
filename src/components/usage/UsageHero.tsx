@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useUsageSummaryByApp } from "@/lib/query/usage";
 import { cn } from "@/lib/utils";
 import { APP_ICON_MAP } from "@/config/appConfig";
+import { UsageQueryError } from "./UsageQueryError";
 import type { AppId } from "@/lib/api/types";
 import {
   Activity,
@@ -162,7 +163,7 @@ export function UsageHero({
   const { t, i18n } = useTranslation();
   const lang = getResolvedLang(i18n);
 
-  const { data, isLoading } = useUsageSummaryByApp(
+  const { data, isLoading, isError, refetch } = useUsageSummaryByApp(
     range,
     { providerName, model },
     {
@@ -183,13 +184,19 @@ export function UsageHero({
   const appLabel =
     appType && appType in TITLE_THEMES ? t(`usage.appFilter.${appType}`) : null;
 
-  const cacheWriteState = getCacheWriteAvailability(
+  const inferredCacheWriteState = getCacheWriteAvailability(
     appType ? [appType] : allApps.map((a) => a.appType),
   );
 
   const input = summary?.totalInputTokens ?? 0;
   const output = summary?.totalOutputTokens ?? 0;
   const cacheWrite = summary?.totalCacheCreationTokens ?? 0;
+  // Some sessions report cache writes even for otherwise OpenAI-style apps.
+  // Show those recorded tokens instead of hiding them behind an N/A label.
+  const cacheWriteState =
+    cacheWrite > 0 && inferredCacheWriteState === "na"
+      ? "partial"
+      : inferredCacheWriteState;
   const cacheRead = summary?.totalCacheReadTokens ?? 0;
   const realTotal = summary?.realTotalTokens ?? 0;
   const hitRate = summary?.cacheHitRate ?? 0;
@@ -213,6 +220,8 @@ export function UsageHero({
             )
           : undefined,
   };
+
+  if (isError) return <UsageQueryError onRetry={() => void refetch()} />;
 
   if (isLoading) {
     return (

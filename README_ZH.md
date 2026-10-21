@@ -4,7 +4,7 @@
 
 ModelDeck 是独立维护的个人桌面项目，用于管理模型提供商、端点、独立密钥、模型目录、上下文限制与推理档位。它复用 CC Switch 的部分原生配置与协议适配代码，并按自己的产品范围维护。
 
-## 当前版本：v0.4.1
+## 当前版本：v0.4.2
 
 产品保留三个入口：
 
@@ -18,7 +18,7 @@ Memory、MCP、Skills、提示词、会话浏览、OpenClaw 工作区、OAuth �
 
 保留各提供商的认证头、端点拼接、请求字段、推理参数和流式协议转换。编辑资源路由会影响所有引用它的连接；连接只保存引用，不复制另一套上游凭据与模型目录。
 
-[两层管理使用说明](docs/TWO_LAYER_MODELDECK.md) · [客户端适配说明](docs/CLIENT_MODELS.md) · [v0.4.1 变更](docs/releases/v0.4.1.md)
+[两层管理使用说明](docs/TWO_LAYER_MODELDECK.md) · [客户端适配说明](docs/CLIENT_MODELS.md) · [v0.4.2 变更](docs/releases/v0.4.2.md)
 
 ## 原生配置与数据
 

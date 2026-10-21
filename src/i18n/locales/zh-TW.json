@@ -1514,6 +1514,13 @@
     "noSearchResults": "沒有相符的預設供應商。"
   },
   "usage": {
+    "date": "日期",
+    "calendarRangeHint": "日曆按整天選擇；可編輯時間精確篩選，結束時間包含所選分鐘。",
+    "previousMonth": "上個月",
+    "nextMonth": "下個月",
+    "settingsSaveFailed": "用量設定儲存失敗",
+    "loadError": "用量資料載入失敗",
+    "retry": "重試",
     "title": "使用統計",
     "subtitle": "查看 AI 模型的使用情況和成本統計",
     "today": "24 小時",
