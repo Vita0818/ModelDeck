@@ -51,7 +51,7 @@ cargo clippy --all-targets --all-features -- -D warnings
 cargo test
 ```
 
-Build with `pnpm build`. On this Mac, `./scripts/build-modeldeck-macos.sh` creates the application, verifies its signature and archives it under `release/v<version>/`. Build products are not committed.
+ModelDeck desktop releases target macOS. Run `pnpm build` to build the app. The `./scripts/build-modeldeck-macos.sh` helper verifies the app signature and creates a ZIP under `release/v<version>/`. Build products are not committed.
 
 `pnpm dev`, `pnpm build` and `pnpm tauri` use `scripts/tauri.mjs`. On macOS it checks Rust and, when necessary, uses an installed Homebrew Z3 library. The renderer build loads its emitted library chunks to check initialization cycles that could otherwise produce a blank window.
 

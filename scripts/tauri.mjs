@@ -12,6 +12,14 @@ const needsRust =
   !args.some((arg) => ["--help", "-h", "--version", "-V"].includes(arg));
 
 try {
+  if (
+    needsRust &&
+    ["build", "bundle"].includes(command) &&
+    process.platform !== "darwin"
+  ) {
+    throw new Error("ModelDeck desktop builds require macOS.");
+  }
+
   if (needsRust) {
     const env = { ...process.env };
     const probeRust = () =>

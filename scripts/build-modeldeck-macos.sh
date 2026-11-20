@@ -5,7 +5,7 @@ MODELDECK_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$MODELDECK_ROOT"
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
-  echo "This helper builds the macOS application. Use pnpm build on other platforms." >&2
+  echo "ModelDeck desktop builds require macOS." >&2
   exit 1
 fi
 if [[ ! -d node_modules ]]; then

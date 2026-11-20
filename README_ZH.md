@@ -51,7 +51,7 @@ cargo clippy --all-targets --all-features -- -D warnings
 cargo test
 ```
 
-使用 `pnpm build` 构建。本机可运行 `./scripts/build-modeldeck-macos.sh`，生成签名检查通过的应用与 ZIP，保存在 `release/v<版本>/`。构建产物不纳入 Git。
+ModelDeck 桌面版面向 macOS。使用 `pnpm build` 构建应用，或运行 `./scripts/build-modeldeck-macos.sh` 校验应用签名并生成 ZIP。压缩包保存在 `release/v<版本>/`。构建产物不纳入 Git。
 
 `pnpm dev`、`pnpm build` 和 `pnpm tauri` 共用 `scripts/tauri.mjs`。macOS 上该入口会检查 Rust，并在需要时使用 Homebrew 已安装的 Z3 库。前端构建会加载生成的库分块，检查会导致空白窗口的初始化循环。
 
